@@ -1,0 +1,60 @@
+<app-header titulo="reservar cancha"></app-header>
+
+
+<ion-content>
+
+  <form #formulario="ngForm" (ngSubmit)="crearPerfil()">
+
+    <ion-list>
+  
+      <!-- <ion-list-header>
+      <ion-label>FORMULARIO: {{ formulario.valid }}</ion-label>
+      </ion-list-header> -->
+  
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input type="text"
+                    name="nombre"
+                   [(ngModel)]="perfil.nombre"
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Edad</ion-label>
+        <ion-input type="number"
+                    name="edad"
+                   [(ngModel)]="perfil.edad"
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Equipo</ion-label>
+        <ion-input type ="text"
+                    name ="hDisponible"
+                   [(ngModel)] ="perfil.equipo"
+                   >
+                  </ion-input>
+      </ion-item>
+  
+      <!-- <ion-item>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input type="number"
+                    name="precio"
+                   [(ngModel)]="reservacion.precio"
+                   [disabled]=true
+                   required>
+                  </ion-input>
+      </ion-item> -->
+  
+    </ion-list>
+  
+    <ion-button expand="full" type="submit"
+    [disabled]="formulario.invalid">
+        Guardar
+    </ion-button>
+  
+  </form>
+
+</ion-content>

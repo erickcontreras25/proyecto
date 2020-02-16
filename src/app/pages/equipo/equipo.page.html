@@ -1,0 +1,52 @@
+<app-header titulo="Equipo"></app-header>
+
+
+<ion-content>
+
+  <ion-button color="success" routerLink="/crear-equipo">CREAR EQUIPO</ion-button>
+
+
+    <ion-list>
+  
+      <ion-item>
+        <ion-label position="floating">Nombre Equipo</ion-label>
+        <ion-input type="text"
+                    name="nombreComplejo"
+                   [(ngModel)]="nEquipo"
+                   [disabled]=true
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Miembros</ion-label>
+        <ion-input type="list"
+                    name="agregar"
+                   [(ngModel)]="miembros"
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <!-- <ion-item>
+        <ion-label position="floating">Horarios Disp.</ion-label>
+        <ion-input type ="date"
+                    name ="hDisponible"
+                   [(ngModel)] ="reservacion.hDisponible"
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input type="number"
+                    name="precio"
+                   [(ngModel)]="reservacion.precio"
+                   [disabled]=true
+                   required>
+                  </ion-input>
+      </ion-item> -->
+  
+    </ion-list>
+  
+
+</ion-content>

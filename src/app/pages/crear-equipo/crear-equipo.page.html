@@ -1,0 +1,60 @@
+<app-header titulo="reservar cancha"></app-header>
+
+
+<ion-content>
+
+  <form #formulario="ngForm" (ngSubmit)="crearEquipo()">
+
+    <ion-list>
+  
+      <!-- <ion-list-header>
+      <ion-label>FORMULARIO: {{ formulario.valid }}</ion-label>
+      </ion-list-header> -->
+  
+      <ion-item>
+        <ion-label position="floating">Nombre Equipo</ion-label>
+        <ion-input type="text"
+                    name="nombreComplejo"
+                   [(ngModel)]="equipo.nombreEquipo"
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Agreagar miembro</ion-label>
+        <ion-input type="txt"
+                    name="agregar"
+                   [(ngModel)]="equipo.agregarMienbro"
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <!-- <ion-item>
+        <ion-label position="floating">Horarios Disp.</ion-label>
+        <ion-input type ="date"
+                    name ="hDisponible"
+                   [(ngModel)] ="reservacion.hDisponible"
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input type="number"
+                    name="precio"
+                   [(ngModel)]="reservacion.precio"
+                   [disabled]=true
+                   required>
+                  </ion-input>
+      </ion-item> -->
+  
+    </ion-list>
+  
+    <ion-button expand="full" type="submit"
+    [disabled]="formulario.invalid">
+        Crear Equipo
+    </ion-button>
+  
+  </form>
+
+</ion-content>
