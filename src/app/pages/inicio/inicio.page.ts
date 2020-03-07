@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiserviService } from 'src/app/services/apiservi.service';
 
 @Component({
   selector: 'app-inicio',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicioPage implements OnInit {
 
-  constructor() { }
+  constructor(private apiServi: ApiserviService) { }
 
   ngOnInit() {
+    this.apiServi.getCanchas()
+    .subscribe(resp => {
+      console.log('EL SERVICIO SI SIRVE', resp);
+    });
   }
 
 }
