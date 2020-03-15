@@ -23,6 +23,14 @@ const routes: Routes = [
     path: 'crear-equipo',
     loadChildren: () => import('./pages/crear-equipo/crear-equipo.module').then( m => m.CrearEquipoPageModule)
   },
+  {
+    path: 'complejo',
+    loadChildren: () => import('./pages/complejo/complejo.module').then( m => m.ComplejoPageModule)
+  },
+  {
+    path: 'cancha',
+    loadChildren: () => import('./pages/cancha/cancha.module').then( m => m.CanchaPageModule)
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,68 @@
+<app-header titulo="Crear complejo"></app-header>
+
+
+<ion-content>
+
+  <h1>Complejo</h1>
+
+
+
+<form #formulario="ngForm" (ngSubmit)="crearComplejo()">
+
+  <ion-list>
+
+    <!-- <ion-list-header>
+    <ion-label>FORMULARIO: {{ formulario.valid }}</ion-label>
+    </ion-list-header> -->
+
+    <ion-item>
+      <ion-label position="floating">Nombre Complejo</ion-label>
+      <ion-input type="text"
+                  name="nombreComplejo"
+                 [(ngModel)]="complejo.nombre"
+                 required>
+                </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Latitud</ion-label>
+      <ion-input type="number"
+                  name="latitud"
+                 [(ngModel)]="complejo.latitud"
+                 required>
+                </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Longitud</ion-label>
+      <ion-input type ="number"
+                  name ="longitud"
+                 [(ngModel)] ="complejo.longitud"
+                 required>
+                </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Cantidad de Canchas</ion-label>
+      <ion-input type="number"
+                  name="cantidadDeCanchas"
+                 [(ngModel)]="complejo.cantCanchas"
+                 required>
+                </ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-button expand="full" type="submit"
+  [disabled]="formulario.invalid">
+      Guardar
+  </ion-button>
+
+</form>
+
+<h1>AQUI ESTA</h1>
+<ion-item *ngFor="let item of complejos">
+  <p>{{item.idComplejo}} - {{item.nombre}}</p>
+</ion-item>
+
+</ion-content>
