@@ -18,7 +18,7 @@ export class InicioPage implements OnInit {
 
   ngOnInit() {
 
-    // this.loadMap();
+    this.loadMap();
 
     // this.apiServi.getComplejo()
     // .subscribe(resp => {
