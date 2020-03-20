@@ -1,15 +1,11 @@
-<app-header titulo="reservar cancha"></app-header>
+<app-header titulo="crear usuario"></app-header>
 
 
 <ion-content>
 
-  <form #formulario="ngForm" (ngSubmit)="crearPerfil()">
+  <form #formulario="ngForm" (ngSubmit)="agregarUsuario()">
 
     <ion-list>
-  
-      <!-- <ion-list-header>
-      <ion-label>FORMULARIO: {{ formulario.valid }}</ion-label>
-      </ion-list-header> -->
   
       <ion-item>
         <ion-label position="floating">Nombre</ion-label>
@@ -21,32 +17,42 @@
       </ion-item>
   
       <ion-item>
-        <ion-label position="floating">Edad</ion-label>
-        <ion-input type="number"
-                    name="edad"
-                   [(ngModel)]="perfil.edad"
+        <ion-label position="floating">Nombre de usuario</ion-label>
+        <ion-input type="text"
+                    name="nombreUsuario"
+                   [(ngModel)]="perfil.nombreUsuario"
                    required>
                   </ion-input>
       </ion-item>
   
       <ion-item>
-        <ion-label position="floating">Equipo</ion-label>
-        <ion-input type ="text"
-                    name ="hDisponible"
-                   [(ngModel)] ="perfil.equipo"
+        <ion-label position="floating">Edad</ion-label>
+        <ion-input type ="number"
+                    name ="edad"
+                   [(ngModel)]="perfil.edad"
                    >
                   </ion-input>
       </ion-item>
   
-      <!-- <ion-item>
-        <ion-label position="floating">Precio</ion-label>
-        <ion-input type="number"
-                    name="precio"
-                   [(ngModel)]="reservacion.precio"
-                   [disabled]=true
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="string"
+                    name="email"
+                   [(ngModel)]="perfil.email"
                    required>
                   </ion-input>
-      </ion-item> -->
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="string"
+                    name="password"
+                   [(ngModel)]="perfil.password"
+                   required>
+                  </ion-input>
+      </ion-item>
+
+      {{perfil.rol}} = false
   
     </ion-list>
   
@@ -56,5 +62,8 @@
     </ion-button>
   
   </form>
+
+
+  <button (click)="obtenerUsuario()">MOSTRAR DATOS USUARIO</button>
 
 </ion-content>

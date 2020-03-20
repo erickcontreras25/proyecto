@@ -14,17 +14,17 @@ export class ComplejoPage implements OnInit {
 
   complejos: Complejo[] = [];
 
-  
+
 
   complejo = {
     idComplejo: 0,
     nombre: '',
-    latitud: 0.0,
-    longitud: 0.0,
-    cantCanchas: 0
+    localidad: '',
+    cantCanchas: 0,
+    idAdmin: 0
   };
 
-  aux: Complejo;
+  // aux: Complejo;
 
   constructor(private apiServi: ApiserviService) { }
 
@@ -36,9 +36,15 @@ export class ComplejoPage implements OnInit {
     });
   }
 
+  obtenerComplejoId() {
+    this.apiServi.getComplejoId(this.complejo.idComplejo)
+    .subscribe( resp => {
+      console.log('EJECUTADO CON EXITO');
+    });
+  }
+
+
   crearComplejo() {
-    console.log('FORM SUBMIT');
-    console.log(this.complejo);
     this.metodoPos();
     }
 
@@ -49,16 +55,47 @@ export class ComplejoPage implements OnInit {
       this.complejo = {
         idComplejo: 0,
         nombre: '',
-        latitud: 0.0,
-        longitud: 0.0,
-        cantCanchas: 0
+        localidad: '',
+        cantCanchas: 0,
+        idAdmin: 0
       };
       window.alert('AGREGADO');
     },
-    (error) => {console.log(error)
+    (error) => {
+      console.log('ESTE ES EL ERROR', error);
     }
     );
   }
-  
+
+
+
+  modificarComplejo() {
+    this.apiServi.putComplejo(this.complejo.idComplejo, this.complejo)
+    .subscribe((data) => {
+      this.complejos.push(this.complejo);
+      this.complejo = {
+        idComplejo: 0,
+        nombre: '',
+        localidad: '',
+        cantCanchas: 0,
+        idAdmin: 0
+      };
+      window.alert('ACTUALIZADO CON EXITO');
+    },
+    (error) => {
+      console.log(error);
+    }
+    );
+  }
+
+
+  eliminarComplejo() {
+    this.apiServi.deleteComplejo(this.complejo.idComplejo)
+    .subscribe( resp => {
+      console.log('ELIMINADO CON EXITO');
+    });
+  }
+
+
 
 }

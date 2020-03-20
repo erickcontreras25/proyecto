@@ -7,7 +7,7 @@
 
 
 
-<form #formulario="ngForm" (ngSubmit)="crearComplejo()">
+<form #formulario="ngForm" (ngSubmit)="metodoPos()">
 
   <ion-list>
 
@@ -25,19 +25,10 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Latitud</ion-label>
-      <ion-input type="number"
-                  name="latitud"
-                 [(ngModel)]="complejo.latitud"
-                 required>
-                </ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Longitud</ion-label>
-      <ion-input type ="number"
-                  name ="longitud"
-                 [(ngModel)] ="complejo.longitud"
+      <ion-label position="floating">Localidad</ion-label>
+      <ion-input type="string"
+                  name="localidad"
+                 [(ngModel)]="complejo.localidad"
                  required>
                 </ion-input>
     </ion-item>
@@ -47,6 +38,15 @@
       <ion-input type="number"
                   name="cantidadDeCanchas"
                  [(ngModel)]="complejo.cantCanchas"
+                 required>
+                </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Admin Id</ion-label>
+      <ion-input type="number"
+                  name="adminId"
+                 [(ngModel)]="complejo.idAdmin"
                  required>
                 </ion-input>
     </ion-item>

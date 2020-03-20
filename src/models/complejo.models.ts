@@ -1,15 +1,15 @@
-export class Complejo{
+export class Complejo {
     idComplejo: number;
     nombre: string;
-    latitud: number;
-    longitud: number;
+    localidad: string;
     cantCanchas: number;
+    idAdmin: number;
 
-    constructor(id:number, nombre: string, lat: number, long: number, cant: number){
+    constructor(id: number, nombre: string, loc: string, cant: number, adminId: number) {
+        this.idComplejo = id;
         this.nombre = nombre;
-        this.latitud = lat;
-        this.longitud = long;
+        this.localidad = loc;
         this.cantCanchas = cant;
-
+        this.idAdmin = adminId;
     }
 }

@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form #formulario="ngForm" (ngSubmit)="modificarUsuario()">
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label position="floating">ID</ion-label>
+        <ion-input type="number"
+                    name="id"
+                   [(ngModel)]="perfil.idUsuario"
+                   [disabled]=true
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input type="text"
+                    name="nombre"
+                   [(ngModel)]="perfil.nombre"
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Nombre de usuario</ion-label>
+        <ion-input type="text"
+                    name="nombreUsuario"
+                   [(ngModel)]="perfil.nombreUsuario"
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Edad</ion-label>
+        <ion-input type ="number"
+                    name ="edad"
+                   [(ngModel)]="perfil.edad"
+                   >
+                  </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="string"
+                    name="email"
+                   [(ngModel)]="perfil.edad"
+                   required>
+                  </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="number"
+                    name="precio"
+                   [(ngModel)]="perfil.password"
+                   required>
+                  </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Rol</ion-label>
+        <ion-input type="string"
+                    name="rol"
+                   [(ngModel)]="perfil.rol"
+                   [disabled]=true
+                   required>
+                  </ion-input>
+      </ion-item>
+  
+    </ion-list>
+  
+    <ion-button expand="full" type="submit"
+    [disabled]="formulario.invalid">
+        Guardar
+    </ion-button>
+  
+  </form>
+
+</ion-content>

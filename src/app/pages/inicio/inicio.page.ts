@@ -14,16 +14,20 @@ export class InicioPage implements OnInit {
 
   constructor(private apiServi: ApiserviService, private geolocation: Geolocation) { }
 
+  hola: Date;
+
   ngOnInit() {
 
-    this.loadMap();
+    // this.loadMap();
 
     // this.apiServi.getComplejo()
     // .subscribe(resp => {
     //   console.log('EL SERVICIO SI SIRVE', resp);
     // });
   }
-
+  obtenerFehca() {
+  console.log(this.hola);
+}
   async loadMap() {
     const rta = await this.geolocation.getCurrentPosition();
     const myLatLng = {
