@@ -11,8 +11,8 @@ export class CrearPerfilPage implements OnInit {
 
   perfiles: Usuario[] = [];
 
+  idUsuario;
   perfil = {
-    idUsuario: 0,
     nombre: '',
     nombreUsuario: '',
     edad: 0,
@@ -37,7 +37,7 @@ export class CrearPerfilPage implements OnInit {
   }
 
   obtenerUsuarioId() {
-    this.apiServi.getUsuarioId(this.perfil.idUsuario)
+    this.apiServi.getUsuarioId(this.idUsuario)
     .subscribe( resp => {
       console.log('EJECUTADO CON EXITO');
     });
@@ -48,7 +48,6 @@ export class CrearPerfilPage implements OnInit {
     .subscribe((data) => {
       this.perfiles.push(this.perfil);
       this.perfil = {
-        idUsuario: 0,
         nombre: '',
         nombreUsuario: '',
         edad: 0,
@@ -65,11 +64,10 @@ export class CrearPerfilPage implements OnInit {
   }
 
   modificarUsuario() {
-    this.apiServi.putUsuario(this.perfil.idUsuario, this.perfil)
+    this.apiServi.putUsuario(this.idUsuario, this.perfil)
     .subscribe((data) => {
       this.perfiles.push(this.perfil);
       this.perfil = {
-        idUsuario: 0,
         nombre: '',
         nombreUsuario: '',
         edad: 0,
@@ -86,7 +84,7 @@ export class CrearPerfilPage implements OnInit {
   }
 
   eliminarUsuario() {
-    this.apiServi.deleteUsuario(this.perfil.idUsuario)
+    this.apiServi.deleteUsuario(this.idUsuario)
     .subscribe( resp => {
       console.log('ELIMINADO CON EXITO');
     });

@@ -3,9 +3,17 @@
 
 <ion-content>
 
-  <h1>Reservar cancha</h1>
+  <h1 class="ion-text-center">Reservar TU cancha</h1>
 
-
+  <ion-list>
+    <ion-item>
+      <ion-label>Complejo</ion-label>
+      <ion-select [(ngModel)]="seleccion"
+                  (ngModelChange)="obtenerCancha()">
+        <ion-select-option *ngFor="let user of complejos" value="{{user.idComplejo}}" >{{user.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 
 <form #formulario="ngForm" (ngSubmit)="agregarReservacion()">
 
@@ -39,31 +47,21 @@
                  required>
                 </ion-input>
     </ion-item> -->
-
-
-
+  <ion-list>
     <ion-item>
-      <ion-label position="floating">ID Cancha</ion-label>
-      <ion-input type="number"
-                  name="idCancha"
-                 [(ngModel)]="reservacion.idCancha"
-                 required>
-                </ion-input>
+      <ion-label>Cancha</ion-label>
+      <ion-select [(ngModel)]="reservacion.idCancha"
+                  name="idCancha">
+        <ion-select-option *ngFor="let user of canchas" value="{{user.idCancha}}" >{{user.idCancha}}</ion-select-option>
+      </ion-select>
     </ion-item>
+  </ion-list>
 
-    <ion-item>
-      <ion-label position="floating">ID Usuario</ion-label>
-      <ion-input type ="number"
-                  name ="idUsuario"
-                 [(ngModel)]="reservacion.idUsuario"
-                 required>
-                </ion-input>
-    </ion-item>
 
   </ion-list>
 
   <ion-button expand="full" type="submit"
-  [disabled]="formulario.invalid">
+  [disabled]="formulario.invalid" routerLink="/inicio">
       Guardar
   </ion-button>
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/models/usuario.models';
 import { ApiserviService } from 'src/app/services/apiservi.service';
+import { Reservacion } from 'src/models/reservacion.models';
+import { Equipo } from 'src/models/equipo.models';
 
 @Component({
   selector: 'app-perfil',
@@ -9,10 +11,17 @@ import { ApiserviService } from 'src/app/services/apiservi.service';
 })
 export class PerfilPage implements OnInit {
 
+  idUsuario;
+  idReser;
+  nombreUsu;
   perfiles: Usuario[] = [];
+  reservaciones: Reservacion[] =[];
+
+  equipos: Equipo[] = [];
+  idEquipo;
+
 
   perfil = {
-    idUsuario: 0,
     nombre: '',
     nombreUsuario: '',
     edad: 0,
@@ -25,8 +34,11 @@ export class PerfilPage implements OnInit {
   constructor(private apiServi: ApiserviService) { }
 
   ngOnInit() {
-      this.apiServi.getUsuarioId(this.perfil.idUsuario)
-      .subscribe( resp => {
+      this.idUsuario = this.apiServi.getAuxUsu();
+
+      this.apiServi.getUsuarioId(this.idUsuario)
+      .subscribe( (resp: Usuario) => {
+        this.perfil = resp;
         console.log('EJECUTADO CON EXITO');
       });
   }
@@ -36,7 +48,6 @@ export class PerfilPage implements OnInit {
     .subscribe((data) => {
       this.perfiles.push(this.perfil);
       this.perfil = {
-        idUsuario: 0,
         nombre: '',
         nombreUsuario: '',
         edad: 0,
@@ -53,11 +64,10 @@ export class PerfilPage implements OnInit {
   }
 
   modificarUsuario() {
-    this.apiServi.putUsuario(this.perfil.idUsuario, this.perfil)
+    this.apiServi.putUsuario(this.idUsuario, this.perfil)
     .subscribe((data) => {
       this.perfiles.push(this.perfil);
       this.perfil = {
-        idUsuario: 0,
         nombre: '',
         nombreUsuario: '',
         edad: 0,
@@ -73,5 +83,27 @@ export class PerfilPage implements OnInit {
     );
   }
 
+  obtenerReservacion() {
+    this.apiServi.getReservacion(this.idUsuario)
+    .subscribe((resp: Reservacion[]) => {
+      this.reservaciones = resp;
+      console.log('EL SERVICIO SI SIRVE', resp);
+    });
+  }
+
+  eliminarReservacion(rese: number) {
+    this.apiServi.deleteReservacion(rese)
+    .subscribe( resp => {
+      console.log('ELIMINADO CON EXITO');
+    });
+  }
+
+  obtenerEquipoUsuario() {
+    this.apiServi.getEquipoUsuario(this.idUsuario)
+    .subscribe( (resp: Equipo[]) => {
+      this.equipos = resp;
+      console.log('EJECUTADO CON EXITO');
+    });
+  }
 
 }

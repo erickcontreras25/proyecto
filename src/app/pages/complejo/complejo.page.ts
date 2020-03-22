@@ -29,12 +29,17 @@ export class ComplejoPage implements OnInit {
   constructor(private apiServi: ApiserviService) { }
 
   ngOnInit() {
+    // if (document.referrer !== 'http://localhost:8100/login') {
+    //   location.href = 'http://localhost:8100/login';
+    // }
     this.apiServi.getComplejo()
     .subscribe((resp: Complejo[]) => {
       this.complejos = resp;
       console.log('EL SERVICIO SI SIRVE', resp);
     });
+    this.complejo.idAdmin = this.apiServi.getAuxUsu();
   }
+
 
   obtenerComplejoId() {
     this.apiServi.getComplejoId(this.complejo.idComplejo)
@@ -42,13 +47,10 @@ export class ComplejoPage implements OnInit {
       console.log('EJECUTADO CON EXITO');
     });
   }
-
-
   crearComplejo() {
     this.metodoPos();
     }
-
-    metodoPos() {
+  metodoPos() {
     this.apiServi.postComplejo(this.complejo)
     .subscribe((data) => {
       this.complejos.push(this.complejo);
@@ -66,9 +68,6 @@ export class ComplejoPage implements OnInit {
     }
     );
   }
-
-
-
   modificarComplejo() {
     this.apiServi.putComplejo(this.complejo.idComplejo, this.complejo)
     .subscribe((data) => {
@@ -87,8 +86,6 @@ export class ComplejoPage implements OnInit {
     }
     );
   }
-
-
   eliminarComplejo() {
     this.apiServi.deleteComplejo(this.complejo.idComplejo)
     .subscribe( resp => {

@@ -5,48 +5,28 @@
 
   <ion-button color="success" routerLink="/crear-equipo">CREAR EQUIPO</ion-button>
 
+  <h1>{{equipo.idUsuario}}</h1>
+  <h1>{{idEquipo}}</h1>
+  <br>
+
+  <form #formulario="ngForm" (ngSubmit)="modificarEquipo()">
 
     <ion-list>
-  
       <ion-item>
-        <ion-label position="floating">Nombre Equipo</ion-label>
-        <ion-input type="text"
-                    name="nombreComplejo"
-                   [(ngModel)]="nEquipo"
-                   [disabled]=true
-                   required>
-                  </ion-input>
+        <ion-label>Equipo</ion-label>
+        <ion-select [(ngModel)]="idEquipo"
+                    name="idCancha">
+          <ion-select-option *ngFor="let user of equipos" value="{{user.idEquipo}}" >{{user.idEquipo}} {{user.nombre}}</ion-select-option>
+        </ion-select>
       </ion-item>
-  
-      <ion-item>
-        <ion-label position="floating">Miembros</ion-label>
-        <ion-input type="list"
-                    name="agregar"
-                   [(ngModel)]="miembros"
-                   required>
-                  </ion-input>
-      </ion-item>
-  
-      <!-- <ion-item>
-        <ion-label position="floating">Horarios Disp.</ion-label>
-        <ion-input type ="date"
-                    name ="hDisponible"
-                   [(ngModel)] ="reservacion.hDisponible"
-                   required>
-                  </ion-input>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label position="floating">Precio</ion-label>
-        <ion-input type="number"
-                    name="precio"
-                   [(ngModel)]="reservacion.precio"
-                   [disabled]=true
-                   required>
-                  </ion-input>
-      </ion-item> -->
-  
     </ion-list>
+  
+    <ion-button expand="full" type="submit"
+    [disabled]="formulario.invalid" routerLink="/inicio">
+        Unirme a equipo
+    </ion-button>
+  
+  </form>
   
 
 </ion-content>

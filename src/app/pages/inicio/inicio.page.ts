@@ -15,9 +15,13 @@ export class InicioPage implements OnInit {
   constructor(private apiServi: ApiserviService, private geolocation: Geolocation) { }
 
   hola: Date;
+  aux1;
+  aux2;
 
   ngOnInit() {
-
+    this.aux1 = this.apiServi.getAuxUsu();
+    this.aux2 = this.apiServi.getAuxEst();
+    console.log('ESTE ES EL ID ' + this.aux1, 'ESTE ES EL ROL ' + this.aux2);
     this.loadMap();
 
     // this.apiServi.getComplejo()

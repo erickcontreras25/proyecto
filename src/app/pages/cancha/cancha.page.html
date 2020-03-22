@@ -4,7 +4,6 @@
 <form #formulario="ngForm" (ngSubmit)="agregarCancha()">
 
   <ion-list>
-
     <ion-item>
       <ion-label position="floating">Precio</ion-label>
       <ion-input type="text"
@@ -23,32 +22,40 @@
                 </ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-list>
+      <ion-item>
+        <ion-label>Complejo</ion-label>
+        <ion-select [(ngModel)]="cancha.idComplejo"
+                    name="idCancha">
+          <ion-select-option *ngFor="let user of complejos" value="{{user.idComplejo}}" >{{user.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <!-- <ion-item>
       <ion-label position="floating">ID Complejo</ion-label>
       <ion-input type="number"
                   name="idComplejo"
                  [(ngModel)]="cancha.idComplejo"
                  required>
                 </ion-input>
-    </ion-item>
+    </ion-item> -->
 
   </ion-list>
 
   <ion-button expand="full" type="submit"
-  [disabled]="formulario.invalid">
+  [disabled]="formulario.invalid" routerLink="/inicio">
       Guardar
   </ion-button>
 
 </form>
 
 
-
-
 <ion-content>
-  <ion-button (click)="obtenerCancha()">Ver mi reservacion</ion-button>
+  <!-- <ion-button (click)="obtenerCancha()">Ver mi reservacion</ion-button>
   <ion-item *ngFor="let item of canchas">
     <p>{{item.idCancha}} </p>
     <p>{{item.complejo.nombre}}</p>
-  </ion-item>
+  </ion-item> -->
 
 </ion-content>

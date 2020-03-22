@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cancha } from 'src/models/cancha.models';
 import { ApiserviService } from 'src/app/services/apiservi.service';
+import { Complejo } from 'src/models/complejo.models';
 
 @Component({
   selector: 'app-cancha',
@@ -11,6 +12,9 @@ export class CanchaPage implements OnInit {
 
 
   canchas: Cancha[] = [];
+  complejos: Complejo[] = [];
+
+  idUsu;
 
   cancha = {
     idCancha: 0,
@@ -23,15 +27,22 @@ export class CanchaPage implements OnInit {
   constructor(private apiServi: ApiserviService) { }
 
   ngOnInit() {
-  }
+    this.idUsu = this.apiServi.getAuxUsu();
 
-  obtenerCancha() {
-    this.apiServi.getCancha()
-    .subscribe((resp: Cancha[]) => {
-      this.canchas = resp;
+    this.apiServi.getComplejoAdmin(this.idUsu)
+    .subscribe((resp: Complejo[]) => {
+      this.complejos = resp;
       console.log('EL SERVICIO SI SIRVE', resp);
     });
   }
+
+  // obtenerCancha() {
+  //   this.apiServi.getCancha()
+  //   .subscribe((resp: Cancha[]) => {
+  //     this.canchas = resp;
+  //     console.log('EL SERVICIO SI SIRVE', resp);
+  //   });
+  // }
 
   obtenerCanchaId() {
     this.apiServi.getCanchaId(this.cancha.idCancha)

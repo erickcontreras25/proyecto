@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Equipo } from 'src/models/equipo.models';
+import { ApiserviService } from 'src/app/services/apiservi.service';
 
 @Component({
   selector: 'app-crear-equipo',
@@ -7,18 +9,70 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrearEquipoPage implements OnInit {
 
+  equipos: Equipo[] = [];
+  idEquipo;
+
   equipo = {
-    nombreEquipo: '',
-    agregarMienbro: ''
+    nombre: '',
+    idUsuario: 0
   };
 
-  constructor() { }
+  constructor(private apiServi: ApiserviService) { }
 
   ngOnInit() {
+    this.equipo.idUsuario = this.apiServi.getAuxUsu();
   }
 
-  crearEquipo(){
-    console.log("EQUIPO CREADO");
+  obtenerEquipo() {
+    this.apiServi.getEquipo()
+    .subscribe((resp: Equipo[]) => {
+      this.equipos = resp;
+      console.log('EL SERVICIO SI SIRVE', resp);
+    });
   }
+
+  obtenerEquipoId() {
+    this.apiServi.getEquipoId(this.idEquipo)
+    .subscribe( resp => {
+      console.log('EJECUTADO CON EXITO');
+    });
+  }
+  crearEquipo() {
+    this.apiServi.postEquipo(this.equipo)
+    .subscribe((data) => {
+      this.equipos.push(this.equipo);
+      this.equipo = {
+        nombre: '',
+        idUsuario: 0
+      };
+      window.alert('AGREGADO');
+    },
+    (error) => {
+      console.log('ESTE ES EL ERROR', error);
+    }
+    );
+  }
+  modificarEquipo() {
+    this.apiServi.putEquipo(this.idEquipo, this.equipo)
+    .subscribe((data) => {
+      this.equipos.push(this.equipo);
+      this.equipo = {
+        nombre: '',
+        idUsuario: 0
+      };
+      window.alert('ACTUALIZADO CON EXITO');
+    },
+    (error) => {
+      console.log(error);
+    }
+    );
+  }
+  eliminarEquipo() {
+    this.apiServi.deleteEquipo(this.idEquipo)
+    .subscribe( resp => {
+      console.log('ELIMINADO CON EXITO');
+    });
+  }
+
 
 }

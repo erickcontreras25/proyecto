@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Reservacion } from 'src/models/reservacion.models';
 import { ApiserviService } from 'src/app/services/apiservi.service';
+import { Complejo } from 'src/models/complejo.models';
+import { Cancha } from 'src/models/cancha.models';
 
 @Component({
   selector: 'app-reservar',
@@ -10,6 +12,10 @@ import { ApiserviService } from 'src/app/services/apiservi.service';
 export class ReservarPage implements OnInit {
 
   nombre: string;
+  seleccion: number;
+  complejos: Complejo[];
+  canchas: Cancha[];
+  aux;
 
   reservaciones: Reservacion[] = [];
 
@@ -24,15 +30,22 @@ export class ReservarPage implements OnInit {
   constructor(private apiServi: ApiserviService) { }
 
   ngOnInit() {
-  }
-
-  obtenerReservacion() {
-    this.apiServi.getReservacion()
-    .subscribe((resp: Reservacion[]) => {
-      this.reservaciones = resp;
+    this.apiServi.getComplejo()
+    .subscribe((resp: Complejo[]) => {
+      this.complejos = resp;
       console.log('EL SERVICIO SI SIRVE', resp);
     });
+    this.reservacion.idUsuario = this.apiServi.getAuxUsu();
+
   }
+
+  // obtenerReservacion() {
+  //   this.apiServi.getReservacion()
+  //   .subscribe((resp: Reservacion[]) => {
+  //     this.reservaciones = resp;
+  //     console.log('EL SERVICIO SI SIRVE', resp);
+  //   });
+  // }
 
   obtenerReservacionId() {
     this.apiServi.getReservacionId(this.reservacion.idReservacion)
@@ -87,5 +100,25 @@ export class ReservarPage implements OnInit {
   }
 
 
+  obtenerCancha() {
+    this.apiServi.getCancha(this.seleccion)
+    .subscribe((resp: Cancha[]) => {
+      this.canchas = resp;
+      console.log('ESTAS SON LAS CANCHAS', this.canchas);
+    });
+  }
 
+  // tener() {
+  //   for (let index = 0; index < this.canchas.length; index++) {
+  //   //  console.log('ARREGLO CANCHAS: ' + this.canchas[index].idComplejo + '  :  ' + this.canchas[index].precio);
+  //   //  console.log('ESTA ES LA SELECCION ' + this.seleccion);
+  //    const aux2 = this.canchas[index].idComplejo;
+  //    console.log('ESTE ES EL AUXILIAR 2: ' + aux2);
+  //     if (aux2 === this.seleccion) {
+  //       //this.aux[index] == this.canchas[index].idCancha;
+  //       console.log('SI ENTRA AL ARREGLO' + this.aux);
+  //     }
+  // }
+  
+  // }
 }
