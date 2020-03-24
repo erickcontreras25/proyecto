@@ -32,7 +32,7 @@ export class CanchaPage implements OnInit {
     this.apiServi.getComplejoAdmin(this.idUsu)
     .subscribe((resp: Complejo[]) => {
       this.complejos = resp;
-      console.log('EL SERVICIO SI SIRVE', resp);
+      console.log('SERVICIO', resp);
     });
   }
 

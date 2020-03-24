@@ -39,7 +39,6 @@ export class PerfilPage implements OnInit {
       this.apiServi.getUsuarioId(this.idUsuario)
       .subscribe( (resp: Usuario) => {
         this.perfil = resp;
-        console.log('EJECUTADO CON EXITO');
       });
   }
 
@@ -62,7 +61,6 @@ export class PerfilPage implements OnInit {
     }
     );
   }
-
   modificarUsuario() {
     this.apiServi.putUsuario(this.idUsuario, this.perfil)
     .subscribe((data) => {
@@ -82,22 +80,19 @@ export class PerfilPage implements OnInit {
     }
     );
   }
-
   obtenerReservacion() {
     this.apiServi.getReservacion(this.idUsuario)
     .subscribe((resp: Reservacion[]) => {
       this.reservaciones = resp;
-      console.log('EL SERVICIO SI SIRVE', resp);
+      console.log('SERVICIO', resp);
     });
   }
-
   eliminarReservacion(rese: number) {
     this.apiServi.deleteReservacion(rese)
     .subscribe( resp => {
       console.log('ELIMINADO CON EXITO');
     });
   }
-
   obtenerEquipoUsuario() {
     this.apiServi.getEquipoUsuario(this.idUsuario)
     .subscribe( (resp: Equipo[]) => {

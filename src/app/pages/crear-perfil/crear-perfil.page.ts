@@ -32,7 +32,7 @@ export class CrearPerfilPage implements OnInit {
     this.apiServi.getUsuario()
     .subscribe((resp: Usuario[]) => {
       this.perfiles = resp;
-      console.log('EL SERVICIO SI SIRVE', resp);
+      console.log('SERVICIO', resp);
     });
   }
 

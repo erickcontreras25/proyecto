@@ -21,17 +21,13 @@ export class InicioPage implements OnInit {
   ngOnInit() {
     this.aux1 = this.apiServi.getAuxUsu();
     this.aux2 = this.apiServi.getAuxEst();
-    console.log('ESTE ES EL ID ' + this.aux1, 'ESTE ES EL ROL ' + this.aux2);
     this.loadMap();
 
-    // this.apiServi.getComplejo()
-    // .subscribe(resp => {
-    //   console.log('EL SERVICIO SI SIRVE', resp);
-    // });
   }
   obtenerFehca() {
   console.log(this.hola);
 }
+
   async loadMap() {
     const rta = await this.geolocation.getCurrentPosition();
     const myLatLng = {

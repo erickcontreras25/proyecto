@@ -39,13 +39,6 @@ export class ReservarPage implements OnInit {
 
   }
 
-  // obtenerReservacion() {
-  //   this.apiServi.getReservacion()
-  //   .subscribe((resp: Reservacion[]) => {
-  //     this.reservaciones = resp;
-  //     console.log('EL SERVICIO SI SIRVE', resp);
-  //   });
-  // }
 
   obtenerReservacionId() {
     this.apiServi.getReservacionId(this.reservacion.idReservacion)
@@ -53,7 +46,6 @@ export class ReservarPage implements OnInit {
       console.log('EJECUTADO CON EXITO');
     });
   }
-
   agregarReservacion() {
     this.apiServi.postReservacion(this.reservacion)
     .subscribe((data) => {
@@ -72,7 +64,6 @@ export class ReservarPage implements OnInit {
     }
     );
   }
-
   modificarReservacion() {
     this.apiServi.putReservacion(this.reservacion.idReservacion, this.reservacion)
     .subscribe((data) => {
@@ -91,34 +82,19 @@ export class ReservarPage implements OnInit {
     }
     );
   }
-
   eliminarReservacion() {
     this.apiServi.deleteReservacion(this.reservacion.idReservacion)
     .subscribe( resp => {
       console.log('ELIMINADO CON EXITO');
     });
   }
-
-
   obtenerCancha() {
     this.apiServi.getCancha(this.seleccion)
     .subscribe((resp: Cancha[]) => {
       this.canchas = resp;
-      console.log('ESTAS SON LAS CANCHAS', this.canchas);
+      console.log('CANCHAS ', this.canchas);
     });
   }
 
-  // tener() {
-  //   for (let index = 0; index < this.canchas.length; index++) {
-  //   //  console.log('ARREGLO CANCHAS: ' + this.canchas[index].idComplejo + '  :  ' + this.canchas[index].precio);
-  //   //  console.log('ESTA ES LA SELECCION ' + this.seleccion);
-  //    const aux2 = this.canchas[index].idComplejo;
-  //    console.log('ESTE ES EL AUXILIAR 2: ' + aux2);
-  //     if (aux2 === this.seleccion) {
-  //       //this.aux[index] == this.canchas[index].idCancha;
-  //       console.log('SI ENTRA AL ARREGLO' + this.aux);
-  //     }
-  // }
-  
-  // }
+
 }

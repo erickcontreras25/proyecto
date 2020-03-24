@@ -25,11 +25,9 @@ export class EquipoPage implements OnInit {
     this.apiServi.getEquipo()
       .subscribe((resp: Equipo[]) => {
         this.equipos = resp;
-        console.log('EL SERVICIO SI SIRVE', resp);
+        console.log('SERVICIO ', resp);
       });
   }
-
-
 
 
   modificarEquipo() {

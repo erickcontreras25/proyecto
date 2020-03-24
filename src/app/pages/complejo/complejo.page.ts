@@ -35,7 +35,7 @@ export class ComplejoPage implements OnInit {
     this.apiServi.getComplejo()
     .subscribe((resp: Complejo[]) => {
       this.complejos = resp;
-      console.log('EL SERVICIO SI SIRVE', resp);
+      console.log('SERVICIO', resp);
     });
     this.complejo.idAdmin = this.apiServi.getAuxUsu();
   }
@@ -64,7 +64,7 @@ export class ComplejoPage implements OnInit {
       window.alert('AGREGADO');
     },
     (error) => {
-      console.log('ESTE ES EL ERROR', error);
+      console.log('ERROR: ', error);
     }
     );
   }
