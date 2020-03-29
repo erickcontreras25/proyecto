@@ -1,15 +1,17 @@
 export class Complejo {
     idComplejo: number;
-    nombre: string;
-    localidad: string;
-    cantCanchas: number;
-    idAdmin: number;
+    nombre;
+    localidad;
+    foto;
+    estado;
+    idAdmin;
 
-    constructor(id: number, nombre: string, loc: string, cant: number, adminId: number) {
+    constructor(id: number, nombre, loc, fot, est, adminId) {
         this.idComplejo = id;
         this.nombre = nombre;
         this.localidad = loc;
-        this.cantCanchas = cant;
+        this.foto = fot;
+        this.estado = est;
         this.idAdmin = adminId;
     }
 }

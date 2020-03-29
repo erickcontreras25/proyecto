@@ -1,0 +1,17 @@
+<app-header titulo="Lista complejos"></app-header>
+
+<ion-content>
+
+  <ion-card class="ion-text-center" *ngFor="let item of complejos">
+    <img src={{item.foto}} alt="200" width="500">
+    <ion-card-title>
+      {{item.nombre}}
+    </ion-card-title>
+    <ion-row>
+      <ion-col *ngIf='item.estado == true'><h3>Abierto</h3></ion-col>
+    </ion-row>
+      
+  </ion-card>
+
+
+</ion-content>

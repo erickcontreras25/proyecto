@@ -22,12 +22,13 @@ export class PerfilPage implements OnInit {
 
 
   perfil = {
-    nombre: '',
-    nombreUsuario: '',
-    edad: 0,
-    email: '',
-    password: '',
-    rol: false
+    nombre: null,
+    nombreUsuario: null,
+    edad: null,
+    email: null,
+    password: null,
+    rol: false,
+    foto: null
   };
 
 
@@ -47,12 +48,13 @@ export class PerfilPage implements OnInit {
     .subscribe((data) => {
       this.perfiles.push(this.perfil);
       this.perfil = {
-        nombre: '',
-        nombreUsuario: '',
-        edad: 0,
-        email: '',
-        password: '',
-        rol: false
+        nombre: null,
+        nombreUsuario: null,
+        edad: null,
+        email: null,
+        password: null,
+        rol: false,
+        foto: null
       };
       window.alert('AGREGADO');
     },
@@ -66,12 +68,13 @@ export class PerfilPage implements OnInit {
     .subscribe((data) => {
       this.perfiles.push(this.perfil);
       this.perfil = {
-        nombre: '',
-        nombreUsuario: '',
-        edad: 0,
-        email: '',
-        password: '',
-        rol: false
+        nombre: null,
+        nombreUsuario: null,
+        edad: null,
+        email: null,
+        password: null,
+        rol: false,
+        foto: null
       };
       window.alert('ACTUALIZADO CON EXITO');
     },

@@ -43,6 +43,10 @@ const routes: Routes = [
     path: 'unirme-equipo',
     loadChildren: () => import('./pages/unirme-equipo/unirme-equipo.module').then( m => m.UnirmeEquipoPageModule)
   },
+  {
+    path: 'lista-complejos',
+    loadChildren: () => import('./pages/lista-complejos/lista-complejos.module').then( m => m.ListaComplejosPageModule)
+  },
 ];
 
 @NgModule({

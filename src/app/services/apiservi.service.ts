@@ -52,6 +52,9 @@ export class ApiserviService {
   getComplejoAdmin(n1: number) {
     return this.http.get(`${this.url}/complejo/p?n1=${n1}`);
   }
+  getComplejoEstado(n1: boolean) {
+    return this.http.get(`${this.url}/complejo/q?n1=${n1}`);
+  }
   postComplejo(complejo: Complejo) {
     return this.http.post(`${this.url}/complejo`, complejo, {responseType: 'text'});
   }

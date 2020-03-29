@@ -1,18 +1,19 @@
 export class Usuario {
-    nombre: string;
-    nombreUsuario: string;
-    edad: number;
-    email: string;
-    password: string;
-    rol: boolean;
+    nombre;
+    nombreUsuario;
+    edad;
+    email;
+    password;
+    rol;
+    foto;
 
-    constructor(nombre: string, nUsuario: string,
-                edad: number, email: string, password: string, rol: boolean) {
+    constructor(nombre, nUsuario, edad, email, password, rol, fot) {
         this.nombre = nombre;
         this.nombreUsuario = nUsuario;
         this.edad = edad;
         this.email = email;
         this.password = password;
         this.rol = rol;
+        this.foto = fot;
     }
 }

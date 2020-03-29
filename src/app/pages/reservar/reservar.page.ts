@@ -14,8 +14,25 @@ export class ReservarPage implements OnInit {
   nombre: string;
   seleccion: number;
   complejos: Complejo[];
+  complejosAbiertos: Complejo[];
   canchas: Cancha[];
-  aux;
+  aux = false;
+
+  complejo = {
+    idComplejo: 0,
+    nombre: null,
+    localidad: null,
+    foto: null,
+    estado: null,
+    idAdmin: null
+  };
+
+  canchaId = {
+    idCancha: 0,
+    precio: null,
+    foto: null,
+    idComplejo: null
+  };
 
   reservaciones: Reservacion[] = [];
 
@@ -33,12 +50,16 @@ export class ReservarPage implements OnInit {
     this.apiServi.getComplejo()
     .subscribe((resp: Complejo[]) => {
       this.complejos = resp;
-      console.log('EL SERVICIO SI SIRVE', resp);
+      console.log('SERVICIO ', resp);
     });
     this.reservacion.idUsuario = this.apiServi.getAuxUsu();
 
-  }
+    this.apiServi.getComplejoEstado(true)
+    .subscribe((resp: Complejo[]) => {
+      this.complejosAbiertos = resp;
+    });
 
+  }
 
   obtenerReservacionId() {
     this.apiServi.getReservacionId(this.reservacion.idReservacion)
@@ -47,6 +68,7 @@ export class ReservarPage implements OnInit {
     });
   }
   agregarReservacion() {
+
     this.apiServi.postReservacion(this.reservacion)
     .subscribe((data) => {
       this.reservaciones.push(this.reservacion);
@@ -61,6 +83,7 @@ export class ReservarPage implements OnInit {
     },
     (error) => {
       console.log(error);
+      window.alert('Ingrese los datos correctamente');
     }
     );
   }
@@ -93,6 +116,12 @@ export class ReservarPage implements OnInit {
     .subscribe((resp: Cancha[]) => {
       this.canchas = resp;
       console.log('CANCHAS ', this.canchas);
+    });
+  }
+  obtenerCanchaId() {
+    this.apiServi.getCanchaId(this.reservacion.idCancha)
+    .subscribe((resp: Cancha) => {
+      this.canchaId = resp;
     });
   }
 

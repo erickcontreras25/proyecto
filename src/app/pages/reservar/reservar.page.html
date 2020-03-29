@@ -10,7 +10,9 @@
       <ion-label>Complejo</ion-label>
       <ion-select [(ngModel)]="seleccion"
                   (ngModelChange)="obtenerCancha()">
-        <ion-select-option *ngFor="let user of complejos" value="{{user.idComplejo}}" >{{user.nombre}}</ion-select-option>
+        <ion-select-option *ngFor="let user of complejosAbiertos" value="{{user.idComplejo}}" >
+          {{user.nombre}}
+        </ion-select-option>
       </ion-select>
     </ion-item>
   </ion-list>
@@ -37,24 +39,60 @@
       </ion-datetime>
     </ion-item>
 
-  <ion-list>
-    <ion-item>
-      <ion-label>Cancha</ion-label>
-      <ion-select [(ngModel)]="reservacion.idCancha"
-                  name="idCancha">
-        <ion-select-option *ngFor="let user of canchas" value="{{user.idCancha}}" >{{user.idCancha}}</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <ion-list>
+      <ion-item>
+        <ion-label>Cancha</ion-label>
+        <ion-select [(ngModel)]="reservacion.idCancha"
+                    (ngModelChange)="obtenerCanchaId()"
+                    name="idCancha">
+          <ion-select-option *ngFor="let user of canchas" value="{{user.idCancha}}" >
+            Lps. {{user.precio}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+
+  <!-- -->
   </ion-list>
 
+  <ion-row>
 
-  </ion-list>
+    <ion-col>
+      <ion-button expand="full" type="submit"
+                  shape="round"
+                  size="small"
+                  color="tertiary"
+                  [disabled]="formulario.invalid" 
+                  routerLink="/inicio">
+                  Reservar
+      </ion-button>
+    </ion-col>
 
-  <ion-button expand="full" type="submit"
+    <ion-col>
+      <ion-button shape="round"
+                  expand="full"
+                  size="small"
+                  color="tertiary"
+                  routerLink="/lista-complejos">
+        Ver complejos
+      </ion-button>
+    </ion-col>
+
+  </ion-row>
+
+  <!-- <ion-button expand="full" type="submit"
   [disabled]="formulario.invalid" routerLink="/inicio">
-      Guardar
-  </ion-button>
+      Reservar
+  </ion-button> -->
 
 </form>
 
+  <ion-item>
+    <img src={{canchaId.foto}} alt="200" width="500" class="img-rounded">
+  </ion-item>
+
+
+
 </ion-content>
+

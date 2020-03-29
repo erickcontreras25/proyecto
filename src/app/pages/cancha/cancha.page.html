@@ -3,6 +3,14 @@
 
 <form #formulario="ngForm" (ngSubmit)="agregarCancha()">
 
+  <ion-item>
+    <ion-label>Foto</ion-label>
+    <input type="file"
+    id="img"
+    name="img"
+   ngModel
+   required>
+  </ion-item>
   <ion-list>
     <ion-item>
       <ion-label position="floating">Precio</ion-label>
@@ -12,16 +20,6 @@
                  required>
                 </ion-input>
     </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Estado</ion-label>
-      <ion-input type="string"
-                  name="estado"
-                 [(ngModel)]="cancha.estado"
-                 required>
-                </ion-input>
-    </ion-item>
-
     <ion-list>
       <ion-item>
         <ion-label>Complejo</ion-label>
@@ -32,19 +30,17 @@
       </ion-item>
     </ion-list>
 
-
-
   </ion-list>
 
   <ion-button expand="full" type="submit"
   [disabled]="formulario.invalid" routerLink="/inicio">
       Guardar
   </ion-button>
-
 </form>
 
 
 <ion-content>
+  
 
 
 </ion-content>

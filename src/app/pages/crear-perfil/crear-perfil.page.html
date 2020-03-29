@@ -3,6 +3,14 @@
 
 <ion-content>
 
+  <ion-item>
+    <ion-label>Insertar foto</ion-label>
+    <input type="file"
+    id="img"
+    name="img"
+   ngModel>
+  </ion-item>
+
   <form #formulario="ngForm" (ngSubmit)="agregarUsuario()">
     <ion-list>
       <ion-item>
@@ -31,7 +39,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input type="string"
+        <ion-input type="email"
                     name="email"
                    [(ngModel)]="perfil.email"
                    required>

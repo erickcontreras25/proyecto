@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NavController, IonSlide, IonSlides } from '@ionic/angular';
 import { InicioPage } from '../inicio/inicio.page';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { ApiserviService } from 'src/app/services/apiservi.service';
@@ -12,6 +12,8 @@ import { Admin } from 'src/models/admin.models';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+
+  @ViewChild('slidePrincipal', {static: true}) slides: IonSlides;
 
   pAdmin: any[] = [{
     nombre: '',
@@ -30,6 +32,11 @@ export class LoginPage implements OnInit {
     rol: false,
   }];
 
+  perfiles: Usuario[] = [];
+
+  idUsuario;
+  perfil = new Usuario(null, null, null, null, null, false, null);
+
   auxNombre: string = '';
   auxPassword: string = '';
   auxEstado: boolean = false;
@@ -40,6 +47,9 @@ export class LoginPage implements OnInit {
 
 
   ngOnInit() {
+
+    this.slides.lockSwipes(true);
+
     this.apiServi.getUsuario()
     .subscribe((resp: any[]) => {
       this.prueba = resp;
@@ -53,6 +63,7 @@ export class LoginPage implements OnInit {
   }
 
   goInicio(): void {
+
     for (let index = 0; index < this.prueba.length; index++) {
         if (this.auxNombre === this.prueba[index].email && this.auxPassword === this.prueba[index].password) {
           this.navCtr1.navigateForward('/inicio');
@@ -69,6 +80,49 @@ export class LoginPage implements OnInit {
         this.apiServi.setAuxNom(this.pAdmin[index].nombreUsuario);
       }
   }
+  }
+
+
+  agregarUsuario() {
+
+
+      this.apiServi.postUsuario(this.perfil)
+    .subscribe((data) => {
+      this.perfiles.push(this.perfil);
+      this.perfil = {
+        nombre: null,
+        nombreUsuario: null,
+        edad: null,
+        email: null,
+        password: null,
+        rol: false,
+        foto: null
+      };
+      window.alert('AGREGADO');
+      this.apiServi.getUsuario()
+    .subscribe((resp: any[]) => {
+      this.prueba = resp;
+      console.log("AQUI ESTA: ", resp);
+    });
+    this.mostrarRegistro();
+    },
+    (error) => {console.log(error);
+    }
+    );
+
+  }
+
+
+  mostrarRegistro() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(0);
+    this.slides.lockSwipes(true);
+  }
+
+  mostrarLogin() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(1);
+    this.slides.lockSwipes(true);
   }
 
 

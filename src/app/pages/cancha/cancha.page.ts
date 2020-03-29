@@ -18,9 +18,9 @@ export class CanchaPage implements OnInit {
 
   cancha = {
     idCancha: 0,
-    precio: 0,
-    estado: '',
-    idComplejo: 0
+    precio: null,
+    foto: null,
+    idComplejo: null
   };
 
 
@@ -52,14 +52,23 @@ export class CanchaPage implements OnInit {
   }
 
   agregarCancha() {
-    this.apiServi.postCancha(this.cancha)
+
+    const fileInput: any = document.getElementById('img');
+    const file = fileInput.files[0];
+
+    const imgPromise = this.getFileBlob(file);
+
+    imgPromise.then(blob => {
+      this.cancha.foto = blob;
+
+      this.apiServi.postCancha(this.cancha)
     .subscribe((data) => {
       this.canchas.push(this.cancha);
       this.cancha = {
         idCancha: 0,
-        precio: 0,
-        estado: '',
-        idComplejo: 0
+        precio: null,
+        foto: null,
+        idComplejo: null
       };
       window.alert('AGREGADO');
     },
@@ -67,6 +76,11 @@ export class CanchaPage implements OnInit {
       console.log(error);
     }
     );
+
+
+    });
+
+
   }
 
   modificarCancha() {
@@ -75,9 +89,9 @@ export class CanchaPage implements OnInit {
       this.canchas.push(this.cancha);
       this.cancha = {
         idCancha: 0,
-        precio: 0,
-        estado: '',
-        idComplejo: 0
+        precio: null,
+        foto: null,
+        idComplejo: null
       };
       window.alert('ACTUALIZADO CON EXITO');
     },
@@ -94,6 +108,21 @@ export class CanchaPage implements OnInit {
     });
   }
 
+
+  getFileBlob(file) {
+    const reader = new FileReader();
+    return new Promise(function(resolve, reject) {
+
+      reader.onload = (function(theFile) {
+        return function(e) {
+          resolve(e.target.result);
+        };
+      })(file);
+
+      reader.readAsDataURL(file);
+
+    });
+  }
 
 
 }

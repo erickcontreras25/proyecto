@@ -14,17 +14,15 @@ export class ComplejoPage implements OnInit {
 
   complejos: Complejo[] = [];
 
-
-
   complejo = {
     idComplejo: 0,
-    nombre: '',
-    localidad: '',
-    cantCanchas: 0,
-    idAdmin: 0
+    nombre: null,
+    localidad: null,
+    foto: null,
+    estado: null,
+    idAdmin: null
   };
 
-  // aux: Complejo;
 
   constructor(private apiServi: ApiserviService) { }
 
@@ -32,12 +30,13 @@ export class ComplejoPage implements OnInit {
     // if (document.referrer !== 'http://localhost:8100/login') {
     //   location.href = 'http://localhost:8100/login';
     // }
-    this.apiServi.getComplejo()
+    this.complejo.idAdmin = this.apiServi.getAuxUsu();
+    this.apiServi.getComplejoAdmin(this.complejo.idAdmin)
     .subscribe((resp: Complejo[]) => {
       this.complejos = resp;
       console.log('SERVICIO', resp);
     });
-    this.complejo.idAdmin = this.apiServi.getAuxUsu();
+
   }
 
 
@@ -48,18 +47,27 @@ export class ComplejoPage implements OnInit {
     });
   }
   crearComplejo() {
-    this.metodoPos();
-    }
-  metodoPos() {
-    this.apiServi.postComplejo(this.complejo)
+
+    const fileInput: any = document.getElementById('img');
+    const file = fileInput.files[0];
+
+    const imgPromise = this.getFileBlob(file);
+
+    imgPromise.then(blob => {
+      this.complejo.foto = blob;
+      console.log("ESTE ES MI BLOB: " + blob);
+
+
+      this.apiServi.postComplejo(this.complejo)
     .subscribe((data) => {
       this.complejos.push(this.complejo);
       this.complejo = {
         idComplejo: 0,
-        nombre: '',
-        localidad: '',
-        cantCanchas: 0,
-        idAdmin: 0
+        nombre: null,
+        localidad: null,
+        foto: null,
+        estado: null,
+        idAdmin: null
       };
       window.alert('AGREGADO');
     },
@@ -67,6 +75,11 @@ export class ComplejoPage implements OnInit {
       console.log('ERROR: ', error);
     }
     );
+
+    });
+
+    
+
   }
   modificarComplejo() {
     this.apiServi.putComplejo(this.complejo.idComplejo, this.complejo)
@@ -74,10 +87,11 @@ export class ComplejoPage implements OnInit {
       this.complejos.push(this.complejo);
       this.complejo = {
         idComplejo: 0,
-        nombre: '',
-        localidad: '',
-        cantCanchas: 0,
-        idAdmin: 0
+        nombre: null,
+        localidad: null,
+        foto: null,
+        estado: null,
+        idAdmin: null
       };
       window.alert('ACTUALIZADO CON EXITO');
     },
@@ -90,6 +104,23 @@ export class ComplejoPage implements OnInit {
     this.apiServi.deleteComplejo(this.complejo.idComplejo)
     .subscribe( resp => {
       console.log('ELIMINADO CON EXITO');
+    });
+  }
+
+
+
+  getFileBlob(file) {
+    const reader = new FileReader();
+    return new Promise(function(resolve, reject) {
+
+      reader.onload = (function(theFile) {
+        return function(e) {
+          resolve(e.target.result);
+        };
+      })(file);
+
+      reader.readAsDataURL(file);
+
     });
   }
 

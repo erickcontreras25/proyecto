@@ -5,15 +5,21 @@
 
   <h1>Complejo</h1>
 
-  <h1>{{complejo.idAdmin}}</h1>
+  
 
 
-<form #formulario="ngForm" (ngSubmit)="metodoPos()">
+<form #formulario="ngForm" (ngSubmit)="crearComplejo()">
+
+  <ion-item>
+    <ion-label>Foto</ion-label>
+    <input type="file"
+    id="img"
+    name="img"
+   ngModel
+   required>
+  </ion-item>
 
   <ion-list>
-
-
-
     <ion-item>
       <ion-label position="floating">Nombre Complejo</ion-label>
       <ion-input type="text"
@@ -22,7 +28,6 @@
                  required>
                 </ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label position="floating">Localidad</ion-label>
       <ion-input type="string"
@@ -31,17 +36,17 @@
                  required>
                 </ion-input>
     </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Cantidad de Canchas</ion-label>
-      <ion-input type="number"
-                  name="cantidadDeCanchas"
-                 [(ngModel)]="complejo.cantCanchas"
-                 required>
-                </ion-input>
-    </ion-item>
-    
-
+    <ion-list>
+      <ion-item>
+        <ion-label>Cancha</ion-label>
+        <ion-select [(ngModel)]="complejo.estado"
+                    name="idCancha">
+            <ion-select-option value="true">Abierto</ion-select-option>
+            <ion-select-option value="false">Cerrado</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  
   </ion-list>
 
   <ion-button expand="full" type="submit"
@@ -51,6 +56,18 @@
 
 </form>
 
+
+<ion-card class="ion-text-center" *ngFor="let item of complejos">
+  <ion-row>
+    <ion-col><h2>{{item.nombre}}</h2></ion-col>
+    <ion-col *ngIf='item.estado == true'><h3>Abierto</h3></ion-col>
+  </ion-row>
+    <img src={{item.foto}} alt="200" width="500">
+    
+    <!-- <ion-item>
+      <ion-icon slot="start" name="trash-outline" (click)="eliminarReservacion(item.idReservacion)">Eliminar reservacion</ion-icon>
+    </ion-item> -->
+</ion-card>
 
 
 <div>

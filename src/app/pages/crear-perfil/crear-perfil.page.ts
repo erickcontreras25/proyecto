@@ -12,14 +12,7 @@ export class CrearPerfilPage implements OnInit {
   perfiles: Usuario[] = [];
 
   idUsuario;
-  perfil = {
-    nombre: '',
-    nombreUsuario: '',
-    edad: 0,
-    email: '',
-    password: '',
-    rol: false
-  };
+  perfil = new Usuario(null, null, null, null, null, false, null);
 
   constructor(private apiServi: ApiserviService) { }
 
@@ -44,23 +37,36 @@ export class CrearPerfilPage implements OnInit {
   }
 
   agregarUsuario() {
-    this.apiServi.postUsuario(this.perfil)
+    const fileInput: any = document.getElementById('img');
+    const file = fileInput.files[0];
+
+    const imgPromise = this.getFileBlob(file);
+
+    imgPromise.then(blob => {
+      this.perfil.foto = blob;
+
+
+      this.apiServi.postUsuario(this.perfil)
     .subscribe((data) => {
       this.perfiles.push(this.perfil);
       this.perfil = {
-        nombre: '',
-        nombreUsuario: '',
-        edad: 0,
-        email: '',
-        password: '',
-        rol: false
+        nombre: null,
+        nombreUsuario: null,
+        edad: null,
+        email: null,
+        password: null,
+        rol: false,
+        foto: null
       };
       window.alert('AGREGADO');
     },
-    (error) => {
-      console.log(error);
+    (error) => {console.log(error); 
     }
     );
+
+    }).catch(e => console.log(e));
+
+
   }
 
   modificarUsuario() {
@@ -73,7 +79,8 @@ export class CrearPerfilPage implements OnInit {
         edad: 0,
         email: '',
         password: '',
-        rol: false
+        rol: false,
+        foto: null
       };
       window.alert('ACTUALIZADO CON EXITO');
     },
@@ -90,6 +97,22 @@ export class CrearPerfilPage implements OnInit {
     });
   }
 
+
+
+  getFileBlob(file) {
+    const reader = new FileReader();
+    return new Promise(function(resolve, reject) {
+
+      reader.onload = (function(theFile) {
+        return function(e) {
+          resolve(e.target.result);
+        };
+      })(file);
+
+      reader.readAsDataURL(file);
+
+    });
+  }
 
 
 }
