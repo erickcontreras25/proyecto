@@ -3,9 +3,25 @@
 
 <ion-content>
 
+  <!-- <ion-button (click)="obtenerReservaciones()">MOSTRAR HORARIOS</ion-button>
+  <ion-item *ngFor='let user of reser'>
+    <ion-label>Esta es la hora: : {{user.horaInicial | date:'yyyy-MM-dd HH'}}</ion-label>
+  </ion-item>
+  <ion-item>
+  <ion-label>Hora Inicial</ion-label>
+  <ion-datetime displayFormat="D MMM YYYY H" 
+                name="horaInicial"
+                
+                [(ngModel)]="reservacion.horaInicial">
+  </ion-datetime>
+</ion-item>
+
+<h3>{{reservacion.horaInicial}}</h3> -->
+
   <h1 class="ion-text-center">Reservar TU cancha</h1>
 
-  <ion-list>
+  <!-- SELECT PARA ELEGIR COMPLEJO -->
+  <!-- <ion-list>
     <ion-item>
       <ion-label>Complejo</ion-label>
       <ion-select [(ngModel)]="seleccion"
@@ -15,13 +31,16 @@
         </ion-select-option>
       </ion-select>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
-<form #formulario="ngForm" (ngSubmit)="agregarReservacion()">
 
-  <ion-list>
 
-    <ion-item>
+<!-- <form #formulario="ngForm" (ngSubmit)="agregarReservacion()"> -->
+
+  <!-- <ion-list> -->
+
+    <!-- INGRESAR HORA INICIAL Y FINAL DE RESERVACION -->
+    <!-- <ion-item>
       <ion-label>Hora Inicial</ion-label>
       <ion-datetime displayFormat="HH:mm" 
                     name="horaInicial"
@@ -29,7 +48,6 @@
                     [(ngModel)]="reservacion.horaInicial">
       </ion-datetime>
     </ion-item>
-
     <ion-item>
       <ion-label>Hora Final</ion-label>
       <ion-datetime displayFormat="HH:mm" 
@@ -37,9 +55,11 @@
                     minuteValues="0" min="11:00" 
                     [(ngModel)]="reservacion.horaFinal">
       </ion-datetime>
-    </ion-item>
+    </ion-item> -->
 
-    <ion-list>
+
+    <!-- INGRESAR ID DE LA CANCHA -->
+    <!-- <ion-list>
       <ion-item>
         <ion-label>Cancha</ion-label>
         <ion-select [(ngModel)]="reservacion.idCancha"
@@ -50,14 +70,12 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-    </ion-list>
+    </ion-list> -->
 
 
-  <!-- -->
-  </ion-list>
-
+  <!-- BOTONES PARA VER COMPLEJOS Y RESERVAR -->
+  <!-- </ion-list>
   <ion-row>
-
     <ion-col>
       <ion-button expand="full" type="submit"
                   shape="round"
@@ -68,7 +86,6 @@
                   Reservar
       </ion-button>
     </ion-col>
-
     <ion-col>
       <ion-button shape="round"
                   expand="full"
@@ -78,19 +95,267 @@
         Ver complejos
       </ion-button>
     </ion-col>
+  </ion-row> -->
 
-  </ion-row>
 
+    <!-- BOTON GRANDE PARA RESERVAR -->
   <!-- <ion-button expand="full" type="submit"
   [disabled]="formulario.invalid" routerLink="/inicio">
       Reservar
   </ion-button> -->
 
-</form>
+<!-- </form> -->
 
-  <ion-item>
+<!-- IMG PARA VISUALIZAR CANCHAS -->
+  <!-- <ion-item>
     <img src={{canchaId.foto}} alt="200" width="500" class="img-rounded">
-  </ion-item>
+  </ion-item> -->
+
+
+
+
+<!-- AQUI COMIENZA LO NUEVO CON SLIDES -->
+
+
+<ion-slides class="mainSlide" #slidePrincipal>
+    
+  <ion-slide>
+
+    <form>
+      <ion-grid fixed>
+
+        <ion-row>
+          <ion-col>
+            <!-- <img src="/assets/img/im2.png" alt="10" width="20"> -->
+          </ion-col>
+        </ion-row>
+      
+        <ion-row>
+          <ion-col>
+            
+              <ion-list *ngFor='let user of complejos'>
+
+              <ion-card class="ion-text-center">
+                <ion-card-title>
+                  {{user.nombre}}
+                </ion-card-title>
+                <ion-row>
+                  <ion-col *ngIf='user.estado == true'><h3>Abierto</h3></ion-col>
+                  <ion-col *ngIf='user.estado == false'><h3>Cerrado</h3></ion-col>
+                </ion-row>
+                <img src="{{user.foto}}" alt="200" width="500">
+                <ion-button type="submit"
+                        color="tertiary"
+                        shape="round"
+                        (click)="obtenerCancha(user.idComplejo)"
+                        (click)="nombreComplejo(user.nombre)"
+                        (click)="localidadComplejo(user.localidad)"
+                        (click)="goCancha()">
+              Elegir cancha
+            </ion-button>
+
+              </ion-card>
+
+              </ion-list>
+          </ion-col>
+        </ion-row>
+
+        <!-- <ion-row>
+          <ion-col>
+            <ion-button type="submit"
+                        color="tertiary"
+                        shape="round"
+                        (ngModelChange)="obtenerCancha()"
+                        (click)="goCancha()">
+              Canchas
+            </ion-button>
+          </ion-col>
+        </ion-row> -->
+
+      </ion-grid>
+    </form>
+  </ion-slide>
+
+  <!-- -----------------------SLIDE CANCHAS----------------------------- -->
+  <ion-slide>
+    <ion-grid fixed>
+          <form>
+            <ion-row>
+              <ion-col>
+                <!-- <img src="/assets/img/im2.png"> -->
+              </ion-col>
+            </ion-row>
+              <ion-row>
+                  <ion-col>  
+
+                      <ion-list *ngFor='let user of canchas'>
+
+                        <ion-card class="ion-text-center">
+                          <ion-card-title>
+                            Precio:  {{user.precio}}
+                          </ion-card-title>
+                          <ion-row>
+
+                          </ion-row>
+                        <img src="{{user.foto}}" alt="200" width="500">
+                          <ion-button type="submit"
+                            color="tertiary"
+                            shape="round"
+                            (click)="idCancha(user.idCancha)"
+                            (click)="precioCancha(user.precio)"
+                            (click)="goHorarios()">
+                            Elegir hora
+                          </ion-button>
+
+                      </ion-card>
+                          
+                      </ion-list>
+                  </ion-col>
+              </ion-row>
+
+              <ion-row>
+              <ion-col>
+                  <ion-button type="submit"
+                              color="tertiary"
+                              shape="round"
+                              (click)="goComplejos()">
+                      Regresar
+                  </ion-button>
+              </ion-col>
+          </ion-row>
+          </form>
+      </ion-grid>
+
+    </ion-slide>
+
+
+<!-- -------------------------------SLIDE HORARIOS------------------------------------- -->
+    <ion-slide>
+      <ion-grid fixed>
+            <form>
+              <ion-row>
+                <ion-col>
+                  <!-- <img src="/assets/img/im2.png"> -->
+                </ion-col>
+              </ion-row>
+                <ion-row>
+                    <ion-col>  
+  
+                      <ion-item>
+                        <ion-label>Hora Inicial</ion-label>
+                        <ion-datetime displayFormat="D MMM YYYY H" 
+                                      name="horaInicial"
+                                      minuteValues="0" min="10:00" 
+                                      [(ngModel)]="reservacion.horaInicial">
+                        </ion-datetime>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>Hora Final</ion-label>
+                        <ion-datetime displayFormat="D MMM YYYY H" 
+                                      name="horaFinal"
+                                      minuteValues="0" min="11:00" 
+                                      [(ngModel)]="reservacion.horaFinal">
+                        </ion-datetime>
+                      </ion-item>
+                        
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button type="submit"
+                                color="tertiary"
+                                shape="round"
+                                (click)="goCancha()">
+                        Regresar
+                    </ion-button>
+                </ion-col>
+                <ion-col>
+                    <ion-button type="submit"
+                                color="tertiary"
+                                shape="round"
+                                *ngIf="auxReser==true"
+                                (click)="goReservar()">
+                        Ver resumen
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-button (click)="obtenerReservaciones()">Verificar Horario</ion-button>
+              </ion-col>
+            </ion-row>
+            </form>
+        </ion-grid>
+  
+      </ion-slide>
+
+
+<!-- ----------------------------------SLIDE RESUMEN---------------------------------------- -->
+    <ion-slide>
+      <ion-grid fixed>
+            <form>
+              <ion-row>
+                <ion-col>
+                  <!-- <img src="/assets/img/im2.png"> -->
+                </ion-col>
+              </ion-row>
+                <ion-row>
+                    <ion-col>  
+
+                      <ion-card class="ion-text-center">
+                          <!-- <ion-item>{{item.idReservacion}}</ion-item> -->
+                          <ion-item>De: {{reservacion.horaInicial}}</ion-item>
+                          <ion-item>A: {{reservacion.horaFinal}}</ion-item>
+                          <ion-item>Precio cancha: {{seleccion}}</ion-item>
+                          <ion-item>Complejo: {{complejo.nombre}}</ion-item>
+                          <ion-item>Lugar: {{complejo.localidad}}</ion-item>
+                          <ion-item>Lugar: {{reservacion.idCancha}}</ion-item>
+                          <ion-item>Lugar: {{reservacion.idUsuario}}</ion-item>
+
+                      </ion-card>
+  
+                      
+                        
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button type="submit"
+                                color="tertiary"
+                                shape="round"
+                                (click)="goCancha()">
+                        Regresar
+                    </ion-button>
+                </ion-col>
+                <ion-col>
+                    <ion-button type="submit"
+                                color="tertiary"
+                                shape="round"
+                                (click)="agregarReservacion()">
+                        Ver resumen
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+            </form>
+        </ion-grid>
+  
+      </ion-slide>
+
+
+
+</ion-slides>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

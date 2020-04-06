@@ -103,8 +103,15 @@ export class ApiserviService {
 
 
 
+  getReservaciones() {
+    return this.http.get(`${this.url}/reservacion`);
+  }
+
   getReservacion(n1: number) {
-    return this.http.get(`${this.url}/reservacion?n1=${n1}`);
+    return this.http.get(`${this.url}/reservacion/p?n1=${n1}`);
+  }
+  getReservacionCancha(n1: number) {
+    return this.http.get(`${this.url}/reservacion/q?n1=${n1}`);
   }
   getReservacionId(id: number) {
     return this.http.get(`${this.url}/reservacion/${id}`);
