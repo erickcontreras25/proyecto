@@ -1,0 +1,121 @@
+<app-header titulo="Torneo"></app-header>
+
+
+<ion-content>
+
+  <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
+
+
+    <ion-slide>
+      <ion-grid>
+        
+        <div class="derecha">
+          <ion-button color="tertiary" 
+                      (click)="mostrarCrear=true"
+                      shape="round" 
+                      fill="solid"
+                      routerLink="/crear-torneo" routerDirection="forward">CREAR TORNEO</ion-button>
+          </div>  
+          
+            <h2 class="ion-text-center">Mis torneos</h2>
+            <div *ngFor="let item of torneosxUser">
+              <ion-card>
+                <ion-row class="ion-align-items-center">
+                  <ion-col class="izquierda">
+                    <h4>{{item.nombre}}</h4>
+                  </ion-col>
+                  <ion-col *ngIf="item.diaTorneo < hoy">
+                    <label  style="color: tomato;"> Finalizado</label>
+                  </ion-col>
+                  <ion-col *ngIf="item.diaTorneo > hoy">
+                    <label  style="color: rgb(0, 119, 255);"> {{item.diaTorneo | date:'yyyy-MMMM-dd'}}</label>
+                  </ion-col>
+                  <ion-col class="derecha">
+                    <ion-button color="success"
+                                          class="derecha"      
+                                          shape="round" fill="outline"
+                                          (click)="getTorneoId(item.idTorneo)"
+                                          >VER</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-card>
+            </div>
+            
+
+      </ion-grid>
+    </ion-slide>
+    
+<!-- ---------------------------------------------------SLIDE 2---------------------------------------- -->
+  <ion-slide>
+    <ion-grid fixed>
+        <form>
+          <ion-card>
+            <ion-card-title>{{torneoUser.nombre}}</ion-card-title>
+            <ion-row>
+              <ion-label>Dia del torneo: {{torneoUser.diaTorneo | date:'yyyy-MMMM-dd'}}</ion-label>
+            </ion-row>
+            <ion-row>
+              <ion-label>Cantidad de equipos a participar: {{torneoUser.cantEquipos}}</ion-label>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-button color="success"
+                            shape="round"
+                          (click)="goSlide1()">Regresar</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button color="success"
+                            shape="round"
+                          (click)="getEquipoxTorneo(torneoUser.idTorneo)">Equipos Inscritos</ion-button>
+              </ion-col>
+            </ion-row>          
+          </ion-card>
+        </form>
+  </ion-grid>
+  </ion-slide>
+
+
+<!-- ---------------------------------------------------SLIDE 3---------------------------------------- -->
+
+  <ion-slide>
+    <ion-grid>
+ 
+      <div>
+        <ion-card class="blanco">
+          <ion-row *ngFor="let item of equipoxTorneo">
+            <ion-col size="6">        
+              <h5 style="color: black;">{{item.equipo.nombre}}</h5>                  
+            </ion-col> 
+            <ion-col class="derecha">
+              <ion-button color="success"
+                          class="derecha"
+                          fill="clear"
+                          (click)="sacardTorneo(item.torneoId, item.equipoId)">Sacar del torneo</ion-button>
+            </ion-col>    
+          </ion-row>
+          <ion-row>
+            <ion-col>
+            <ion-button   color="success"
+                          expand="full"
+                          (click)="goSlide1()">Regresar</ion-button>
+                        </ion-col>
+          </ion-row>
+        </ion-card>
+      </div>
+      
+  </ion-grid>
+</ion-slide>
+
+<!-- ---------------------------------------------------SLIDE 4---------------------------------------- -->
+
+<ion-slide>
+  <ion-grid>
+
+    
+  </ion-grid>
+</ion-slide>
+
+  
+</ion-slides>
+
+</ion-content>

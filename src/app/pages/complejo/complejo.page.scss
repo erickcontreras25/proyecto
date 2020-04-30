@@ -1,0 +1,16 @@
+// ion-slides {
+//     height: 100%;
+
+// }
+
+// ion-slide {
+//     background-color: greenyellow;
+// }
+ion-content.background{
+    --background: url(/assets/img/fondocancha.png) 0 0/100% 100% no-repeat;
+    opacity: 0.8;
+  }
+
+  ion-icon.size {
+    font-size: 35px;
+}

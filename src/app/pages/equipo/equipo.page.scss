@@ -1,0 +1,21 @@
+.centrado{
+    text-align: center;
+  }
+.derecha{
+    text-align: right;
+}
+.izquierda{
+    text-align: left;
+}
+
+ion-content.background{
+    --background: url(/assets/img/fondoequipo.jpg) 0 0/100% 100% no-repeat;
+    opacity: 0.8;
+}
+.blanco {
+    background-color: white;
+}
+
+ion-icon.size {
+    font-size: 30px;
+}

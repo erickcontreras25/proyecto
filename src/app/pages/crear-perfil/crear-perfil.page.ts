@@ -12,7 +12,7 @@ export class CrearPerfilPage implements OnInit {
   perfiles: Usuario[] = [];
 
   idUsuario;
-  perfil = new Usuario(null, null, null, null, null, false, null);
+  perfil = new Usuario(null, null, null, null, false);
 
   constructor(private apiServi: ApiserviService) { }
 
@@ -21,98 +21,68 @@ export class CrearPerfilPage implements OnInit {
 
 
 
-  obtenerUsuario() {
-    this.apiServi.getUsuario()
-    .subscribe((resp: Usuario[]) => {
-      this.perfiles = resp;
-      console.log('SERVICIO', resp);
-    });
-  }
+  // obtenerUsuario() {
+  //   this.apiServi.getUsuario()
+  //   .subscribe((resp: Usuario[]) => {
+  //     this.perfiles = resp;
+  //     console.log('SERVICIO', resp);
+  //   });
+  // }
 
-  obtenerUsuarioId() {
-    this.apiServi.getUsuarioId(this.idUsuario)
-    .subscribe( resp => {
-      console.log('EJECUTADO CON EXITO');
-    });
-  }
+  // obtenerUsuarioId() {
+  //   this.apiServi.getUsuarioId(this.idUsuario)
+  //   .subscribe( resp => {
+  //     console.log('EJECUTADO CON EXITO');
+  //   });
+  // }
 
-  agregarUsuario() {
-    const fileInput: any = document.getElementById('img');
-    const file = fileInput.files[0];
+  // agregarUsuario() {
 
-    const imgPromise = this.getFileBlob(file);
+  //     this.apiServi.postUsuario(this.perfil)
+  //   .subscribe((data) => {
+  //     this.perfiles.push(this.perfil);
+  //     this.perfil = {
+  //       nombreUsuario: null,
+  //       edad: null,
+  //       email: null,
+  //       password: null,
+  //       rol: false
+  //     };
+  //     window.alert('AGREGADO');
+  //   },
+  //   (error) => {console.log(error); 
+  //   }
+  //   );
+  // }
 
-    imgPromise.then(blob => {
-      this.perfil.foto = blob;
+  // modificarUsuario() {
+  //   this.apiServi.putUsuario(this.idUsuario, this.perfil)
+  //   .subscribe((data) => {
+  //     this.perfiles.push(this.perfil);
+  //     this.perfil = {
+  //       nombreUsuario: '',
+  //       edad: 0,
+  //       email: '',
+  //       password: '',
+  //       rol: false
+  //     };
+  //     window.alert('ACTUALIZADO CON EXITO');
+  //   },
+  //   (error) => {
+  //     console.log(error);
+  //   }
+  //   );
+  // }
 
-
-      this.apiServi.postUsuario(this.perfil)
-    .subscribe((data) => {
-      this.perfiles.push(this.perfil);
-      this.perfil = {
-        nombre: null,
-        nombreUsuario: null,
-        edad: null,
-        email: null,
-        password: null,
-        rol: false,
-        foto: null
-      };
-      window.alert('AGREGADO');
-    },
-    (error) => {console.log(error); 
-    }
-    );
-
-    }).catch(e => console.log(e));
-
-
-  }
-
-  modificarUsuario() {
-    this.apiServi.putUsuario(this.idUsuario, this.perfil)
-    .subscribe((data) => {
-      this.perfiles.push(this.perfil);
-      this.perfil = {
-        nombre: '',
-        nombreUsuario: '',
-        edad: 0,
-        email: '',
-        password: '',
-        rol: false,
-        foto: null
-      };
-      window.alert('ACTUALIZADO CON EXITO');
-    },
-    (error) => {
-      console.log(error);
-    }
-    );
-  }
-
-  eliminarUsuario() {
-    this.apiServi.deleteUsuario(this.idUsuario)
-    .subscribe( resp => {
-      console.log('ELIMINADO CON EXITO');
-    });
-  }
+  // eliminarUsuario() {
+  //   this.apiServi.deleteUsuario(this.idUsuario)
+  //   .subscribe( resp => {
+  //     console.log('ELIMINADO CON EXITO');
+  //   });
+  // }
 
 
 
-  getFileBlob(file) {
-    const reader = new FileReader();
-    return new Promise(function(resolve, reject) {
-
-      reader.onload = (function(theFile) {
-        return function(e) {
-          resolve(e.target.result);
-        };
-      })(file);
-
-      reader.readAsDataURL(file);
-
-    });
-  }
 
 
 }

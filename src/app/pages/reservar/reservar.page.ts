@@ -3,7 +3,12 @@ import { Reservacion } from 'src/models/reservacion.models';
 import { ApiserviService } from 'src/app/services/apiservi.service';
 import { Complejo } from 'src/models/complejo.models';
 import { Cancha } from 'src/models/cancha.models';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, NavController } from '@ionic/angular';
+import * as moment from 'moment';
+import { Usuario } from 'src/models/usuario.models';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { User } from 'src/models/user.models';
+import { AlertaServiceService } from 'src/app/services/alerta-service.service';
 
 @Component({
   selector: 'app-reservar',
@@ -16,20 +21,25 @@ export class ReservarPage implements OnInit {
 
   nombre: string;
   seleccion: number;
-  complejos: Complejo[];
+  
   complejosAbiertos: Complejo[];
   canchas: Cancha[];
   aux = false;
   auxReser = false;
+  auxHoras;
 
-
+  complejos: Complejo[];
   complejo = {
     idComplejo: 0,
-    nombre: null,
-    localidad: null,
+    nombre: '',
+    localidad: '',
     foto: null,
-    estado: null,
-    idAdmin: null
+    estado: false,
+    longitud: 0,
+    latitud: 0,
+    horaInicio: new Date(),
+    horaCierre: new Date(),
+    userId: ''
   };
 
   canchaId = {
@@ -46,31 +56,62 @@ export class ReservarPage implements OnInit {
     idReservacion: 0,
     horaInicial: new Date(),
     horaFinal: new Date(),
+    pago: false,
     idCancha: 0,
-    idUsuario: 0
+    userId: ''
   };
 
-  constructor(private apiServi: ApiserviService) { }
+
+  perfil: User;
+
+  constructor(private apiServi: ApiserviService,
+              private usuarioService: UsuarioService,
+              private navCtrl: NavController,
+              private alertaService: AlertaServiceService) { }
 
   ngOnInit() {
+    this.perfil = this.usuarioService.getUsuario();
 
     this.slides.lockSwipes(true);
 
+    this.reservacion.userId = this.perfil.id;
+    console.log('ESTE ES EL ID OBTENIDO > > ' + this.reservacion.userId);
+
+
+    this.obtenerComplejos();
+
+    this.obtenerComplejoEstado();
+
+
+  }
+
+
+  // ---------------METODOS COMPLEJO------------------------------------------------
+  obtenerComplejos() {
     this.apiServi.getComplejo()
     .subscribe((resp: Complejo[]) => {
       this.complejos = resp;
       console.log('SERVICIO ', resp);
     });
-    this.reservacion.idUsuario = this.apiServi.getAuxUsu();
+  }
 
+  obtenerComplejoEstado() {
     this.apiServi.getComplejoEstado(true)
     .subscribe((resp: Complejo[]) => {
       this.complejosAbiertos = resp;
     });
-
-
   }
 
+  obtenerComplejoId(id: number) {
+    this.apiServi.getComplejoId(id)
+    .subscribe( (resp: Complejo) => {
+      this.complejo = resp;
+      console.log(this.complejo);
+    });
+  }
+
+
+  // ----------------------METODOS RESERVAR-----------------------------------
   obtenerReservacionId() {
     this.apiServi.getReservacionId(this.reservacion.idReservacion)
     .subscribe( resp => {
@@ -85,10 +126,12 @@ export class ReservarPage implements OnInit {
         idReservacion: 0,
         horaInicial: new Date(),
         horaFinal: new Date(),
+        pago: false,
         idCancha: 0,
-        idUsuario: 0
+        userId: ''
       };
-      window.alert('AGREGADO');
+      this.alertaService.alertaInformativa('Su reserva se realizo con exito. \n Puede verla ingresando a su Mi Perfil en Mis Reservas');
+      this.navCtrl.navigateRoot('/inicio');
     },
     (error) => {
       console.log(error);
@@ -104,8 +147,9 @@ export class ReservarPage implements OnInit {
         idReservacion: 0,
         horaInicial: new Date(),
         horaFinal: new Date(),
+        pago: false,
         idCancha: 0,
-        idUsuario: 0
+        userId: ''
       };
       window.alert('ACTUALIZADO CON EXITO');
     },
@@ -121,68 +165,116 @@ export class ReservarPage implements OnInit {
     });
   }
 
+
+
+  volver() {
+    this.auxReser = false;
+  }
+
+
+
   // ----------------------------METODOS CANCHAS-----------------------------------
-  obtenerCancha(id: number) {
-    this.seleccion = id;
-    this.apiServi.getCancha(id)
+  obtenerCanchasComplejo(id: number) {
+    this.apiServi.getCanchaComplejo(id)
     .subscribe((resp: Cancha[]) => {
       this.canchas = resp;
-      console.log('CANCHAS ', this.canchas);
+      // console.log('CANCHAS ', this.canchas);
     });
   }
-  obtenerCanchaId() {
-    this.apiServi.getCanchaId(this.reservacion.idCancha)
+  obtenerCanchaId(id: number) {
+    this.apiServi.getCanchaId(id)
     .subscribe((resp: Cancha) => {
       this.canchaId = resp;
+      this.reservacion.idCancha = this.canchaId.idCancha;
     });
   }
 
 
-  obtenerReservas() {
-    this.apiServi.getReservacionCancha(this.reservacion.idCancha)
+  obtenerReservas(id: number) {
+    this.apiServi.getReservacionCancha(id)
     .subscribe((resp: Reservacion[]) => {
       this.reser = resp;
+      console.log(this.reser);
     });
   }
+
   obtenerReservaciones() {
     this.validarFecha();
   }
   validarFecha() {
-    const inicial = new Date(this.reservacion.horaInicial);
-    const dInicial = inicial.toUTCString();
-    const final = new Date(this.reservacion.horaFinal);
-    const dFinal = final.toUTCString();
+
+    const ini = moment().format('MM-DD-YYYY H:mm');
+
+    const dInicial = moment(this.reservacion.horaInicial).format('MM-DD-YYYY H:mm');
+    const dFinal = moment(this.reservacion.horaFinal).format('MM-DD-YYYY H:mm');
+
+    const abre = moment(this.reservacion.horaInicial).format('HH');
+    const cierra = moment(this.reservacion.horaFinal).format('HH');
+    const abreComplejo = moment(this.complejo.horaInicio).format('HH');
+    const cierraComplejo = moment(this.complejo.horaCierre).format('HH');
+
+    if (dInicial <= ini || dFinal <= ini) {
+      return alert('La hora inicial o final no puede ser menor que la hora actual');
+    }
+
+    if (dInicial === dFinal) {
+      return alert('La hora final no puede ser igual que la inicial');
+    }
+
+    if (abre < abreComplejo || cierra > cierraComplejo) {
+      return alert('Solo puede reservar en horario que permite el complejo');
+    }
 
     for (let i = 0; i < this.reser.length; i++) {
-      const datInicial = new Date(this.reser[i].horaInicial);
-      const fechInicial = datInicial.toUTCString();
+      const fechInicial = moment(this.reser[i].horaInicial).format('MM-DD-YYYY H:mm');
+      const fechFinal = moment(this.reser[i].horaFinal).format('MM-DD-YYYY H:mm');
 
-      const datFinal = new Date(this.reser[i].horaFinal);
-      const fechFinal = datFinal.toUTCString();
+      if (dInicial > fechInicial && dInicial < fechFinal || dFinal > fechInicial && dFinal < fechFinal) {
+        return alert('El horario de ' + fechInicial + ' a ' + fechFinal + ' no esta disponible');
+      }
 
       if (dInicial === fechInicial || dFinal === fechFinal) {
         this.auxReser = false;
         return alert('Este horario no esta disponible');
       }
+
     }
+    const inic = moment(this.reservacion.horaInicial);
+    const fin = moment(this.reservacion.horaFinal);
+    this.auxHoras = fin.diff(inic, 'hours');
     this.auxReser = true;
     return alert('Horario disponible');
   }
 
 
 
+
+  // -------------------------------METODOS OBTENER------------------
 idCancha(id: number) {
   this.reservacion.idCancha = id;
 }
-precioCancha(precio: number) {
-  this.seleccion = precio;
+// precioCancha(precio: number) {
+//   this.seleccion = precio;
+// }
+// nombreComplejo(nombre: string) {
+//   this.complejo.nombre = nombre;
+// }
+// localidadComplejo(local: string) {
+//   this.complejo.localidad = local;
+// }
+obtenerComplejo(id: number) {
+  this.obtenerComplejoId(id);
 }
-nombreComplejo(nombre: string) {
-  this.complejo.nombre = nombre;
+obtenerCancha(id: number) {
+  this.obtenerCanchaId(id);
+  this.obtenerReservas(id);
 }
-localidadComplejo(local: string) {
-  this.complejo.localidad = local;
+llenar() {
+  this.reservacion.idCancha = this.canchaId.idCancha;
 }
+
+
+
 
 // -------------------------------------------------SLIDE--------------------------------
 goComplejos() {
@@ -192,13 +284,14 @@ goComplejos() {
 }
 
 goCancha() {
+  this.auxReser = false;
   this.slides.lockSwipes(false);
   this.slides.slideTo(1);
   this.slides.lockSwipes(true);
 }
 
 goHorarios() {
-  this.obtenerReservas();
+  // this.obtenerReservas();
   this.slides.lockSwipes(false);
   this.slides.slideTo(2);
   this.slides.lockSwipes(true);

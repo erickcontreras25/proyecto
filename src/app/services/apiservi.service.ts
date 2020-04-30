@@ -49,7 +49,7 @@ export class ApiserviService {
   getComplejoId(id: number) {
     return this.http.get(`${this.url}/complejo/${id}`);
   }
-  getComplejoAdmin(n1: number) {
+  getComplejoAdmin(n1: string) {
     return this.http.get(`${this.url}/complejo/p?n1=${n1}`);
   }
   getComplejoEstado(n1: boolean) {
@@ -59,7 +59,7 @@ export class ApiserviService {
     return this.http.post(`${this.url}/complejo`, complejo, {responseType: 'text'});
   }
   putComplejo(id: number, complejo: Complejo) {
-    return this.http.put(`${this.url}/complejo`, complejo, {responseType: 'text'});
+    return this.http.put(`${this.url}/complejo/${id}`, complejo, {responseType: 'text'});
   }
   deleteComplejo(id: number) {
     return this.http.delete(`${this.url}/complejo/${id}`);
@@ -67,8 +67,9 @@ export class ApiserviService {
 
 
 
-  getCancha(n1: number) {
-    return this.http.get(`${this.url}/cancha?n1=${n1}`);
+
+  getCanchaComplejo(n1: number) {
+    return this.http.get(`${this.url}/cancha/p?n1=${n1}`);
   }
   getCanchaId(id: number) {
     return this.http.get(`${this.url}/cancha/${id}`);
@@ -77,7 +78,7 @@ export class ApiserviService {
     return this.http.post(`${this.url}/cancha`, cancha, {responseType: 'text'});
   }
   putCancha(id: number, cancha: Cancha) {
-    return this.http.put(`${this.url}/cancha`, cancha, {responseType: 'text'});
+    return this.http.put(`${this.url}/cancha/${id}`, cancha, {responseType: 'text'});
   }
   deleteCancha(id: number) {
     return this.http.delete(`${this.url}/cancha/${id}`);
@@ -85,21 +86,7 @@ export class ApiserviService {
 
 
 
-  getUsuario() {
-    return this.http.get(`${this.url}/usuario`);
-  }
-  getUsuarioId(id: number) {
-    return this.http.get(`${this.url}/usuario/${id}`);
-  }
-  postUsuario(usuario: Usuario) {
-    return this.http.post(`${this.url}/usuario`, usuario, {responseType: 'text'});
-  }
-  putUsuario(id: number, usuario: Usuario) {
-    return this.http.put(`${this.url}/usuario`, usuario, {responseType: 'text'});
-  }
-  deleteUsuario(id: number) {
-    return this.http.delete(`${this.url}/usuario/${id}`);
-  }
+  
 
 
 
@@ -107,7 +94,7 @@ export class ApiserviService {
     return this.http.get(`${this.url}/reservacion`);
   }
 
-  getReservacion(n1: number) {
+  getReservacionXUser(n1: string) {
     return this.http.get(`${this.url}/reservacion/p?n1=${n1}`);
   }
   getReservacionCancha(n1: number) {
@@ -120,48 +107,15 @@ export class ApiserviService {
     return this.http.post(`${this.url}/reservacion`, reservacion, {responseType: 'text'});
   }
   putReservacion(id: number, reservacion: Reservacion) {
-    return this.http.put(`${this.url}/reservacion`, reservacion, {responseType: 'text'});
+    return this.http.put(`${this.url}/reservacion/${id}`, reservacion, {responseType: 'text'});
   }
   deleteReservacion(id: number) {
     return this.http.delete(`${this.url}/reservacion/${id}`);
   }
 
 
-  getAdmin() {
-    return this.http.get(`${this.url}/admin`);
-  }
-  getAdminId(id: number) {
-    return this.http.get(`${this.url}/admin/${id}`);
-  }
-  postAdmin(admin: Admin) {
-    return this.http.post(`${this.url}/admin`, admin, {responseType: 'text'});
-  }
-  putAdmin(id: number, admin: Admin) {
-    return this.http.put(`${this.url}/admin`, admin, {responseType: 'text'});
-  }
-  deleteAdmin(id: number) {
-    return this.http.delete(`${this.url}/admin/${id}`);
-  }
+  
 
-
-  getEquipo() {
-    return this.http.get(`${this.url}/equipo`);
-  }
-  getEquipoId(id: number) {
-    return this.http.get(`${this.url}/equipo/${id}`);
-  }
-  getEquipoUsuario(n1: number) {
-    return this.http.get(`${this.url}/equipo/p?n1=${n1}`);
-  }
-  postEquipo(equipo: Equipo) {
-    return this.http.post(`${this.url}/equipo`, equipo, {responseType: 'text'});
-  }
-  putEquipo(id: number, equipo: Equipo) {
-    return this.http.put(`${this.url}/equipo`, equipo, {responseType: 'text'});
-  }
-  deleteEquipo(id: number) {
-    return this.http.delete(`${this.url}/equipo/${id}`);
-  }
 
 
 }

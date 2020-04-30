@@ -1,7 +1,7 @@
 <app-header titulo="Cancha"></app-header>
 
 
-<form #formulario="ngForm" (ngSubmit)="agregarCancha()">
+<!-- <form #formulario="ngForm" (ngSubmit)="agregarCancha()">
 
   <ion-item>
     <ion-label>Foto</ion-label>
@@ -36,10 +36,181 @@
   [disabled]="formulario.invalid" routerLink="/inicio">
       Guardar
   </ion-button>
-</form>
+</form> -->
 
 
 <ion-content>
+
+  <ion-slides class="mainSlide" #slidePrincipal>
+    
+    <ion-slide>
+  
+      <form>
+        <ion-grid fixed>
+  
+          <ion-row>
+            <ion-col>
+              <!-- <img src="/assets/img/im2.png" alt="10" width="20"> -->
+            </ion-col>
+          </ion-row>
+        
+          <ion-row class="center">
+            <ion-col>
+              
+                <ion-list *ngFor='let user of complejos'>
+  
+                <ion-card class="ion-text-center">
+
+                  <img src="{{user.foto}}" alt="200" width="500">
+                  <ion-card-title>
+                    {{user.nombre}}
+                  </ion-card-title>
+                  
+              <ion-row>
+                <ion-col size="6">
+                  <ion-button type="submit"
+                      color="tertiary"
+                      shape="round"
+                      (click)="obtenerIdComplejo(user.idComplejo)"
+                      (click)="goSlideCancha()">
+                      Crear cancha
+                  </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-button type="submit"
+                      color="tertiary"
+                      shape="round"                      
+                      (click)="obtenerCanchasComplejo(user.idComplejo)"
+                      (click)="goSlideVerCancha()">
+                      Ver canchas
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+  
+                </ion-card>
+  
+                </ion-list>
+            </ion-col>
+          </ion-row>
+  
+
+  
+        </ion-grid>
+      </form>
+    </ion-slide>
+  
+    <!-- -----------------------SLIDE AGREGAR CANCHA----------------------------- -->
+    <ion-slide>
+      <ion-grid fixed>
+            <form #formulario="ngForm">
+
+                <ion-row>
+                    <ion-col>  
+  
+                      
+                        <ion-label class="ion-text-center">Cual sera el precio por hora que tendra esta cancha?</ion-label>                      
+                      
+
+                      <ion-item>
+                        <ion-label position="floating">Precio Lps.</ion-label>
+                        <ion-input type="number"
+                                    name="precio"
+                                   [(ngModel)]="cancha.precio"
+                                   required>
+                                  </ion-input>
+                      </ion-item>
+
+                      
+                        <ion-item class="ion-text-center">
+                          <ion-label>Agrega una foto de la cancha</ion-label>
+                        </ion-item>
+                        <ion-item class="ion-text-center">
+                        <input type="file"
+                        id="imgCancha"
+                        name="imgCancha"
+                        ngModel
+                        required>
+                      </ion-item>
+                        
+                    </ion-col>
+                </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-button type="submit"
+                          color="tertiary"
+                          shape="round"
+                          expand="full"
+                          (click)="goSlide1()">
+                          Regresar
+                        </ion-button>
+              </ion-col>
+              </ion-row>
+              <ion-row>
+              <ion-col>
+                <ion-button type="submit"
+                                color="tertiary"
+                                shape="round"
+                                expand="full"
+                                fill="outline"
+                                [disabled]="formulario.invalid"
+                                (click)="agregarCancha()">
+                        Crear cancha
+                    </ion-button>
+              </ion-col>
+            </ion-row>
+
+            </form>
+        </ion-grid>  
+      </ion-slide>
+    
+
+      <!-- -------------------------------SLIDE VER CANCHAS------------------------------------- -->
+
+  <ion-slide>  
+    <form>
+      <ion-grid fixed>
+
+      
+        <ion-row class="center">
+          <ion-col>
+            
+              <ion-list *ngFor='let user of canchas'>
+
+              <ion-card class="ion-text-center">
+                <ion-card-header>                  
+                  <ion-card-title>Precio</ion-card-title>
+                  <ion-card-subtitle>Lps. {{user.precio}}</ion-card-subtitle>
+                </ion-card-header>
+
+                <img class="img" src="{{user.foto}}">
+                
+
+              </ion-card>
+
+              </ion-list>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="center">
+          <ion-col>
+            <ion-button type="submit"
+                        color="tertiary"
+                        shape="round"
+                        expand="full"                 
+                        (click)="goSlide1()">
+              Regresar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+
+
+      </ion-grid>
+    </form>
+  </ion-slide>
+  
+  </ion-slides>
   
 
 

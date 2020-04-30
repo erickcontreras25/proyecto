@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiserviService } from 'src/app/services/apiservi.service';
 import { Complejo } from 'src/models/complejo.models';
 import { error } from 'protractor';
+import { User } from 'src/models/user.models';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { NavController, IonSlides } from '@ionic/angular';
+import { AlertaServiceService } from 'src/app/services/alerta-service.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
+declare var mapboxgl: any;
 
 @Component({
   selector: 'app-complejo',
@@ -10,6 +16,7 @@ import { error } from 'protractor';
   styleUrls: ['./complejo.page.scss'],
 })
 export class ComplejoPage implements OnInit {
+  @ViewChild('slidePrincipal', {static: true}) slides: IonSlides;
 
 
   complejos: Complejo[] = [];
@@ -19,26 +26,50 @@ export class ComplejoPage implements OnInit {
     nombre: null,
     localidad: null,
     foto: null,
-    estado: null,
-    idAdmin: null
+    estado: false,
+    longitud: -88.036392,
+    latitud: 15.517893,
+    horaInicio: null,
+    horaCierre: null,
+    userId: null
   };
 
+  cargando = false;
+  listo = false;
 
-  constructor(private apiServi: ApiserviService) { }
+
+  perfil: User;
+
+  constructor(private apiServi: ApiserviService,
+              private usuarioService: UsuarioService,
+              private navCtrl: NavController,
+              private alertaService: AlertaServiceService,
+              private geolocation: Geolocation) { }
 
   ngOnInit() {
     // if (document.referrer !== 'http://localhost:8100/login') {
     //   location.href = 'http://localhost:8100/login';
     // }
-    this.complejo.idAdmin = this.apiServi.getAuxUsu();
-    this.apiServi.getComplejoAdmin(this.complejo.idAdmin)
+    this.perfil = this.usuarioService.getUsuario();
+
+    this.slides.lockSwipes(true);
+
+    this.complejo.userId = this.perfil.id;
+
+    this.obtenerComplejoXAdmin(this.perfil.id);
+
+  }
+
+
+
+  // --------------------------------METODOS COMPLEJO-------------------------------------
+  obtenerComplejoXAdmin(id: string) {
+    this.apiServi.getComplejoAdmin(id)
     .subscribe((resp: Complejo[]) => {
       this.complejos = resp;
       console.log('SERVICIO', resp);
     });
-
   }
-
 
   obtenerComplejoId() {
     this.apiServi.getComplejoId(this.complejo.idComplejo)
@@ -46,6 +77,7 @@ export class ComplejoPage implements OnInit {
       console.log('EJECUTADO CON EXITO');
     });
   }
+
   crearComplejo() {
 
     const fileInput: any = document.getElementById('img');
@@ -55,21 +87,16 @@ export class ComplejoPage implements OnInit {
 
     imgPromise.then(blob => {
       this.complejo.foto = blob;
-      console.log("ESTE ES MI BLOB: " + blob);
-
+      // console.log("ESTE ES MI BLOB: " + blob);
 
       this.apiServi.postComplejo(this.complejo)
     .subscribe((data) => {
       this.complejos.push(this.complejo);
-      this.complejo = {
-        idComplejo: 0,
-        nombre: null,
-        localidad: null,
-        foto: null,
-        estado: null,
-        idAdmin: null
-      };
-      window.alert('AGREGADO');
+      this.limpiar();
+      this.listo = false;
+      this.alertaService.alertaInformativa('Cambia el estado de complejo a ABIERTO AHORA para que tus clientes sepan que pueden visitarte');
+      this.alertaService.alertaInformativa('Complejo creado. \n Puedes verlo en Mis Complejos.');
+      this.navCtrl.navigateRoot('/inicio');
     },
     (error) => {
       console.log('ERROR: ', error);
@@ -78,28 +105,8 @@ export class ComplejoPage implements OnInit {
 
     });
 
-    
+  }
 
-  }
-  modificarComplejo() {
-    this.apiServi.putComplejo(this.complejo.idComplejo, this.complejo)
-    .subscribe((data) => {
-      this.complejos.push(this.complejo);
-      this.complejo = {
-        idComplejo: 0,
-        nombre: null,
-        localidad: null,
-        foto: null,
-        estado: null,
-        idAdmin: null
-      };
-      window.alert('ACTUALIZADO CON EXITO');
-    },
-    (error) => {
-      console.log(error);
-    }
-    );
-  }
   eliminarComplejo() {
     this.apiServi.deleteComplejo(this.complejo.idComplejo)
     .subscribe( resp => {
@@ -124,6 +131,83 @@ export class ComplejoPage implements OnInit {
     });
   }
 
+  limpiar() {
+    this.complejo = {
+      idComplejo: 0,
+      nombre: null,
+      localidad: null,
+      foto: null,
+      estado: false,
+      longitud: null,
+      latitud: null,
+      horaInicio: null,
+      horaCierre: null,
+      userId: null
+    };
+  }
+
+
+  async loadMap() {
+    this.cargando = true;
+    const rta = await this.geolocation.getCurrentPosition();
+    const myLatLng = {
+      lat: rta.coords.latitude,
+      lng: rta.coords.longitude
+    };
+    this.cargando = false;
+    this.listo = true;
+
+    this.complejo.longitud = myLatLng.lng;
+    this.complejo.latitud = myLatLng.lat;
+  }
+
+  // getGeo() {
+
+  //   this.cargando = true;
+
+  //   this.geolocation.getCurrentPosition().then((resp) => {
+  //     // resp.coords.latitude
+  //     // resp.coords.longitude
+  //     this.cargando = false;
+
+  //     this.complejo.longitud = resp.coords.longitude;
+  //     this.complejo.latitud = resp.coords.latitude;
+
+  //    }).catch((error) => {
+  //      console.log('Error getting location', error);
+  //      this.cargando = false;
+  //    });
+
+  // }
+
+
+
+
+
+  // -------------------------------------------------SLIDE--------------------------------
+  goSlide1() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(0);
+    this.slides.lockSwipes(true);
+  }
+
+  goSlide2() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(1);
+    this.slides.lockSwipes(true);
+  }
+
+  goSlide3() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(2);
+    this.slides.lockSwipes(true);
+  }
+
+  goSlide4() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(3);
+    this.slides.lockSwipes(true);
+  }
 
 
 }

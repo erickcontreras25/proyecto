@@ -1,9 +1,11 @@
 export class Equipo {
-    nombre: string;
-    idUsuario: number;
+    idEquipo: number;
+    nombre;
+    userId;
 
-    constructor(nombre: string, usuarioId: number) {
+    constructor(id, nombre, usuarioId) {
+        this.idEquipo = id;
         this.nombre = nombre;
-        this.idUsuario = usuarioId;
+        this.userId = usuarioId;
     }
 }

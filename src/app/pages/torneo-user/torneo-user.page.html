@@ -1,0 +1,101 @@
+<app-header titulo="Torneos"></app-header>
+
+<ion-content>
+  
+  <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
+
+    <ion-slide>
+      <ion-grid>
+
+        <h1 style="text-shadow: 1px 1px 1px black; color: black;">Torneos</h1>
+        <div *ngFor="let item of torneosNoVen">
+          <ion-card class="blanco">
+            <ion-row class="ion-align-items-center">
+              <ion-col class="izquierda"><h5>{{item.nombre}}</h5></ion-col>
+              <ion-col *ngIf="item.diaTorneo > hoy">
+                <label  style="color: rgb(16, 122, 243);"> {{item.diaTorneo | date:'dd-MMMM-yyyy'}}</label>
+              </ion-col>
+              <ion-col class="derecha">
+                <ion-button color="success"
+                            class="derecha"      
+                            shape="round" fill="clear"                
+                            (click)="getTorneoId(item.idTorneo)">VER</ion-button>
+                
+              </ion-col>
+            </ion-row>            
+          </ion-card>  
+        </div>
+      </ion-grid>
+    </ion-slide>
+
+    
+<!-- ---------------------------------------------------SLIDE 2---------------------------------------- -->
+
+    <ion-slide>
+      <ion-grid>
+
+        <form>
+          <ion-card class="ion-text-center" style="background-color: #F1F1F6; border-radius : 10px;">
+            <img src="{{torneo.premioFoto}}" alt="200" width="500">
+            <ion-card-title>{{torneo.nombre}}</ion-card-title>
+
+            <ion-row>
+              <ion-col>
+                <h6>
+                  <ion-icon class="size" name="calendar-outline" color="secondary"></ion-icon>
+                      Dia del torneo:
+                </h6>
+                <h6>{{torneo.diaTorneo | date:'dd-MMMM-yyyy'}}</h6>
+              </ion-col>
+              <ion-col>
+                <h6>
+                  <ion-icon class="size" name="location-outline" color="primary"></ion-icon>
+                    Direccion:
+                </h6>
+                <h6>{{complejo.localidad}}</h6>
+              </ion-col>
+            </ion-row>
+            
+            <h6 *ngIf="torneo.descripcion != ''">
+              <ion-label>{{torneo.descripcion}}</ion-label>
+            </h6>
+              
+              <h5 class="ion-text-center">Complejo: {{complejo.nombre}}</h5>
+              <ion-row>
+                <ion-col>
+                  <ion-list>
+                    <ion-item borde="none">
+                      <ion-label>Elige tu equipo</ion-label>
+                      <ion-select [(ngModel)]="equipo.idEquipo"
+                                  name="equipoId"
+                                  (ngModelChange)="llenar()">
+                        <ion-select-option *ngFor="let item of equipos" value="{{item.idEquipo}}" >{{item.nombre}}</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+              </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-button color="success"
+                            shape="round"
+                          (click)="goSlide1()">Regresar</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button color="success"
+                           (click)="registrar()" 
+                          >Registrar mi equipo</ion-button>
+              </ion-col>
+            </ion-row>          
+          </ion-card>
+        </form>
+
+      </ion-grid>
+    </ion-slide>
+
+
+
+
+  </ion-slides>
+
+</ion-content>

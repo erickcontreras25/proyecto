@@ -1,32 +1,177 @@
 <app-header titulo="Equipo"></app-header>
 
 
-<ion-content>
+<ion-content class="background">
 
-  <ion-button color="success" routerLink="/crear-equipo">CREAR EQUIPO</ion-button>
+  <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
 
-  <h1>{{equipo.idUsuario}}</h1>
-  <h1>{{idEquipo}}</h1>
-  <br>
+    <ion-slide>
+      <ion-grid>
 
-  <form #formulario="ngForm" (ngSubmit)="modificarEquipo()">
+        <br>
+        <div class="derecha">
+          <ion-button color="success" 
+                      routerLink="/unirme-equipo" routerDirection="forward"
+                      shape="round" 
+                      fill="solid">BUSCAR EQUIPO</ion-button>
+          </div>
+        <div class="derecha">
+        <ion-button color="tertiary" 
+                    (click)="mostrarCrear=true"
+                    shape="round" 
+                    fill="solid">CREAR EQUIPO</ion-button>
+        </div>
 
-    <ion-list>
-      <ion-item>
-        <ion-label>Equipo</ion-label>
-        <ion-select [(ngModel)]="idEquipo"
-                    name="idCancha">
-          <ion-select-option *ngFor="let user of equipos" value="{{user.idEquipo}}" >{{user.idEquipo}} {{user.nombre}}</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
+        <div *ngIf="mostrarCrear">
+          <ion-list>
+            <ion-label>Nombra al equipo</ion-label>
+            <ion-item>
+              <ion-input name="nombre"
+                          type="nombre"
+                          placeholder="Nombre"
+                          required
+                          [(ngModel)]="equipo.nombre"></ion-input>
+            </ion-item>
+          </ion-list>
+
+          <ion-button expand="full" 
+                      type="submit"
+                      (click)="crearEquipo()">
+              CREAR
+          </ion-button>
+
+          <ion-button color="success" 
+                      (click)="mostrarCrear=false">OCULTAR</ion-button>
+
+        </div>
+
+
+      <h1 style="text-shadow: 1px 1px 1px black; color: white;">Mis equipos</h1>  
+
+        <div *ngFor="let user of equipoUserUser">
+          <ion-card class="blanco">
+            <ion-row class="ion-align-items-center">
+              <ion-col size="6" class="izquierda"><h5>{{user.equipo.nombre}}</h5></ion-col>
+              
+              <ion-col class="derecha">
+                <ion-button class="derecha"      
+                            shape="round" fill="clear"
+                            (click)="obtenerEquipoId(user.equipoId)"
+                            (click)="obtenerEquipoUserId(user.equipoId)"
+                            (click)="goSlide2()">
+                            <ion-icon color="success" class="size" name="return-up-forward-outline"></ion-icon>
+                          </ion-button>
+                
+              </ion-col>
+            </ion-row>
+
+            
+            
+          </ion-card>  
+        </div>
+
+      <h2 style="color: white;">Administrar mis equipos</h2>
+        <div *ngFor="let user of equiposCap">          
+          <ion-card class="blanco">
+            <ion-row>
+              <ion-col class="izquierda"><h5>{{user.nombre}}</h5></ion-col>
+              <!-- <ion-col class="derecha">
+                <ion-button *ngIf="!unido" color="success"
+                            (click)="llenar(user.idEquipo)"
+                            (click)="uniraEquipo()">UNIRME</ion-button>
+              </ion-col> -->
+              <ion-col class="derecha">
+                <ion-button color="success"
+                            class="derecha"
+                            shape="round" fill="clear"
+                            (click)="obtenerEquipoId(user.idEquipo)"
+                            (click)="obtenerEquipoUserId(user.idEquipo)"
+                            (click)="goSlide3()">Gestionar</ion-button>              
+              </ion-col>
+            </ion-row>
+
+
+          </ion-card>        
+        </div>
+
+    </ion-grid>
+  </ion-slide>
+
+
+
+
+
+  <ion-slide>
+    <ion-grid>
+    <div>
+      <ion-card class="blanco">
+        <ion-card-title>Miembros</ion-card-title>
+        <ion-row class="ion-align-items-center" *ngFor="let user of equipoUsers">
+          <ion-col>        
+            <h5 class="izquierda" style="color: black;">{{user.user.nombreUsuario}}</h5>                  
+          </ion-col>
+          <ion-col *ngIf="user.userId == equipo.userId">
+            <h5>Capitan</h5>
+          </ion-col>
+          <ion-col *ngIf="user.userId == perfil.id && user.userId!=equipo.userId">
+            <ion-button color="warning"
+                        class="derecha"
+                        shape="round" fill="clear"                                            
+                        (click)="salirEquipo(user.equipoId)">SALIRME</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button color="success"
+                      expand="full"
+                      (click)="goSlide1()">Regresar</ion-button>
+          </ion-col>
+          
+        </ion-row>
+
+      </ion-card>
+    </div>
+  </ion-grid>
+  </ion-slide>
+
+
+
+
+
+  <ion-slide>
+    <ion-grid>
+    <div>
+      <ion-card class="blanco">
+        <ion-row *ngFor="let user of equipoUsers">
+          <ion-col size="6">        
+            <h5 style="color: black;">{{user.user.nombreUsuario}}</h5>                  
+          </ion-col>
+          <ion-col class="derecha" *ngIf="user.userId == equipo.userId">
+            <h5>Capitan</h5>
+          </ion-col>
+          <ion-col *ngIf="user.userId != equipo.userId" class="derecha">
+            <ion-button color="danger"
+                        class="derecha"
+                        fill="outline"
+                        (click)="sacarEquipo(user.userId)">
+                        <ion-icon color="danger" name="person-remove-outline"></ion-icon>
+                      </ion-button>
+          </ion-col>    
+        </ion-row>
+        <ion-row>
+          <ion-col>
+          <ion-button   color="success"
+                        expand="full"
+                        (click)="ocultar()"
+                        (click)="goSlide1()">Regresar</ion-button>
+                      </ion-col>
+        </ion-row>
+      </ion-card>
+    </div>  
+  </ion-grid>
+  </ion-slide>
   
-    <ion-button expand="full" type="submit"
-    [disabled]="formulario.invalid" routerLink="/inicio">
-        Unirme a equipo
-    </ion-button>
   
-  </form>
-  
+</ion-slides>
 
 </ion-content>

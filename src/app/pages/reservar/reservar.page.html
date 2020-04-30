@@ -1,7 +1,7 @@
 <app-header titulo="Reservar"></app-header>
 
 
-<ion-content>
+<ion-content class="background">
 
   <!-- <ion-button (click)="obtenerReservaciones()">MOSTRAR HORARIOS</ion-button>
   <ion-item *ngFor='let user of reser'>
@@ -18,7 +18,7 @@
 
 <h3>{{reservacion.horaInicial}}</h3> -->
 
-  <h1 class="ion-text-center">Reservar TU cancha</h1>
+  
 
   <!-- SELECT PARA ELEGIR COMPLEJO -->
   <!-- <ion-list>
@@ -117,7 +117,7 @@
 <!-- AQUI COMIENZA LO NUEVO CON SLIDES -->
 
 
-<ion-slides class="mainSlide" #slidePrincipal>
+<ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
     
   <ion-slide>
 
@@ -127,36 +127,41 @@
         <ion-row>
           <ion-col>
             <!-- <img src="/assets/img/im2.png" alt="10" width="20"> -->
+            <h1 class="ion-text-center" style="color: white;">Elige el complejo que quieras</h1>
           </ion-col>
         </ion-row>
       
         <ion-row>
           <ion-col>
             
-              <ion-list *ngFor='let user of complejos'>
+              <div *ngFor='let user of complejos'>
 
-              <ion-card class="ion-text-center">
+              <ion-card class="ion-text-center" style="background-color: #F1F1F6; border-radius : 10px;">
+                
+                <ion-row>
+                  <ion-col *ngIf='user.estado == true'><h3>Abierto Ahora</h3></ion-col>
+                  <ion-col *ngIf='user.estado == false'><h3>Cerrado Ahora</h3></ion-col>
+                </ion-row>
+                <img src="{{user.foto}}" alt="200" width="500">
                 <ion-card-title>
                   {{user.nombre}}
                 </ion-card-title>
-                <ion-row>
-                  <ion-col *ngIf='user.estado == true'><h3>Abierto</h3></ion-col>
-                  <ion-col *ngIf='user.estado == false'><h3>Cerrado</h3></ion-col>
-                </ion-row>
-                <img src="{{user.foto}}" alt="200" width="500">
+                <h6>
+                  <ion-icon name="location-outline" color="primary"></ion-icon>
+                     {{user.localidad }}
+                </h6>
                 <ion-button type="submit"
                         color="tertiary"
                         shape="round"
-                        (click)="obtenerCancha(user.idComplejo)"
-                        (click)="nombreComplejo(user.nombre)"
-                        (click)="localidadComplejo(user.localidad)"
+                        (click)="obtenerCanchasComplejo(user.idComplejo)"
+                        (click)="obtenerComplejo(user.idComplejo)"
                         (click)="goCancha()">
               Elegir cancha
             </ion-button>
 
               </ion-card>
 
-              </ion-list>
+              </div>
           </ion-col>
         </ion-row>
 
@@ -176,7 +181,7 @@
     </form>
   </ion-slide>
 
-  <!-- -----------------------SLIDE CANCHAS----------------------------- -->
+  <!-- ----------------------------------------SLIDE CANCHAS----------------------------------------------- -->
   <ion-slide>
     <ion-grid fixed>
           <form>
@@ -188,28 +193,29 @@
               <ion-row>
                   <ion-col>  
 
-                      <ion-list *ngFor='let user of canchas'>
+                      <div *ngFor='let user of canchas'>
 
-                        <ion-card class="ion-text-center">
+                        <ion-card class="ion-text-center" style="border-radius : 10px;">
+                          <img src="{{user.foto}}" alt="200" width="500">
                           <ion-card-title>
-                            Precio:  {{user.precio}}
+                            Precio/hora: Lps.{{user.precio}}.00
                           </ion-card-title>
                           <ion-row>
 
                           </ion-row>
-                        <img src="{{user.foto}}" alt="200" width="500">
+                        
                           <ion-button type="submit"
                             color="tertiary"
                             shape="round"
-                            (click)="idCancha(user.idCancha)"
-                            (click)="precioCancha(user.precio)"
+                            
+                            (click)="obtenerCancha(user.idCancha)"
                             (click)="goHorarios()">
                             Elegir hora
                           </ion-button>
 
                       </ion-card>
                           
-                      </ion-list>
+                      </div>
                   </ion-col>
               </ion-row>
 
@@ -233,28 +239,35 @@
     <ion-slide>
       <ion-grid fixed>
             <form>
-              <ion-row>
-                <ion-col>
-                  <!-- <img src="/assets/img/im2.png"> -->
-                </ion-col>
-              </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <h3 style="text-shadow: 1px 1px 1px black; color: white; border-radius : 10px;">
+                    En este complejo puede reservar entre <b>{{complejo.horaInicio | date:'HH'}}:00</b>
+                     y 
+                     <b>{{complejo.horaCierre | date:'HH'}}:00</b>
+                  </h3>
+                  </ion-col>
+                </ion-row>
+
                 <ion-row>
                     <ion-col>  
   
                       <ion-item>
                         <ion-label>Hora Inicial</ion-label>
-                        <ion-datetime displayFormat="D MMM YYYY H" 
+                        <ion-datetime displayFormat="D MMM YYYY HH:mm" 
                                       name="horaInicial"
                                       minuteValues="0" min="10:00" 
-                                      [(ngModel)]="reservacion.horaInicial">
+                                      [(ngModel)]="reservacion.horaInicial"
+                                      (ngModelChange)="volver()">
                         </ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>Hora Final</ion-label>
-                        <ion-datetime displayFormat="D MMM YYYY H" 
+                        <ion-datetime displayFormat="D MMM YYYY HH:mm" 
                                       name="horaFinal"
                                       minuteValues="0" min="11:00" 
-                                      [(ngModel)]="reservacion.horaFinal">
+                                      [(ngModel)]="reservacion.horaFinal"
+                                      (ngModelChange)="volver()">
                         </ion-datetime>
                       </ion-item>
                         
@@ -274,12 +287,19 @@
                                 color="tertiary"
                                 shape="round"
                                 *ngIf="auxReser==true"
+                                (click)="llenar()"
                                 (click)="goReservar()">
                         Ver resumen
                     </ion-button>
                 </ion-col>
             </ion-row>
 
+            <ion-row>
+              <ion-col>
+                <h3 style="text-shadow: 1px 1px 1px black; color: white;">Estas reservando por un tiempo de </h3>
+                <h2 *ngIf="auxHoras!=null" style="text-shadow: 1px 1px 1px black; color: white;">{{auxHoras}} horas</h2>
+              </ion-col>
+            </ion-row>
             <ion-row>
               <ion-col>
                 <ion-button (click)="obtenerReservaciones()">Verificar Horario</ion-button>
@@ -303,15 +323,29 @@
                 <ion-row>
                     <ion-col>  
 
-                      <ion-card class="ion-text-center">
-                          <!-- <ion-item>{{item.idReservacion}}</ion-item> -->
-                          <ion-item>De: {{reservacion.horaInicial}}</ion-item>
-                          <ion-item>A: {{reservacion.horaFinal}}</ion-item>
-                          <ion-item>Precio cancha: {{seleccion}}</ion-item>
+                      <ion-card class="ion-text-center" style="background-color: rgb(236, 236, 243); border-radius : 10px;">
+                          <h3 class="ion-text-center">Complejo: {{complejo.nombre}}</h3>
+                          <h6>
+                            <ion-icon class="size" name="calendar-outline" color="secondary"></ion-icon>
+                                Dia y hora de reserva:
+                          </h6>
+                          <h6>{{reservacion.horaInicial | date:'MMMM-dd HH:mm'}} a {{reservacion.horaFinal | date:'HH:mm'}}</h6>
+                          <h6>
+                            <ion-icon class="size" name="cash-outline" color="success"></ion-icon>
+                              Total a pagar:
+                          </h6>
+                          <h6>Lps.{{canchaId.precio}}.00</h6>                          
+                          <h6>
+                            <ion-icon class="size" name="location-outline" color="primary"></ion-icon>
+                              Direccion:
+                          </h6>
+                          <h6>{{complejo.localidad}}</h6>
+                          <!-- <ion-item>De: {{reservacion.horaInicial | date:'yyyy-MM-dd HH:mm'}}</ion-item>
+                          <ion-item>A: {{reservacion.horaFinal | date:'yyyy-MM-dd HH:mm'}}</ion-item>
+                          <ion-item>Total a pagar: {{canchaId.precio * auxHoras}}</ion-item>
                           <ion-item>Complejo: {{complejo.nombre}}</ion-item>
-                          <ion-item>Lugar: {{complejo.localidad}}</ion-item>
-                          <ion-item>Lugar: {{reservacion.idCancha}}</ion-item>
-                          <ion-item>Lugar: {{reservacion.idUsuario}}</ion-item>
+                          <ion-item>Lugar: {{complejo.localidad}}</ion-item> -->
+                          
 
                       </ion-card>
   
@@ -324,16 +358,20 @@
                     <ion-button type="submit"
                                 color="tertiary"
                                 shape="round"
-                                (click)="goCancha()">
+                                (click)="goHorarios()">
                         Regresar
                     </ion-button>
                 </ion-col>
+              </ion-row>
+              <ion-row>
                 <ion-col>
                     <ion-button type="submit"
-                                color="tertiary"
+                                color="light"
                                 shape="round"
+                                expand="full"
+                                fill="outline"
                                 (click)="agregarReservacion()">
-                        Ver resumen
+                        Confirmar Reserva
                     </ion-button>
                 </ion-col>
             </ion-row>

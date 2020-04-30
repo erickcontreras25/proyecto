@@ -1,0 +1,27 @@
+.masters {
+  width: 100%;
+  }
+.back {
+    background-color: rgb(197, 216, 201);
+}
+.card
+{
+box-shadow:none !important
+}
+.img {
+  width: 500px;
+  height: 220px;
+}
+
+ion-slides {
+  height: auto;
+}
+
+ion-content.background{
+  --ion-background-color: #22C94A;
+  opacity: 0.8;
+}
+
+ion-icon.size {
+  font-size: 35px;
+}

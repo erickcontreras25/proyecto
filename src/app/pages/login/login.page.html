@@ -109,17 +109,22 @@
                   <img src="/assets/img/im2.png">
                 </ion-col>
               </ion-row>
+
+              <ion-list>
+                <ion-item>
+                  <ion-label>¿Qué eres?</ion-label>
+                  <ion-select [(ngModel)]="perfil.isAdmin"
+                              name="isAdmin">
+                    <ion-select-option value="true" >Admin</ion-select-option>
+                    <ion-select-option value="false" >Usuario</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+
                 <ion-row>
                     <ion-col>  
                         <ion-list>
 
-                          <ion-item>
-                            <ion-label>Nombre</ion-label>
-                            <ion-input type="text"
-                                       name="nombre"
-                                       [(ngModel)]="perfil.nombre"
-                                        required></ion-input>
-                            </ion-item>
                             <ion-item>
                               <ion-label>Nombre de usuario</ion-label>
                               <ion-input type="text"
@@ -156,7 +161,7 @@
                     <ion-button type="submit"
                                 color="tertiary"
                                 shape="round"
-                                (click)="agregarUsuario()">
+                                (click)="registro()">
                         Crear usuario
                     </ion-button>
                 </ion-col>

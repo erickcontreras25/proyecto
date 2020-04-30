@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Cancha } from 'src/models/cancha.models';
 import { ApiserviService } from 'src/app/services/apiservi.service';
 import { Complejo } from 'src/models/complejo.models';
+import { User } from 'src/models/user.models';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { NavController, IonSlides } from '@ionic/angular';
+import { AlertaServiceService } from 'src/app/services/alerta-service.service';
 
 @Component({
   selector: 'app-cancha',
@@ -9,6 +13,7 @@ import { Complejo } from 'src/models/complejo.models';
   styleUrls: ['./cancha.page.scss'],
 })
 export class CanchaPage implements OnInit {
+  @ViewChild('slidePrincipal', {static: true}) slides: IonSlides;
 
 
   canchas: Cancha[] = [];
@@ -23,26 +28,32 @@ export class CanchaPage implements OnInit {
     idComplejo: null
   };
 
+  perfil: User;
 
-  constructor(private apiServi: ApiserviService) { }
+
+  constructor(private apiServi: ApiserviService,
+              private usuarioService: UsuarioService,
+              private navCtrl: NavController,
+              private alertaService: AlertaServiceService) { }
 
   ngOnInit() {
-    this.idUsu = this.apiServi.getAuxUsu();
 
-    this.apiServi.getComplejoAdmin(this.idUsu)
+    this.slides.lockSwipes(true);
+
+    this.perfil = this.usuarioService.getUsuario();
+
+    this.obtenerComplejoAdmin(this.perfil.id);
+
+  }
+
+
+  obtenerComplejoAdmin(id: string) {
+    this.apiServi.getComplejoAdmin(id)
     .subscribe((resp: Complejo[]) => {
       this.complejos = resp;
       console.log('SERVICIO', resp);
     });
   }
-
-  // obtenerCancha() {
-  //   this.apiServi.getCancha()
-  //   .subscribe((resp: Cancha[]) => {
-  //     this.canchas = resp;
-  //     console.log('EL SERVICIO SI SIRVE', resp);
-  //   });
-  // }
 
   obtenerCanchaId() {
     this.apiServi.getCanchaId(this.cancha.idCancha)
@@ -51,37 +62,6 @@ export class CanchaPage implements OnInit {
     });
   }
 
-  agregarCancha() {
-
-    const fileInput: any = document.getElementById('img');
-    const file = fileInput.files[0];
-
-    const imgPromise = this.getFileBlob(file);
-
-    imgPromise.then(blob => {
-      this.cancha.foto = blob;
-
-      this.apiServi.postCancha(this.cancha)
-    .subscribe((data) => {
-      this.canchas.push(this.cancha);
-      this.cancha = {
-        idCancha: 0,
-        precio: null,
-        foto: null,
-        idComplejo: null
-      };
-      window.alert('AGREGADO');
-    },
-    (error) => {
-      console.log(error);
-    }
-    );
-
-
-    });
-
-
-  }
 
   modificarCancha() {
     this.apiServi.putCancha(this.cancha.idCancha, this.cancha)
@@ -109,7 +89,56 @@ export class CanchaPage implements OnInit {
   }
 
 
-  getFileBlob(file) {
+
+  obtenerIdComplejo(id: number) {
+    this.cancha.idComplejo = id;
+    console.log('ESTE ES EL ID DEL COMPLEJO ' + this.cancha.idComplejo);
+  }
+
+
+
+
+  // --------------------------------------------METODOS CANCHAS--------------------------------------
+  agregarCancha() {
+
+    const fileInput: any = document.getElementById('imgCancha');
+    const file = fileInput.files[0];
+    const imgPromise = this.getFileBlobCancha(file);
+
+    imgPromise.then(blob => {
+      this.cancha.foto = blob;
+
+      this.apiServi.postCancha(this.cancha)
+    .subscribe((data) => {
+      this.canchas.push(this.cancha);
+      this.cancha = {
+        idCancha: 0,
+        precio: null,
+        foto: null,
+        idComplejo: null
+      };
+      this.alertaService.alertaInformativa('Cancha agregada');
+      this.navCtrl.navigateRoot('/inicio');
+    },
+    (error) => {
+      console.log(error);
+    }
+    );
+    });
+  }
+
+  obtenerCanchasComplejo(id: number) {
+    this.apiServi.getCanchaComplejo(id)
+    .subscribe((resp: Cancha[]) => {
+      this.canchas = resp;
+    });
+  }
+
+  idCancha(id: number) {
+    this.cancha.idCancha = id;
+  }
+
+  getFileBlobCancha(file) {
     const reader = new FileReader();
     return new Promise(function(resolve, reject) {
 
@@ -118,11 +147,31 @@ export class CanchaPage implements OnInit {
           resolve(e.target.result);
         };
       })(file);
-
       reader.readAsDataURL(file);
-
     });
   }
 
+
+
+
+
+
+  goSlide1() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(0);
+    this.slides.lockSwipes(true);
+  }
+
+  goSlideCancha() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(1);
+    this.slides.lockSwipes(true);
+  }
+
+  goSlideVerCancha() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(2);
+    this.slides.lockSwipes(true);
+  }
 
 }

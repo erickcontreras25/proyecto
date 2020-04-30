@@ -1,22 +1,22 @@
 <app-header titulo="Crear complejo"></app-header>
 
 
-<ion-content>
+<ion-content class="background">
 
-  <h1>Complejo</h1>
+  <br>
 
-  
+<!-- <form #formulario="ngForm" (ngSubmit)="crearComplejo()">
 
-
-<form #formulario="ngForm" (ngSubmit)="crearComplejo()">
+  <ion-item class="text-center">
+    Agrega una imagen de tu complejo
+  </ion-item>
 
   <ion-item>
-    <ion-label>Foto</ion-label>
-    <input type="file"
-    id="img"
-    name="img"
-   ngModel
-   required>
+      <input type="file"
+             id="img"
+             name="img"
+             ngModel
+             required>
   </ion-item>
 
   <ion-list>
@@ -50,7 +50,7 @@
   </ion-list>
 
   <ion-button expand="full" type="submit"
-  [disabled]="formulario.invalid" routerLink="/inicio">
+              [disabled]="formulario.invalid">
       Guardar
   </ion-button>
 
@@ -64,14 +64,220 @@
   </ion-row>
     <img src={{item.foto}} alt="200" width="500">
     
-    <!-- <ion-item>
+    ESTE ESTABA COMENTADO
+    <ion-item>
       <ion-icon slot="start" name="trash-outline" (click)="eliminarReservacion(item.idReservacion)">Eliminar reservacion</ion-icon>
-    </ion-item> -->
-</ion-card>
+    </ion-item>
+</ion-card> -->
 
 
-<div>
-  <a routerLink="/login">Cerrar Sesion</a>
-</div>
+
+<ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
+    
+  <ion-slide >
+
+    <form #formulario="ngForm">
+      <ion-grid fixed>
+
+        <ion-row>
+          <ion-col>
+            <!-- <img src="/assets/img/im2.png" alt="10" width="20"> -->
+            <ion-icon class="size" color="dark" name="tv-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+      
+        <ion-row>
+          <ion-col>
+              <div>
+
+                <h4 style="color: black;">Dale un nombre al complejo</h4>
+                <ion-item class="ion-text-center">
+                  <ion-input type="text"
+                              class="ion-text-left"                              
+                              name="nombreComplejo"
+                              placeholder="Nombre"
+                             [(ngModel)]="complejo.nombre"
+                             required>
+                            </ion-input>
+                </ion-item>
+
+                <br>
+
+                <h4 style="color: black;">Seleccion una imagen para tu complejo</h4>
+                <ion-item>
+                    <input type="file"
+                           id="img"
+                           name="img"
+                           ngModel
+                           required>
+                </ion-item>                
+
+              </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="center">
+          <ion-col>
+            
+            <ion-button type="submit"
+                        color="tertiary"
+                        shape="round"
+                        (click)="goSlide2()"
+                        [disabled]="formulario.invalid">
+              Siguiente
+              <ion-icon name="caret-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </form>
+  </ion-slide>
+
+  <!-- -----------------------SLIDE 2----------------------------- -->
+  <ion-slide>
+    <ion-grid fixed>
+          <form>
+            <ion-row>
+              <ion-col>
+                <!-- <img src="/assets/img/im2.png"> -->
+                <ion-icon class="size" color="dark" name="time-outline"></ion-icon>
+              </ion-col>
+            </ion-row>
+              <ion-row>
+                  <ion-col>  
+
+                      <div>
+                        <h4 style="color: black;">Coloca la direccion donde se ubica el complejo</h4>
+                        <ion-item class="ion-text-center">
+                          <ion-input type="string"
+                                      class="ion-text-left"
+                                      placeholder="Direccion"
+                                      name="localidad"
+                                     [(ngModel)]="complejo.localidad"
+                                     required>
+                          </ion-input>
+                        </ion-item>
+
+                        <h4 style="color: black;">En que horario te gustaria que reservaran tus clientes</h4>
+
+                        <ion-item>
+                          <ion-label>Hora Inicio</ion-label>
+                          <ion-datetime displayFormat="HH:mm" 
+                                      name="horaInicio"
+                                      minuteValues="0" 
+                                      [(ngModel)]="complejo.horaInicio">
+                          </ion-datetime>
+                        </ion-item>
+                        <ion-item>
+                          <ion-label>Hora Cierre</ion-label>
+                          <ion-datetime displayFormat="HH:mm" 
+                                      name="horaCierre"
+                                      minuteValues="0"
+                                      [(ngModel)]="complejo.horaCierre">
+                          </ion-datetime>
+
+                        </ion-item>                          
+                          
+                      </div>
+                  </ion-col>
+              </ion-row>
+
+              <ion-row>
+              <ion-col>
+                <ion-button type="submit"
+                          color="tertiary"
+                          shape="round"
+                          (click)="goSlide1()">
+                          <ion-icon name="caret-back-outline"></ion-icon>
+                          Regresar
+                        </ion-button>
+              </ion-col>
+              <ion-col>
+                  <ion-button type="submit"
+                              color="tertiary"
+                              shape="round"
+                              (click)="goSlide3()">
+                      Siguiente
+                      <ion-icon name="caret-forward-outline"></ion-icon>
+                  </ion-button>
+              </ion-col>
+          </ion-row>
+          </form>
+      </ion-grid>
+
+    </ion-slide>
+
+
+<!-- -------------------------------SLIDE 3------------------------------------- -->
+    <ion-slide>
+      <ion-grid fixed>
+            <form>
+              <ion-row>
+                <ion-col>
+                  <!-- <img src="/assets/img/im2.png"> -->
+                  <ion-icon class="size" color="dark" name="compass-outline"></ion-icon>
+                </ion-col>
+              </ion-row>
+                <ion-row>
+                    <ion-col>  
+  
+                      <h4 style="color: black;">Obten tu ubicacion para que tu complejo pueda salir en el mapa</h4>
+
+                      <ion-item class="ion-text-center">
+                        <ion-spinner name="lines-small"
+                                     *ngIf="cargando"></ion-spinner>
+                        <ion-button (click)="loadMap()">Obtener mi ubicacion actual</ion-button>
+                        <ion-label *ngIf="listo">
+                          <ion-icon class="size" color="success" name="checkmark-done-outline"></ion-icon>
+                        </ion-label>
+                      </ion-item>
+                        
+                    </ion-col>
+                </ion-row>
+                <ion-row class="center">
+                  <ion-col>
+                    <ion-button type="submit"
+                                color="tertiary"
+                                shape="round"
+                                (click)="goSlide2()">
+                                <ion-icon name="caret-back-outline"></ion-icon>
+                        Regresar
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <h4 style="color: black;">Tambien puedes colocarla despues</h4>
+              </ion-col>
+            </ion-row>
+            <ion-row class="center">
+              <ion-col>
+                <ion-button type="submit"
+                                color="tertiary"
+                                shape="round"
+                                (click)="crearComplejo()">
+                        Crear complejo
+                    </ion-button>
+              </ion-col>
+            </ion-row>
+            </form>
+        </ion-grid>
+  
+      </ion-slide>
+
+
+</ion-slides>
+
+
+
+
+
+
+
+
+
+
+
 
 </ion-content>
