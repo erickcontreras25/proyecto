@@ -18,19 +18,21 @@
           </ion-item>
         </ion-list>
         <br>
-        <div>
-          <ion-label>Dale nombre al torneo</ion-label>
+        <div *ngIf="complejo.idComplejo!=0">
+          <h4>Dale nombre al torneo</h4>
           <ion-item>
             <ion-input name="nombre"
                         type="text"
                         placeholder="Nombre"
+                        minlength="5"
+                        maxlength="15"
                         required
                         [(ngModel)]="torneo.nombre"></ion-input>
           </ion-item>
         </div>
         <br>
-        <div>
-          <ion-label>Cuantos equipos quieres que participen</ion-label>
+        <div *ngIf="complejo.idComplejo!=0">
+          <h4>Cuantos equipos quieres que participen</h4>
           <ion-item>
             <ion-input name="cantEquipos"
                         type="number"
@@ -39,7 +41,7 @@
                         [(ngModel)]="torneo.cantEquipos"></ion-input>
           </ion-item>
         </div>
-        <ion-row>
+        <ion-row *ngIf="complejo.idComplejo!=0">
           <ion-col>
             <ion-button color="success"
                         shape="round" fill="outline"
@@ -51,17 +53,22 @@
     </form>
     </ion-slide>
 
+<!-- ----------------------------------------------------SLIDE 3-------------------------------------------- -->
 
     <ion-slide>
       <ion-grid>
+        <form>
         <div>
-          <ion-label>Quieres agregar una descripcion al torneo como ser los premios. Tambien puedes omitir este y colocar una foto en su lugar</ion-label>
+          <ion-label>Agrega una descripción, pueden ser los premios que se entregaran o lo que quieras.</ion-label>
+          <br>
+          <ion-label>También puedes dejar en blanco y agregar una imagen en su lugar.</ion-label>
+          <br>
+          <ion-label>O ambas.</ion-label>
           <ion-item>
-            <ion-input name="descripcion"
-                        type="text"
-                        placeholder="descripcion"
-                        required
-                        [(ngModel)]="torneo.descripcion"></ion-input>
+            <ion-textarea rows="6" cols="20" 
+                          placeholder="Escribe aquí..." 
+                          name="descripcion"
+                          [(ngModel)]="torneo.descripcion"></ion-textarea>
           </ion-item>
           <br>
           <ion-item>
@@ -86,19 +93,22 @@
                         >Continuar</ion-button>
           </ion-col>
         </ion-row>
+      </form>
       </ion-grid>
     </ion-slide>
 
+<!-- ----------------------------------------------------SLIDE 3-------------------------------------------- -->
 
     <ion-slide>
       <ion-grid>
-        <div>
-          <ion-label>Que dia se llevara a cabo el torneo</ion-label>
+        <ion-item>
+          <ion-label>¿Cuándo se realizara el torneo?</ion-label>
           <ion-datetime displayFormat="D MMM YYYY" 
-                                    name="diaTorneo"                                      
-                                    [(ngModel)]="torneo.diaTorneo">
+                                    name="diaTorneo"
+                                    [(ngModel)]="torneo.diaTorneo"
+                                    (ngModelChange)='verificar()'>
                       </ion-datetime>
-        </div>
+        </ion-item>
         <ion-row>
           <ion-col>
             <ion-button color="success"
@@ -107,17 +117,19 @@
                         >Regresar</ion-button>
           </ion-col>
           <ion-col>
-            <ion-button color="success"
+            <!-- <ion-button color="success"
                         shape="round" fill="outline"
-                        
-                        >Verificar</ion-button>
+                        (click)="verificar()"
+                        >Verificar</ion-button> -->
+                  <ion-button *ngIf="ver"
+                              color="success"
+                              shape="round"
+                              (click)="crearTorneo()">
+                CREAR
+            </ion-button>
           </ion-col>
         </ion-row>
-        <ion-button expand="full" 
-                    type="submit"
-                    (click)="crearTorneo()">
-            CREAR
-        </ion-button>
+        
       </ion-grid>
     </ion-slide>
 

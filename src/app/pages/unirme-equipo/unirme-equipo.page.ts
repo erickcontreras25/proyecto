@@ -17,7 +17,7 @@ export class UnirmeEquipoPage implements OnInit {
   perfil: User;
 
   equipos: Equipo[] = [];
-  equipo: Equipo = new Equipo(0, '', '');
+  equipo: Equipo = new Equipo(0, '', 0, '');
 
   equipoUsers: EquipoUser[] = [];
   equipoUser: EquipoUser = new EquipoUser(0, '');
@@ -57,8 +57,8 @@ export class UnirmeEquipoPage implements OnInit {
       this.navCtrl.navigateRoot('/inicio');
     },
     (error) => {
-      this.alertaService.alertaInformativa('Ya estas unido a este equipo');
-      console.log(error);
+      // this.alertaService.alertaInformativa('Ya estas unido a este equipo');
+      this.alertaService.alertaInformativa(error['error']);
     });
   }
 

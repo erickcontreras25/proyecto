@@ -30,7 +30,7 @@ export class EquipoService {
   }
 
   putEquipo(id: number, equipo: Equipo) {
-    return this.http.put(`${this.url}/equipo`, equipo, {responseType: 'text'});
+    return this.http.put(`${this.url}/equipo/${id}`, equipo, {responseType: 'text'});
   }
   
   deleteEquipo(id: number) {

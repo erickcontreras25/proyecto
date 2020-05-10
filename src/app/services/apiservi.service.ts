@@ -97,7 +97,7 @@ export class ApiserviService {
   getReservacionXUser(n1: string) {
     return this.http.get(`${this.url}/reservacion/p?n1=${n1}`);
   }
-  getReservacionCancha(n1: number) {
+  getReservacionComplejo(n1: number) {
     return this.http.get(`${this.url}/reservacion/q?n1=${n1}`);
   }
   getReservacionId(id: number) {

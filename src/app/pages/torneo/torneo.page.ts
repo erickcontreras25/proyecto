@@ -19,7 +19,7 @@ export class TorneoPage implements OnInit {
   @ViewChild('slidePrincipal', {static: true}) slides: IonSlides;
 
   complejos: Complejo[] = [];
-  complejo: Complejo = new Complejo(0, '', '', null, false, 0, 0, new Date(), new Date(), '');
+  complejo: Complejo = new Complejo(0, null, null, null, null, false, 0.0, 0.0, new Date(), new Date(), false, false, null);
 
   torneo: Torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
   torneoUser: Torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);

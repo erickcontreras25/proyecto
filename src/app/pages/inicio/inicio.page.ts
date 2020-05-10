@@ -25,14 +25,14 @@ export class InicioPage implements OnInit, AfterViewInit {
   aux2;
 
   complejos: Complejo[] = [];
-  complejo = {
-    idComplejo: 0,
-    nombre: null,
-    localidad: null,
-    foto: null,
-    estado: null,
-    idAdmin: null
-  };
+  // complejo = {
+  //   idComplejo: 0,
+  //   nombre: null,
+  //   localidad: null,
+  //   foto: null,
+  //   estado: null,
+  //   idAdmin: null
+  // };
 
   // perfil: User;
 
@@ -50,7 +50,7 @@ export class InicioPage implements OnInit, AfterViewInit {
     // const lat = 15.5;
     // const lng =  -88.0333;
 
-    this.obtenerComplejos();
+    
 
     
     this.user = this.usuarioService.getUsuario();
@@ -62,7 +62,8 @@ export class InicioPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
+    this.obtenerComplejos();
+    console.log('ESTA RECARGANDO');
   }
 
   logout() {

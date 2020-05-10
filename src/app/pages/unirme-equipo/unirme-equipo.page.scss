@@ -7,3 +7,8 @@
 .izquierda{
     text-align: left;
 }
+
+ion-content.background{
+    --background: url(/assets/img/fondoequipo.jpg) 0 0/100% 100% no-repeat;
+    opacity: 0.8;
+}

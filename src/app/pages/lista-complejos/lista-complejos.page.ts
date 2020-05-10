@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Complejo } from 'src/models/complejo.models';
 import { ApiserviService } from 'src/app/services/apiservi.service';
-import { IonSlides, NavController, ActionSheetController } from '@ionic/angular';
+import { IonSlides, NavController, ActionSheetController, AlertController } from '@ionic/angular';
 import { Cancha } from 'src/models/cancha.models';
 import { User } from 'src/models/user.models';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { AlertaServiceService } from 'src/app/services/alerta-service.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Reservacion } from 'src/models/reservacion.models';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-lista-complejos',
@@ -16,7 +18,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 export class ListaComplejosPage implements OnInit {
   @ViewChild('slidePrincipal', {static: true}) slides: IonSlides;
 
-  complejos: Complejo[] = [];
+  
   // complejo = {
   //   idComplejo: 0,
   //   nombre: '',
@@ -29,10 +31,12 @@ export class ListaComplejosPage implements OnInit {
   //   horaCierre: new Date(),
   //   userId: ''
   // };
-  complejo: Complejo = new Complejo(0, '', '', null, false, 0, 0, new Date(), new Date(), '');
+  complejo: Complejo = new Complejo(0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
+  complejos: Complejo[] = [];
 
   cargando = false;
   listo = false;
+  hoy = moment().format('YYYY-MM-DDTHH:mm');
 
   canchas: Cancha[] = [];
   cancha = {
@@ -41,6 +45,9 @@ export class ListaComplejosPage implements OnInit {
     foto: null,
     idComplejo: null
   };
+
+  reservaComplejo: Reservacion = new Reservacion(0, new Date(), new Date(), false, false, 0, '');
+  reservasComplejo: Reservacion[] = [];
 
   perfil: User;
 
@@ -51,7 +58,8 @@ export class ListaComplejosPage implements OnInit {
               private navCtrl: NavController,
               private alertaService: AlertaServiceService,
               private geolocation: Geolocation,
-              public actionSheetController: ActionSheetController) { }
+              public actionSheetController: ActionSheetController,
+              public alertController: AlertController) { }
 
   ngOnInit() {
 
@@ -76,7 +84,7 @@ export class ListaComplejosPage implements OnInit {
     this.apiServi.getComplejoId(id)
     .subscribe( (resp: Complejo) => {
       this.complejo = resp;
-      console.log(this.complejo);
+      console.log(this.complejo);                
     });
   }
 
@@ -89,11 +97,14 @@ export class ListaComplejosPage implements OnInit {
 
 
   modificarSinFoto() {
+    // this.complejo.latitud = 15.51789;
+    // this.complejo.longitud = -88.03639;
     this.apiServi.putComplejo(this.complejo.idComplejo, this.complejo)
       .subscribe((data) => {
         this.complejos.push(this.complejo);
-        // this.limpiar();
-        window.alert('ACTUALIZADO CON EXITO');
+        this.clear();
+        this.obtenerComplejos();
+        this.alertaService.alertaInformativa('Actualizado con exito');
         this.navCtrl.navigateRoot('/inicio');
       },
       (error) => {
@@ -111,17 +122,7 @@ export class ListaComplejosPage implements OnInit {
     imgPromise.then(blob => {
       this.complejo.foto = blob;
 
-      this.apiServi.putComplejo(this.complejo.idComplejo, this.complejo)
-      .subscribe((data) => {
-        this.complejos.push(this.complejo);
-        // this.limpiar();
-        window.alert('ACTUALIZADO CON EXITO');
-        this.navCtrl.navigateRoot('/inicio');
-      },
-      (error) => {
-        console.log(error);
-      }
-      );
+      this.modificarSinFoto();
   });
   }
 
@@ -201,12 +202,65 @@ export class ListaComplejosPage implements OnInit {
   }
 
 
-  clear() {
-    this.complejo = new Complejo(0, '', '', null, false, 0, 0, new Date(), new Date(), '');
+// -------------------------------------------------METODOS RESERVAS---------------------------------------------
+
+  obtenerReservasxComplejo(id: number) {
+    this.apiServi.getReservacionComplejo(id)
+    .subscribe((resp: Reservacion[]) => {
+      this.reservasComplejo = resp;
+      console.log(resp);
+    });
+  }
+
+  eliminarReservacion(id: number, dia: Date) {
+    const d = moment(dia).format('YYYY-MM-DDTHH:mm');
+
+    if (d < this.hoy) {
+      return this.alertaService.alertaInformativa('No puedes eliminar esta reserva porque ya se vencio.')
+    }
+
+    this.apiServi.deleteReservacion(id)
+    .subscribe( resp => {
+      console.log('ELIMINADO CON EXITO');
+    });
+  }
+
+  async presentAlertConfirmEliminar() {
+    const alert = await this.alertController.create({
+      header: 'Quieres eliminar esta reservacion!',
+      message: '<strong>Eliminar</strong>??',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.complejo.estado = !this.complejo.estado;
+            this.modificarSinFoto();
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 
-  // -------------------------------------------ACTION SHEET----------------------
+// -------------------------------------------------------------------------------------------------
+
+
+  clear() {
+    this.complejo = new Complejo(0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
+  }
+
+
+// -----------------------------------------------ACTION SHEET-----------------------------------------------
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Actualizar',
@@ -232,7 +286,7 @@ export class ListaComplejosPage implements OnInit {
           this.goSlideActualizarHorario();
         }
       }, {
-        text: 'Foto',
+        text: 'Imagen',
         icon: 'camera-reverse',
         cssClass: 'morado',
         handler: () => {
@@ -251,6 +305,34 @@ export class ListaComplejosPage implements OnInit {
   }
 
 
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Informa a tus clientes si estas Abierto/Cerrado!',
+      message: '<strong>Confirma el cambio dando OK</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            this.complejo.estado = !this.complejo.estado;
+            this.modificarSinFoto();
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
   // -------------------------------------------------SLIDE--------------------------------
   goSlide1() {
     this.slides.lockSwipes(false);
@@ -258,7 +340,7 @@ export class ListaComplejosPage implements OnInit {
     this.slides.lockSwipes(true);
   }
 
-  goSlideActualizar() {
+  goSlide2() {
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
     this.slides.lockSwipes(true);

@@ -57,6 +57,7 @@ export class ReservarPage implements OnInit {
     horaInicial: new Date(),
     horaFinal: new Date(),
     pago: false,
+    pagoParcial: false,
     idCancha: 0,
     userId: ''
   };
@@ -127,6 +128,7 @@ export class ReservarPage implements OnInit {
         horaInicial: new Date(),
         horaFinal: new Date(),
         pago: false,
+        pagoParcial: false,
         idCancha: 0,
         userId: ''
       };
@@ -148,6 +150,7 @@ export class ReservarPage implements OnInit {
         horaInicial: new Date(),
         horaFinal: new Date(),
         pago: false,
+        pagoParcial: false,
         idCancha: 0,
         userId: ''
       };
@@ -178,6 +181,7 @@ export class ReservarPage implements OnInit {
     this.apiServi.getCanchaComplejo(id)
     .subscribe((resp: Cancha[]) => {
       this.canchas = resp;
+      this.goCancha();
       // console.log('CANCHAS ', this.canchas);
     });
   }
@@ -191,22 +195,20 @@ export class ReservarPage implements OnInit {
 
 
   obtenerReservas(id: number) {
-    this.apiServi.getReservacionCancha(id)
+    this.apiServi.getReservacionComplejo(id)
     .subscribe((resp: Reservacion[]) => {
       this.reser = resp;
       console.log(this.reser);
     });
   }
 
-  obtenerReservaciones() {
-    this.validarFecha();
-  }
+
   validarFecha() {
 
-    const ini = moment().format('MM-DD-YYYY H:mm');
+    const ini = moment().format('MM-DD-YYYY HH:mm');
 
-    const dInicial = moment(this.reservacion.horaInicial).format('MM-DD-YYYY H:mm');
-    const dFinal = moment(this.reservacion.horaFinal).format('MM-DD-YYYY H:mm');
+    const dInicial = moment(this.reservacion.horaInicial).format('MM-DD-YYYY HH:mm');
+    const dFinal = moment(this.reservacion.horaFinal).format('MM-DD-YYYY HH:mm');
 
     const abre = moment(this.reservacion.horaInicial).format('HH');
     const cierra = moment(this.reservacion.horaFinal).format('HH');
@@ -214,14 +216,22 @@ export class ReservarPage implements OnInit {
     const cierraComplejo = moment(this.complejo.horaCierre).format('HH');
 
     if (dInicial <= ini || dFinal <= ini) {
+      this.volver();
       return alert('La hora inicial o final no puede ser menor que la hora actual');
     }
 
+    if (dFinal < dInicial) {
+      this.volver();
+      return alert('La hora final no puede ser menor que la hora inicial.');
+    }
+
     if (dInicial === dFinal) {
+      this.volver();
       return alert('La hora final no puede ser igual que la inicial');
     }
 
     if (abre < abreComplejo || cierra > cierraComplejo) {
+      this.volver();
       return alert('Solo puede reservar en horario que permite el complejo');
     }
 
@@ -230,11 +240,12 @@ export class ReservarPage implements OnInit {
       const fechFinal = moment(this.reser[i].horaFinal).format('MM-DD-YYYY H:mm');
 
       if (dInicial > fechInicial && dInicial < fechFinal || dFinal > fechInicial && dFinal < fechFinal) {
+        this.volver();
         return alert('El horario de ' + fechInicial + ' a ' + fechFinal + ' no esta disponible');
       }
 
       if (dInicial === fechInicial || dFinal === fechFinal) {
-        this.auxReser = false;
+        this.volver();
         return alert('Este horario no esta disponible');
       }
 
@@ -242,6 +253,12 @@ export class ReservarPage implements OnInit {
     const inic = moment(this.reservacion.horaInicial);
     const fin = moment(this.reservacion.horaFinal);
     this.auxHoras = fin.diff(inic, 'hours');
+
+    if (this.auxHoras >= 4) {
+      this.volver();
+      return alert('No puedes reservar por más de 3 horas.');
+    }
+
     this.auxReser = true;
     return alert('Horario disponible');
   }

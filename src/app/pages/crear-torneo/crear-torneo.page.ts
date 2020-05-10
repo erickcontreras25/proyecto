@@ -7,6 +7,7 @@ import { AlertaServiceService } from 'src/app/services/alerta-service.service';
 import { User } from 'src/models/user.models';
 import { Torneo } from 'src/models/torneo.models';
 import { Complejo } from 'src/models/complejo.models';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-crear-torneo',
@@ -19,11 +20,13 @@ export class CrearTorneoPage implements OnInit {
 
   perfil: User;
 
+  ver = false;
+
   torneo: Torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
   torneos: Torneo[] = [];
 
   complejos: Complejo[] = [];
-  complejo: Complejo = new Complejo(0, '', '', null, false, 0, 0, new Date(), new Date(), '');
+  complejo: Complejo = new Complejo(0, null, null, null, null, false, 0.0, 0.0, new Date(), new Date(), false, false, null);
 
   constructor(public actionSheetController: ActionSheetController,
               private usuarioService: UsuarioService,
@@ -57,10 +60,11 @@ export class CrearTorneoPage implements OnInit {
   }
 
   crearTorneo() {
-    if (this.torneo.premioFoto !== '') {
-      this.crearTorneoConImagen();
-    } else {
+    if (this.torneo.premioFoto === '' || this.torneo.premioFoto === undefined || this.torneo.premioFoto === null) {
+      console.log('AQUI ESTA');
       this.postTorneo();
+    } else {
+      this.crearTorneoConImagen();
     }
   }
 
@@ -115,6 +119,18 @@ export class CrearTorneoPage implements OnInit {
   }
 
 
+  verificar() {
+    const hoy = moment().format('MM-DD-YYYY');
+    const diaTorneo = moment(this.torneo.diaTorneo).format('MM-DD-YYYY');
+
+    if (diaTorneo <= hoy) {
+      this.ver = false;
+      this.alertaService.alertaInformativa('El dia del torneo no puede ser igual al dia de hoy o anterior a el.')
+    } else {
+      this.ver = true;
+    }
+
+  }
 
 
 

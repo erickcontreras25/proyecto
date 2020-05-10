@@ -1,28 +1,28 @@
 <app-header titulo="Unirme Equipo"></app-header>
 
-<ion-content>
+<ion-content class="background">
 
   <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
     <ion-slide>
       <ion-grid>
 
-        <h1 style="text-shadow: 1px 1px 1px black; color: white;">Equipos</h1>  
+        <h1 style="color: black;">Equipos</h1>  
 
-        <div *ngFor="let user of equipos">
-          <ion-card class="blanco">
-            <ion-row >
-              <ion-col size="4"><h5>{{user.nombre}}</h5></ion-col>
-              <ion-col class="derecha">
+        <div>
+            <ion-row *ngFor="let user of equipos">
+              <ion-col size="6" class="izquierda" *ngIf="perfil.id != user.userId"><h5>{{user.nombre}}</h5></ion-col>
+              <ion-col class="derecha" *ngIf="perfil.id != user.userId">
                 <ion-button color="success"
                             class="derecha"      
-                            shape="round" fill="clear"                
+                            fill="solid"                
                             (click)="llenar(user.idEquipo)"
-                            (click)="uniraEquipo()">UNIRME</ion-button>
+                            (click)="uniraEquipo()">
+                            <ion-icon name="add-circle-outline"></ion-icon>
+                            UNIRME
+                            </ion-button>
                 
               </ion-col>
             </ion-row>            
-            
-          </ion-card>  
         </div>
 
       </ion-grid>

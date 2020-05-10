@@ -1,5 +1,5 @@
 <ion-header no-border>
-  <ion-toolbar>
+  <ion-toolbar><h3>ARMALAPOTRA</h3>
     <ion-buttons slot="end">Cerrar Sesión
       <ion-button (click)="logout()"
                   color="danger">
@@ -18,7 +18,7 @@
   <ion-grid *ngIf="!user.isAdmin">
     <ion-row text-center>
       <ion-col size="6">
-        <ion-card class="ion-text-center" color="light" routerLink="/equipo">
+        <ion-card class="ion-text-center" routerLink="/equipo">
           <ion-card-header>
             <ion-icon color="secondary" class="centrado" name="people-outline"></ion-icon>
           </ion-card-header>
@@ -29,7 +29,7 @@
       </ion-col>
 
       <ion-col size="6">
-        <ion-card class="ion-text-center" color="light" routerLink="/reservar">
+        <ion-card class="ion-text-center" routerLink="/reservar">
           <ion-card-header>
             <ion-icon color="success" class="centrado" name="create-outline"></ion-icon>
           </ion-card-header>
@@ -42,7 +42,7 @@
 
     <ion-row text-center>
       <ion-col size="6">
-        <ion-card class="ion-text-center" color="light" routerLink="/perfil">
+        <ion-card class="ion-text-center" routerLink="/perfil">
           <ion-card-header>
             <ion-icon color="secondary" class="centrado" name="person-circle-outline"></ion-icon>
           </ion-card-header>
@@ -52,7 +52,7 @@
         </ion-card>
       </ion-col>
       <ion-col>
-        <ion-card class="ion-text-center" color="light" routerLink="/torneo-user">
+        <ion-card class="ion-text-center" routerLink="/torneo-user">
           <ion-card-header>
             <ion-icon color="success" class="centrado" name="trophy-outline"></ion-icon>
           </ion-card-header>
@@ -86,9 +86,9 @@
   <ion-grid *ngIf="user.isAdmin">
     <ion-row text-center>
       <ion-col size="6">
-        <ion-card class="ion-text-center" color="light" routerLink="/complejo" routerDirection="forward">
+        <ion-card class="ion-text-center" routerLink="/complejo" routerDirection="forward">
           <ion-card-header>
-            <ion-icon color="secondary" class="centrado" name="add-outline"></ion-icon>
+            <ion-icon color="secondary" name="add-outline"></ion-icon>
           </ion-card-header>
           <ion-card-title>
             Crear complejo
@@ -97,9 +97,9 @@
       </ion-col>
 
       <ion-col>
-        <ion-card class="ion-text-center" color="light" routerLink="/cancha" routerDirection="forward">
+        <ion-card class="ion-text-center" routerLink="/cancha" routerDirection="forward">
           <ion-card-header>
-            <ion-icon color="secondary" class="centrado" name="add-outline"></ion-icon>
+            <ion-icon color="secondary" name="add-outline"></ion-icon>
           </ion-card-header>
           <ion-card-title>
             Crear cancha
@@ -110,7 +110,7 @@
 
     <ion-row text-center>
       <ion-col>
-        <ion-card class="ion-text-center" color="light" routerLink="/torneo" routerDirection="forward">
+        <ion-card class="ion-text-center" routerLink="/torneo" routerDirection="forward">
           <ion-card-header>
             <ion-icon color="success" class="centrado" name="trophy-outline"></ion-icon>
           </ion-card-header>
@@ -121,7 +121,7 @@
       </ion-col>
 
       <ion-col>
-        <ion-card class="ion-text-center" color="light" routerLink="/lista-complejos" routerDirection="forward">
+        <ion-card class="ion-text-center" routerLink="/lista-complejos" routerDirection="forward">
           <ion-card-header>
             <ion-icon color="success" class="centrado" name="list-outline"></ion-icon>
           </ion-card-header>

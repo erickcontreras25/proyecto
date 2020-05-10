@@ -120,14 +120,13 @@
 <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
     
   <ion-slide>
-
-    <form>
-      <ion-grid fixed>
+    <ion-grid>
+      <form>
 
         <ion-row>
           <ion-col>
             <!-- <img src="/assets/img/im2.png" alt="10" width="20"> -->
-            <h1 class="ion-text-center" style="color: white;">Elige el complejo que quieras</h1>
+            <h1 class="ion-text-center" style="color: black;">Elige el complejo que quieras</h1>
           </ion-col>
         </ion-row>
       
@@ -155,7 +154,7 @@
                         shape="round"
                         (click)="obtenerCanchasComplejo(user.idComplejo)"
                         (click)="obtenerComplejo(user.idComplejo)"
-                        (click)="goCancha()">
+                        >
               Elegir cancha
             </ion-button>
 
@@ -176,18 +175,18 @@
             </ion-button>
           </ion-col>
         </ion-row> -->
-
-      </ion-grid>
-    </form>
+      </form>
+    </ion-grid>    
   </ion-slide>
 
   <!-- ----------------------------------------SLIDE CANCHAS----------------------------------------------- -->
   <ion-slide>
-    <ion-grid fixed>
+    <ion-grid>
           <form>
             <ion-row>
               <ion-col>
                 <!-- <img src="/assets/img/im2.png"> -->
+                <h1 class="ion-text-center" style="color: black;">Elige la cancha que mas te guste</h1>
               </ion-col>
             </ion-row>
               <ion-row>
@@ -241,10 +240,10 @@
             <form>
                 <ion-row>
                   <ion-col>
-                    <h3 style="text-shadow: 1px 1px 1px black; color: white; border-radius : 10px;">
-                    En este complejo puede reservar entre <b>{{complejo.horaInicio | date:'HH'}}:00</b>
+                    <h3 style="color: black; border-radius : 10px;">
+                    En este complejo puede reservar entre <b style="color: red;">{{complejo.horaInicio | date:'HH'}}:00</b>
                      y 
-                     <b>{{complejo.horaCierre | date:'HH'}}:00</b>
+                     <b style="color: red;">{{complejo.horaCierre | date:'HH'}}:00</b>
                   </h3>
                   </ion-col>
                 </ion-row>
@@ -296,13 +295,14 @@
 
             <ion-row>
               <ion-col>
-                <h3 style="text-shadow: 1px 1px 1px black; color: white;">Estas reservando por un tiempo de </h3>
-                <h2 *ngIf="auxHoras!=null" style="text-shadow: 1px 1px 1px black; color: white;">{{auxHoras}} horas</h2>
+                <h3 style="color: black;">Estas reservando por un tiempo de </h3>
+                <!-- <h3 style="text-shadow: 1px 1px 1px black; color: black;">Estas reservando por un tiempo de </h3> -->
+                <h2 *ngIf="auxHoras!=null" style="color: red;">{{auxHoras}} horas</h2>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col>
-                <ion-button (click)="obtenerReservaciones()">Verificar Horario</ion-button>
+                <ion-button (click)="validarFecha()">Verificar Horario</ion-button>
               </ion-col>
             </ion-row>
             </form>
@@ -334,7 +334,7 @@
                             <ion-icon class="size" name="cash-outline" color="success"></ion-icon>
                               Total a pagar:
                           </h6>
-                          <h6>Lps.{{canchaId.precio}}.00</h6>                          
+                          <h6>Lps.{{canchaId.precio * auxHoras}}.00</h6>                          
                           <h6>
                             <ion-icon class="size" name="location-outline" color="primary"></ion-icon>
                               Direccion:
@@ -366,10 +366,9 @@
               <ion-row>
                 <ion-col>
                     <ion-button type="submit"
-                                color="light"
+                                color="success"
                                 shape="round"
                                 expand="full"
-                                fill="outline"
                                 (click)="agregarReservacion()">
                         Confirmar Reserva
                     </ion-button>

@@ -29,10 +29,10 @@ export class TorneoUserPage implements OnInit {
   torneosEquipos: TorneoEquipo[] = [];
   torneoEquipos: TorneoEquipo[] = [];
 
-  equipo: Equipo = new Equipo(0, '', '');
+  equipo: Equipo = new Equipo(0, '', 0, '');
   equipos: Equipo[] = [];
 
-  complejo: Complejo = new Complejo(0, '', '', '', false, 0.0, 0.0, new Date(), new Date(), '');
+  complejo: Complejo = new Complejo(0, null, null, null, null, false, 0.0, 0.0, new Date(), new Date(), false, false, null);
 
   hoy = moment().format('YYYY-MM-DDTHH:mm');
 
@@ -100,7 +100,7 @@ export class TorneoUserPage implements OnInit {
 
   registrar() {
     this.torneoEquipo.torneoId = this.torneo.idTorneo;
-    if (this.torneoEquipo.equipoId === 0) {
+    if (this.torneoEquipo.equipoId === 0 || this.torneoEquipo.equipoId === undefined) {
       this.alertaService.alertaInformativa('Primero debes elegir un equipo donde seas capitan.');
     } else {
       this.validar();
@@ -111,16 +111,13 @@ export class TorneoUserPage implements OnInit {
     console.log('IDTORNEO: ' + this.torneoEquipo.torneoId + ' IDEQUIPO: ' + this.torneoEquipo.equipoId);
     this.torneoService.postTorneoEquipo(this.torneoEquipo)
     .subscribe(data => {
-      if (data === 'Torneo ya esta lleno.') {
-        this.alertaService.alertaInformativa(data);
-      } else {
+
         this.torneoEquipos.push(this.torneoEquipo);
         this.alertaService.alertaInformativa('Registrado!!');
         this.navCtrl.navigateRoot('/inicio');
-      }
     },
     (error) => {
-      this.alertaService.alertaInformativa('El equipo ya esta inscrito. Puedes verlo en Mis Torneos');
+      this.alertaService.alertaInformativa(error['error']);
     });
   }
 
@@ -158,7 +155,7 @@ export class TorneoUserPage implements OnInit {
 
 
   clea() {
-    this.complejo = new Complejo(0, '', '', '', false, 0.0, 0.0, new Date(), new Date(), '');
+    this.complejo = new Complejo(0, null, null, null, null, false, 0.0, 0.0, new Date(), new Date(), false, false, null);
   }
 
 

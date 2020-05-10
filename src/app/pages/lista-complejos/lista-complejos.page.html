@@ -1,6 +1,6 @@
 <app-header titulo="Lista complejos"></app-header>
 
-<ion-content class="background">
+<ion-content>
 
 
   <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
@@ -8,7 +8,7 @@
     <ion-slide>
   
       <form>
-        <ion-grid fixed>
+        <ion-grid >
   
           <ion-row>
             <ion-col>
@@ -16,25 +16,38 @@
             </ion-col>
           </ion-row>
         
-          <ion-row>
+          <ion-row class="center">
             <ion-col>
               
                 <div *ngFor='let user of complejos'>
   
                 <ion-card class="ion-text-center back">
-                  <ion-row>
+                  <ion-row class="ion-align-items-center">
+                    <ion-col class="izquierda">
                   <ion-button fill="clear"
                               (click)="obtenerComplejo(user.idComplejo)"
                               (click)="presentActionSheet()">
-                    <ion-icon class="size" color="primary" slot="start" name="reorder-three-outline"></ion-icon>
+                    <ion-icon class="size" color="success"lot="start" name="reorder-three-outline"></ion-icon>
                   </ion-button>
+                </ion-col>
+                <ion-col class="derecha">
+                  <h6 *ngIf="user.estado" style="color: rgb(6, 138, 6);" 
+                      (click)="obtenerComplejoId(user.idComplejo)"
+                      (click)="presentAlertConfirm()">&#8226;Abierto Ahora</h6>
+                  <h6 *ngIf="!user.estado" style="color: green;"
+                      (click)="obtenerComplejoId(user.idComplejo)"
+                      (click)="presentAlertConfirm()">&#8226;Cerrado Ahora</h6>
+                </ion-col>
                 </ion-row>
 
-                  <img class="img" src="{{user.foto}}">
+                  <img src="{{user.foto}}" alt="200" width="500">
                   <ion-card-title>
-                    <ion-label *ngIf="user.estado">Abierto Ahora</ion-label>
-                    <ion-label *ngIf="!user.estado">Cerrado Ahora</ion-label>
+                    {{user.nombre}}
                   </ion-card-title>
+                  <ion-card-subtitle>
+                    <ion-icon name="location-outline" color="primary"></ion-icon>
+                    {{user.localidad}}
+                  </ion-card-subtitle>
 
                   <!-- <ion-row>
                     <ion-col>                 
@@ -92,11 +105,12 @@
                   <ion-row>
                     <ion-col>
                       <ion-button type="submit"
-                          color="tertiary"
-                          
-                          expand="full"
-                          >
-                        Actualizar estado
+                                  color="tertiary"
+                                  expand="full"
+                                  color="success"
+                                  (click)="obtenerReservasxComplejo(user.idComplejo)"
+                                  (click)="goSlide2()">
+                        Ver reservaciones del complejo
                       </ion-button>
                     </ion-col>
                   </ion-row>
@@ -113,51 +127,41 @@
       </form>
     </ion-slide>
   
-    <!-- -----------------------SLIDE ACTUALIZAR----------------------------- -->
+    <!-- -----------------------SLIDE RESERVACIONES----------------------------- -->
     <ion-slide>
       <ion-grid fixed>
             <form>
  
-                <ion-row>
-                    <ion-col>  
-                      <ion-button type="submit"
-                                  color="tertiary"
-                                  
-                                  size="medium"
-                                  (click)="goSlideActualizarDireccion()">
-                                Cambiar direccion
-                      </ion-button> 
-                      <ion-button type="submit"
-                                  color="tertiary"
-                                  
-                                  size="medium"
-                                  (click)="goSlideActualizarUbicacion()">
-                                Cambiar ubicacion
-                      </ion-button>                                        
-                    </ion-col>
-                    
-                </ion-row>
+              <h1 style="color: black;">Reservas</h1>  
 
+              <div>
                 <ion-row>
-                  <ion-col>  
-                    <ion-button type="submit"
-                                color="tertiary"
-                                shape="round"
-                                expand="block"
-                                (click)="goSlideActualizarHorario()">
-                                Cambiar horario
-                    </ion-button>                                        
-                  </ion-col>
-                  <ion-col>  
-                    <ion-button type="submit"
-                                color="tertiary"
-                                shape="round"
-                                expand="block"
-                                (click)="goSlideActualizarFoto()">
-                                Cambiar foto
-                    </ion-button>                                        
-                  </ion-col>
-              </ion-row>
+                  <ion-col size="3"><h6>Usuario</h6></ion-col>
+                  <ion-col size="3"><h6>Dia y hora</h6></ion-col>
+                  <ion-col><h6>¿Realizo el pagó?</h6></ion-col>
+                  <!-- <ion-col></ion-col> -->
+                </ion-row>
+              </div>
+
+              <div>
+                  <ion-row *ngFor="let item of reservasComplejo">
+                    <ion-col size="3"><label>{{item.user.nombreUsuario}}</label></ion-col>
+                    <ion-col size="3"><label>{{item.horaInicial | date:'dd-MMMM HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</label></ion-col>
+                    <ion-col *ngIf="item.pago"><label>Completo <ion-icon color="success" name="checkmark-done-outline"></ion-icon></label></ion-col>
+                    <ion-col *ngIf="item.pagoParcial"><label>50% <ion-icon color="success" name="checkmark-outline"></ion-icon></label></ion-col>
+                    <ion-col *ngIf="!item.pago && !item.pagoParcial"><h6>No</h6></ion-col>
+                    <ion-col *ngIf="!item.pago || !item.pagoParcial">
+                      <ion-button color="danger"
+                                  class="centrado"      
+                                  fill="clear"                
+                                  (click)="eliminarReservacion(item.idReservacion, item.horaInicial)">
+                                  <ion-icon name="trash-outline"></ion-icon>
+                                  </ion-button>
+                      
+                    </ion-col>
+                    <!-- <ion-col *ngIf="item.pago || item.pagoParcial"></ion-col> -->
+                  </ion-row>            
+              </div>
 
             
             </form>
@@ -169,18 +173,19 @@
 
       <!-- -----------------------SLIDE ACTUALIZAR DIRECCION----------------------------- -->
     <ion-slide>
-      <ion-grid fixed>
+      <ion-grid>
             <form>
  
-                <ion-row>
-                  <ion-col>
+                <ion-row class="ion-text-center">
+                  <ion-col class="ion-text-center">
+                    <h4>Actualiza tu dirección</h4>
                     <ion-item>
-                      <ion-label position="floating">Nueva Direccion</ion-label>
-                      <ion-input type="text"                              
-                              name="complejoLocalidad"
-                             [(ngModel)]="complejo.localidad"
-                             required>
-                            </ion-input>
+                      <ion-input type="text"
+                                  class="izquierda"                         
+                                 name="complejoLocalidad"
+                                 [(ngModel)]="complejo.localidad"
+                                 required>
+                                </ion-input>
                     </ion-item>
                   </ion-col>
                 </ion-row>
@@ -188,24 +193,26 @@
                 <ion-row>
                   <ion-col>
                     <ion-button type="submit"
-                        color="tertiary"
-                        shape="round"
-                        (click)="goSlide1()">
+                                fill="outline"
+                                color="tertiary"
+                                shape="round"
+                                (click)="goSlide1()">
+                                <ion-icon name="caret-back-outline"></ion-icon>
                       Regresar
                     </ion-button>
                   </ion-col>
-                </ion-row>
-                
-                <ion-row class="center">
                   <ion-col>
                     <ion-button type="submit"
-                    color="tertiary"
-                    shape="round"
-                    >
-                        Actualizar
+                                fill="outline"
+                                color="tertiary"
+                                shape="round"
+                                (click)="modificarSinFoto()">
+                                <ion-icon name="sync-outline"></ion-icon>
+                        Actualizar                        
                     </ion-button>  
                   </ion-col>
                 </ion-row>
+
             
             </form>
       </ion-grid>  
@@ -219,14 +226,12 @@
  
               <ion-row>
                 <ion-col>  
-                  <ion-item class="ion-text-center">
-                    <ion-label>Obten tu ubicacion para salir en el mapa</ion-label>                    
-                  </ion-item>
+                    <h4>Obten tu ubicacion para salir en el mapa</h4>                    
 
-                  <ion-item class="center">
+                  <ion-item class="ion-text-center">
                     <ion-spinner name="lines-small"
                                  *ngIf="cargando"></ion-spinner>
-                    <ion-button (click)="loadMap()">Obtener mi ubicacion actual</ion-button>
+                    <ion-button (click)="loadMap()" class="centrado">Obtener mi ubicacion actual</ion-button>
                     <ion-label *ngIf="listo">
                       <ion-icon name="checkmark-done-outline"></ion-icon>
                     </ion-label>
@@ -237,24 +242,26 @@
             <ion-row>
               <ion-col>
                 <ion-button type="submit"
-                    color="tertiary"
-                    shape="round"
-                    (click)="goSlide1()">
+                            fill="outline"
+                            color="tertiary"
+                            shape="round"
+                            (click)="goSlide1()">
+                    <ion-icon name="caret-back-outline"></ion-icon>
                   Regresar
                 </ion-button>
               </ion-col>
+              <ion-col>
+                <ion-button type="submit"
+                            fill="outline"
+                            color="tertiary"
+                            shape="round"
+                            (click)="modificarSinFoto()">
+                            <ion-icon name="sync-outline"></ion-icon>
+                    Actualizar
+                </ion-button>  
+              </ion-col>
             </ion-row>
 
-              <ion-row class="center">
-                <ion-col>
-                  <ion-button type="submit"
-                  color="tertiary"
-                  shape="round"
-                  (click)="modificarSinFoto()">
-                      Actualizar
-                  </ion-button>  
-                </ion-col>
-              </ion-row>
             
             </form>
       </ion-grid>  
@@ -269,9 +276,7 @@
                 <ion-row>
                   <ion-col>
                     <ion-list>
-                      <ion-item class="ion-text-center">
-                        <ion-label class="ion-text-wrap">En que horario te gustaria que reservaran tus clientes</ion-label>
-                      </ion-item>
+                        <h4 class="ion-text-wrap">En que horario te gustaria que reservaran tus clientes</h4>
 
                       <ion-item>
                         <ion-label>Hora Inicio</ion-label>
@@ -297,52 +302,50 @@
                 <ion-row>
                   <ion-col>
                     <ion-button type="submit"
-                        color="tertiary"
-                        shape="round"
-                        (click)="goSlide1()">
+                                fill="outline"
+                                color="tertiary"
+                                shape="round"
+                                (click)="goSlide1()">
+                        <ion-icon name="caret-back-outline"></ion-icon>
                       Regresar
                     </ion-button>
                   </ion-col>
+                  <ion-col>
+                    <ion-button type="submit"
+                                fill="outline"
+                                color="tertiary"
+                                shape="round"
+                                (click)="modificarSinFoto()">
+                                <ion-icon name="sync-outline"></ion-icon>
+                        Actualizar
+                    </ion-button>  
+                  </ion-col>
                 </ion-row>
 
-              <ion-row class="center">
-                <ion-col>
-                  <ion-button type="submit"
-                  color="tertiary"
-                  shape="round"
-                  >
-                      Actualizar
-                  </ion-button>  
-                </ion-col>
-              </ion-row>
             
             </form>
       </ion-grid>  
     </ion-slide>
 
 
-    <!-- -----------------------SLIDE ACTUALIZAR FOTO----------------------------- -->
+<!-- ------------------------------------SLIDE ACTUALIZAR FOTO--------------------------------------------- -->
     <ion-slide>
       <ion-grid fixed>
             <form>
 
               <ion-row>
                 <ion-col>
-                  <ion-item class="ion-text-center" style="background-color: chartreuse;">
-                    <ion-label>Imagen Actual</ion-label>
-                  </ion-item>
-                  <ion-card class="ion-text-center masters card">
-                      <img src="{{complejo.foto}}">
+                    <h4>Imagen Actual</h4>
+                  <ion-card class="ion-text-center">
+                      <img src="{{complejo.foto}}" alt="200" width="500">
                   </ion-card>                  
                 </ion-col>
               </ion-row>
  
                 <ion-row>
                   <ion-col>
-                    <ion-list>
-                      <ion-item class="ion-text-center">
-                        Cambia la imagen
-                      </ion-item>
+                    <div>
+                      <h4>Cambia la imagen</h4>                        
                       <ion-item>
                           <input type="file"
                                  id="img"
@@ -350,31 +353,33 @@
                                  ngModel
                                  required>
                       </ion-item>
-                    </ion-list>
+                    </div>
                   </ion-col>
                 </ion-row>
 
                 <ion-row>
                   <ion-col>
-                    <ion-button type="submit"
-                        color="tertiary"
-                        shape="round"
-                        (click)="goSlide1()">
+                    <ion-button fill="outline"
+                                type="submit"
+                                color="tertiary"
+                                shape="round"
+                                (click)="goSlide1()">
+                        <ion-icon name="caret-back-outline"></ion-icon>
                       Regresar
                     </ion-button>
                   </ion-col>
+                  <ion-col>
+                    <ion-button fill="outline"
+                                type="submit"
+                                color="tertiary"
+                                shape="round"
+                                (click)="modificarComplejo()">
+                                <ion-icon name="sync-outline"></ion-icon>
+                        Actualizar
+                    </ion-button>  
+                  </ion-col>
                 </ion-row>
 
-              <ion-row class="center">
-                <ion-col>
-                  <ion-button type="submit"
-                  color="tertiary"
-                  shape="round"
-                  (click)="modificarComplejo()">
-                      Actualizar
-                  </ion-button>  
-                </ion-col>
-              </ion-row>
             
             </form>
       </ion-grid>  

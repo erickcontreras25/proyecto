@@ -8,10 +8,22 @@
       <ion-grid>
 
         <h1 style="text-shadow: 1px 1px 1px black; color: black;">Torneos</h1>
+        <div>
+            <ion-row class="ion-align-items-center bor" >
+              <ion-col class="centrado"><h5>Torneo</h5></ion-col>
+              <ion-col class="izquierda"><h5>Complejo</h5></ion-col>
+              <ion-col>
+                <h5>Dia Torneo</h5>
+              </ion-col>
+              <ion-col class="derecha">                
+              </ion-col>
+            </ion-row>            
+        </div>
         <div *ngFor="let item of torneosNoVen">
           <ion-card class="blanco">
             <ion-row class="ion-align-items-center">
               <ion-col class="izquierda"><h5>{{item.nombre}}</h5></ion-col>
+              <ion-col class="izquierda"><h5>{{item.complejo.nombre}}</h5></ion-col>
               <ion-col *ngIf="item.diaTorneo > hoy">
                 <label  style="color: rgb(16, 122, 243);"> {{item.diaTorneo | date:'dd-MMMM-yyyy'}}</label>
               </ion-col>

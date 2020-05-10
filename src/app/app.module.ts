@@ -19,6 +19,8 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
+import { PayPal } from '@ionic-native/paypal/ngx';
+
 
 
 @NgModule({
@@ -36,6 +38,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     StatusBar,
     SplashScreen,
     Geolocation,
+    PayPal,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

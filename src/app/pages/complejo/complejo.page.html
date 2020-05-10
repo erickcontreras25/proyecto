@@ -75,9 +75,8 @@
 <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
     
   <ion-slide >
-
     <form #formulario="ngForm">
-      <ion-grid fixed>
+      <ion-grid>
 
         <ion-row>
           <ion-col>
@@ -133,9 +132,9 @@
     </form>
   </ion-slide>
 
-  <!-- -----------------------SLIDE 2----------------------------- -->
+  <!-- --------------------------------------------------SLIDE 2---------------------------------------- -->
   <ion-slide>
-    <ion-grid fixed>
+    <ion-grid>
           <form>
             <ion-row>
               <ion-col>
@@ -143,7 +142,7 @@
                 <ion-icon class="size" color="dark" name="time-outline"></ion-icon>
               </ion-col>
             </ion-row>
-              <ion-row>
+              <ion-row class="center">
                   <ion-col>  
 
                       <div>
@@ -183,7 +182,7 @@
               </ion-row>
 
               <ion-row>
-              <ion-col>
+              <ion-col class="derecha">
                 <ion-button type="submit"
                           color="tertiary"
                           shape="round"
@@ -192,7 +191,7 @@
                           Regresar
                         </ion-button>
               </ion-col>
-              <ion-col>
+              <ion-col class="izquierda">
                   <ion-button type="submit"
                               color="tertiary"
                               shape="round"
@@ -208,9 +207,83 @@
     </ion-slide>
 
 
-<!-- -------------------------------SLIDE 3------------------------------------- -->
+<!-- -------------------------------------------SLIDE 3------------------------------------------------- -->
+
+<ion-slide>
+  <ion-grid>
+        <form>
+          <ion-row>
+            <ion-col>
+              <!-- <img src="/assets/img/im2.png"> -->
+              <ion-icon class="size" color="dark" name="time-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+            <ion-row class="center">
+                <ion-col>  
+
+                    <div>
+                      <h4 style="color: black;">Ingresa tu numero de telefono</h4>
+                      <ion-item class="ion-text-center">
+                        <ion-input type="string"
+                                    class="ion-text-left"
+                                    placeholder="Direccion"
+                                    name="localidad"
+                                   [(ngModel)]="complejo.numero"
+                                   required>
+                        </ion-input>
+                      </ion-item>
+
+                      <ion-item>
+                        <ion-label>¿Tienes parqueo?</ion-label>
+                        <ion-select [(ngModel)]="complejo.parqueo"
+                                    name="parqueo">
+                          <ion-select-option value="true" >Si</ion-select-option>
+                          <ion-select-option value="false" >No</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+
+                      <ion-item>
+                        <ion-label>¿Cuentas con seguridad?</ion-label>
+                        <ion-select [(ngModel)]="complejo.seguridad"
+                                    name="seguridad">
+                          <ion-select-option value="true" >Si</ion-select-option>
+                          <ion-select-option value="false" >No</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                                               
+                        
+                    </div>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+            <ion-col class="derecha">
+              <ion-button type="submit"
+                        color="tertiary"
+                        shape="round"
+                        (click)="goSlide2()">
+                        <ion-icon name="caret-back-outline"></ion-icon>
+                        Regresar
+                      </ion-button>
+            </ion-col>
+            <ion-col class="izquierda">
+                <ion-button type="submit"
+                            color="tertiary"
+                            shape="round"
+                            (click)="goSlide4()">
+                    Siguiente
+                    <ion-icon name="caret-forward-outline"></ion-icon>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+        </form>
+    </ion-grid>
+
+  </ion-slide>
+
+<!-- -------------------------------------------SLIDE 4---------------------------------------------------- -->
     <ion-slide>
-      <ion-grid fixed>
+      <ion-grid>
             <form>
               <ion-row>
                 <ion-col>
@@ -239,7 +312,7 @@
                     <ion-button type="submit"
                                 color="tertiary"
                                 shape="round"
-                                (click)="goSlide2()">
+                                (click)="goSlide3()">
                                 <ion-icon name="caret-back-outline"></ion-icon>
                         Regresar
                     </ion-button>

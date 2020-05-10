@@ -14,13 +14,13 @@
                       (click)="mostrarCrear=true"
                       shape="round" 
                       fill="solid"
-                      routerLink="/crear-torneo" routerDirection="forward">CREAR TORNEO</ion-button>
+                      routerLink="/crear-torneo" routerDirection="root">CREAR TORNEO</ion-button>
           </div>  
           
             <h2 class="ion-text-center">Mis torneos</h2>
-            <div *ngFor="let item of torneosxUser">
+            <div>
               <ion-card>
-                <ion-row class="ion-align-items-center">
+                <ion-row class="ion-align-items-center" *ngFor="let item of torneosxUser">
                   <ion-col class="izquierda">
                     <h4>{{item.nombre}}</h4>
                   </ion-col>
@@ -83,10 +83,10 @@
       <div>
         <ion-card class="blanco">
           <ion-row *ngFor="let item of equipoxTorneo">
-            <ion-col size="6">        
+            <ion-col size="6" class="izquierda">        
               <h5 style="color: black;">{{item.equipo.nombre}}</h5>                  
             </ion-col> 
-            <ion-col class="derecha">
+            <ion-col class="derecha" *ngIf="torneo.diaTorneo < hoy">
               <ion-button color="success"
                           class="derecha"
                           fill="clear"

@@ -21,18 +21,7 @@ export class ComplejoPage implements OnInit {
 
   complejos: Complejo[] = [];
 
-  complejo = {
-    idComplejo: 0,
-    nombre: null,
-    localidad: null,
-    foto: null,
-    estado: false,
-    longitud: -88.036392,
-    latitud: 15.517893,
-    horaInicio: null,
-    horaCierre: null,
-    userId: null
-  };
+  complejo = new Complejo(0, null, null, null, null, false, 0.0, 0.0, null, null, false, false, null);
 
   cargando = false;
   listo = false;
@@ -132,18 +121,7 @@ export class ComplejoPage implements OnInit {
   }
 
   limpiar() {
-    this.complejo = {
-      idComplejo: 0,
-      nombre: null,
-      localidad: null,
-      foto: null,
-      estado: false,
-      longitud: null,
-      latitud: null,
-      horaInicio: null,
-      horaCierre: null,
-      userId: null
-    };
+    this.complejo = new Complejo(0, null, null, null, null, false, 0.0, 0.0, null, null, false, false, null);
   }
 
 

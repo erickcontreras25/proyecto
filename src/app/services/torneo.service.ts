@@ -30,7 +30,7 @@ export class TorneoService {
   }
 
   putTorneo(id: number, torneo: Torneo) {
-    return this.http.put(`${this.url}/torneo`, torneo, {responseType: 'text'});
+    return this.http.put(`${this.url}/torneo/${id}`, torneo, {responseType: 'text'});
   }
   
   deleteTorneo(id: number) {

@@ -3,7 +3,7 @@ import { Equipo } from 'src/models/equipo.models';
 import { ApiserviService } from 'src/app/services/apiservi.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { EquipoService } from 'src/app/services/equipo.service';
-import { NavController, IonSlides } from '@ionic/angular';
+import { NavController, IonSlides, AlertController } from '@ionic/angular';
 import { AlertaServiceService } from 'src/app/services/alerta-service.service';
 import { Usuario } from 'src/models/usuario.models';
 import { User } from 'src/models/user.models';
@@ -18,18 +18,20 @@ export class EquipoPage implements OnInit {
 
   @ViewChild('slidePrincipal', {static: true}) slides: IonSlides;
 
-  equipo: Equipo = new Equipo(0, '', '');
+  equipo: Equipo = new Equipo(0, '', null, '');
   equiposCap: Equipo[] = [];
+  mostrarEIncomp: Equipo[] = [];
   equiposMiembro: Equipo[] = [];
   equipos: Equipo[] = [];
 
   equipoUser: EquipoUser = new EquipoUser(0, '');
   equipoUsers: EquipoUser[] = [];
+  idEquipoUser: EquipoUser[] = [];
+  
   equipoUserUser: EquipoUser[] = [];
 
   idEquipo;
   mostrarCrear = false;
-  unido = false;
   ver = false;
 
   perfil: User;
@@ -37,7 +39,8 @@ export class EquipoPage implements OnInit {
   constructor(private usuarioService: UsuarioService,
               private equipoService: EquipoService,
               private navCtrl: NavController,
-              private alertaService: AlertaServiceService) { }
+              private alertaService: AlertaServiceService,
+              private alertController: AlertController) { }
 
   ngOnInit() {
     this.perfil = this.usuarioService.getUsuario();
@@ -46,6 +49,7 @@ export class EquipoPage implements OnInit {
 
     this.obtenerEquipoxUser();
     this.obtenerEquipoUserxIduser();
+    
   }
 
 
@@ -57,6 +61,7 @@ export class EquipoPage implements OnInit {
   //   });
   // }
 
+// -----------------------------------------------METODOS EQUIPO--------------------------------------------
   obtenerTodosEquipos() {
     this.equipoService.getEquipos()
       .subscribe((resp: Equipo[]) => {
@@ -69,6 +74,7 @@ export class EquipoPage implements OnInit {
     this.equipoService.getEquipoId(id)
     .subscribe((resp: Equipo) => {
       this.equipo = resp;
+      console.log(this.equipo);
     });
   }
 
@@ -76,6 +82,7 @@ export class EquipoPage implements OnInit {
     this.equipoService.getEquipoxUsuario(this.perfil.id)
     .subscribe((resp: Equipo[]) => {
       this.equiposCap = resp;
+      this.verificarCompleto();
     });
   }
 
@@ -85,9 +92,9 @@ export class EquipoPage implements OnInit {
     .subscribe(data => {
       this.equipos.push(this.equipo);
       this.clear();
-      this.alertaService.alertaInformativa('Para completar la creacion debes dar click en boton unirme a equipo');
-      this.alertaService.alertaInformativa('Equipo creado');
+      this.alertaService.alertaInformativa('Equipo creado. \n Ahora solo tienes que dar click en completar creacion.');
       this.obtenerEquipoxUser();
+      this.obtenerEquipoUserxIduser();
       this.mostrarCrear = false;
     },
     (error) => {
@@ -95,23 +102,72 @@ export class EquipoPage implements OnInit {
     });
   }
 
-  modificarEquipo() {
-    this.equipoService.putEquipo(this.idEquipo, this.equipo)
+  modificarEquipo(user: string) {
+    this.equipo.userId = user;
+    this.equipoService.putEquipo(this.equipo.idEquipo, this.equipo)
     .subscribe(data => {
       this.clear();
       this.alertaService.alertaInformativa('Equipo modificado');
+      this.obtenerEquipoxUser();
+      this.obtenerEquipoUserxIduser();
+      // this.goSlide1();
     },
     (error) => {
       console.log(error);
     });
   }
 
-  // -----------------------------------------------METODOS PARA EQUIPO USUARIOS-----------------------------
 
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Listo!',
+      message: '<strong>Completa la creacion dando Ok</strong>??',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            
+            
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+// -----------------------------------------------METODOS EQUIPO-USER--------------------------------------------
+
+  verificarCompleto() {
+    let aux = 0;
+    for (let i = 0; i < this.equiposCap.length; i++) {
+      // this.obtenerEquipoUserId(this.equiposCap[i].idEquipo);
+
+      this.equipoService.getEquipoUserId(this.equiposCap[i].idEquipo)
+    .subscribe((resp: EquipoUser[]) => {
+      this.idEquipoUser = resp;
+      if (this.idEquipoUser.length < 1) {
+        this.mostrarEIncomp[aux] = this.equiposCap[i];
+        this.idEquipoUser = [];
+        aux = aux + 1;
+      }
+    });
+      console.log(this.mostrarEIncomp);
+    }
+  }
   obtenerEquipoUserId(id: number) {
     this.equipoService.getEquipoUserId(id)
     .subscribe((resp: EquipoUser[]) => {
-      this.equipoUsers = resp;
+      this.idEquipoUser = resp;
+      // this.goSlide2();
     },
     (error) => {
       console.log(error);
@@ -128,16 +184,31 @@ export class EquipoPage implements OnInit {
     } );
   }
 
-  uniraEquipo() {
-    this.equipoUser.userId = this.perfil.id;
-    this.equipoService.postEquipoUser(this.equipoUser)
-    .subscribe(data => {
-      this.equipoUsers.push(this.equipoUser);
-      this.unido = true;
-      this.obtenerEquipoUserxIduser();
+  getEquipoUserxIdEquipo(id: number) {
+    this.equipoService.getEquipoUserId(id)
+    .subscribe((resp: EquipoUser[]) => {
+      this.equipoUsers = resp;
+      this.goSlide2();
     },
     (error) => {
       console.log(error);
+    });
+  }
+  
+
+  uniraEquipo(id: string) {
+    this.equipoUser.userId = this.perfil.id;
+    this.equipoUser.equipoId = id;
+    this.equipoService.postEquipoUser(this.equipoUser)
+    .subscribe(data => {
+      // this.equipoUsers.push(this.equipoUser);
+      this.alertaService.alertaInformativa('Creacion completada.');
+      this.mostrarEIncomp = [];
+      this.obtenerEquipoxUser();
+      this.obtenerEquipoUserxIduser();
+    },
+    (error) => {
+      console.log(error['error']);
     });
   }
 
@@ -158,7 +229,7 @@ export class EquipoPage implements OnInit {
     .subscribe( resp => {
       this.alertaService.alertaInformativa('Hecho!!');
       this.obtenerEquipoUserxIduser();
-      this.obtenerEquipoUserId(this.equipoUser.equipoId);
+      this.getEquipoUserxIdEquipo(this.equipoUser.equipoId);
     },
     error => console.log(error));
   }
@@ -174,7 +245,7 @@ export class EquipoPage implements OnInit {
   }
 
   clear() {
-    this.equipo = new Equipo(0, '', '');
+    this.equipo = new Equipo(0, '', 0, '');
   }
 
 
