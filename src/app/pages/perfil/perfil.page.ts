@@ -121,10 +121,12 @@ export class PerfilPage implements OnInit {
       this.noVencidas();
     });
   }
-  eliminarReservacion(rese: number) {
-    this.apiServi.deleteReservacion(rese)
+  eliminarReservacion() {
+    this.apiServi.deleteReservacion(this.reservacion.idReservacion)
     .subscribe( resp => {
       console.log('ELIMINADO CON EXITO');
+      this.obtenerMisReservacion();
+      this.navCtrl.navigateRoot('/inicio');
     });
   }
 
@@ -168,12 +170,12 @@ export class PerfilPage implements OnInit {
 
   noVencidas() {
 
-    const ini = moment().format('MM-DD-YYYY H');
+    const ini = moment().format('MM-DD-YYYY HH:mm');
     let valor = 0;
 
     for (let i = 0; i < this.reservaciones.length; i++) {
 
-      const val = moment(this.reservaciones[i].horaFinal).format('MM-DD-YYYY H');
+      const val = moment(this.reservaciones[i].horaFinal).format('MM-DD-YYYY HH:mm');
       
       if (ini < val) {
         this.reservacionesNoVencidas[valor] = this.reservaciones[i];
@@ -184,6 +186,31 @@ export class PerfilPage implements OnInit {
 
 
 // --------------------------------------------------------------------------------------------------
+async confirmarCancelacion() {
+  const alert = await this.alertController.create({
+    header: '¿Quieres cancelar la reserva?',
+    message: '<strong>Click Ok </strong>',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: (blah) => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: () => {
+          this.eliminarReservacion();
+          console.log('Confirm Okay');
+        }
+      }
+    ]
+  });
+  await alert.present();
+}
+
+
   async pagarCompleto() {
     const alert = await this.alertController.create({
       header: 'Confirmar pago',

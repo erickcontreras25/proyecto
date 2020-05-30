@@ -11,3 +11,8 @@
 .bor {
     border-bottom: black 2px solid;
 }
+
+ion-content.background{
+    --background: url(/assets/img/trofeo.png) 0 0/100% 100% no-repeat;
+    opacity: 0.8;
+  }

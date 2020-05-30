@@ -74,7 +74,7 @@ export class UsuarioService {
 
       this.http.post(`${this.url}/account/create`, usuario)
       .subscribe( resp => {
-        console.log(resp);
+        // console.log(resp);
 
         if( resp['ok'] ) {
           resolve(true);
@@ -139,8 +139,9 @@ export class UsuarioService {
         this.http.get(`${this.url}/user`, {headers: tokenHeaders})
         .subscribe( (resp: any) => {
           this.user = resp;
-          console.log( 'PASO 3 >> ' );
-          console.log(this.user);
+          // console.log( 'PASO 3 >> ' );
+          // console.log(this.user);
+
           // if (this.user.isAdmin === true) {
           //   this.setAuxEst(true);
           // } else {

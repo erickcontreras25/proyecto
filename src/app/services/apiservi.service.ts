@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Complejo } from 'src/models/complejo.models';
 import { Cancha } from 'src/models/cancha.models';
 import { Usuario } from 'src/models/usuario.models';
 import { Reservacion } from 'src/models/reservacion.models';
 import { Admin } from 'src/models/admin.models';
 import { Equipo } from 'src/models/equipo.models';
+import { Storage } from '@ionic/storage';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +18,11 @@ export class ApiserviService {
   private auxNom: string;
   private auxEst: boolean;
   private url = 'https://localhost:44381/api';
+  token: string = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private storage: Storage,
+              private usuarioSer: UsuarioService) { }
 
   // getCanchas(){
   //   return this.http.get('https://apibackend2019.herokuapp.com/api/Complejos');
@@ -44,16 +49,20 @@ export class ApiserviService {
 
 
   getComplejo() {
-    return this.http.get(`${this.url}/complejo`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/complejo`, {headers: tokenHeaders});
   }
   getComplejoId(id: number) {
-    return this.http.get(`${this.url}/complejo/${id}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/complejo/${id}`, {headers: tokenHeaders});
   }
   getComplejoAdmin(n1: string) {
-    return this.http.get(`${this.url}/complejo/p?n1=${n1}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/complejo/p?n1=${n1}`, {headers: tokenHeaders});
   }
   getComplejoEstado(n1: boolean) {
-    return this.http.get(`${this.url}/complejo/q?n1=${n1}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/complejo/q?n1=${n1}`, {headers: tokenHeaders});
   }
   postComplejo(complejo: Complejo) {
     return this.http.post(`${this.url}/complejo`, complejo, {responseType: 'text'});
@@ -69,10 +78,12 @@ export class ApiserviService {
 
 
   getCanchaComplejo(n1: number) {
-    return this.http.get(`${this.url}/cancha/p?n1=${n1}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/cancha/p?n1=${n1}`, {headers: tokenHeaders});
   }
   getCanchaId(id: number) {
-    return this.http.get(`${this.url}/cancha/${id}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/cancha/${id}`, {headers: tokenHeaders});
   }
   postCancha(cancha: Cancha) {
     return this.http.post(`${this.url}/cancha`, cancha, {responseType: 'text'});
@@ -91,17 +102,21 @@ export class ApiserviService {
 
 
   getReservaciones() {
-    return this.http.get(`${this.url}/reservacion`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/reservacion`, {headers: tokenHeaders});
   }
 
   getReservacionXUser(n1: string) {
-    return this.http.get(`${this.url}/reservacion/p?n1=${n1}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/reservacion/p?n1=${n1}`, {headers: tokenHeaders});
   }
   getReservacionComplejo(n1: number) {
-    return this.http.get(`${this.url}/reservacion/q?n1=${n1}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/reservacion/q?n1=${n1}`, {headers: tokenHeaders});
   }
   getReservacionId(id: number) {
-    return this.http.get(`${this.url}/reservacion/${id}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/reservacion/${id}`, {headers: tokenHeaders});
   }
   postReservacion(reservacion: Reservacion) {
     return this.http.post(`${this.url}/reservacion`, reservacion, {responseType: 'text'});

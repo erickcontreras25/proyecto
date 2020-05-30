@@ -1,5 +1,7 @@
 <ion-header no-border>
-  <ion-toolbar><h3>ARMALAPOTRA</h3>
+  <ion-toolbar><label style="color: green;">ARMA</label>
+                <label>LA</label>
+                <label style="color: red;">POTRA</label>
     <ion-buttons slot="end">Cerrar Sesión
       <ion-button (click)="logout()"
                   color="danger">
@@ -10,13 +12,18 @@
 </ion-header>
 
 <ion-content center class="background">
-  <div id="map"></div>
+  <div *ngIf="!todoMap" id="map" style="width: 100%; height: 40%; background-color:#f6f6f4;">
+    <a class="centrado" fill="clear" (click)="todoMap = !todoMap" (click)="loadMap()">Pasar a pantalla completa</a>
+  </div>
+  
+  <div *ngIf="todoMap" id="map" style="width: 100%; height: 100%; background-color:#f6f6f4;">
+    <a class="centrado" fill="clear" (click)="todoMap = !todoMap" (click)="loadMap()">Pasar a pantalla normal</a></div>
   <br>
 
   <!-- <ion-button expand="full" routerLink="/reservar">RESERVAR CANCHA</ion-button> -->
 
   <ion-grid *ngIf="!user.isAdmin">
-    <ion-row text-center>
+    <!-- <ion-row text-center>
       <ion-col size="6">
         <ion-card class="ion-text-center" routerLink="/equipo">
           <ion-card-header>
@@ -62,8 +69,31 @@
         </ion-card>
       </ion-col>
       
-    </ion-row>
+    </ion-row> -->
+
+    <ion-item routerLink="/equipo" routerDirection="forward" detail>
+      <ion-icon color="secondary" class="centrado" name="people-outline"></ion-icon>
+      <ion-label>Equipo</ion-label>
+    </ion-item>
+  <br>
+    <ion-item routerLink="/reservar" routerDirection="forward" detail>
+      <ion-icon color="success" class="centrado" name="create-outline"></ion-icon>
+      <ion-label>Reservar</ion-label>
+    </ion-item>
+  <br>
+    <ion-item routerLink="/perfil" routerDirection="forward" detail>
+      <ion-icon color="secondary" class="centrado" name="person-circle-outline"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-item>
+  <br>
+    <ion-item routerLink="/torneo-user" routerDirection="forward" detail>
+      <ion-icon color="success" class="centrado" name="trophy-outline"></ion-icon>
+      <ion-label>Torneos</ion-label>
+    </ion-item>
+
   </ion-grid>
+
+  
 
   <!-- <div *ngIf="!user.isAdmin">
     <ion-list>
@@ -83,7 +113,7 @@
   </div> -->
 
 
-  <ion-grid *ngIf="user.isAdmin">
+  <!-- <ion-grid *ngIf="user.isAdmin">
     <ion-row text-center>
       <ion-col size="6">
         <ion-card class="ion-text-center" routerLink="/complejo" routerDirection="forward">
@@ -132,7 +162,7 @@
       </ion-col>
       
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
   <!-- <div *ngIf="user.isAdmin">
     <ion-list>
@@ -151,5 +181,29 @@
     </ion-list>
     
   </div> -->
+
+  <ion-grid *ngIf="user.isAdmin && !todoMap">
+
+            <ion-item routerLink="/complejo" routerDirection="forward" detail>
+              <ion-icon slot="start" color="secondary" class="centrado" name="add-outline"></ion-icon>
+              <ion-label>Crear complejo</ion-label>
+            </ion-item>
+        <br>
+            <ion-item routerLink="/cancha" routerDirection="forward" detail>
+              <ion-icon slot="start" color="secondary" class="centrado" name="add-outline"></ion-icon>
+              <ion-label>Crear cancha</ion-label>
+            </ion-item>
+          <br>
+            <ion-item routerLink="/torneo" routerDirection="forward" detail>
+              <ion-icon slot="start" color="success" class="centrado" name="trophy-outline"></ion-icon>
+              <ion-label>Torneos</ion-label>
+            </ion-item>
+          <br>
+            <ion-item routerLink="/lista-complejos" routerDirection="forward" detail>
+              <ion-icon slot="start" color="success" class="centrado" name="list-outline"></ion-icon>
+              <ion-label>Mis Complejos</ion-label>
+            </ion-item>
+
+  </ion-grid>
 
 </ion-content>

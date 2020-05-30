@@ -1,13 +1,23 @@
-<app-header titulo="Torneos"></app-header>
+<app-header titulo="Torneos" *ngIf="!atras"></app-header>
 
-<ion-content>
+<ion-header no-border *ngIf="atras">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goSlide1()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background">
   
   <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
 
     <ion-slide>
       <ion-grid>
 
-        <h1 style="text-shadow: 1px 1px 1px black; color: black;">Torneos</h1>
+        <!-- <h1 style="text-shadow: 1px 1px 1px black; color: black;">Torneos</h1> -->
         <div>
             <ion-row class="ion-align-items-center bor" >
               <ion-col class="centrado"><h5>Torneo</h5></ion-col>
@@ -49,7 +59,7 @@
         <form>
           <ion-card class="ion-text-center" style="background-color: #F1F1F6; border-radius : 10px;">
             <img src="{{torneo.premioFoto}}" alt="200" width="500">
-            <ion-card-title>{{torneo.nombre}}</ion-card-title>
+            <ion-card-title style="color: black;">{{torneo.nombre}}</ion-card-title>
 
             <ion-row>
               <ion-col>
@@ -72,9 +82,12 @@
               <ion-label>{{torneo.descripcion}}</ion-label>
             </h6>
               
-              <h5 class="ion-text-center">Complejo: {{complejo.nombre}}</h5>
+                <h5 class="ion-text-center" style="color: black;">Complejo: {{complejo.nombre}}</h5>
+
+                <h5 class="ion-text-center"><ion-icon name="call-outline" color="primary"></ion-icon>
+                  {{complejo.numero}}</h5>
               <ion-row>
-                <ion-col>
+                <ion-col *ngIf="ver">
                   <ion-list>
                     <ion-item borde="none">
                       <ion-label>Elige tu equipo</ion-label>
@@ -88,15 +101,18 @@
                 </ion-col>
               </ion-row>
             <ion-row>
-              <ion-col>
+              <!-- <ion-col>
                 <ion-button color="success"
                             shape="round"
                           (click)="goSlide1()">Regresar</ion-button>
-              </ion-col>
-              <ion-col>
+              </ion-col> -->
+              <ion-col *ngIf="ver">
                 <ion-button color="success"
                            (click)="registrar()" 
                           >Registrar mi equipo</ion-button>
+              </ion-col>
+              <ion-col *ngIf="!ver">
+                <h4 style="color: red;">Torneo lleno</h4>
               </ion-col>
             </ion-row>          
           </ion-card>

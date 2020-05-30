@@ -9,7 +9,7 @@
 }
 
 ion-content.background{
-    --background: url(/assets/img/fondoequipo.jpg) 0 0/100% 100% no-repeat;
+    --background: url(/assets/img/paraequipo.jpeg) 0 0/100% 100% no-repeat;
     opacity: 0.8;
 }
 .blanco {
@@ -18,4 +18,8 @@ ion-content.background{
 
 ion-icon.size {
     font-size: 30px;
+}
+
+.bor {
+    border-bottom: rgba(255, 255, 255, 0.877) 1px solid;
 }

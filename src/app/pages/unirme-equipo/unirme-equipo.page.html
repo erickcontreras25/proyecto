@@ -6,10 +6,10 @@
     <ion-slide>
       <ion-grid>
 
-        <h1 style="color: black;">Equipos</h1>  
+        <h1 style="color: white;">Equipos</h1>  
 
         <div>
-            <ion-row *ngFor="let user of equipos">
+            <ion-row *ngFor="let user of equipos" class="bor">
               <ion-col size="6" class="izquierda" *ngIf="perfil.id != user.userId"><h5>{{user.nombre}}</h5></ion-col>
               <ion-col class="derecha" *ngIf="perfil.id != user.userId">
                 <ion-button color="success"

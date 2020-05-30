@@ -9,6 +9,8 @@ import { Usuario } from 'src/models/usuario.models';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { User } from 'src/models/user.models';
 import { AlertaServiceService } from 'src/app/services/alerta-service.service';
+import { TorneoService } from 'src/app/services/torneo.service';
+import { Torneo } from 'src/models/torneo.models';
 
 @Component({
   selector: 'app-reservar',
@@ -21,7 +23,8 @@ export class ReservarPage implements OnInit {
 
   nombre: string;
   seleccion: number;
-  
+  atras = false;
+
   complejosAbiertos: Complejo[];
   canchas: Cancha[];
   aux = false;
@@ -61,6 +64,7 @@ export class ReservarPage implements OnInit {
     idCancha: 0,
     userId: ''
   };
+  torneo: Torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
 
 
   perfil: User;
@@ -68,7 +72,8 @@ export class ReservarPage implements OnInit {
   constructor(private apiServi: ApiserviService,
               private usuarioService: UsuarioService,
               private navCtrl: NavController,
-              private alertaService: AlertaServiceService) { }
+              private alertaService: AlertaServiceService,
+              private torneoService: TorneoService) { }
 
   ngOnInit() {
     this.perfil = this.usuarioService.getUsuario();
@@ -202,6 +207,14 @@ export class ReservarPage implements OnInit {
     });
   }
 
+  getTorneoId(id: number) {
+    this.torneoService.getTorneooId(id)
+    .subscribe( (resp: Torneo) => {
+      this.torneo = resp;
+      console.log(resp);
+    });
+  }
+
 
   validarFecha() {
 
@@ -214,6 +227,9 @@ export class ReservarPage implements OnInit {
     const cierra = moment(this.reservacion.horaFinal).format('HH');
     const abreComplejo = moment(this.complejo.horaInicio).format('HH');
     const cierraComplejo = moment(this.complejo.horaCierre).format('HH');
+
+    const diaReserva = moment(this.reservacion.horaInicial).format('MM-DD-YYYY');
+
 
     if (dInicial <= ini || dFinal <= ini) {
       this.volver();
@@ -234,6 +250,12 @@ export class ReservarPage implements OnInit {
       this.volver();
       return alert('Solo puede reservar en horario que permite el complejo');
     }
+
+    // if (this.torneo.diaTorneo !== null || this.torneo.diaTorneo !== undefined) {
+    //   if (diaReserva === moment(this.torneo.diaTorneo).format('MM-DD-YYYY')) {
+    //     return alert('Este dia no esta disponible ya que se realizará un torneo');
+    //   }
+    // }
 
     for (let i = 0; i < this.reser.length; i++) {
       const fechInicial = moment(this.reser[i].horaInicial).format('MM-DD-YYYY H:mm');
@@ -295,12 +317,14 @@ llenar() {
 
 // -------------------------------------------------SLIDE--------------------------------
 goComplejos() {
+  this.atras = false;
   this.slides.lockSwipes(false);
   this.slides.slideTo(0);
   this.slides.lockSwipes(true);
 }
 
 goCancha() {
+  this.atras = true;
   this.auxReser = false;
   this.slides.lockSwipes(false);
   this.slides.slideTo(1);
@@ -318,6 +342,17 @@ goReservar() {
   this.slides.lockSwipes(false);
   this.slides.slideTo(3);
   this.slides.lockSwipes(true);
+}
+
+slideAtras() {
+  this.slides.lockSwipes(false);
+  this.slides.slidePrev();
+  this.slides.lockSwipes(true);
+  this.slides.isBeginning().then(data => {
+    if (data === true) {
+      this.atras = false;
+    }
+  });
 }
 
 

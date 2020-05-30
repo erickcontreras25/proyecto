@@ -7,6 +7,8 @@ import { Usuario } from 'src/models/usuario.models';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { User } from 'src/models/user.models';
 
+import * as Mapboxgl from 'mapbox-gl';
+
 declare var google;
 declare var mapboxgl: any;
 
@@ -21,8 +23,7 @@ export class InicioPage implements OnInit, AfterViewInit {
               private geolocation: Geolocation,
               private usuarioService: UsuarioService) { }
 
-  aux1;
-  aux2;
+  todoMap = false;
 
   complejos: Complejo[] = [];
   // complejo = {
@@ -88,23 +89,24 @@ export class InicioPage implements OnInit, AfterViewInit {
       lat: rta.coords.latitude,
       lng: rta.coords.longitude
     };
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZXJpY2syMDIwIiwiYSI6ImNrODlyYnhiZzA5ejQzbXFuMWI2Z2sxd24ifQ.gEkvgi98ddKvs34g2icOBg';
-    const map = new mapboxgl.Map({
+    Mapboxgl.accessToken = 'pk.eyJ1IjoiZXJpY2syMDIwIiwiYSI6ImNrODlyYnhiZzA5ejQzbXFuMWI2Z2sxd24ifQ.gEkvgi98ddKvs34g2icOBg';
+    const map = new Mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
     center: [ myLatLng.lng, myLatLng.lat ],
-    zoom: 12
+    zoom: 11
     });
+    const marker = new Mapboxgl.Marker().setLngLat( [ myLatLng.lng, myLatLng.lat ] ).addTo( map );
     
-    var markers: any[] = [];
-    var valor = 0;
+    let markers: any[] = [];
+    let valor = 0;
     console.log(this.complejos);
     for (let i = 0; i < this.complejos.length; i++) {
 
       if (this.complejos[i].longitud != null && this.complejos[i].latitud != null) {
       
-      const popup = new mapboxgl.Popup()
-      .setHTML(this.complejos[i].nombre);
+      const popup = new Mapboxgl.Popup()
+      .setHTML('<h3 style="color: black;">' + this.complejos[i].nombre + '</h3>');
 
       // console.log(this.complejos[i].nombre);
 
@@ -113,7 +115,7 @@ export class InicioPage implements OnInit, AfterViewInit {
       //   .setPopup(popup)
       //   .addTo( map );
 
-      markers[valor] = new mapboxgl.Marker()
+      markers[valor] = new Mapboxgl.Marker({color: 'green'})
       .setLngLat([this.complejos[i].longitud, this.complejos[i].latitud])
       .setPopup(popup)
       .addTo(map);

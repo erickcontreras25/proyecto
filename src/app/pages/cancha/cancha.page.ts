@@ -20,6 +20,7 @@ export class CanchaPage implements OnInit {
   complejos: Complejo[] = [];
 
   idUsu;
+  atras = false;
 
   cancha = new Cancha(0, null, null, '', null);
 
@@ -63,7 +64,7 @@ export class CanchaPage implements OnInit {
     this.apiServi.putCancha(this.cancha.idCancha, this.cancha)
     .subscribe((data) => {
       this.canchas.push(this.cancha);
-      this.cancha = new Cancha(0, null, null, '', null);
+      this.clean();
       window.alert('ACTUALIZADO CON EXITO');
       
       this.goSlide1();
@@ -88,7 +89,14 @@ export class CanchaPage implements OnInit {
     // console.log('ESTE ES EL ID DEL COMPLEJO ' + this.cancha.idComplejo);
     this.obtenerCanchasComplejo(id);
   }
+  obtenerIdComplejo2(id: number) {
+    this.cancha.idComplejo = id;
+    // console.log('ESTE ES EL ID DEL COMPLEJO ' + this.cancha.idComplejo);
+  }
 
+  clean() {
+    this.cancha = new Cancha(0, null, null, '', null);
+  }
 
 
 
@@ -212,18 +220,22 @@ export class CanchaPage implements OnInit {
 // ---------------------------------------------------SLIDES--------------------------------------------
 
   goSlide1() {
+    this.atras = false;
+    this.clean();
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
   }
 
   goSlideCancha() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
     this.slides.lockSwipes(true);
   }
 
   goSlideVerCancha() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(2);
     this.slides.lockSwipes(true);

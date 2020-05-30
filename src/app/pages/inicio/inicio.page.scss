@@ -1,21 +1,27 @@
-#map{
-    width: 100%;
-    height: 50%;
-    background-color:#f6f6f4;
-  }
+// #map{
+//     width: 100%;
+//     height: 40%;
+//     background-color:#f6f6f4;
+//   }
   ion-icon {
     font-size: 30px;
+}
+ion-icon.p {
+  font-size: 25px;
 }
 .centrado{
   margin-left: auto;
   margin-right: auto;
+}
+.derecha{
+  text-align: right;
 }
 ion-card {
   width: 90%;
   height: 90%;
 }
 ion-content.background{
-  --background: url(/assets/img/fondograma.jpg) 0 0/100% 100% no-repeat;
+  --background: url(/assets/img/fondograma1.jpg) 0 0/100% 100% no-repeat;
   opacity: 0.8;
 }
 

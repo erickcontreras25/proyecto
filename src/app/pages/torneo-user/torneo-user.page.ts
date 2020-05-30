@@ -20,6 +20,8 @@ import { Complejo } from 'src/models/complejo.models';
 export class TorneoUserPage implements OnInit {
   @ViewChild('slidePrincipal', {static: true}) slides: IonSlides;
   perfil: User;
+  ver = false;
+  atras = false;
 
   torneos: Torneo[] = [];
   torneosNoVen: Torneo[] = [];
@@ -74,6 +76,7 @@ export class TorneoUserPage implements OnInit {
     });
   }
 
+
   noVencidas() {
     let valor = 0;
 
@@ -92,10 +95,17 @@ export class TorneoUserPage implements OnInit {
     this.torneoService.getTorneoEquipoId(id)
     .subscribe((resp: TorneoEquipo[]) => {
        this.torneosEquipos = resp;
+       this.verificarCanEquipos();
     },
     error => {
       console.log(error);
     });
+  }
+  verificarCanEquipos() {
+    console.log(this.torneosEquipos.length + ' ' + this.torneo.cantEquipos);
+    if (this.torneosEquipos.length < this.torneo.cantEquipos) {
+      this.ver = true;
+    }
   }
 
   registrar() {
@@ -161,12 +171,14 @@ export class TorneoUserPage implements OnInit {
 
       // -------------------------------------------------SLIDE--------------------------------
 goSlide1() {
+  this.atras = false;
   this.slides.lockSwipes(false);
   this.slides.slideTo(0);
   this.slides.lockSwipes(true);
 }
 
 goSlide2() {
+  this.atras = true;
   this.slides.lockSwipes(false);
   this.slides.slideTo(1);
   this.slides.lockSwipes(true);

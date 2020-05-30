@@ -82,6 +82,7 @@ export class LoginPage implements OnInit {
 
     if (valido) {
       // NAVEGAR A Login
+      this.auxNombre = this.perfil.email;
       this.perfil = new Usuario(null, null, null, null, false);
       this.mostrarRegistro();
     } else {

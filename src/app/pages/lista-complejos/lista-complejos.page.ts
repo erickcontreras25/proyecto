@@ -34,6 +34,7 @@ export class ListaComplejosPage implements OnInit {
   complejo: Complejo = new Complejo(0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
   complejos: Complejo[] = [];
 
+  atras = false;
   cargando = false;
   listo = false;
   hoy = moment().format('YYYY-MM-DDTHH:mm');
@@ -50,6 +51,8 @@ export class ListaComplejosPage implements OnInit {
   reservasComplejo: Reservacion[] = [];
 
   perfil: User;
+
+  ver = false;
 
 
 
@@ -201,6 +204,18 @@ export class ListaComplejosPage implements OnInit {
     this.complejo.latitud = myLatLng.lat;
   }
 
+  localizacion() {
+    this.cargando = true;
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.complejo.latitud = resp.coords.latitude;
+      this.complejo.longitud = resp.coords.longitude;
+      this.cargando = false;
+      this.listo = true;
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+  }
+
 
 // -------------------------------------------------METODOS RESERVAS---------------------------------------------
 
@@ -208,16 +223,17 @@ export class ListaComplejosPage implements OnInit {
     this.apiServi.getReservacionComplejo(id)
     .subscribe((resp: Reservacion[]) => {
       this.reservasComplejo = resp;
-      console.log(resp);
+      this.goSlide2();
+      // console.log(resp);
     });
   }
 
-  eliminarReservacion(id: number, dia: Date) {
-    const d = moment(dia).format('YYYY-MM-DDTHH:mm');
+  eliminarReservacion(id: number) {
+    // const d = moment(dia).format('YYYY-MM-DDTHH:mm');
 
-    if (d < this.hoy) {
-      return this.alertaService.alertaInformativa('No puedes eliminar esta reserva porque ya se vencio.')
-    }
+    // if (d < this.hoy) {
+    //   return this.alertaService.alertaInformativa('No puedes eliminar esta reserva porque ya se vencio.')
+    // }
 
     this.apiServi.deleteReservacion(id)
     .subscribe( resp => {
@@ -249,6 +265,21 @@ export class ListaComplejosPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+
+  verificar() {
+    const hoy = moment().format('MM-DD-YYYY HH:mm');
+    const inicio = moment(this.complejo.horaInicio).format('MM-DD-YYYY HH:mm');
+    const cierre = moment(this.complejo.horaCierre).format('MM-DD-YYYY HH:mm');
+
+    if (cierre < inicio) {
+      this.ver = false;
+      this.alertaService.alertaInformativa('La hora de cierre no puede ser menor que la de inicio.');
+    } else {
+      this.ver = true;
+    }
+
   }
 
 
@@ -293,6 +324,13 @@ export class ListaComplejosPage implements OnInit {
           this.goSlideActualizarFoto();
         }
       }, {
+        text: 'Teléfono',
+        icon: 'call',
+        cssClass: 'azul',
+        handler: () => {
+          this.goSlideActualizarNumero();
+        }
+      }, {
         text: 'Cancel',
         icon: 'close',
         role: 'cancel',
@@ -332,45 +370,129 @@ export class ListaComplejosPage implements OnInit {
     await alert.present();
   }
 
+  async parqueo() {
+    const alert = await this.alertController.create({
+      header: 'Informa a tus clientes si cuentas con parqueo!',
+      message: '<strong>Confirma el cambio dando OK</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            this.complejo.parqueo = !this.complejo.parqueo;
+            this.modificarSinFoto();
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async seguridad() {
+    const alert = await this.alertController.create({
+      header: 'Informa a tus clientes si cuentas con seguridad!',
+      message: '<strong>Confirma el cambio dando OK</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            this.complejo.seguridad = !this.complejo.seguridad;
+            this.modificarSinFoto();
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async eliminar(id: number) {
+    const alert = await this.alertController.create({
+      header: 'Quieres eliminar esta reservacón!',
+      message: '<strong>Confirma dando OK</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            this.eliminarReservacion(id);
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 
   // -------------------------------------------------SLIDE--------------------------------
   goSlide1() {
+    this.atras = false;
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
   }
 
   goSlide2() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
     this.slides.lockSwipes(true);
   }
 
   goSlideActualizarDireccion() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(2);
     this.slides.lockSwipes(true);
   }
 
   goSlideActualizarUbicacion() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(3);
     this.slides.lockSwipes(true);
   }
 
   goSlideActualizarHorario() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(4);
     this.slides.lockSwipes(true);
   }
 
   goSlideActualizarFoto() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(5);
     this.slides.lockSwipes(true);
   }
 
-  goSlideAgregarCancha() {
+  goSlideActualizarNumero() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(6);
     this.slides.lockSwipes(true);

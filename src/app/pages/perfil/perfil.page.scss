@@ -21,3 +21,12 @@
 .izquierda{
   text-align: left;
 }
+
+.bor {
+  border-bottom: black 2px solid;
+}
+
+ion-content.background{
+  --background: url(/assets/img/fondograma1.jpg) 0 0/100% 100% no-repeat;
+  opacity: 0.8;
+}

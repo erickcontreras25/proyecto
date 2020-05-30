@@ -33,6 +33,8 @@ export class EquipoPage implements OnInit {
   idEquipo;
   mostrarCrear = false;
   ver = false;
+  aux;
+  atras = false;
 
   perfil: User;
 
@@ -102,7 +104,7 @@ export class EquipoPage implements OnInit {
     });
   }
 
-  modificarEquipo(user: string) {
+  cambiarCapitan(user: string) {
     this.equipo.userId = user;
     this.equipoService.putEquipo(this.equipo.idEquipo, this.equipo)
     .subscribe(data => {
@@ -116,12 +118,65 @@ export class EquipoPage implements OnInit {
       console.log(error);
     });
   }
+  modificarEquipo() {
+    this.equipoService.putEquipo(this.equipo.idEquipo, this.equipo)
+    .subscribe(data => {
+      this.clear();
+      this.aux = null;
+      this.alertaService.alertaInformativa('Equipo actualizado');
+      this.obtenerEquipoxUser();
+      this.obtenerEquipoUserxIduser();
+      this.goSlide1();
+    },
+    (error) => {
+      this.equipo.cantJugadores = this.aux;
+      console.log(error['error']);
+      this.alertaService.alertaInformativa(error['error']);
+    });
+  }
+
+
+
+  async presentAlertPrompt() {
+    const alert = await this.alertController.create({
+      header: '¿Quieres aumentar o disminuir la cantidad de cupos?',
+      message: '<strong>Coloca cuantos cupos quieres quieres tener en total</strong>??',
+      inputs: [
+        {
+          name: 'cantJugadores',
+          type: 'number',
+          min: 0,
+          max: 2000
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            console.log('Confirm Ok');
+            this.aux = this.equipo.cantJugadores;
+            this.equipo.cantJugadores = data.cantJugadores;
+            this.modificarEquipo();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
-      header: 'Listo!',
-      message: '<strong>Completa la creacion dando Ok</strong>??',
+      header: '¿Quieres aumentar o disminuir la cantidad de cupos?',
+      message: '<strong>Escribe </strong>??',
       buttons: [
         {
           text: 'Cancel',
@@ -259,6 +314,7 @@ goSlide1() {
 }
 
 goSlide2() {
+  this.atras = true;
   this.slides.lockSwipes(false);
   this.slides.slideTo(1);
   this.slides.lockSwipes(true);
@@ -267,6 +323,17 @@ goSlide3() {
   this.slides.lockSwipes(false);
   this.slides.slideTo(2);
   this.slides.lockSwipes(true);
+}
+
+slideAtras() {
+  this.slides.lockSwipes(false);
+  this.slides.slidePrev();
+  this.slides.lockSwipes(true);
+  this.slides.isBeginning().then(data => {
+    if (data === true) {
+      this.atras = false;
+    }
+  });
 }
 
 

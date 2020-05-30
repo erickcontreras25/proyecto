@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Torneo } from 'src/models/torneo.models';
 import { TorneoEquipo } from 'src/models/torneoEquipo.models';
+import { UsuarioService } from './usuario.service';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +12,24 @@ export class TorneoService {
 
   private url = 'https://localhost:44381/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private storage: Storage,
+              private usuarioSer: UsuarioService) { }
 
 
   getTorneos() {
-    return this.http.get(`${this.url}/torneo`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/torneo`, {headers: tokenHeaders});
   }
 
   getTorneoxUsuario(n1: string) {
-    return this.http.get(`${this.url}/torneo/p?n1=${n1}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/torneo/p?n1=${n1}`, {headers: tokenHeaders});
   }
 
   getTorneooId(id: number) {
-    return this.http.get(`${this.url}/torneo/${id}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/torneo/${id}`, {headers: tokenHeaders});
   }
   
   postTorneo(torneo: Torneo) {
@@ -42,15 +49,18 @@ export class TorneoService {
 
 
   getTorneoEquipo() {
-    return this.http.get(`${this.url}/torneoEquipo`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/torneoEquipo`, {headers: tokenHeaders});
   }
 
   getTorneoEquipoxUsuario(n1: string) {
-    return this.http.get(`${this.url}/torneoEquipo/p?n1=${n1}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/torneoEquipo/p?n1=${n1}`, {headers: tokenHeaders});
   }
 
   getTorneoEquipoId(id: number) {
-    return this.http.get(`${this.url}/torneoEquipo/${id}`);
+    const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.usuarioSer.token});
+    return this.http.get(`${this.url}/torneoEquipo/${id}`, {headers: tokenHeaders});
   }
 
   postTorneoEquipo(torneoEquipo: TorneoEquipo) {

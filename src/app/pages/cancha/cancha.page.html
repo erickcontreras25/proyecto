@@ -1,4 +1,14 @@
-<app-header titulo="Cancha"></app-header>
+<app-header titulo="Cancha" *ngIf="!atras"></app-header>
+
+<ion-header no-border *ngIf="atras">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goSlide1()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 
 <!-- <form #formulario="ngForm" (ngSubmit)="agregarCancha()">
@@ -61,7 +71,7 @@
                 <ion-card class="ion-text-center back">
 
                   <img src="{{user.foto}}" alt="200" width="500">
-                  <ion-card-title>
+                  <ion-card-title style="color: black;">
                     Complejo: {{user.nombre}}
                   </ion-card-title>
                   
@@ -69,8 +79,7 @@
                 <ion-col size="6">
                   <ion-button type="submit"
                       color="tertiary"
-                      shape="round"
-                      (click)="obtenerIdComplejo(user.idComplejo)"
+                      (click)="obtenerIdComplejo2(user.idComplejo)"
                       (click)="goSlideCancha()">
                       Crear cancha
                   </ion-button>
@@ -78,10 +87,9 @@
                 <ion-col size="6">
                   <ion-button type="submit"
                       color="tertiary"
-                      shape="round"                      
                       (click)="obtenerIdComplejo(user.idComplejo)"
                       >
-                      Ver canchas
+                      Ver cancha
                   </ion-button>
                 </ion-col>
               </ion-row>
@@ -118,6 +126,20 @@
                                    required>
                                   </ion-input>
                       </ion-item>
+                      <br>
+
+                      <ion-list>
+                        <ion-label>¿Qué tamaño tiene la cancha?</ion-label>
+                        <ion-item>
+                            <ion-select [(ngModel)]="cancha.tamanioCancha"
+                                        name="tamanioCancha"
+                                        required>
+                              <ion-select-option value="Pequeña" >Pequeña</ion-select-option>
+                              <ion-select-option value="Mediana" >Mediana</ion-select-option>
+                              <ion-select-option value="Grande" >Grande</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                      </ion-list>
 
                       
                           <h4>Agrega una foto de la cancha</h4>
@@ -133,7 +155,7 @@
                 </ion-row>
 
             <ion-row>
-              <ion-col>
+              <!-- <ion-col>
                 <ion-button type="submit"
                           color="success"
                           shape="round"
@@ -142,11 +164,10 @@
                           <ion-icon name="caret-back-outline"></ion-icon>
                           Regresar
                         </ion-button>
-              </ion-col>
+              </ion-col> -->
               <ion-col>
                 <ion-button type="submit"
                             color="success"
-                            shape="round"
                             expand="full"
                             [disabled]="formulario.invalid"
                             (click)="agregarCancha()">
@@ -167,7 +188,7 @@
     <form>
       <ion-grid>
 
-        <ion-row class="center">
+        <!-- <ion-row class="center">
           <ion-col>
             <ion-button type="submit"
                         color="success"
@@ -177,7 +198,7 @@
               Regresar
             </ion-button>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
 
       
         <ion-row class="center">
@@ -185,13 +206,26 @@
             
               <div *ngFor='let user of canchas'>
 
-              <ion-card class="ion-text-center back">
-                <ion-card-header>                  
-                  <ion-card-title>Precio</ion-card-title>
-                </ion-card-header>
-                  <ion-card-subtitle (click)="getCanchaId(user.idCancha)"
-                                      (click)="presentAlertPrompt()"
-                                      style="color: blue;"><u>&#8226; Lps. {{user.precio}}</u></ion-card-subtitle>
+              <ion-card class="ion-text-center" color="medium">
+                <ion-row>
+                  <ion-col>
+                    <ion-card-header>                  
+                      <ion-card-title style="color: black;">Precio</ion-card-title>
+                    </ion-card-header>
+                      <ion-card-subtitle (click)="getCanchaId(user.idCancha)"
+                                          (click)="presentAlertPrompt()"
+                                          style="color: blue;"><u>&#8226; Lps. {{user.precio}}</u>
+                                        </ion-card-subtitle>
+                  </ion-col>
+                  <ion-col>
+                    <ion-card-header style="color: black;">                  
+                      <ion-card-title>Tamaño</ion-card-title>
+                    </ion-card-header>
+                      <ion-card-subtitle style="color: black;">{{user.tamanioCancha}}
+                                        </ion-card-subtitle>
+                  </ion-col>
+                </ion-row>
+                
 
                 <img class="img" src="{{user.foto}}" alt="200" width="500">
                 

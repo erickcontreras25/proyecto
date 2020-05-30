@@ -1,4 +1,14 @@
-<app-header titulo="Crear complejo"></app-header>
+<app-header titulo="Crear complejo" *ngIf="!atras"></app-header>
+
+<ion-header no-border *ngIf="atras">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="slideAtras()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 
 <ion-content class="background">
@@ -89,12 +99,14 @@
           <ion-col>
               <div>
 
-                <h4 style="color: black;">Dale un nombre al complejo</h4>
+                <h3 style="color: white;">Dale un nombre al complejo</h3>
                 <ion-item class="ion-text-center">
                   <ion-input type="text"
                               class="ion-text-left"                              
                               name="nombreComplejo"
                               placeholder="Nombre"
+                              minlength="5"
+                              maxlength="15"
                              [(ngModel)]="complejo.nombre"
                              required>
                             </ion-input>
@@ -102,7 +114,7 @@
 
                 <br>
 
-                <h4 style="color: black;">Seleccion una imagen para tu complejo</h4>
+                <h4 style="color: white;">Seleccion una imagen para tu complejo</h4>
                 <ion-item>
                     <input type="file"
                            id="img"
@@ -118,7 +130,7 @@
           <ion-col>
             
             <ion-button type="submit"
-                        color="tertiary"
+                        color="success"
                         shape="round"
                         (click)="goSlide2()"
                         [disabled]="formulario.invalid">
@@ -135,7 +147,7 @@
   <!-- --------------------------------------------------SLIDE 2---------------------------------------- -->
   <ion-slide>
     <ion-grid>
-          <form>
+          <form #formulario2="ngForm">
             <ion-row>
               <ion-col>
                 <!-- <img src="/assets/img/im2.png"> -->
@@ -146,25 +158,28 @@
                   <ion-col>  
 
                       <div>
-                        <h4 style="color: black;">Coloca la direccion donde se ubica el complejo</h4>
+                        <h4 style="color: white;">Coloca la direccion donde se ubica el complejo</h4>
                         <ion-item class="ion-text-center">
                           <ion-input type="string"
                                       class="ion-text-left"
                                       placeholder="Direccion"
+                                      minlength="5"
+                                      maxlength="15"
                                       name="localidad"
                                      [(ngModel)]="complejo.localidad"
                                      required>
                           </ion-input>
                         </ion-item>
 
-                        <h4 style="color: black;">En que horario te gustaria que reservaran tus clientes</h4>
+                        <h4 style="color: white;">En que horario te gustaria que reservaran tus clientes</h4>
 
                         <ion-item>
                           <ion-label>Hora Inicio</ion-label>
                           <ion-datetime displayFormat="HH:mm" 
                                       name="horaInicio"
                                       minuteValues="0" 
-                                      [(ngModel)]="complejo.horaInicio">
+                                      [(ngModel)]="complejo.horaInicio"
+                                      >
                           </ion-datetime>
                         </ion-item>
                         <ion-item>
@@ -172,7 +187,8 @@
                           <ion-datetime displayFormat="HH:mm" 
                                       name="horaCierre"
                                       minuteValues="0"
-                                      [(ngModel)]="complejo.horaCierre">
+                                      [(ngModel)]="complejo.horaCierre"
+                                      >
                           </ion-datetime>
 
                         </ion-item>                          
@@ -182,7 +198,7 @@
               </ion-row>
 
               <ion-row>
-              <ion-col class="derecha">
+              <!-- <ion-col class="derecha">
                 <ion-button type="submit"
                           color="tertiary"
                           shape="round"
@@ -190,12 +206,13 @@
                           <ion-icon name="caret-back-outline"></ion-icon>
                           Regresar
                         </ion-button>
-              </ion-col>
-              <ion-col class="izquierda">
+              </ion-col> -->
+              <ion-col>
                   <ion-button type="submit"
-                              color="tertiary"
+                              color="success"
                               shape="round"
-                              (click)="goSlide3()">
+                              (click)="verificar()"
+                              [disabled]="formulario2.invalid">
                       Siguiente
                       <ion-icon name="caret-forward-outline"></ion-icon>
                   </ion-button>
@@ -211,7 +228,7 @@
 
 <ion-slide>
   <ion-grid>
-        <form>
+        <form #formulario3="ngForm">
           <ion-row>
             <ion-col>
               <!-- <img src="/assets/img/im2.png"> -->
@@ -222,16 +239,19 @@
                 <ion-col>  
 
                     <div>
-                      <h4 style="color: black;">Ingresa tu numero de telefono</h4>
+                      <h4 style="color: white;">Ingresa tu número de telefono</h4>
                       <ion-item class="ion-text-center">
                         <ion-input type="string"
                                     class="ion-text-left"
-                                    placeholder="Direccion"
-                                    name="localidad"
+                                    placeholder="Teléfono"
+                                    name="numero"
+                                    minlength="8" maxlength="8"
+                                    pattern="[0-9]+"
                                    [(ngModel)]="complejo.numero"
                                    required>
                         </ion-input>
                       </ion-item>
+                      <br>
 
                       <ion-item>
                         <ion-label>¿Tienes parqueo?</ion-label>
@@ -257,7 +277,7 @@
             </ion-row>
 
             <ion-row>
-            <ion-col class="derecha">
+            <!-- <ion-col class="derecha">
               <ion-button type="submit"
                         color="tertiary"
                         shape="round"
@@ -265,12 +285,13 @@
                         <ion-icon name="caret-back-outline"></ion-icon>
                         Regresar
                       </ion-button>
-            </ion-col>
-            <ion-col class="izquierda">
+            </ion-col> -->
+            <ion-col>
                 <ion-button type="submit"
-                            color="tertiary"
+                            color="success"
                             shape="round"
-                            (click)="goSlide4()">
+                            (click)="goSlide4()"
+                            [disabled]="formulario3.invalid">
                     Siguiente
                     <ion-icon name="caret-forward-outline"></ion-icon>
                 </ion-button>
@@ -294,12 +315,12 @@
                 <ion-row>
                     <ion-col>  
   
-                      <h4 style="color: black;">Obten tu ubicacion para que tu complejo pueda salir en el mapa</h4>
+                      <h4 style="color: white;">Obten tu ubicación para que tu complejo pueda salir en el mapa</h4>
 
                       <ion-item class="ion-text-center">
                         <ion-spinner name="lines-small"
                                      *ngIf="cargando"></ion-spinner>
-                        <ion-button (click)="loadMap()">Obtener mi ubicacion actual</ion-button>
+                        <ion-button (click)="localizacion()">Obtener mi ubicacion actual</ion-button>
                         <ion-label *ngIf="listo">
                           <ion-icon class="size" color="success" name="checkmark-done-outline"></ion-icon>
                         </ion-label>
@@ -307,7 +328,7 @@
                         
                     </ion-col>
                 </ion-row>
-                <ion-row class="center">
+                <!-- <ion-row class="center">
                   <ion-col>
                     <ion-button type="submit"
                                 color="tertiary"
@@ -317,17 +338,17 @@
                         Regresar
                     </ion-button>
                 </ion-col>
-            </ion-row>
+            </ion-row> -->
 
             <ion-row>
               <ion-col>
-                <h4 style="color: black;">Tambien puedes colocarla despues</h4>
+                <h4 style="color: white;">Tambien puedes colocarla despues</h4>
               </ion-col>
             </ion-row>
             <ion-row class="center">
               <ion-col>
                 <ion-button type="submit"
-                                color="tertiary"
+                                color="success"
                                 shape="round"
                                 (click)="crearComplejo()">
                         Crear complejo

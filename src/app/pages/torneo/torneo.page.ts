@@ -31,7 +31,12 @@ export class TorneoPage implements OnInit {
 
   mostrarCrear = false;
 
-  hoy = moment().format('YYYY-MM-DDTHH:mm');
+  hoy = moment().format('YYYY-MM-DD');
+  ver = false;
+  ocupado = 0;
+  libre = 0;
+  mE = false;
+  atras = false;
 
 
   perfil: User;
@@ -61,7 +66,7 @@ export class TorneoPage implements OnInit {
     this.torneoService.getTorneoxUsuario(this.perfil.id)
     .subscribe((resp: Torneo[]) => {
       this.torneosxUser = resp;
-      console.log(resp);
+      // console.log(resp);
     });
   }
 
@@ -69,8 +74,17 @@ export class TorneoPage implements OnInit {
     this.torneoService.getTorneooId(id)
     .subscribe( (resp: Torneo) => {
       this.torneoUser = resp;
+      this.getEquipoxTorneo(id);
+      this.validar();
       this.goSlide2();
     });
+  }
+
+  validar() {
+    const dia = moment(this.torneo.diaTorneo).format('YYYY-MM-DD');
+    if (dia <= this.hoy) {
+      this.ver = true;
+    }
   }
 
   crearTorneoConImagen() {
@@ -140,11 +154,16 @@ export class TorneoPage implements OnInit {
     this.torneoService.getTorneoEquipoId(id)
     .subscribe((resp: TorneoEquipo[]) => {
        this.equipoxTorneo = resp;
-       this.goSlide3();
+       this.calcular();
+      //  this.goSlide3();
     },
     error => {
       console.log(error);
     });
+  }
+  calcular() {
+    this.ocupado = this.equipoxTorneo.length;
+    this.libre = this.torneoUser.cantEquipos - this.equipoxTorneo.length;
   }
 
   sacardTorneo(idT: number, idE: number) {
@@ -165,10 +184,24 @@ export class TorneoPage implements OnInit {
 
   getIdComplejo() {
     this.torneo.idComplejo = this.complejo.idComplejo;
-    console.log(this.torneo.idComplejo);
+    // console.log(this.torneo.idComplejo);
   }
 
 
+
+
+
+
+  mostrarDel() {
+    this.hoy = moment().format('YYYY-MM-DD');
+    const d = moment(this.torneoUser.diaTorneo).format('YYYY-MM-DD');
+    if (d >= this.hoy) {
+      this.mE = true;
+    } else {
+      this.mE = false;
+    }
+    this.goSlide3();
+  }
 
 
 
@@ -184,6 +217,7 @@ goSlide1() {
 }
 
 goSlide2() {
+  this.atras = true;
   this.slides.lockSwipes(false);
   this.slides.slideTo(1);
   this.slides.lockSwipes(true);
@@ -193,6 +227,17 @@ goSlide3() {
   this.slides.lockSwipes(false);
   this.slides.slideTo(2);
   this.slides.lockSwipes(true);
+}
+
+slideAtras() {
+  this.slides.lockSwipes(false);
+  this.slides.slidePrev();
+  this.slides.lockSwipes(true);
+  this.slides.isBeginning().then(data => {
+    if (data === true) {
+      this.atras = false;
+    }
+  });
 }
 
 }

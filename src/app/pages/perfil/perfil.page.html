@@ -1,14 +1,14 @@
 <app-header titulo="Mi Perfil"></app-header>
 
-<ion-content>
+<ion-content class="background">
 
   <div>
     <ion-row>
       <ion-col>
-        <ion-row><h5 style="color: black;">{{user.nombreUsuario}}</h5></ion-row>
+        <ion-row><h5 style="color: white;">{{user.nombreUsuario}}</h5></ion-row>
         <!-- <ion-row><h5>{{user.email}}</h5></ion-row>       -->
       </ion-col>
-      <ion-col><h5 style="color: black;">{{user.edad}} años</h5></ion-col>
+      <ion-col><h5 style="color: white;">{{user.edad}} años</h5></ion-col>
     </ion-row>
   </div>
 
@@ -24,11 +24,21 @@
             <ion-button (click)="obtenerMisReservacion()">Ver mi historial reservas</ion-button>
           </ion-row>
 
-          <h1 style="color: black;">Reservas Pendientes</h1>
+          <h1 style="color: white;">Reservas Pendientes</h1>
+
+          <div>
+            <ion-row class="ion-align-items-center bor" >
+              <ion-col class="centrado"><h5>Día</h5></ion-col>
+              <ion-col class="centrado"><h5>Horario</h5></ion-col>
+              <ion-col class="derecha">                
+              </ion-col>
+            </ion-row>            
+        </div>
+
         <div *ngFor="let item of reservacionesNoVencidas">
             <ion-row class="ion-align-items-center">
-              <ion-col class="izquierda" ><label>{{item.horaInicial | date:'MMMM-dd'}}</label></ion-col>
-              <ion-col class="izquierda" ><label>{{item.horaInicial | date:'HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</label></ion-col>
+              <ion-col class="centrado" ><label>{{item.horaInicial | date:'MMMM-dd'}}</label></ion-col>
+              <ion-col class="centrado" ><label>{{item.horaInicial | date:'HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</label></ion-col>
               <ion-col class="derecha">
                 <ion-button color="success"
                             class="derecha"      
@@ -50,7 +60,7 @@
     <ion-slide>
       <ion-grid>
         <form>
-          <h2 class="ion-text-center">Mis reservaciones</h2>
+          <h2 class="ion-text-center">Mis reservaciones</h2>          
 
             <div>
               <ion-card class="ion-text-center" style="background-color: rgb(230, 230, 241); border-radius : 10px;">      
@@ -98,7 +108,7 @@
                   <ion-row>
                     <ion-col class="izquierda">
                       <label>
-                        <ion-icon slot="start" name="trash-outline" color="danger" (click)="eliminarReservacion(reservacion.idReservacion)">Eliminar reservacion</ion-icon>
+                        <ion-icon slot="start" name="trash-outline" color="danger" (click)="confirmarCancelacion()">Cancelar resereserva</ion-icon>
                       </label>
                     </ion-col>          
                     <!-- <ion-col class="centrado" *ngIf="!reservacion.pago || !reservacion.pagoParcial">

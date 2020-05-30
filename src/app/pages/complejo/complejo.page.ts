@@ -7,6 +7,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { NavController, IonSlides } from '@ionic/angular';
 import { AlertaServiceService } from 'src/app/services/alerta-service.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import * as moment from 'moment';
 
 declare var mapboxgl: any;
 
@@ -25,6 +26,8 @@ export class ComplejoPage implements OnInit {
 
   cargando = false;
   listo = false;
+  atras = false;
+  ver = false;
 
 
   perfil: User;
@@ -139,6 +142,34 @@ export class ComplejoPage implements OnInit {
     this.complejo.latitud = myLatLng.lat;
   }
 
+  localizacion() {
+    this.cargando = true;
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.complejo.latitud = resp.coords.latitude;
+      this.complejo.longitud = resp.coords.longitude;
+      this.cargando = false;
+      this.listo = true;
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+  }
+
+
+  verificar() {
+    const hoy = moment().format('MM-DD-YYYY HH:mm');
+    const inicio = moment(this.complejo.horaInicio).format('MM-DD-YYYY HH:mm');
+    const cierre = moment(this.complejo.horaCierre).format('MM-DD-YYYY HH:mm');
+
+    if (cierre < inicio) {
+      this.ver = false;
+      this.alertaService.alertaInformativa('La hora de cierre no puede ser menor a la hora de inicio.')
+    } else {
+      this.ver = true;
+      this.goSlide3();
+    }
+
+  }
+
   // getGeo() {
 
   //   this.cargando = true;
@@ -164,12 +195,14 @@ export class ComplejoPage implements OnInit {
 
   // -------------------------------------------------SLIDE--------------------------------
   goSlide1() {
+    this.atras = false;
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
   }
 
   goSlide2() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
     this.slides.lockSwipes(true);
@@ -185,6 +218,17 @@ export class ComplejoPage implements OnInit {
     this.slides.lockSwipes(false);
     this.slides.slideTo(3);
     this.slides.lockSwipes(true);
+  }
+
+  slideAtras() {
+    this.slides.lockSwipes(false);
+    this.slides.slidePrev();
+    this.slides.lockSwipes(true);
+    this.slides.isBeginning().then(data => {
+      if (data === true) {
+        this.atras = false;
+      }
+    });
   }
 
 

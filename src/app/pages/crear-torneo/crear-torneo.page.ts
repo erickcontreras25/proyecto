@@ -21,6 +21,7 @@ export class CrearTorneoPage implements OnInit {
   perfil: User;
 
   ver = false;
+  atras = false;
 
   torneo: Torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
   torneos: Torneo[] = [];
@@ -137,12 +138,14 @@ export class CrearTorneoPage implements OnInit {
 
 
   goSlide1() {
+    this.atras = false;
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
   }
 
   goSlide2() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
     this.slides.lockSwipes(true);
@@ -152,6 +155,17 @@ export class CrearTorneoPage implements OnInit {
     this.slides.lockSwipes(false);
     this.slides.slideTo(2);
     this.slides.lockSwipes(true);
+  }
+
+  slideAtras() {
+    this.slides.lockSwipes(false);
+    this.slides.slidePrev();
+    this.slides.lockSwipes(true);
+    this.slides.isBeginning().then(data => {
+      if (data === true) {
+        this.atras = false;
+      }
+    });
   }
 
 }
