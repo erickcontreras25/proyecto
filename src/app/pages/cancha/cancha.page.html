@@ -204,25 +204,21 @@
         <ion-row class="center">
           <ion-col>
             
-              <div *ngFor='let user of canchas'>
+              <div *ngFor='let user of canchas' style="background-color: rgb(211, 197, 197, 0.1);">
 
-              <ion-card class="ion-text-center" color="medium">
                 <ion-row>
                   <ion-col>
-                    <ion-card-header>                  
-                      <ion-card-title style="color: black;">Precio</ion-card-title>
-                    </ion-card-header>
-                      <ion-card-subtitle (click)="getCanchaId(user.idCancha)"
+                      <h4 class="shadow">Precio</h4>
+                      <h5 (click)="getCanchaId(user.idCancha)"
                                           (click)="presentAlertPrompt()"
                                           style="color: blue;"><u>&#8226; Lps. {{user.precio}}</u>
-                                        </ion-card-subtitle>
+                                        </h5>
                   </ion-col>
                   <ion-col>
-                    <ion-card-header style="color: black;">                  
-                      <ion-card-title>Tamaño</ion-card-title>
-                    </ion-card-header>
-                      <ion-card-subtitle style="color: black;">{{user.tamanioCancha}}
-                                        </ion-card-subtitle>
+                      <h4 class="shadow">Tamaño</h4>
+                      <h5 style="color: blue;"
+                      ><u>&#8226;{{user.tamanioCancha}}</u>
+                                        </h5>
                   </ion-col>
                 </ion-row>
                 
@@ -230,7 +226,6 @@
                 <img class="img" src="{{user.foto}}" alt="200" width="500">
                 
 
-              </ion-card>
 
               </div>
           </ion-col>

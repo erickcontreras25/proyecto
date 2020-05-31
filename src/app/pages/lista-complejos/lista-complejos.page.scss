@@ -15,7 +15,7 @@ ion-slides {
 }
 
 ion-content.background{
-  --ion-background-color: #22C94A;
+  --background: url(/assets/img/fondograma1.jpg) 0 0/100% 100% no-repeat;
   opacity: 0.8;
 }
 
@@ -44,4 +44,8 @@ ion-icon.size {
   border-left: white 1px solid;
   border-right: white 1px solid;
   border-top: white 1px solid;
+}
+
+.shadow {
+  text-shadow: 2px 2px #080808;
 }

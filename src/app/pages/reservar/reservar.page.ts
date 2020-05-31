@@ -32,18 +32,19 @@ export class ReservarPage implements OnInit {
   auxHoras;
 
   complejos: Complejo[];
-  complejo = {
-    idComplejo: 0,
-    nombre: '',
-    localidad: '',
-    foto: null,
-    estado: false,
-    longitud: 0,
-    latitud: 0,
-    horaInicio: new Date(),
-    horaCierre: new Date(),
-    userId: ''
-  };
+  // complejo = {
+  //   idComplejo: 0,
+  //   nombre: '',
+  //   localidad: '',
+  //   foto: null,
+  //   estado: false,
+  //   longitud: 0,
+  //   latitud: 0,
+  //   horaInicio: new Date(),
+  //   horaCierre: new Date(),
+  //   userId: ''
+  // };
+  complejo = new Complejo(0, '', '', null, '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
 
   canchaId = {
     idCancha: 0,
@@ -112,7 +113,9 @@ export class ReservarPage implements OnInit {
     this.apiServi.getComplejoId(id)
     .subscribe( (resp: Complejo) => {
       this.complejo = resp;
-      console.log(this.complejo);
+      this.goCancha();
+      this.getTorneoId(id);
+      // console.log(this.complejo);
     });
   }
 
@@ -186,7 +189,8 @@ export class ReservarPage implements OnInit {
     this.apiServi.getCanchaComplejo(id)
     .subscribe((resp: Cancha[]) => {
       this.canchas = resp;
-      this.goCancha();
+      this.obtenerComplejoId(id);
+      
       // console.log('CANCHAS ', this.canchas);
     });
   }
@@ -211,7 +215,7 @@ export class ReservarPage implements OnInit {
     this.torneoService.getTorneooId(id)
     .subscribe( (resp: Torneo) => {
       this.torneo = resp;
-      console.log(resp);
+      // console.log(resp);
     });
   }
 

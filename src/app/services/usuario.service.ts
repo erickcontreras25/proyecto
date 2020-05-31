@@ -27,7 +27,7 @@ export class UsuarioService {
     isAdmin: null
   };
 
-  private url = 'https://localhost:44381/api';
+  private url = 'https://conmigo.armalapotra.com/api';
 
 
   constructor(private http: HttpClient,

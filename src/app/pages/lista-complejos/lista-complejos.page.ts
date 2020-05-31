@@ -102,6 +102,7 @@ export class ListaComplejosPage implements OnInit {
   modificarSinFoto() {
     // this.complejo.latitud = 15.51789;
     // this.complejo.longitud = -88.03639;
+    console.log(this.complejo.horaInicio + ' ' + this.complejo.horaCierre);
     this.apiServi.putComplejo(this.complejo.idComplejo, this.complejo)
       .subscribe((data) => {
         this.complejos.push(this.complejo);

@@ -58,8 +58,8 @@
     <ion-grid fixed>
         <form>
           <h3>{{torneoUser.nombre}}</h3>
-          <ion-card>
-            <ion-row>
+          <div>
+            <ion-row class="bor">
               <ion-col class="izquierda">
                 <h6 style="color: white;">Dia del torneo:</h6>
               </ion-col>
@@ -67,7 +67,7 @@
                 <h6 style="color: white;">{{torneoUser.diaTorneo | date:'dd-MMMM-yyyy'}}</h6>
               </ion-col>              
             </ion-row>
-            <ion-row>
+            <ion-row class="bor">
               <ion-col class="izquierda">
                 <h6 style="color: white;">Cupos habilitados:</h6>
               </ion-col>
@@ -75,7 +75,7 @@
                 <h6 style="color: white;">{{torneoUser.cantEquipos}}</h6>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row class="bor">
               <ion-col class="izquierda">
                 <h6 style="color: white;">Equipos inscritos: </h6>
               </ion-col>
@@ -92,7 +92,7 @@
               </ion-col>
             </ion-row>
 
-          </ion-card>
+          </div>
           <ion-row>
             <ion-col>
               <ion-button color="success"

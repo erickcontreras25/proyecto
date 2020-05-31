@@ -149,75 +149,59 @@
         <ion-row>
           <ion-col>
             
-              <div *ngFor='let user of complejos'>
-
-              <ion-card class="ion-text-center" style="background-color: #F1F1F6;">
-                
+              <div *ngFor='let user of complejos' style="background-color: rgb(211, 197, 197, 0.05);">
+                <br>
                 <img src="{{user.foto}}" style="alt: 400px; width: 100%;">
-                <ion-card-title style="color: black;">
+                <h2 class="shadow" style="color: white;">
                   {{user.nombre}}
-                </ion-card-title>
+                </h2>
                 <ion-row>
-                  <ion-col *ngIf='user.estado == true'><h5 style="color: blue;">Abierto Ahora</h5></ion-col>
-                  <ion-col *ngIf='user.estado == false'><h5 style="color: blue;">Cerrado Ahora</h5></ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <h6>
-                      <ion-icon name="location-outline" color="primary"></ion-icon>
-                         {{user.localidad }}
-                    </h6>
-                  </ion-col>
-                  <ion-col>
-                    <h6>
-                      <ion-icon name="call-outline" color="primary"></ion-icon>
-                         {{user.numero }}
-                    </h6>
-                  </ion-col>
+                  <ion-col *ngIf='user.estado == true'><label class="shadow" style="color: blue;">Abierto Ahora</label></ion-col>
+                  <ion-col *ngIf='user.estado == false'><label class="shadow" style="color: blue;">Cerrado Ahora</label></ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col *ngIf="user.parqueo">
-                    <h6 >Con parqueo</h6>
+                    <label class="shadow" style="color: white;">Con parqueo</label>
                   </ion-col>
                   <ion-col *ngIf="!user.parqueo">
-                    <h6 >Sin parqueo</h6>
+                    <label class="shadow" style="color: white;">Sin parqueo</label>
                   </ion-col>
                   <ion-col *ngIf="user.seguridad">
-                    <h6 >Con seguridad</h6>
+                    <label class="shadow" style="color: white;">Con seguridad</label>
                   </ion-col>
                   <ion-col *ngIf="!user.seguridad">
-                    <h6 >Sin seguridad</h6>
+                    <label class="shadow" style="color: white;">Sin seguridad</label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <label class="shadow" style="color: white;">
+                      <ion-icon class="size" name="location-outline" style="color: red;"></ion-icon>
+                         {{user.localidad }}
+                    </label>
+                  </ion-col>
+                  <ion-col>
+                    <label class="shadow" style="color: white;">
+                      <ion-icon class="size" name="call-outline" style="color: red;"></ion-icon>
+                         {{user.numero }}
+                    </label>
                   </ion-col>
                 </ion-row>
                 
                 
+                
                 <ion-button type="submit"
-                        color="tertiary"
+                        color="success"
                         shape="round"
                         (click)="obtenerCanchasComplejo(user.idComplejo)"
-                        (click)="obtenerComplejo(user.idComplejo)"
-                        (click)="getTorneoId(user.idComplejo)"
                         >
               Elegir cancha
             </ion-button>
-
-              </ion-card>
 
               </div>
           </ion-col>
         </ion-row>
 
-        <!-- <ion-row>
-          <ion-col>
-            <ion-button type="submit"
-                        color="tertiary"
-                        shape="round"
-                        (ngModelChange)="obtenerCancha()"
-                        (click)="goCancha()">
-              Canchas
-            </ion-button>
-          </ion-col>
-        </ion-row> -->
       </form>
     </ion-grid>    
   </ion-slide>
@@ -233,41 +217,27 @@
               </ion-col>
             </ion-row>
 
-            <!-- <ion-row>
-              <ion-col>
-                  <ion-button type="submit"
-                              color="tertiary"
-                              shape="round"
-                              (click)="goComplejos()">
-                      Regresar
-                  </ion-button>
-              </ion-col>
-          </ion-row> -->
 
               <ion-row>
                   <ion-col>  
 
                       <div *ngFor='let user of canchas'>
-
-                        <ion-card class="ion-text-center" style="border-radius : 10px;">
                           <img src="{{user.foto}}" alt="200" width="500">
-                          <ion-card-title>
+                          <ion-card-title class="shadow">
                             Precio/hora: Lps.{{user.precio}}.00
                           </ion-card-title>
-                          <h6 style="color: white;">
+                          <h6 class="shadow" style="color: white;">
                             Cancha {{user.tamanioCancha}}
                           </h6>
                         
                           <ion-button type="submit"
-                            color="tertiary"
+                            color="success"
                             shape="round"
                             
                             (click)="obtenerCancha(user.idCancha)"
                             (click)="goHorarios()">
                             Elegir hora
                           </ion-button>
-
-                      </ion-card>
                           
                       </div>
                   </ion-col>
@@ -372,10 +342,85 @@
                   <!-- <img src="/assets/img/im2.png"> -->
                 </ion-col>
               </ion-row>
-                <ion-row>
-                    <ion-col>  
+                <div>
 
-                      <ion-card class="ion-text-center" style="background-color: rgb(236, 236, 243); border-radius : 10px;">
+                      <ion-grid>
+                        <h1 class="shadow">Detalle de la reserva</h1>
+                        <h3 class="borA shadow">Informacion Complejo</h3>
+                        <ion-row class="borA">
+                          <ion-col class="izquierda">
+                            <label class="shadow">Nombre:</label>
+                          </ion-col>
+                          <ion-col class="izquierda">
+                            <label class="shadow">{{complejo.nombre}}</label>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row class="borA">
+                          <ion-col class="izquierda">
+                            <label class="shadow">Dia y hora de reserva:</label>
+                          </ion-col>
+                          <ion-col class="izquierda">
+                            <label class="shadow">{{reservacion.horaInicial | date:'MMMM-dd HH:mm'}} a {{reservacion.horaFinal | date:'HH:mm'}}</label>
+                          </ion-col>
+                        </ion-row>                        
+                          
+                        <ion-row class="borA">
+                          <ion-col class="izquierda">
+                            <label class="shadow">Total a pagar:</label>
+                          </ion-col>
+                          <ion-col class="izquierda">
+                            <label class="shadow">Lps.{{canchaId.precio * auxHoras}}.00</label>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row class="borA">
+                          <ion-col class="izquierda">
+                            <label class="shadow"> Direccion:</label>
+                          </ion-col>
+                          <ion-col class="izquierda">
+                            <label class="shadow">{{complejo.localidad}}</label>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col>
+                            <label class="shadow">Telefono:</label>
+                          </ion-col>
+                          <ion-col>
+                            <label class="shadow">{{complejo.numero}}</label>
+                          </ion-col>
+                        </ion-row>
+                        
+                      </ion-grid>
+
+                      <ion-grid>
+                        <h3 class="borA shadow">Datos Personales</h3>
+
+                        <ion-row class="borA">
+                          <ion-col class="izquierda">
+                            <label class="shadow">Usuario:</label>
+                          </ion-col>
+                          <ion-col class="izquierda">
+                            <label class="shadow">{{perfil.nombreUsuario}}</label>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row class="borA">
+                          <ion-col class="izquierda">
+                            <label class="shadow">Correo:</label>
+                          </ion-col>
+                          <ion-col class="izquierda">
+                            <label class="shadow">{{perfil.email}}</label>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col>
+
+                          </ion-col>
+                          <ion-col>
+                            
+                          </ion-col>
+                        </ion-row>
+                      </ion-grid>
+
+                      <!-- <ion-card class="ion-text-center" style="background-color: rgb(236, 236, 243); border-radius : 10px;">
                           <h3 class="ion-text-center">Complejo: {{complejo.nombre}}</h3>
                           <h6>
                             <ion-icon class="size" name="calendar-outline" color="secondary"></ion-icon>
@@ -392,29 +437,14 @@
                               Direccion:
                           </h6>
                           <h6>{{complejo.localidad}}</h6>
-                          <!-- <ion-item>De: {{reservacion.horaInicial | date:'yyyy-MM-dd HH:mm'}}</ion-item>
-                          <ion-item>A: {{reservacion.horaFinal | date:'yyyy-MM-dd HH:mm'}}</ion-item>
-                          <ion-item>Total a pagar: {{canchaId.precio * auxHoras}}</ion-item>
-                          <ion-item>Complejo: {{complejo.nombre}}</ion-item>
-                          <ion-item>Lugar: {{complejo.localidad}}</ion-item> -->
                           
 
-                      </ion-card>
+                      </ion-card> -->
   
                       
                         
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                  <!-- <ion-col>
-                    <ion-button type="submit"
-                                color="tertiary"
-                                shape="round"
-                                (click)="goHorarios()">
-                        Regresar
-                    </ion-button>
-                </ion-col> -->
-              </ion-row>
+                </div>
+
               <ion-row>
                 <ion-col>
                     <ion-button type="submit"

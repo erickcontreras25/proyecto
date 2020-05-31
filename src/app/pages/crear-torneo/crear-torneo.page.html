@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content center>
+<ion-content class="background">
 
   <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
 
@@ -18,7 +18,7 @@
       <form #formulario="ngForm">
       <ion-grid>
         <div class="ion-margin-top">
-          <ion-label>¿Donde se realizara el torneo?</ion-label>
+          <ion-label class="shadow">¿Donde se realizara el torneo?</ion-label>
           <ion-select [(ngModel)]="complejo.idComplejo"
                       name="idComplejo"
                       (ngModelChange)="getIdComplejo()">
@@ -28,7 +28,7 @@
             
         <br>
         <div *ngIf="complejo.idComplejo!=0">
-          <h4>Dale nombre al torneo</h4>
+          <h4 class="shadow">Dale nombre al torneo</h4>
           <ion-item>
             <ion-input name="nombre"
                         type="text"
@@ -41,7 +41,7 @@
         </div>
         <br>
         <div *ngIf="complejo.idComplejo!=0">
-          <h4>Cuantos equipos quieres que participen</h4>
+          <h4 class="shadow">Cuantos equipos quieres que participen</h4>
           <ion-item>
             <ion-input name="cantEquipos"
                         type="number"
@@ -68,7 +68,7 @@
       <ion-grid>
         <form #formulario1="ngForm">
         <div>
-          <h5>Agrega una descripción si deseas.</h5>
+          <h5 class="shadow">Agrega una descripción si deseas.</h5>
 
           <ion-item>
             <ion-input name="descripcion"
@@ -78,7 +78,7 @@
                         [(ngModel)]="torneo.descripcion"></ion-input>
           </ion-item>
           <br>
-          <h5>Coloca una foto con los premios y reglas del torneo</h5>
+          <h5 class="shadow">Coloca una foto con los premios y reglas del torneo</h5>
           <ion-item>
             <input type="file"
                    id="img"
@@ -111,7 +111,7 @@
       <ion-grid>
         <form #formulario2="ngForm">
         <ion-item>
-          <ion-label>¿Cuándo se realizara el torneo?</ion-label>
+          <ion-label class="shadow">¿Cuándo se realizara el torneo?</ion-label>
           <ion-datetime displayFormat="D MMM YYYY" 
                                     name="diaTorneo"
                                     [(ngModel)]="torneo.diaTorneo"

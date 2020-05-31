@@ -28,6 +28,7 @@ export class PerfilPage implements OnInit {
   auxPrecio;
   parcial = false;
   completo = false;
+  atras = false;
 
   reservacion: Reservacion = new Reservacion(0, new Date(), new Date(), false, false, 0, '');
   reservaciones: Reservacion[] = [];
@@ -334,18 +335,21 @@ async confirmarCancelacion() {
 
 
   goSlide1() {
+    this.atras = false;
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
   }
 
   goSlide2() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
     this.slides.lockSwipes(true);
   }
 
   goSlide3() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(2);
     this.slides.lockSwipes(true);

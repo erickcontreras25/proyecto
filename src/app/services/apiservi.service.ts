@@ -17,7 +17,7 @@ export class ApiserviService {
   private auxUsu: number;
   private auxNom: string;
   private auxEst: boolean;
-  private url = 'https://localhost:44381/api';
+  private url = 'https://conmigo.armalapotra.com/api';
   token: string = null;
 
   constructor(private http: HttpClient,

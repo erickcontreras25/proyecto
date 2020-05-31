@@ -10,7 +10,7 @@ import { Storage } from '@ionic/storage';
 })
 export class TorneoService {
 
-  private url = 'https://localhost:44381/api';
+  private url = 'https://conmigo.armalapotra.com/api';
 
   constructor(private http: HttpClient,
               private storage: Storage,

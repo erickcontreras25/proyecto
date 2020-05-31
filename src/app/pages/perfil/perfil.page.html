@@ -1,14 +1,24 @@
-<app-header titulo="Mi Perfil"></app-header>
+<app-header titulo="Mi Perfil" *ngIf="!atras"></app-header>
+
+<ion-header no-border *ngIf="atras">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goSlide1()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content class="background">
 
   <div>
     <ion-row>
       <ion-col>
-        <ion-row><h5 style="color: white;">{{user.nombreUsuario}}</h5></ion-row>
+        <ion-row><h5 class="shadow" style="color: white;">{{user.nombreUsuario}}</h5></ion-row>
         <!-- <ion-row><h5>{{user.email}}</h5></ion-row>       -->
       </ion-col>
-      <ion-col><h5 style="color: white;">{{user.edad}} años</h5></ion-col>
+      <ion-col><h5 class="shadow" style="color: white;">{{user.edad}} años</h5></ion-col>
     </ion-row>
   </div>
 
@@ -20,16 +30,16 @@
       <ion-grid>
         <form>
 
-          <ion-row center>
+          <!-- <ion-row center>
             <ion-button (click)="obtenerMisReservacion()">Ver mi historial reservas</ion-button>
-          </ion-row>
+          </ion-row> -->
 
-          <h1 style="color: white;">Reservas Pendientes</h1>
+          <h1 style="color: white;" class="shadow">Mis reservaciones</h1>
 
           <div>
             <ion-row class="ion-align-items-center bor" >
-              <ion-col class="centrado"><h5>Día</h5></ion-col>
-              <ion-col class="centrado"><h5>Horario</h5></ion-col>
+              <ion-col class="centrado"><label class="shadow">Día</label></ion-col>
+              <ion-col class="centrado"><label class="shadow">Horario</label></ion-col>
               <ion-col class="derecha">                
               </ion-col>
             </ion-row>            
@@ -37,8 +47,12 @@
 
         <div *ngFor="let item of reservacionesNoVencidas">
             <ion-row class="ion-align-items-center">
-              <ion-col class="centrado" ><label>{{item.horaInicial | date:'MMMM-dd'}}</label></ion-col>
-              <ion-col class="centrado" ><label>{{item.horaInicial | date:'HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</label></ion-col>
+              <ion-col class="centrado" >
+                <label class="shadow">{{item.horaInicial | date:'MMMM-dd'}}</label>
+              </ion-col>
+              <ion-col class="centrado" >
+                <label class="shadow">{{item.horaInicial | date:'HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</label>
+              </ion-col>
               <ion-col class="derecha">
                 <ion-button color="success"
                             class="derecha"      
@@ -60,10 +74,9 @@
     <ion-slide>
       <ion-grid>
         <form>
-          <h2 class="ion-text-center">Mis reservaciones</h2>          
+          <!-- <h2 class="ion-text-center">Mis reservaciones</h2>           -->
 
-            <div>
-              <ion-card class="ion-text-center" style="background-color: rgb(230, 230, 241); border-radius : 10px;">      
+            <div style="background-color: rgb(211, 197, 197, 0.05);">
 
                   <div style="display: inline-block; position:relative">
                     <img src="{{cancha.foto}}" alt="200" width="500">
@@ -71,45 +84,43 @@
                       <img src="{{complejo.foto}}" class="imgRedonda">
                   </div>
                   </div>
-                  <br><br><br><br><br>
-                  <h3 class="ion-text-center">{{complejo.nombre}}</h3>
+                  <br><br><br><br>
+                  <h1 class="ion-text-center shadow">{{complejo.nombre}}</h1>
                   <ion-row>
                     <ion-col>
-                      <ion-icon name="calendar-outline" color="secondary"></ion-icon>
-                      <h6>{{reservacion.horaInicial | date:'MMMM-dd'}}</h6>
-                      <h6>                       
+                      <ion-icon class="shadow" name="calendar-outline" color="secondary"></ion-icon>
+                      <label class="shadow">{{reservacion.horaInicial | date:'MMMM-dd'}}</label>
+                      <label class="shadow">                       
                           {{reservacion.horaInicial | date:'HH:mm'}} a {{reservacion.horaFinal | date:'HH:mm'}}
-                      </h6>
+                      </label>
                     </ion-col>
                     <ion-col>
-                      <ion-icon name="cash-outline" color="success"></ion-icon>
-                      <h6>                        
+                      <ion-icon class="shadow" name="cash-outline" color="success"></ion-icon>
+                      <label class="shadow">                        
                           Lps. {{cancha.precio * auxHoras}}
-                      </h6>
+                      </label>
                     </ion-col>
                   </ion-row>
                   <ion-row>
                     <ion-col>
-                      <ion-icon name="location-outline" color="primary"></ion-icon>
-                      <h6>                        
+                      <ion-icon class="shadow" name="location-outline" color="primary"></ion-icon>
+                      <label class="shadow">                        
                           {{complejo.localidad}}
-                      </h6>
+                      </label>
                     </ion-col>
                     <ion-col>
                       <ion-icon name="call-outline" color="secondary"></ion-icon>
-                      <h6>                        
+                      <label class="shadow">                        
                         {{complejo.numero}}
-                    </h6>
+                    </label>
                     </ion-col>
                   </ion-row>
                   
 
                   
                   <ion-row>
-                    <ion-col class="izquierda">
-                      <label>
-                        <ion-icon slot="start" name="trash-outline" color="danger" (click)="confirmarCancelacion()">Cancelar resereserva</ion-icon>
-                      </label>
+                    <ion-col>
+                          <ion-icon name="trash-outline" style="color: red;" (click)="confirmarCancelacion()">Cancelar resereserva</ion-icon>
                     </ion-col>          
                     <!-- <ion-col class="centrado" *ngIf="!reservacion.pago || !reservacion.pagoParcial">
                       <ion-button (click)="obtenerReservacionId(reservacion.idReservacion)"
@@ -124,7 +135,6 @@
                   </ion-row>
                   
                   
-               </ion-card>
              </div>
         </form>
       </ion-grid>
