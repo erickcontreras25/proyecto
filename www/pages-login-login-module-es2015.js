@@ -181,6 +181,7 @@ let LoginPage = class LoginPage {
             const valido = yield this.usuarioService.registro(this.perfil);
             if (valido) {
                 // NAVEGAR A Login
+                this.auxNombre = this.perfil.email;
                 this.perfil = new src_models_usuario_models__WEBPACK_IMPORTED_MODULE_4__["Usuario"](null, null, null, null, false);
                 this.mostrarRegistro();
             }

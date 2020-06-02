@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<app-header titulo=\"Unirme Equipo\"></app-header>\n\n<ion-content>\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n    <ion-slide>\n      <ion-grid>\n\n        <h1 style=\"color: black;\">Equipos</h1>  \n\n        <div>\n            <ion-row *ngFor=\"let user of equipos\">\n              <ion-col size=\"6\" class=\"izquierda\"><h5>{{user.nombre}}</h5></ion-col>\n              <ion-col class=\"derecha\">\n                <ion-button color=\"success\"\n                            class=\"derecha\"      \n                            fill=\"solid\"                \n                            (click)=\"llenar(user.idEquipo)\"\n                            (click)=\"uniraEquipo()\">\n                            <ion-icon name=\"add-circle-outline\"></ion-icon>\n                            UNIRME\n                            </ion-button>\n                \n              </ion-col>\n            </ion-row>            \n        </div>\n\n      </ion-grid>\n    </ion-slide>\n\n\n  </ion-slides>\n\n</ion-content>\n";
+    __webpack_exports__["default"] = "<app-header titulo=\"Unirme Equipo\"></app-header>\n\n<ion-content class=\"background\">\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n    <ion-slide>\n      <ion-grid>\n\n        <h1 style=\"color: white;\">Equipos</h1>  \n\n        <div>\n            <ion-row *ngFor=\"let user of equipos\" class=\"bor\">\n              <ion-col size=\"6\" class=\"izquierda\" *ngIf=\"perfil.id != user.userId\"><h5>{{user.nombre}}</h5></ion-col>\n              <ion-col class=\"derecha\" *ngIf=\"perfil.id != user.userId\">\n                <ion-button color=\"success\"\n                            class=\"derecha\"      \n                            fill=\"solid\"                \n                            (click)=\"llenar(user.idEquipo)\"\n                            (click)=\"uniraEquipo()\">\n                            <ion-icon name=\"add-circle-outline\"></ion-icon>\n                            UNIRME\n                            </ion-button>\n                \n              </ion-col>\n            </ion-row>            \n        </div>\n\n      </ion-grid>\n    </ion-slide>\n\n\n  </ion-slides>\n\n</ion-content>\n";
     /***/
   },
 
@@ -180,7 +180,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".centrado {\n  text-align: center;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.izquierda {\n  text-align: left;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvdW5pcm1lLWVxdWlwby9DOlxcVXNlcnNcXGVyaWNrXFxPbmVEcml2ZVxcRGVza3RvcFxcaW9uaWNcXHByb3llY3RvL3NyY1xcYXBwXFxwYWdlc1xcdW5pcm1lLWVxdWlwb1xcdW5pcm1lLWVxdWlwby5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3VuaXJtZS1lcXVpcG8vdW5pcm1lLWVxdWlwby5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxrQkFBQTtBQ0NKOztBRENBO0VBQ0ksaUJBQUE7QUNFSjs7QURBQTtFQUNJLGdCQUFBO0FDR0oiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy91bmlybWUtZXF1aXBvL3VuaXJtZS1lcXVpcG8ucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNlbnRyYWRve1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIH1cclxuLmRlcmVjaGF7XHJcbiAgICB0ZXh0LWFsaWduOiByaWdodDtcclxufVxyXG4uaXpxdWllcmRhe1xyXG4gICAgdGV4dC1hbGlnbjogbGVmdDtcclxufSIsIi5jZW50cmFkbyB7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLmRlcmVjaGEge1xuICB0ZXh0LWFsaWduOiByaWdodDtcbn1cblxuLml6cXVpZXJkYSB7XG4gIHRleHQtYWxpZ246IGxlZnQ7XG59Il19 */";
+    __webpack_exports__["default"] = ".centrado {\n  text-align: center;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.izquierda {\n  text-align: left;\n}\n\nion-content.background {\n  --background: url(/assets/img/bueno.jpg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.bor {\n  border-bottom: rgba(255, 255, 255, 0.877) 1px solid;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvdW5pcm1lLWVxdWlwby9DOlxcVXNlcnNcXGVyaWNrXFxPbmVEcml2ZVxcRGVza3RvcFxcaW9uaWNcXHByb3llY3RvL3NyY1xcYXBwXFxwYWdlc1xcdW5pcm1lLWVxdWlwb1xcdW5pcm1lLWVxdWlwby5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3VuaXJtZS1lcXVpcG8vdW5pcm1lLWVxdWlwby5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxrQkFBQTtBQ0NKOztBRENBO0VBQ0ksaUJBQUE7QUNFSjs7QURBQTtFQUNJLGdCQUFBO0FDR0o7O0FEQUE7RUFDSSxnRUFBQTtFQUNBLFlBQUE7QUNHSjs7QURBQTtFQUNJLG1EQUFBO0FDR0oiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy91bmlybWUtZXF1aXBvL3VuaXJtZS1lcXVpcG8ucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNlbnRyYWRve1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIH1cclxuLmRlcmVjaGF7XHJcbiAgICB0ZXh0LWFsaWduOiByaWdodDtcclxufVxyXG4uaXpxdWllcmRhe1xyXG4gICAgdGV4dC1hbGlnbjogbGVmdDtcclxufVxyXG5cclxuaW9uLWNvbnRlbnQuYmFja2dyb3VuZHtcclxuICAgIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL2J1ZW5vLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XHJcbiAgICBvcGFjaXR5OiAwLjg7XHJcbn1cclxuXHJcbi5ib3Ige1xyXG4gICAgYm9yZGVyLWJvdHRvbTogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjg3NykgMXB4IHNvbGlkO1xyXG59IiwiLmNlbnRyYWRvIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uZGVyZWNoYSB7XG4gIHRleHQtYWxpZ246IHJpZ2h0O1xufVxuXG4uaXpxdWllcmRhIHtcbiAgdGV4dC1hbGlnbjogbGVmdDtcbn1cblxuaW9uLWNvbnRlbnQuYmFja2dyb3VuZCB7XG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL2J1ZW5vLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XG4gIG9wYWNpdHk6IDAuODtcbn1cblxuLmJvciB7XG4gIGJvcmRlci1ib3R0b206IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC44NzcpIDFweCBzb2xpZDtcbn0iXX0= */";
     /***/
   },
 
@@ -263,7 +263,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.navCtrl = navCtrl;
         this.alertaService = alertaService;
         this.equipos = [];
-        this.equipo = new src_models_equipo_models__WEBPACK_IMPORTED_MODULE_3__["Equipo"](0, '', '');
+        this.equipo = new src_models_equipo_models__WEBPACK_IMPORTED_MODULE_3__["Equipo"](0, '', 0, '');
         this.equipoUsers = [];
         this.equipoUser = new src_models_equipoUser_models__WEBPACK_IMPORTED_MODULE_7__["EquipoUser"](0, '');
       }
@@ -299,9 +299,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             _this2.navCtrl.navigateRoot('/inicio');
           }, function (error) {
-            _this2.alertaService.alertaInformativa('Ya estas unido a este equipo');
-
-            console.log(error);
+            // this.alertaService.alertaInformativa('Ya estas unido a este equipo');
+            _this2.alertaService.alertaInformativa(error['error']);
           });
         }
       }, {

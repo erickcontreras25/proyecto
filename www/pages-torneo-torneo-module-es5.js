@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<app-header titulo=\"Torneo\"></app-header>\n\n\n<ion-content>\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n\n    <ion-slide>\n      <ion-grid>\n        \n        <div class=\"derecha\">\n          <ion-button color=\"tertiary\" \n                      (click)=\"mostrarCrear=true\"\n                      shape=\"round\" \n                      fill=\"solid\"\n                      routerLink=\"/crear-torneo\" routerDirection=\"forward\">CREAR TORNEO</ion-button>\n          </div>  \n          \n            <h2 class=\"ion-text-center\">Mis torneos</h2>\n            <div>\n              <ion-card>\n                <ion-row class=\"ion-align-items-center\" *ngFor=\"let item of torneosxUser\">\n                  <ion-col class=\"izquierda\">\n                    <h4>{{item.nombre}}</h4>\n                  </ion-col>\n                  <ion-col *ngIf=\"item.diaTorneo < hoy\">\n                    <label  style=\"color: tomato;\"> Finalizado</label>\n                  </ion-col>\n                  <ion-col *ngIf=\"item.diaTorneo > hoy\">\n                    <label  style=\"color: rgb(0, 119, 255);\"> {{item.diaTorneo | date:'yyyy-MMMM-dd'}}</label>\n                  </ion-col>\n                  <ion-col class=\"derecha\">\n                    <ion-button color=\"success\"\n                                          class=\"derecha\"      \n                                          shape=\"round\" fill=\"outline\"\n                                          (click)=\"getTorneoId(item.idTorneo)\"\n                                          >VER</ion-button>\n                  </ion-col>\n                </ion-row>\n              </ion-card>\n            </div>\n            \n\n      </ion-grid>\n    </ion-slide>\n    \n<!-- ---------------------------------------------------SLIDE 2---------------------------------------- -->\n  <ion-slide>\n    <ion-grid fixed>\n        <form>\n          <ion-card>\n            <ion-card-title>{{torneoUser.nombre}}</ion-card-title>\n            <ion-row>\n              <ion-label>Dia del torneo: {{torneoUser.diaTorneo | date:'yyyy-MMMM-dd'}}</ion-label>\n            </ion-row>\n            <ion-row>\n              <ion-label>Cantidad de equipos a participar: {{torneoUser.cantEquipos}}</ion-label>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <ion-button color=\"success\"\n                            shape=\"round\"\n                          (click)=\"goSlide1()\">Regresar</ion-button>\n              </ion-col>\n              <ion-col>\n                <ion-button color=\"success\"\n                            shape=\"round\"\n                          (click)=\"getEquipoxTorneo(torneoUser.idTorneo)\">Equipos Inscritos</ion-button>\n              </ion-col>\n            </ion-row>          \n          </ion-card>\n        </form>\n  </ion-grid>\n  </ion-slide>\n\n\n<!-- ---------------------------------------------------SLIDE 3---------------------------------------- -->\n\n  <ion-slide>\n    <ion-grid>\n \n      <div>\n        <ion-card class=\"blanco\">\n          <ion-row *ngFor=\"let item of equipoxTorneo\">\n            <ion-col size=\"6\" class=\"izquierda\">        \n              <h5 style=\"color: black;\">{{item.equipo.nombre}}</h5>                  \n            </ion-col> \n            <ion-col class=\"derecha\" *ngIf=\"torneo.diaTorneo < hoy\">\n              <ion-button color=\"success\"\n                          class=\"derecha\"\n                          fill=\"clear\"\n                          (click)=\"sacardTorneo(item.torneoId, item.equipoId)\">Sacar del torneo</ion-button>\n            </ion-col>    \n          </ion-row>\n          <ion-row>\n            <ion-col>\n            <ion-button   color=\"success\"\n                          expand=\"full\"\n                          (click)=\"goSlide1()\">Regresar</ion-button>\n                        </ion-col>\n          </ion-row>\n        </ion-card>\n      </div>\n      \n  </ion-grid>\n</ion-slide>\n\n<!-- ---------------------------------------------------SLIDE 4---------------------------------------- -->\n\n<ion-slide>\n  <ion-grid>\n\n    \n  </ion-grid>\n</ion-slide>\n\n  \n</ion-slides>\n\n</ion-content>\n";
+    __webpack_exports__["default"] = "<app-header titulo=\"Torneo\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"slideAtras()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n\n<ion-content class=\"background\">\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n\n    <ion-slide>\n      <ion-grid>\n        \n        <div class=\"derecha\">\n          <ion-button color=\"tertiary\" \n                      (click)=\"mostrarCrear=true\"\n                      shape=\"round\" \n                      fill=\"solid\"\n                      routerLink=\"/crear-torneo\" routerDirection=\"root\">CREAR TORNEO</ion-button>\n          </div>  \n          \n            <h2 class=\"ion-text-center\">Mis torneos</h2>\n            <div>\n                <ion-row class=\"ion-align-items-center bor\" *ngFor=\"let item of torneosxUser\">\n                  <ion-col class=\"izquierda\">\n                    <h4 style=\"color: white;\">{{item.nombre}}</h4>\n                  </ion-col>\n                  <ion-col *ngIf=\"item.diaTorneo < hoy\">\n                    <label  style=\"color: tomato;\"> Finalizado</label>\n                  </ion-col>\n                  <ion-col *ngIf=\"item.diaTorneo > hoy\">\n                    <label  style=\"color: rgb(0, 119, 255);\"> {{item.diaTorneo | date:'yyyy-MMMM-dd'}}</label>\n                  </ion-col>\n                  <ion-col class=\"derecha\">\n                    <ion-button color=\"success\"\n                                          class=\"derecha\"      \n                                          shape=\"round\" fill=\"outline\"\n                                          (click)=\"getTorneoId(item.idTorneo)\"\n                                          >VER</ion-button>\n                  </ion-col>\n                </ion-row>\n            </div>\n            \n\n      </ion-grid>\n    </ion-slide>\n    \n<!-- ---------------------------------------------------SLIDE 2---------------------------------------- -->\n  <ion-slide>\n    <ion-grid fixed>\n        <form>\n          <h3>{{torneoUser.nombre}}</h3>\n          <div>\n            <ion-row class=\"bor\">\n              <ion-col class=\"izquierda\">\n                <h6 style=\"color: white;\">Dia del torneo:</h6>\n              </ion-col>\n              <ion-col class=\"derecha\">\n                <h6 style=\"color: white;\">{{torneoUser.diaTorneo | date:'dd-MMMM-yyyy'}}</h6>\n              </ion-col>              \n            </ion-row>\n            <ion-row class=\"bor\">\n              <ion-col class=\"izquierda\">\n                <h6 style=\"color: white;\">Cupos habilitados:</h6>\n              </ion-col>\n              <ion-col class=\"derecha\">\n                <h6 style=\"color: white;\">{{torneoUser.cantEquipos}}</h6>\n              </ion-col>\n            </ion-row>\n            <ion-row class=\"bor\">\n              <ion-col class=\"izquierda\">\n                <h6 style=\"color: white;\">Equipos inscritos: </h6>\n              </ion-col>\n              <ion-col class=\"derecha\">\n                <h6 style=\"color: white;\">{{ocupado}}</h6>\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col class=\"izquierda\">\n                <h6 style=\"color: white;\">Cupos disponibles: </h6>\n              </ion-col>\n              <ion-col class=\"derecha\">\n                <h6 style=\"color: white;\">{{libre}}</h6>\n              </ion-col>\n            </ion-row>\n\n          </div>\n          <ion-row>\n            <ion-col>\n              <ion-button color=\"success\"\n                          shape=\"round\"\n                        (click)=\"mostrarDel()\">Ver Equipos Inscritos</ion-button>\n            </ion-col>\n          </ion-row> \n        </form>\n  </ion-grid>\n  </ion-slide>\n\n\n<!-- ---------------------------------------------------SLIDE 3---------------------------------------- -->\n\n  <ion-slide>\n    <ion-grid>\n \n      <!-- <h2 class=\"ion-text-center\">Equipos inscritos: {{calcu}}</h2> -->\n      <div>\n          <ion-row *ngFor=\"let item of equipoxTorneo\" class=\"bor\">\n            <ion-col size=\"6\" class=\"izquierda\">        \n              <h5 style=\"color: white;\">{{item.equipo.nombre}}</h5>                  \n            </ion-col> \n            <ion-col class=\"derecha\" *ngIf=\"mE\">\n              <ion-button color=\"success\"\n                          class=\"derecha\"\n                          fill=\"clear\"\n                          (click)=\"sacardTorneo(item.torneoId, item.equipoId)\">Sacar del torneo</ion-button>\n            </ion-col>    \n          </ion-row>\n          <!-- <ion-row>\n            <ion-col>\n            <ion-button   color=\"success\"\n                          expand=\"full\"\n                          (click)=\"goSlide1()\">Regresar</ion-button>\n                        </ion-col>\n          </ion-row> -->\n      </div>\n      \n  </ion-grid>\n</ion-slide>\n\n<!-- ---------------------------------------------------SLIDE 4---------------------------------------- -->\n\n<ion-slide>\n  <ion-grid>\n\n    \n  </ion-grid>\n</ion-slide>\n\n  \n</ion-slides>\n\n</ion-content>\n";
     /***/
   },
 
@@ -180,7 +180,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvdG9ybmVvL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFx0b3JuZW9cXHRvcm5lby5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3Rvcm5lby90b3JuZW8ucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQUE7QUNDSjs7QURDQTtFQUNJLGtCQUFBO0FDRUo7O0FEQUE7RUFDSSxnQkFBQTtBQ0dKIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvdG9ybmVvL3Rvcm5lby5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZGVyZWNoYXtcclxuICAgIHRleHQtYWxpZ246IHJpZ2h0O1xyXG59XHJcbi5jZW50cmFkb3tcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICB9XHJcbi5penF1aWVyZGF7XHJcbiAgICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG59IiwiLmRlcmVjaGEge1xuICB0ZXh0LWFsaWduOiByaWdodDtcbn1cblxuLmNlbnRyYWRvIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uaXpxdWllcmRhIHtcbiAgdGV4dC1hbGlnbjogbGVmdDtcbn0iXX0= */";
+    __webpack_exports__["default"] = ".derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n\nion-content.background {\n  --background: url(/assets/img/fondograma1.jpg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.bor {\n  border-bottom: rgba(255, 255, 255, 0.877) 1px solid;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvdG9ybmVvL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFx0b3JuZW9cXHRvcm5lby5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3Rvcm5lby90b3JuZW8ucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQUE7QUNDSjs7QURDQTtFQUNJLGtCQUFBO0FDRUo7O0FEQUE7RUFDSSxnQkFBQTtBQ0dKOztBREFBO0VBQ0Usc0VBQUE7RUFDQSxZQUFBO0FDR0Y7O0FEQUU7RUFDRSxtREFBQTtBQ0dKIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvdG9ybmVvL3Rvcm5lby5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZGVyZWNoYXtcclxuICAgIHRleHQtYWxpZ246IHJpZ2h0O1xyXG59XHJcbi5jZW50cmFkb3tcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICB9XHJcbi5penF1aWVyZGF7XHJcbiAgICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG59XHJcblxyXG5pb24tY29udGVudC5iYWNrZ3JvdW5ke1xyXG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL2ZvbmRvZ3JhbWExLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XHJcbiAgb3BhY2l0eTogMC44O1xyXG59XHJcblxyXG4gIC5ib3Ige1xyXG4gICAgYm9yZGVyLWJvdHRvbTogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjg3NykgMXB4IHNvbGlkO1xyXG59IiwiLmRlcmVjaGEge1xuICB0ZXh0LWFsaWduOiByaWdodDtcbn1cblxuLmNlbnRyYWRvIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uaXpxdWllcmRhIHtcbiAgdGV4dC1hbGlnbjogbGVmdDtcbn1cblxuaW9uLWNvbnRlbnQuYmFja2dyb3VuZCB7XG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL2ZvbmRvZ3JhbWExLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XG4gIG9wYWNpdHk6IDAuODtcbn1cblxuLmJvciB7XG4gIGJvcmRlci1ib3R0b206IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC44NzcpIDFweCBzb2xpZDtcbn0iXX0= */";
     /***/
   },
 
@@ -289,7 +289,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.alertaService = alertaService;
         this.navCtrl = navCtrl;
         this.complejos = [];
-        this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_5__["Complejo"](0, '', '', null, false, 0, 0, new Date(), new Date(), '');
+        this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_5__["Complejo"](0, null, null, null, null, false, 0.0, 0.0, new Date(), new Date(), false, false, null);
         this.torneo = new src_models_torneo_models__WEBPACK_IMPORTED_MODULE_6__["Torneo"](0, '', null, '', '', new Date(), '', 0);
         this.torneoUser = new src_models_torneo_models__WEBPACK_IMPORTED_MODULE_6__["Torneo"](0, '', null, '', '', new Date(), '', 0);
         this.torneos = [];
@@ -297,7 +297,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.equipoxTorneo = [];
         this.torneoEquipo = new src_models_torneoEquipo_models__WEBPACK_IMPORTED_MODULE_10__["TorneoEquipo"](0, 0);
         this.mostrarCrear = false;
-        this.hoy = moment__WEBPACK_IMPORTED_MODULE_9__().format('YYYY-MM-DDTHH:mm');
+        this.hoy = moment__WEBPACK_IMPORTED_MODULE_9__().format('YYYY-MM-DD');
+        this.ver = false;
+        this.ocupado = 0;
+        this.libre = 0;
+        this.mE = false;
+        this.atras = false;
       }
 
       _createClass(TorneoPage, [{
@@ -315,8 +320,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this = this;
 
           this.torneoService.getTorneoxUsuario(this.perfil.id).subscribe(function (resp) {
-            _this.torneosxUser = resp;
-            console.log(resp);
+            _this.torneosxUser = resp; // console.log(resp);
           });
         }
       }, {
@@ -327,8 +331,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.torneoService.getTorneooId(id).subscribe(function (resp) {
             _this2.torneoUser = resp;
 
+            _this2.getEquipoxTorneo(id);
+
+            _this2.validar();
+
             _this2.goSlide2();
           });
+        }
+      }, {
+        key: "validar",
+        value: function validar() {
+          var dia = moment__WEBPACK_IMPORTED_MODULE_9__(this.torneo.diaTorneo).format('YYYY-MM-DD');
+
+          if (dia <= this.hoy) {
+            this.ver = true;
+          }
         }
       }, {
         key: "crearTorneoConImagen",
@@ -401,10 +418,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.torneoService.getTorneoEquipoId(id).subscribe(function (resp) {
             _this5.equipoxTorneo = resp;
 
-            _this5.goSlide3();
+            _this5.calcular(); //  this.goSlide3();
+
           }, function (error) {
             console.log(error);
           });
+        }
+      }, {
+        key: "calcular",
+        value: function calcular() {
+          this.ocupado = this.equipoxTorneo.length;
+          this.libre = this.torneoUser.cantEquipos - this.equipoxTorneo.length;
         }
       }, {
         key: "sacardTorneo",
@@ -430,8 +454,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getIdComplejo",
         value: function getIdComplejo() {
-          this.torneo.idComplejo = this.complejo.idComplejo;
-          console.log(this.torneo.idComplejo);
+          this.torneo.idComplejo = this.complejo.idComplejo; // console.log(this.torneo.idComplejo);
+        }
+      }, {
+        key: "mostrarDel",
+        value: function mostrarDel() {
+          this.hoy = moment__WEBPACK_IMPORTED_MODULE_9__().format('YYYY-MM-DD');
+          var d = moment__WEBPACK_IMPORTED_MODULE_9__(this.torneoUser.diaTorneo).format('YYYY-MM-DD');
+
+          if (d >= this.hoy) {
+            this.mE = true;
+          } else {
+            this.mE = false;
+          }
+
+          this.goSlide3();
         } // -------------------------------------------------SLIDE--------------------------------
 
       }, {
@@ -444,6 +481,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "goSlide2",
         value: function goSlide2() {
+          this.atras = true;
           this.slides.lockSwipes(false);
           this.slides.slideTo(1);
           this.slides.lockSwipes(true);
@@ -454,6 +492,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.slides.lockSwipes(false);
           this.slides.slideTo(2);
           this.slides.lockSwipes(true);
+        }
+      }, {
+        key: "slideAtras",
+        value: function slideAtras() {
+          var _this8 = this;
+
+          this.slides.lockSwipes(false);
+          this.slides.slidePrev();
+          this.slides.lockSwipes(true);
+          this.slides.isBeginning().then(function (data) {
+            if (data === true) {
+              _this8.atras = false;
+            }
+          });
         }
       }]);
 

@@ -649,13 +649,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+/* harmony import */ var _usuario_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./usuario.service */ "./src/app/services/usuario.service.ts");
+
+
 
 
 
 let ApiserviService = class ApiserviService {
-    constructor(http) {
+    constructor(http, storage, usuarioSer) {
         this.http = http;
-        this.url = 'https://juguemos.azurewebsites.net/api';
+        this.storage = storage;
+        this.usuarioSer = usuarioSer;
+        this.url = 'https://conmigo.armalapotra.com/api';
+        this.token = null;
     }
     // getCanchas(){
     //   return this.http.get('https://apibackend2019.herokuapp.com/api/Complejos');
@@ -679,16 +686,20 @@ let ApiserviService = class ApiserviService {
         return this.auxNom;
     }
     getComplejo() {
-        return this.http.get(`${this.url}/complejo`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/complejo`, { headers: tokenHeaders });
     }
     getComplejoId(id) {
-        return this.http.get(`${this.url}/complejo/${id}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/complejo/${id}`, { headers: tokenHeaders });
     }
     getComplejoAdmin(n1) {
-        return this.http.get(`${this.url}/complejo/p?n1=${n1}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/complejo/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getComplejoEstado(n1) {
-        return this.http.get(`${this.url}/complejo/q?n1=${n1}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/complejo/q?n1=${n1}`, { headers: tokenHeaders });
     }
     postComplejo(complejo) {
         return this.http.post(`${this.url}/complejo`, complejo, { responseType: 'text' });
@@ -700,10 +711,12 @@ let ApiserviService = class ApiserviService {
         return this.http.delete(`${this.url}/complejo/${id}`);
     }
     getCanchaComplejo(n1) {
-        return this.http.get(`${this.url}/cancha/p?n1=${n1}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/cancha/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getCanchaId(id) {
-        return this.http.get(`${this.url}/cancha/${id}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/cancha/${id}`, { headers: tokenHeaders });
     }
     postCancha(cancha) {
         return this.http.post(`${this.url}/cancha`, cancha, { responseType: 'text' });
@@ -715,16 +728,20 @@ let ApiserviService = class ApiserviService {
         return this.http.delete(`${this.url}/cancha/${id}`);
     }
     getReservaciones() {
-        return this.http.get(`${this.url}/reservacion`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/reservacion`, { headers: tokenHeaders });
     }
     getReservacionXUser(n1) {
-        return this.http.get(`${this.url}/reservacion/p?n1=${n1}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/reservacion/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getReservacionComplejo(n1) {
-        return this.http.get(`${this.url}/reservacion/q?n1=${n1}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/reservacion/q?n1=${n1}`, { headers: tokenHeaders });
     }
     getReservacionId(id) {
-        return this.http.get(`${this.url}/reservacion/${id}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/reservacion/${id}`, { headers: tokenHeaders });
     }
     postReservacion(reservacion) {
         return this.http.post(`${this.url}/reservacion`, reservacion, { responseType: 'text' });
@@ -737,13 +754,17 @@ let ApiserviService = class ApiserviService {
     }
 };
 ApiserviService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_3__["Storage"] },
+    { type: _usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"] }
 ];
 ApiserviService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
+        _ionic_storage__WEBPACK_IMPORTED_MODULE_3__["Storage"],
+        _usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"]])
 ], ApiserviService);
 
 
@@ -763,40 +784,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _usuario_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./usuario.service */ "./src/app/services/usuario.service.ts");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+
+
 
 
 
 let EquipoService = class EquipoService {
-    constructor(http) {
+    constructor(http, storage, usuarioSer) {
         this.http = http;
-        this.url = 'https://juguemos.azurewebsites.net/api';
+        this.storage = storage;
+        this.usuarioSer = usuarioSer;
+        this.url = 'https://conmigo.armalapotra.com/api';
     }
     getEquipos() {
-        return this.http.get(`${this.url}/equipo`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/equipo`, { headers: tokenHeaders });
     }
     getEquipoxUsuario(n1) {
-        return this.http.get(`${this.url}/equipo/p?n1=${n1}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/equipo/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getEquipoId(id) {
-        return this.http.get(`${this.url}/equipo/${id}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/equipo/${id}`, { headers: tokenHeaders });
     }
     postEquipo(equipo) {
         return this.http.post(`${this.url}/equipo`, equipo, { responseType: 'text' });
     }
     putEquipo(id, equipo) {
-        return this.http.put(`${this.url}/equipo`, equipo, { responseType: 'text' });
+        return this.http.put(`${this.url}/equipo/${id}`, equipo, { responseType: 'text' });
     }
     deleteEquipo(id) {
         return this.http.delete(`${this.url}/equipo/${id}`);
     }
     getEquipoUser() {
-        return this.http.get(`${this.url}/equipoUser`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/equipoUser`, { headers: tokenHeaders });
     }
     getEquipoUserxUsuario(n1) {
-        return this.http.get(`${this.url}/equipoUser/p?n1=${n1}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/equipoUser/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getEquipoUserId(id) {
-        return this.http.get(`${this.url}/equipoUser/${id}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/equipoUser/${id}`, { headers: tokenHeaders });
     }
     postEquipoUser(equipoUser) {
         return this.http.post(`${this.url}/equipoUser`, equipoUser, { responseType: 'text' });
@@ -806,13 +839,17 @@ let EquipoService = class EquipoService {
     }
 };
 EquipoService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"] },
+    { type: _usuario_service__WEBPACK_IMPORTED_MODULE_3__["UsuarioService"] }
 ];
 EquipoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
+        _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"],
+        _usuario_service__WEBPACK_IMPORTED_MODULE_3__["UsuarioService"]])
 ], EquipoService);
 
 
@@ -832,40 +869,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _usuario_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./usuario.service */ "./src/app/services/usuario.service.ts");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+
+
 
 
 
 let TorneoService = class TorneoService {
-    constructor(http) {
+    constructor(http, storage, usuarioSer) {
         this.http = http;
-        this.url = 'https://juguemos.azurewebsites.net/api';
+        this.storage = storage;
+        this.usuarioSer = usuarioSer;
+        this.url = 'https://conmigo.armalapotra.com/api';
     }
     getTorneos() {
-        return this.http.get(`${this.url}/torneo`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/torneo`, { headers: tokenHeaders });
     }
     getTorneoxUsuario(n1) {
-        return this.http.get(`${this.url}/torneo/p?n1=${n1}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/torneo/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getTorneooId(id) {
-        return this.http.get(`${this.url}/torneo/${id}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/torneo/${id}`, { headers: tokenHeaders });
     }
     postTorneo(torneo) {
         return this.http.post(`${this.url}/torneo`, torneo, { responseType: 'text' });
     }
     putTorneo(id, torneo) {
-        return this.http.put(`${this.url}/torneo`, torneo, { responseType: 'text' });
+        return this.http.put(`${this.url}/torneo/${id}`, torneo, { responseType: 'text' });
     }
     deleteTorneo(id) {
         return this.http.delete(`${this.url}/torneo/${id}`);
     }
     getTorneoEquipo() {
-        return this.http.get(`${this.url}/torneoEquipo`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/torneoEquipo`, { headers: tokenHeaders });
     }
     getTorneoEquipoxUsuario(n1) {
-        return this.http.get(`${this.url}/torneoEquipo/p?n1=${n1}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/torneoEquipo/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getTorneoEquipoId(id) {
-        return this.http.get(`${this.url}/torneoEquipo/${id}`);
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${this.url}/torneoEquipo/${id}`, { headers: tokenHeaders });
     }
     postTorneoEquipo(torneoEquipo) {
         return this.http.post(`${this.url}/torneoEquipo`, torneoEquipo, { responseType: 'text' });
@@ -875,15 +924,44 @@ let TorneoService = class TorneoService {
     }
 };
 TorneoService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"] },
+    { type: _usuario_service__WEBPACK_IMPORTED_MODULE_3__["UsuarioService"] }
 ];
 TorneoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
+        _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"],
+        _usuario_service__WEBPACK_IMPORTED_MODULE_3__["UsuarioService"]])
 ], TorneoService);
 
+
+
+/***/ }),
+
+/***/ "./src/models/cancha.models.ts":
+/*!*************************************!*\
+  !*** ./src/models/cancha.models.ts ***!
+  \*************************************/
+/*! exports provided: Cancha */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Cancha", function() { return Cancha; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class Cancha {
+    constructor(id, precio, fot, tamanio, idCom) {
+        this.idCancha = id;
+        this.precio = precio;
+        this.foto = fot;
+        this.tamanioCancha = tamanio;
+        this.idComplejo = idCom;
+    }
+}
 
 
 /***/ }),
@@ -901,16 +979,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 
 class Complejo {
-    constructor(id, nombre, loc, fot, est, lng, lat, hInicio, hCierre, adminId) {
+    constructor(id, nombre, loc, num, fot, est, lng, lat, hInicio, hCierre, par, seg, adminId) {
         this.idComplejo = id;
         this.nombre = nombre;
         this.localidad = loc;
+        this.numero = num;
         this.foto = fot;
         this.estado = est;
         this.longitud = lng;
         this.latitud = lat;
         this.horaInicio = hInicio;
         this.horaCierre = hCierre;
+        this.parqueo = par;
+        this.seguridad = seg;
         this.userId = adminId;
     }
 }
@@ -931,9 +1012,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 
 class Equipo {
-    constructor(id, nombre, usuarioId) {
+    constructor(id, nombre, cantidad, usuarioId) {
         this.idEquipo = id;
         this.nombre = nombre;
+        this.cantJugadores = cantidad;
         this.userId = usuarioId;
     }
 }

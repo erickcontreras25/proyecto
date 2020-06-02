@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<app-header titulo=\"Lista complejos\"></app-header>\n\n<ion-content>\n\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n    \n    <ion-slide>\n  \n      <form>\n        <ion-grid >\n  \n          <ion-row>\n            <ion-col>\n              <!-- <img src=\"/assets/img/im2.png\" alt=\"10\" width=\"20\"> -->\n            </ion-col>\n          </ion-row>\n        \n          <ion-row class=\"center\">\n            <ion-col>\n              \n                <div *ngFor='let user of complejos'>\n  \n                <ion-card class=\"ion-text-center back\">\n                  <ion-row class=\"ion-align-items-center\">\n                    <ion-col class=\"izquierda\">\n                  <ion-button fill=\"clear\"\n                              (click)=\"obtenerComplejo(user.idComplejo)\"\n                              (click)=\"presentActionSheet()\">\n                    <ion-icon class=\"size\" color=\"success\"lot=\"start\" name=\"reorder-three-outline\"></ion-icon>\n                  </ion-button>\n                </ion-col>\n                <ion-col class=\"derecha\">\n                  <h6 *ngIf=\"user.estado\" style=\"color: rgb(6, 138, 6);\" \n                      (click)=\"obtenerComplejo(user.idComplejo)\"\n                      (click)=\"presentAlertConfirm()\"><u>Abierto Ahora</u></h6>\n                  <h6 *ngIf=\"!user.estado\" style=\"color: green;\"\n                      (click)=\"obtenerComplejo(user.idComplejo)\"\n                      (click)=\"presentAlertConfirm()\"><u>Cerrado Ahora</u></h6>\n                </ion-col>\n                </ion-row>\n\n                  <img src=\"{{user.foto}}\" alt=\"200\" width=\"500\">\n                  <ion-card-title>\n                    {{user.nombre}}\n                  </ion-card-title>\n                  <ion-card-subtitle>\n                    <ion-icon name=\"location-outline\" color=\"primary\"></ion-icon>\n                    {{user.localidad}}\n                  </ion-card-subtitle>\n\n                  <!-- <ion-row>\n                    <ion-col>                 \n                    </ion-col>\n                    <ion-col>\n                        <ion-label position=\"floating\">Cambiar estado</ion-label>\n                        <ion-select [(ngModel)]=\"complejo.estado\"\n                                    name=\"idCancha\">\n                            <ion-select-option value=\"true\">Abierto</ion-select-option>\n                            <ion-select-option value=\"false\">Cerrado</ion-select-option>\n                        </ion-select>\n                  </ion-col>\n                  </ion-row> -->\n                  \n                  <!-- <ion-row>\n                    <ion-col size=\"6\">\n                      <ion-button type=\"submit\"\n                          color=\"tertiary\"\n                          shape=\"round\"\n                          >\n                          Actualizar estado\n                      </ion-button>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-button type=\"submit\"\n                          color=\"tertiary\"\n                          shape=\"round\"\n                          (click)=\"obtenerComplejo(user.idComplejo)\"\n                          \n                          (click)=\"goSlideActualizar()\">\n                        Actualizar Info.\n                      </ion-button>\n                    </ion-col>\n                  </ion-row> -->\n                  <!-- <ion-row>\n                    <ion-col size=\"6\">\n                      <ion-button type=\"submit\"\n                          color=\"tertiary\"\n                          shape=\"round\"\n                          (click)=\"obtenerCanchasComplejo(user.idComplejo)\"\n                          (click)=\"goSlideVerCancha()\">\n                        Ver cancha\n                      </ion-button>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-button type=\"submit\"\n                          color=\"tertiary\"\n                          shape=\"round\"\n                          (click)=\"obtenerIdComplejo(user.idComplejo)\"\n                          (click)=\"goSlideAgregarCancha()\">\n                        Agregar cancha\n                      </ion-button>\n                    </ion-col>\n                  </ion-row> -->\n                  <ion-row>\n                    <ion-col>\n                      <ion-button type=\"submit\"\n                                  color=\"tertiary\"\n                                  expand=\"full\"\n                                  color=\"success\"\n                                  (click)=\"obtenerReservasxComplejo(user.idComplejo)\"\n                                  (click)=\"goSlide2()\">\n                        Ver reservaciones del complejo\n                      </ion-button>\n                    </ion-col>\n                  </ion-row>\n  \n                </ion-card>\n  \n                </div>\n            </ion-col>\n          </ion-row>\n  \n\n  \n        </ion-grid>\n      </form>\n    </ion-slide>\n  \n    <!-- -----------------------SLIDE ACTUALIZAR----------------------------- -->\n    <ion-slide>\n      <ion-grid fixed>\n            <form>\n \n              <h1 style=\"color: black;\">Reservas</h1>  \n\n              <div>\n                <ion-row>\n                  <ion-col size=\"3\"><h6>Usuario</h6></ion-col>\n                  <ion-col size=\"3\"><h6>Dia y hora</h6></ion-col>\n                  <ion-col><h6>¿Realizo el pagó?</h6></ion-col>\n                  <!-- <ion-col></ion-col> -->\n                </ion-row>\n              </div>\n\n              <div>\n                  <ion-row *ngFor=\"let item of reservasComplejo\">\n                    <ion-col size=\"3\"><h5>{{item.user.nombreUsuario}}</h5></ion-col>\n                    <ion-col size=\"3\"><h6>{{item.horaInicial | date:'dd-MMMM HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</h6></ion-col>\n                    <ion-col *ngIf=\"item.pago\"><h6>Completo <ion-icon color=\"success\" name=\"checkmark-done-outline\"></ion-icon></h6></ion-col>\n                    <ion-col *ngIf=\"item.pagoParcial\"><h6>50% <ion-icon color=\"success\" name=\"checkmark-outline\"></ion-icon></h6></ion-col>\n                    <ion-col *ngIf=\"!item.pago && !item.pagoParcial\"><h6>No</h6></ion-col>\n                    <ion-col *ngIf=\"!item.pago || !item.pagoParcial\">\n                      <ion-button color=\"danger\"\n                                  class=\"centrado\"      \n                                  fill=\"clear\"                \n                                  (click)=\"eliminarReservacion(item.idReservacion, item.horaInicial)\">\n                                  <ion-icon name=\"trash-outline\"></ion-icon>\n                                  </ion-button>\n                      \n                    </ion-col>\n                    <!-- <ion-col *ngIf=\"item.pago || item.pagoParcial\"></ion-col> -->\n                  </ion-row>            \n              </div>\n\n            \n            </form>\n        </ion-grid>\n  \n      </ion-slide>\n\n\n\n      <!-- -----------------------SLIDE ACTUALIZAR DIRECCION----------------------------- -->\n    <ion-slide>\n      <ion-grid>\n            <form>\n \n                <ion-row class=\"ion-text-center\">\n                  <ion-col class=\"ion-text-center\">\n                    <h4>Actualiza tu dirección</h4>\n                    <ion-item>\n                      <ion-input type=\"text\"\n                                  class=\"izquierda\"                         \n                                 name=\"complejoLocalidad\"\n                                 [(ngModel)]=\"complejo.localidad\"\n                                 required>\n                                </ion-input>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n\n                <ion-row>\n                  <ion-col>\n                    <ion-button type=\"submit\"\n                                fill=\"outline\"\n                                color=\"tertiary\"\n                                shape=\"round\"\n                                (click)=\"goSlide1()\">\n                                <ion-icon name=\"caret-back-outline\"></ion-icon>\n                      Regresar\n                    </ion-button>\n                  </ion-col>\n                  <ion-col>\n                    <ion-button type=\"submit\"\n                                fill=\"outline\"\n                                color=\"tertiary\"\n                                shape=\"round\"\n                                (click)=\"modificarSinFoto()\">\n                                <ion-icon name=\"sync-outline\"></ion-icon>\n                        Actualizar                        \n                    </ion-button>  \n                  </ion-col>\n                </ion-row>\n\n            \n            </form>\n      </ion-grid>  \n    </ion-slide>\n\n\n    <!-- -----------------------SLIDE ACTUALIZAR UBICACION----------------------------- -->\n    <ion-slide>\n      <ion-grid fixed>\n            <form>\n \n              <ion-row>\n                <ion-col>  \n                    <h4>Obten tu ubicacion para salir en el mapa</h4>                    \n\n                  <ion-item class=\"ion-text-center\">\n                    <ion-spinner name=\"lines-small\"\n                                 *ngIf=\"cargando\"></ion-spinner>\n                    <ion-button (click)=\"loadMap()\" class=\"centrado\">Obtener mi ubicacion actual</ion-button>\n                    <ion-label *ngIf=\"listo\">\n                      <ion-icon name=\"checkmark-done-outline\"></ion-icon>\n                    </ion-label>\n                  </ion-item>                    \n                </ion-col>\n            </ion-row>\n\n            <ion-row>\n              <ion-col>\n                <ion-button type=\"submit\"\n                            fill=\"outline\"\n                            color=\"tertiary\"\n                            shape=\"round\"\n                            (click)=\"goSlide1()\">\n                    <ion-icon name=\"caret-back-outline\"></ion-icon>\n                  Regresar\n                </ion-button>\n              </ion-col>\n              <ion-col>\n                <ion-button type=\"submit\"\n                            fill=\"outline\"\n                            color=\"tertiary\"\n                            shape=\"round\"\n                            (click)=\"modificarSinFoto()\">\n                            <ion-icon name=\"sync-outline\"></ion-icon>\n                    Actualizar\n                </ion-button>  \n              </ion-col>\n            </ion-row>\n\n            \n            </form>\n      </ion-grid>  \n    </ion-slide>\n\n\n    <!-- -----------------------SLIDE ACTUALIZAR HORARIO----------------------------- -->\n    <ion-slide>\n      <ion-grid fixed>\n            <form>\n \n                <ion-row>\n                  <ion-col>\n                    <ion-list>\n                        <h4 class=\"ion-text-wrap\">En que horario te gustaria que reservaran tus clientes</h4>\n\n                      <ion-item>\n                        <ion-label>Hora Inicio</ion-label>\n                        <ion-datetime displayFormat=\"HH:mm\" \n                                      minuteValues=\"0\"\n                                    name=\"horaInicio\"\n                                    [(ngModel)]=\"complejo.horaInicio\">\n                        </ion-datetime>\n                      </ion-item>\n                      <ion-item>\n                        <ion-label>Hora Cierre</ion-label>\n                        <ion-datetime displayFormat=\"HH:mm\" \n                                      minuteValues=\"0\"\n                                    name=\"horaCierre\"\n                                    [(ngModel)]=\"complejo.horaCierre\">\n                        </ion-datetime>\n\n                      </ion-item>   \n                    </ion-list>\n                  </ion-col>\n                </ion-row>\n\n                <ion-row>\n                  <ion-col>\n                    <ion-button type=\"submit\"\n                                fill=\"outline\"\n                                color=\"tertiary\"\n                                shape=\"round\"\n                                (click)=\"goSlide1()\">\n                        <ion-icon name=\"caret-back-outline\"></ion-icon>\n                      Regresar\n                    </ion-button>\n                  </ion-col>\n                  <ion-col>\n                    <ion-button type=\"submit\"\n                                fill=\"outline\"\n                                color=\"tertiary\"\n                                shape=\"round\"\n                                (click)=\"modificarSinFoto()\">\n                                <ion-icon name=\"sync-outline\"></ion-icon>\n                        Actualizar\n                    </ion-button>  \n                  </ion-col>\n                </ion-row>\n\n            \n            </form>\n      </ion-grid>  \n    </ion-slide>\n\n\n<!-- ------------------------------------SLIDE ACTUALIZAR FOTO--------------------------------------------- -->\n    <ion-slide>\n      <ion-grid fixed>\n            <form>\n\n              <ion-row>\n                <ion-col>\n                    <h4>Imagen Actual</h4>\n                  <ion-card class=\"ion-text-center\">\n                      <img src=\"{{complejo.foto}}\" alt=\"200\" width=\"500\">\n                  </ion-card>                  \n                </ion-col>\n              </ion-row>\n \n                <ion-row>\n                  <ion-col>\n                    <div>\n                      <h4>Cambia la imagen</h4>                        \n                      <ion-item>\n                          <input type=\"file\"\n                                 id=\"img\"\n                                 name=\"img\"\n                                 ngModel\n                                 required>\n                      </ion-item>\n                    </div>\n                  </ion-col>\n                </ion-row>\n\n                <ion-row>\n                  <ion-col>\n                    <ion-button fill=\"outline\"\n                                type=\"submit\"\n                                color=\"tertiary\"\n                                shape=\"round\"\n                                (click)=\"goSlide1()\">\n                        <ion-icon name=\"caret-back-outline\"></ion-icon>\n                      Regresar\n                    </ion-button>\n                  </ion-col>\n                  <ion-col>\n                    <ion-button fill=\"outline\"\n                                type=\"submit\"\n                                color=\"tertiary\"\n                                shape=\"round\"\n                                (click)=\"modificarComplejo()\">\n                                <ion-icon name=\"sync-outline\"></ion-icon>\n                        Actualizar\n                    </ion-button>  \n                  </ion-col>\n                </ion-row>\n\n            \n            </form>\n      </ion-grid>  \n    </ion-slide>\n\n\n    <!-- -----------------------SLIDE AGREGAR CANCHA----------------------------- -->\n    <ion-slide>\n      <!--  -->\n  \n      </ion-slide>\n  \n  \n  <!-- -------------------------------SLIDE VER CANCHAS------------------------------------- -->\n\n  <ion-slide>\n  \n    <!--  -->\n  </ion-slide>\n\n\n     \n  \n  \n  \n  </ion-slides>\n\n\n</ion-content>\n";
+    __webpack_exports__["default"] = "<app-header titulo=\"Lista complejos\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"goSlide1()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"background\">\n\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n    \n    <ion-slide>\n  \n      <form>\n        <ion-grid >\n  \n          <ion-row>\n            <ion-col>\n              <!-- <img src=\"/assets/img/im2.png\" alt=\"10\" width=\"20\"> -->\n            </ion-col>\n          </ion-row>\n        \n          <ion-row class=\"center\">\n            <ion-col>\n              \n                <div *ngFor='let user of complejos' style=\"background-color: rgb(211, 197, 197, 0.1);\">\n  \n                  <ion-row class=\"ion-align-items-center\">\n                    <ion-col class=\"izquierda\">\n                  <ion-button fill=\"clear\"\n                              (click)=\"obtenerComplejo(user.idComplejo)\"\n                              (click)=\"presentActionSheet()\">\n                    <ion-icon class=\"size\" color=\"success\" slot=\"start\" name=\"reorder-three-outline\"></ion-icon>\n                  </ion-button>\n                </ion-col>\n                <ion-col class=\"derecha\">\n                  <h6 *ngIf=\"user.estado\" style=\"color: green;\" \n                      (click)=\"obtenerComplejoId(user.idComplejo)\"\n                      (click)=\"presentAlertConfirm()\">&#8226;Abierto Ahora</h6>\n                  <h6 *ngIf=\"!user.estado\" style=\"color: green;\"\n                      (click)=\"obtenerComplejoId(user.idComplejo)\"\n                      (click)=\"presentAlertConfirm()\">&#8226;Cerrado Ahora</h6>\n                </ion-col>\n                </ion-row>\n\n                  <img src=\"{{user.foto}}\" alt=\"200\" width=\"500\">\n                  <h4 >\n                    {{user.nombre}}\n                  </h4>\n                  <h5>\n                    <ion-icon name=\"location-outline\" color=\"danger\"></ion-icon>\n                    {{user.localidad}}\n                  </h5>\n\n                  <ion-row>\n                    <ion-col *ngIf=\"user.parqueo\">\n                      <label style=\"color: blue;\"\n                      (click)=\"obtenerComplejoId(user.idComplejo)\"\n                      (click)=\"parqueo()\">&#8226;Con parqueo</label>\n                    </ion-col>\n                    <ion-col *ngIf=\"!user.parqueo\">\n                      <label style=\"color: blue;\" \n                      (click)=\"obtenerComplejoId(user.idComplejo)\"\n                      (click)=\"parqueo()\">&#8226;Sin parqueo</label>\n                    </ion-col>\n                    <ion-col *ngIf=\"user.seguridad\">\n                      <label style=\"color: blue;\" \n                      (click)=\"obtenerComplejoId(user.idComplejo)\"\n                      (click)=\"seguridad()\">&#8226;Con seguridad</label>\n                    </ion-col>\n                    <ion-col *ngIf=\"!user.seguridad\">\n                      <label style=\"color: blue;\" \n                      (click)=\"obtenerComplejoId(user.idComplejo)\"\n                      (click)=\"seguridad()\">&#8226;Sin seguridad</label>\n                    </ion-col>\n                  </ion-row>\n\n                  <!-- <ion-row>\n                    <ion-col>                 \n                    </ion-col>\n                    <ion-col>\n                        <ion-label position=\"floating\">Cambiar estado</ion-label>\n                        <ion-select [(ngModel)]=\"complejo.estado\"\n                                    name=\"idCancha\">\n                            <ion-select-option value=\"true\">Abierto</ion-select-option>\n                            <ion-select-option value=\"false\">Cerrado</ion-select-option>\n                        </ion-select>\n                  </ion-col>\n                  </ion-row> -->\n                  \n                  <!-- <ion-row>\n                    <ion-col size=\"6\">\n                      <ion-button type=\"submit\"\n                          color=\"tertiary\"\n                          shape=\"round\"\n                          >\n                          Actualizar estado\n                      </ion-button>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-button type=\"submit\"\n                          color=\"tertiary\"\n                          shape=\"round\"\n                          (click)=\"obtenerComplejo(user.idComplejo)\"\n                          \n                          (click)=\"goSlideActualizar()\">\n                        Actualizar Info.\n                      </ion-button>\n                    </ion-col>\n                  </ion-row> -->\n                  <!-- <ion-row>\n                    <ion-col size=\"6\">\n                      <ion-button type=\"submit\"\n                          color=\"tertiary\"\n                          shape=\"round\"\n                          (click)=\"obtenerCanchasComplejo(user.idComplejo)\"\n                          (click)=\"goSlideVerCancha()\">\n                        Ver cancha\n                      </ion-button>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-button type=\"submit\"\n                          color=\"tertiary\"\n                          shape=\"round\"\n                          (click)=\"obtenerIdComplejo(user.idComplejo)\"\n                          (click)=\"goSlideAgregarCancha()\">\n                        Agregar cancha\n                      </ion-button>\n                    </ion-col>\n                  </ion-row> -->\n                  <ion-row>\n                    <ion-col>\n                      <ion-button type=\"submit\"\n                                  color=\"tertiary\"\n                                  expand=\"full\"\n                                  color=\"success\"\n                                  (click)=\"obtenerReservasxComplejo(user.idComplejo)\"\n                                  >\n                        Ver reservaciones del complejo\n                      </ion-button>\n                    </ion-col>\n                  </ion-row>\n  \n  \n                </div>\n            </ion-col>\n          </ion-row>\n  \n\n  \n        </ion-grid>\n      </form>\n    </ion-slide>\n  \n    <!-- -------------------------------------------------SLIDE 1------------------------------------------- -->\n    <ion-slide>\n      <ion-grid fixed>\n            <form>\n \n              <h1 style=\"color: white;\">Reservas</h1>  \n\n              <div>\n                <ion-row>\n                  <ion-col class=\"bor\" size=\"3\"><h6 class=\"shadow\">Usuario</h6></ion-col>\n                  <ion-col class=\"bor\" size=\"3\"><h6 class=\"shadow\">Dia y hora</h6></ion-col>\n                  <ion-col class=\"bor\"><h6 class=\"shadow\">¿Realizo el pagó?</h6></ion-col>\n                  <!-- <ion-col></ion-col> -->\n                </ion-row>\n              </div>\n\n              <div>\n                  <ion-row *ngFor=\"let item of reservasComplejo\">\n                    <ion-col class=\"bor\" size=\"3\"><h6 class=\"shadow\">{{item.user.nombreUsuario}}</h6></ion-col>\n                    <ion-col class=\"bor\" size=\"3\"><h6 class=\"shadow\">{{item.horaInicial | date:'dd-MMMM HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</h6></ion-col>\n                    <ion-col class=\"bor\" *ngIf=\"item.pago\"><label class=\"shadow\">Completo <ion-icon color=\"success\" name=\"checkmark-done-outline\"></ion-icon></label></ion-col>\n                    <ion-col class=\"bor\" *ngIf=\"item.pagoParcial\"><label class=\"shadow\">50% <ion-icon color=\"success\" name=\"checkmark-outline\"></ion-icon></label></ion-col>\n                    <ion-col class=\"bor\" *ngIf=\"!item.pago && !item.pagoParcial\"><h6 class=\"shadow\">No</h6></ion-col>\n                    <ion-col class=\"bor\" *ngIf=\"!item.pago && !item.pagoParcial\">\n                      <ion-button color=\"danger\"\n                                  class=\"centrado\"      \n                                  fill=\"clear\"                \n                                  (click)=\"eliminar(item.idReservacion, item.horaInicial)\">\n                                  <ion-icon name=\"trash-outline\"></ion-icon>\n                                  </ion-button>\n                      \n                    </ion-col>\n                    <!-- <ion-col *ngIf=\"item.pago || item.pagoParcial\"></ion-col> -->\n                  </ion-row>            \n              </div>\n\n            \n            </form>\n        </ion-grid>\n  \n      </ion-slide>\n\n\n\n      <!-- ---------------------------------------SLIDE ACTUALIZAR DIRECCION----------------------------------- -->\n    <ion-slide>\n      <ion-grid>\n            <form>\n \n                <ion-row class=\"ion-text-center\">\n                  <ion-col class=\"ion-text-center\">\n                    <h3>Actualiza tu dirección</h3>\n                    <ion-item>\n                      <ion-input type=\"text\"\n                                  class=\"izquierda\"                         \n                                 name=\"complejoLocalidad\"\n                                 [(ngModel)]=\"complejo.localidad\"\n                                 required>\n                                </ion-input>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n\n                <ion-row>\n                  <!-- <ion-col>\n                    <ion-button type=\"submit\"\n                                fill=\"outline\"\n                                color=\"success\"\n                                shape=\"round\"\n                                (click)=\"goSlide1()\">\n                                <ion-icon name=\"caret-back-outline\"></ion-icon>\n                      Regresar\n                    </ion-button>\n                  </ion-col> -->\n                  <ion-col>\n                    <ion-button type=\"submit\"\n                                fill=\"outline\"\n                                color=\"success\"\n                                shape=\"round\"\n                                (click)=\"modificarSinFoto()\">\n                                <ion-icon name=\"sync-outline\"></ion-icon>\n                        Actualizar                        \n                    </ion-button>  \n                  </ion-col>\n                </ion-row>\n\n            \n            </form>\n      </ion-grid>  \n    </ion-slide>\n\n\n    <!-- --------------------------------------SLIDE ACTUALIZAR UBICACION------------------------------------ -->\n    <ion-slide>\n      <ion-grid fixed>\n            <form>\n \n              <ion-row>\n                <ion-col>  \n                    <h4>Obten tu ubicacion para salir en el mapa</h4>                    \n\n                  <ion-item class=\"ion-text-center\">\n                    <ion-spinner name=\"lines-small\"\n                                 *ngIf=\"cargando\"></ion-spinner>\n                    <ion-button (click)=\"localizacion()\" class=\"centrado\">Obtener mi ubicacion actual</ion-button>\n                    <ion-label *ngIf=\"listo\">\n                      <ion-icon class=\"size\" color=\"success\" name=\"checkmark-done-outline\"></ion-icon>\n                    </ion-label>\n                  </ion-item>                    \n                </ion-col>\n            </ion-row>\n\n            <ion-row>\n              <!-- <ion-col>\n                <ion-button type=\"submit\"\n                            fill=\"outline\"\n                            color=\"success\"\n                            shape=\"round\"\n                            (click)=\"goSlide1()\">\n                    <ion-icon name=\"caret-back-outline\"></ion-icon>\n                  Regresar\n                </ion-button>\n              </ion-col> -->\n              <ion-col>\n                <ion-button type=\"submit\"\n                            fill=\"outline\"\n                            color=\"success\"\n                            shape=\"round\"\n                            (click)=\"modificarSinFoto()\">\n                            <ion-icon name=\"sync-outline\"></ion-icon>\n                    Actualizar\n                </ion-button>  \n              </ion-col>\n            </ion-row>\n\n            \n            </form>\n      </ion-grid>  \n    </ion-slide>\n\n\n    <!-- --------------------------------------SLIDE ACTUALIZAR HORARIO------------------------------------ -->\n    <ion-slide>\n      <ion-grid fixed>\n            <form>\n \n                <ion-row>\n                  <ion-col>\n                    <ion-list>\n                        <h4 class=\"ion-text-wrap\">Indica el horario en que tus clientes podrán reservar</h4>\n\n                      <ion-item class=\"bort\">\n                        <ion-label>Hora Inicio</ion-label>\n                        <ion-datetime displayFormat=\"HH:mm\" \n                                      minuteValues=\"0\"\n                                    name=\"horaInicio\"\n                                    [(ngModel)]=\"complejo.horaInicio\"\n                                    (ngModelChange)='verificar()'>\n                        </ion-datetime>\n                      </ion-item>\n                      <ion-item class=\"bort\">\n                        <ion-label>Hora Cierre</ion-label>\n                        <ion-datetime displayFormat=\"HH:mm\" \n                                      minuteValues=\"0\"\n                                    name=\"horaCierre\"\n                                    [(ngModel)]=\"complejo.horaCierre\"\n                                    (ngModelChange)='verificar()'>\n                        </ion-datetime>\n\n                      </ion-item>   \n                    </ion-list>\n                  </ion-col>\n                </ion-row>\n\n                <ion-row>\n                  <!-- <ion-col>\n                    <ion-button type=\"submit\"\n                                fill=\"outline\"\n                                color=\"success\"\n                                shape=\"round\"\n                                (click)=\"goSlide1()\">\n                        <ion-icon name=\"caret-back-outline\"></ion-icon>\n                      Regresar\n                    </ion-button>\n                  </ion-col> -->\n                  <ion-col>\n                    <ion-button *ngIf=\"ver\"\n                                type=\"submit\"\n                                fill=\"outline\"\n                                color=\"success\"\n                                shape=\"round\"\n                                (click)=\"modificarSinFoto()\">\n                                <ion-icon name=\"sync-outline\"></ion-icon>\n                        Actualizar\n                    </ion-button>  \n                  </ion-col>\n                </ion-row>\n\n            \n            </form>\n      </ion-grid>  \n    </ion-slide>\n\n\n<!-- ------------------------------------SLIDE ACTUALIZAR FOTO--------------------------------------------- -->\n    <ion-slide>\n      <ion-grid>\n            <form #formulario=\"ngForm\">\n\n              <ion-row>\n                <ion-col>\n                    <h4>Imagen Actual</h4>\n                  <ion-card class=\"ion-text-center\">\n                      <img src=\"{{complejo.foto}}\" alt=\"200\" width=\"500\" class=\"bort\">\n                  </ion-card>                  \n                </ion-col>\n              </ion-row>\n \n                <ion-row>\n                  <ion-col>\n                    <div>\n                      <h4>Cambia la imagen</h4>                        \n                      <ion-item>\n                          <input type=\"file\"\n                                 id=\"img\"\n                                 name=\"img\"\n                                 ngModel\n                                 required>\n                      </ion-item>\n                    </div>\n                  </ion-col>\n                </ion-row>\n\n                <ion-row>\n                  <!-- <ion-col>\n                    <ion-button fill=\"outline\"\n                                type=\"submit\"\n                                color=\"success\"\n                                shape=\"round\"\n                                (click)=\"goSlide1()\">\n                        <ion-icon name=\"caret-back-outline\"></ion-icon>\n                      Regresar\n                    </ion-button>\n                  </ion-col> -->\n                  <ion-col>\n                    <ion-button fill=\"outline\"\n                                type=\"submit\"\n                                color=\"success\"\n                                shape=\"round\"\n                                [disabled]=\"formulario.invalid\"\n                                (click)=\"modificarComplejo()\">\n                                <ion-icon name=\"sync-outline\"></ion-icon>\n                        Actualizar\n                    </ion-button>  \n                  </ion-col>\n                </ion-row>\n\n            \n            </form>\n      </ion-grid>  \n    </ion-slide>\n\n\n    <!-- ------------------------------SLIDE ACTUALIZAR NUMERO-------------------------------------------- -->\n    <ion-slide>\n      <!--  -->\n      <ion-grid>\n        <form #formulario3=\"ngForm\">\n \n          <ion-row class=\"ion-text-center\">\n            <ion-col class=\"ion-text-center\">\n              <h4>Actualiza tu número de teléfono</h4>\n              <ion-item>\n                <ion-input type=\"text\"\n                            class=\"izquierda\"                         \n                           name=\"complejoTelefono\"\n                            minlength=\"8\" maxlength=\"8\"\n                            pattern=\"[0-9]+\"\n                           [(ngModel)]=\"complejo.numero\"\n                           required>\n                          </ion-input>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n\n          <ion-row>\n            <!-- <ion-col>\n              <ion-button type=\"submit\"\n                          fill=\"outline\"\n                          color=\"success\"\n                          shape=\"round\"\n                          (click)=\"goSlide1()\">\n                          <ion-icon name=\"caret-back-outline\"></ion-icon>\n                Regresar\n              </ion-button>\n            </ion-col> -->\n            <ion-col>\n              <ion-button type=\"submit\"\n                          fill=\"outline\"\n                          color=\"success\"\n                          shape=\"round\"\n                          (click)=\"modificarSinFoto()\"\n                          [disabled]=\"formulario3.invalid\">\n                          <ion-icon name=\"sync-outline\"></ion-icon>\n                  Actualizar                        \n              </ion-button>  \n            </ion-col>\n          </ion-row>\n\n      \n      </form>\n      </ion-grid>\n  \n      </ion-slide>\n  \n  \n  <!-- -------------------------------SLIDE VER CANCHAS------------------------------------- -->\n\n  <ion-slide>\n  \n    <!--  -->\n  </ion-slide>\n\n\n     \n  \n  \n  \n  </ion-slides>\n\n\n</ion-content>\n";
     /***/
   },
 
@@ -180,7 +180,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".masters {\n  width: 100%;\n}\n\n.back {\n  background-color: #c5d8c9;\n}\n\n.card {\n  box-shadow: none !important;\n}\n\n.img {\n  width: 500px;\n  height: 220px;\n}\n\nion-slides {\n  height: auto;\n}\n\nion-content.background {\n  --ion-background-color: #22C94A;\n  opacity: 0.8;\n}\n\nion-icon.size {\n  font-size: 35px;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvbGlzdGEtY29tcGxlam9zL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxsaXN0YS1jb21wbGVqb3NcXGxpc3RhLWNvbXBsZWpvcy5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL2xpc3RhLWNvbXBsZWpvcy9saXN0YS1jb21wbGVqb3MucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsV0FBQTtBQ0NGOztBRENBO0VBQ0kseUJBQUE7QUNFSjs7QURBQTtFQUVBLDJCQUFBO0FDRUE7O0FEQUE7RUFDRSxZQUFBO0VBQ0EsYUFBQTtBQ0dGOztBREFBO0VBQ0UsWUFBQTtBQ0dGOztBREFBO0VBQ0UsK0JBQUE7RUFDQSxZQUFBO0FDR0Y7O0FEQUE7RUFDRSxlQUFBO0FDR0Y7O0FEQUE7RUFDRSxpQkFBQTtBQ0dGOztBRERBO0VBQ0Usa0JBQUE7QUNJRjs7QURGQTtFQUNFLGdCQUFBO0FDS0YiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy9saXN0YS1jb21wbGVqb3MvbGlzdGEtY29tcGxlam9zLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5tYXN0ZXJzIHtcclxuICB3aWR0aDogMTAwJTtcclxuICB9XHJcbi5iYWNrIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYigxOTcsIDIxNiwgMjAxKTtcclxufVxyXG4uY2FyZFxyXG57XHJcbmJveC1zaGFkb3c6bm9uZSAhaW1wb3J0YW50XHJcbn1cclxuLmltZyB7XHJcbiAgd2lkdGg6IDUwMHB4O1xyXG4gIGhlaWdodDogMjIwcHg7XHJcbn1cclxuXHJcbmlvbi1zbGlkZXMge1xyXG4gIGhlaWdodDogYXV0bztcclxufVxyXG5cclxuaW9uLWNvbnRlbnQuYmFja2dyb3VuZHtcclxuICAtLWlvbi1iYWNrZ3JvdW5kLWNvbG9yOiAjMjJDOTRBO1xyXG4gIG9wYWNpdHk6IDAuODtcclxufVxyXG5cclxuaW9uLWljb24uc2l6ZSB7XHJcbiAgZm9udC1zaXplOiAzNXB4O1xyXG59XHJcblxyXG4uZGVyZWNoYXtcclxuICB0ZXh0LWFsaWduOiByaWdodDtcclxufVxyXG4uY2VudHJhZG97XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbi5penF1aWVyZGF7XHJcbiAgdGV4dC1hbGlnbjogbGVmdDtcclxufVxyXG4iLCIubWFzdGVycyB7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4uYmFjayB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNjNWQ4Yzk7XG59XG5cbi5jYXJkIHtcbiAgYm94LXNoYWRvdzogbm9uZSAhaW1wb3J0YW50O1xufVxuXG4uaW1nIHtcbiAgd2lkdGg6IDUwMHB4O1xuICBoZWlnaHQ6IDIyMHB4O1xufVxuXG5pb24tc2xpZGVzIHtcbiAgaGVpZ2h0OiBhdXRvO1xufVxuXG5pb24tY29udGVudC5iYWNrZ3JvdW5kIHtcbiAgLS1pb24tYmFja2dyb3VuZC1jb2xvcjogIzIyQzk0QTtcbiAgb3BhY2l0eTogMC44O1xufVxuXG5pb24taWNvbi5zaXplIHtcbiAgZm9udC1zaXplOiAzNXB4O1xufVxuXG4uZGVyZWNoYSB7XG4gIHRleHQtYWxpZ246IHJpZ2h0O1xufVxuXG4uY2VudHJhZG8ge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5penF1aWVyZGEge1xuICB0ZXh0LWFsaWduOiBsZWZ0O1xufSJdfQ== */";
+    __webpack_exports__["default"] = ".masters {\n  width: 100%;\n}\n\n.back {\n  background-color: #989b98;\n}\n\n.img {\n  width: 500px;\n  height: 220px;\n}\n\nion-slides {\n  height: auto;\n}\n\nion-content.background {\n  --background: url(/assets/img/fondograma1.jpg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\nion-icon.size {\n  font-size: 35px;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n\n.bor {\n  border-bottom: white 1px solid;\n  border-left: white 1px solid;\n  border-right: white 1px solid;\n}\n\n.bort {\n  border-bottom: white 1px solid;\n  border-left: white 1px solid;\n  border-right: white 1px solid;\n  border-top: white 1px solid;\n}\n\n.shadow {\n  text-shadow: 2px 2px #080808;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvbGlzdGEtY29tcGxlam9zL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxsaXN0YS1jb21wbGVqb3NcXGxpc3RhLWNvbXBsZWpvcy5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL2xpc3RhLWNvbXBsZWpvcy9saXN0YS1jb21wbGVqb3MucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsV0FBQTtBQ0NGOztBRENBO0VBQ0kseUJBQUE7QUNFSjs7QURDQTtFQUNFLFlBQUE7RUFDQSxhQUFBO0FDRUY7O0FEQ0E7RUFDRSxZQUFBO0FDRUY7O0FEQ0E7RUFDRSxzRUFBQTtFQUNBLFlBQUE7QUNFRjs7QURDQTtFQUNFLGVBQUE7QUNFRjs7QURDQTtFQUNFLGlCQUFBO0FDRUY7O0FEQUE7RUFDRSxrQkFBQTtBQ0dGOztBRERBO0VBQ0UsZ0JBQUE7QUNJRjs7QUREQTtFQUNFLDhCQUFBO0VBQ0EsNEJBQUE7RUFDQSw2QkFBQTtBQ0lGOztBRERBO0VBQ0UsOEJBQUE7RUFDQSw0QkFBQTtFQUNBLDZCQUFBO0VBQ0EsMkJBQUE7QUNJRjs7QUREQTtFQUNFLDRCQUFBO0FDSUYiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy9saXN0YS1jb21wbGVqb3MvbGlzdGEtY29tcGxlam9zLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5tYXN0ZXJzIHtcclxuICB3aWR0aDogMTAwJTtcclxuICB9XHJcbi5iYWNrIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYigxNTIsIDE1NSwgMTUyKTtcclxufVxyXG5cclxuLmltZyB7XHJcbiAgd2lkdGg6IDUwMHB4O1xyXG4gIGhlaWdodDogMjIwcHg7XHJcbn1cclxuXHJcbmlvbi1zbGlkZXMge1xyXG4gIGhlaWdodDogYXV0bztcclxufVxyXG5cclxuaW9uLWNvbnRlbnQuYmFja2dyb3VuZHtcclxuICAtLWJhY2tncm91bmQ6IHVybCgvYXNzZXRzL2ltZy9mb25kb2dyYW1hMS5qcGcpIDAgMC8xMDAlIDEwMCUgbm8tcmVwZWF0O1xyXG4gIG9wYWNpdHk6IDAuODtcclxufVxyXG5cclxuaW9uLWljb24uc2l6ZSB7XHJcbiAgZm9udC1zaXplOiAzNXB4O1xyXG59XHJcblxyXG4uZGVyZWNoYXtcclxuICB0ZXh0LWFsaWduOiByaWdodDtcclxufVxyXG4uY2VudHJhZG97XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbi5penF1aWVyZGF7XHJcbiAgdGV4dC1hbGlnbjogbGVmdDtcclxufVxyXG5cclxuLmJvciB7XHJcbiAgYm9yZGVyLWJvdHRvbTogd2hpdGUgMXB4IHNvbGlkO1xyXG4gIGJvcmRlci1sZWZ0OiB3aGl0ZSAxcHggc29saWQ7XHJcbiAgYm9yZGVyLXJpZ2h0OiB3aGl0ZSAxcHggc29saWQ7XHJcbn1cclxuXHJcbi5ib3J0IHtcclxuICBib3JkZXItYm90dG9tOiB3aGl0ZSAxcHggc29saWQ7XHJcbiAgYm9yZGVyLWxlZnQ6IHdoaXRlIDFweCBzb2xpZDtcclxuICBib3JkZXItcmlnaHQ6IHdoaXRlIDFweCBzb2xpZDtcclxuICBib3JkZXItdG9wOiB3aGl0ZSAxcHggc29saWQ7XHJcbn1cclxuXHJcbi5zaGFkb3cge1xyXG4gIHRleHQtc2hhZG93OiAycHggMnB4ICMwODA4MDg7XHJcbn1cclxuIiwiLm1hc3RlcnMge1xuICB3aWR0aDogMTAwJTtcbn1cblxuLmJhY2sge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjOTg5Yjk4O1xufVxuXG4uaW1nIHtcbiAgd2lkdGg6IDUwMHB4O1xuICBoZWlnaHQ6IDIyMHB4O1xufVxuXG5pb24tc2xpZGVzIHtcbiAgaGVpZ2h0OiBhdXRvO1xufVxuXG5pb24tY29udGVudC5iYWNrZ3JvdW5kIHtcbiAgLS1iYWNrZ3JvdW5kOiB1cmwoL2Fzc2V0cy9pbWcvZm9uZG9ncmFtYTEuanBnKSAwIDAvMTAwJSAxMDAlIG5vLXJlcGVhdDtcbiAgb3BhY2l0eTogMC44O1xufVxuXG5pb24taWNvbi5zaXplIHtcbiAgZm9udC1zaXplOiAzNXB4O1xufVxuXG4uZGVyZWNoYSB7XG4gIHRleHQtYWxpZ246IHJpZ2h0O1xufVxuXG4uY2VudHJhZG8ge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5penF1aWVyZGEge1xuICB0ZXh0LWFsaWduOiBsZWZ0O1xufVxuXG4uYm9yIHtcbiAgYm9yZGVyLWJvdHRvbTogd2hpdGUgMXB4IHNvbGlkO1xuICBib3JkZXItbGVmdDogd2hpdGUgMXB4IHNvbGlkO1xuICBib3JkZXItcmlnaHQ6IHdoaXRlIDFweCBzb2xpZDtcbn1cblxuLmJvcnQge1xuICBib3JkZXItYm90dG9tOiB3aGl0ZSAxcHggc29saWQ7XG4gIGJvcmRlci1sZWZ0OiB3aGl0ZSAxcHggc29saWQ7XG4gIGJvcmRlci1yaWdodDogd2hpdGUgMXB4IHNvbGlkO1xuICBib3JkZXItdG9wOiB3aGl0ZSAxcHggc29saWQ7XG59XG5cbi5zaGFkb3cge1xuICB0ZXh0LXNoYWRvdzogMnB4IDJweCAjMDgwODA4O1xufSJdfQ== */";
     /***/
   },
 
@@ -295,8 +295,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         //   userId: ''
         // };
 
-        this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_2__["Complejo"](0, '', '', null, false, 0, 0, new Date(), new Date(), '');
+        this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_2__["Complejo"](0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
         this.complejos = [];
+        this.atras = false;
         this.cargando = false;
         this.listo = false;
         this.hoy = moment__WEBPACK_IMPORTED_MODULE_9__().format('YYYY-MM-DDTHH:mm');
@@ -309,6 +310,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         };
         this.reservaComplejo = new src_models_reservacion_models__WEBPACK_IMPORTED_MODULE_8__["Reservacion"](0, new Date(), new Date(), false, false, 0, '');
         this.reservasComplejo = [];
+        this.ver = false;
       }
 
       _createClass(ListaComplejosPage, [{
@@ -334,7 +336,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this2 = this;
 
           this.apiServi.getComplejoId(id).subscribe(function (resp) {
-            _this2.complejo = resp; // console.log(this.complejo);                AGREGAR
+            _this2.complejo = resp;
+            console.log(_this2.complejo);
           });
         }
       }, {
@@ -352,16 +355,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function modificarSinFoto() {
           var _this3 = this;
 
-          console.log(this.complejo.horaInicio);
+          // this.complejo.latitud = 15.51789;
+          // this.complejo.longitud = -88.03639;
+          console.log(this.complejo.horaInicio + ' ' + this.complejo.horaCierre);
           this.apiServi.putComplejo(this.complejo.idComplejo, this.complejo).subscribe(function (data) {
-            _this3.complejos.push(_this3.complejo); // this.limpiar();
+            _this3.complejos.push(_this3.complejo);
 
+            _this3.clear();
 
-            _this3.navCtrl.navigateRoot('/inicio');
+            _this3.obtenerComplejos();
 
             _this3.alertaService.alertaInformativa('Actualizado con exito');
 
-            _this3.obtenerComplejos();
+            _this3.navCtrl.navigateRoot('/inicio');
           }, function (error) {
             console.log(error);
           });
@@ -462,27 +468,42 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               }
             }, _callee, this);
           }));
+        }
+      }, {
+        key: "localizacion",
+        value: function localizacion() {
+          var _this5 = this;
+
+          this.cargando = true;
+          this.geolocation.getCurrentPosition().then(function (resp) {
+            _this5.complejo.latitud = resp.coords.latitude;
+            _this5.complejo.longitud = resp.coords.longitude;
+            _this5.cargando = false;
+            _this5.listo = true;
+          }).catch(function (error) {
+            console.log('Error getting location', error);
+          });
         } // -------------------------------------------------METODOS RESERVAS---------------------------------------------
 
       }, {
         key: "obtenerReservasxComplejo",
         value: function obtenerReservasxComplejo(id) {
-          var _this5 = this;
+          var _this6 = this;
 
           this.apiServi.getReservacionComplejo(id).subscribe(function (resp) {
-            _this5.reservasComplejo = resp;
-            console.log(resp);
+            _this6.reservasComplejo = resp;
+
+            _this6.goSlide2(); // console.log(resp);
+
           });
         }
       }, {
         key: "eliminarReservacion",
-        value: function eliminarReservacion(id, dia) {
-          var d = moment__WEBPACK_IMPORTED_MODULE_9__(dia).format('YYYY-MM-DDTHH:mm');
-
-          if (d < this.hoy) {
-            return this.alertaService.alertaInformativa('No puedes eliminar esta reserva porque ya se vencio.');
-          }
-
+        value: function eliminarReservacion(id) {
+          // const d = moment(dia).format('YYYY-MM-DDTHH:mm');
+          // if (d < this.hoy) {
+          //   return this.alertaService.alertaInformativa('No puedes eliminar esta reserva porque ya se vencio.')
+          // }
           this.apiServi.deleteReservacion(id).subscribe(function (resp) {
             console.log('ELIMINADO CON EXITO');
           });
@@ -493,7 +514,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
           /*#__PURE__*/
           regeneratorRuntime.mark(function _callee2() {
-            var _this6 = this;
+            var _this7 = this;
 
             var alert;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -514,9 +535,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                       }, {
                         text: 'Okay',
                         handler: function handler() {
-                          _this6.complejo.estado = !_this6.complejo.estado;
+                          _this7.complejo.estado = !_this7.complejo.estado;
 
-                          _this6.modificarSinFoto();
+                          _this7.modificarSinFoto();
 
                           console.log('Confirm Okay');
                         }
@@ -535,12 +556,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               }
             }, _callee2, this);
           }));
+        }
+      }, {
+        key: "verificar",
+        value: function verificar() {
+          var hoy = moment__WEBPACK_IMPORTED_MODULE_9__().format('MM-DD-YYYY HH:mm');
+          var inicio = moment__WEBPACK_IMPORTED_MODULE_9__(this.complejo.horaInicio).format('MM-DD-YYYY HH:mm');
+          var cierre = moment__WEBPACK_IMPORTED_MODULE_9__(this.complejo.horaCierre).format('MM-DD-YYYY HH:mm');
+
+          if (cierre < inicio) {
+            this.ver = false;
+            this.alertaService.alertaInformativa('La hora de cierre no puede ser menor que la de inicio.');
+          } else {
+            this.ver = true;
+          }
         } // -------------------------------------------------------------------------------------------------
 
       }, {
         key: "clear",
         value: function clear() {
-          this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_2__["Complejo"](0, '', '', null, false, 0, 0, new Date(), new Date(), '');
+          this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_2__["Complejo"](0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
         } // -----------------------------------------------ACTION SHEET-----------------------------------------------
 
       }, {
@@ -549,7 +584,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
           /*#__PURE__*/
           regeneratorRuntime.mark(function _callee3() {
-            var _this7 = this;
+            var _this8 = this;
 
             var actionSheet;
             return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -564,28 +599,35 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         icon: 'location',
                         cssClass: 'rojo',
                         handler: function handler() {
-                          _this7.goSlideActualizarDireccion();
+                          _this8.goSlideActualizarDireccion();
                         }
                       }, {
                         text: 'Ubicacion',
                         icon: 'compass',
                         cssClass: 'azul',
                         handler: function handler() {
-                          _this7.goSlideActualizarUbicacion();
+                          _this8.goSlideActualizarUbicacion();
                         }
                       }, {
                         text: 'Horario',
                         icon: 'alarm',
                         cssClass: 'verde',
                         handler: function handler() {
-                          _this7.goSlideActualizarHorario();
+                          _this8.goSlideActualizarHorario();
                         }
                       }, {
                         text: 'Imagen',
                         icon: 'camera-reverse',
                         cssClass: 'morado',
                         handler: function handler() {
-                          _this7.goSlideActualizarFoto();
+                          _this8.goSlideActualizarFoto();
+                        }
+                      }, {
+                        text: 'Teléfono',
+                        icon: 'call',
+                        cssClass: 'azul',
+                        handler: function handler() {
+                          _this8.goSlideActualizarNumero();
                         }
                       }, {
                         text: 'Cancel',
@@ -616,7 +658,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
           /*#__PURE__*/
           regeneratorRuntime.mark(function _callee4() {
-            var _this8 = this;
+            var _this9 = this;
 
             var alert;
             return regeneratorRuntime.wrap(function _callee4$(_context4) {
@@ -625,8 +667,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                   case 0:
                     _context4.next = 2;
                     return this.alertController.create({
-                      header: 'Tus clientes sabran si pueden visitarte!',
-                      message: '<strong>Cambiar estado</strong>??',
+                      header: 'Informa a tus clientes si estas Abierto/Cerrado!',
+                      message: '<strong>Confirma el cambio dando OK</strong>',
                       buttons: [{
                         text: 'Cancel',
                         role: 'cancel',
@@ -635,11 +677,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                           console.log('Confirm Cancel: blah');
                         }
                       }, {
-                        text: 'Okay',
+                        text: 'Ok',
                         handler: function handler() {
-                          _this8.complejo.estado = !_this8.complejo.estado;
+                          _this9.complejo.estado = !_this9.complejo.estado;
 
-                          _this8.modificarSinFoto();
+                          _this9.modificarSinFoto();
 
                           console.log('Confirm Okay');
                         }
@@ -658,11 +700,157 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               }
             }, _callee4, this);
           }));
+        }
+      }, {
+        key: "parqueo",
+        value: function parqueo() {
+          return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
+          /*#__PURE__*/
+          regeneratorRuntime.mark(function _callee5() {
+            var _this10 = this;
+
+            var alert;
+            return regeneratorRuntime.wrap(function _callee5$(_context5) {
+              while (1) {
+                switch (_context5.prev = _context5.next) {
+                  case 0:
+                    _context5.next = 2;
+                    return this.alertController.create({
+                      header: 'Informa a tus clientes si cuentas con parqueo!',
+                      message: '<strong>Confirma el cambio dando OK</strong>',
+                      buttons: [{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: function handler(blah) {
+                          console.log('Confirm Cancel: blah');
+                        }
+                      }, {
+                        text: 'Ok',
+                        handler: function handler() {
+                          _this10.complejo.parqueo = !_this10.complejo.parqueo;
+
+                          _this10.modificarSinFoto();
+
+                          console.log('Confirm Okay');
+                        }
+                      }]
+                    });
+
+                  case 2:
+                    alert = _context5.sent;
+                    _context5.next = 5;
+                    return alert.present();
+
+                  case 5:
+                  case "end":
+                    return _context5.stop();
+                }
+              }
+            }, _callee5, this);
+          }));
+        }
+      }, {
+        key: "seguridad",
+        value: function seguridad() {
+          return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
+          /*#__PURE__*/
+          regeneratorRuntime.mark(function _callee6() {
+            var _this11 = this;
+
+            var alert;
+            return regeneratorRuntime.wrap(function _callee6$(_context6) {
+              while (1) {
+                switch (_context6.prev = _context6.next) {
+                  case 0:
+                    _context6.next = 2;
+                    return this.alertController.create({
+                      header: 'Informa a tus clientes si cuentas con seguridad!',
+                      message: '<strong>Confirma el cambio dando OK</strong>',
+                      buttons: [{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: function handler(blah) {
+                          console.log('Confirm Cancel: blah');
+                        }
+                      }, {
+                        text: 'Ok',
+                        handler: function handler() {
+                          _this11.complejo.seguridad = !_this11.complejo.seguridad;
+
+                          _this11.modificarSinFoto();
+
+                          console.log('Confirm Okay');
+                        }
+                      }]
+                    });
+
+                  case 2:
+                    alert = _context6.sent;
+                    _context6.next = 5;
+                    return alert.present();
+
+                  case 5:
+                  case "end":
+                    return _context6.stop();
+                }
+              }
+            }, _callee6, this);
+          }));
+        }
+      }, {
+        key: "eliminar",
+        value: function eliminar(id) {
+          return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
+          /*#__PURE__*/
+          regeneratorRuntime.mark(function _callee7() {
+            var _this12 = this;
+
+            var alert;
+            return regeneratorRuntime.wrap(function _callee7$(_context7) {
+              while (1) {
+                switch (_context7.prev = _context7.next) {
+                  case 0:
+                    _context7.next = 2;
+                    return this.alertController.create({
+                      header: 'Quieres eliminar esta reservacón!',
+                      message: '<strong>Confirma dando OK</strong>',
+                      buttons: [{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: function handler(blah) {
+                          console.log('Confirm Cancel: blah');
+                        }
+                      }, {
+                        text: 'Ok',
+                        handler: function handler() {
+                          _this12.eliminarReservacion(id);
+
+                          console.log('Confirm Okay');
+                        }
+                      }]
+                    });
+
+                  case 2:
+                    alert = _context7.sent;
+                    _context7.next = 5;
+                    return alert.present();
+
+                  case 5:
+                  case "end":
+                    return _context7.stop();
+                }
+              }
+            }, _callee7, this);
+          }));
         } // -------------------------------------------------SLIDE--------------------------------
 
       }, {
         key: "goSlide1",
         value: function goSlide1() {
+          this.atras = false;
           this.slides.lockSwipes(false);
           this.slides.slideTo(0);
           this.slides.lockSwipes(true);
@@ -670,6 +858,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "goSlide2",
         value: function goSlide2() {
+          this.atras = true;
           this.slides.lockSwipes(false);
           this.slides.slideTo(1);
           this.slides.lockSwipes(true);
@@ -677,6 +866,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "goSlideActualizarDireccion",
         value: function goSlideActualizarDireccion() {
+          this.atras = true;
           this.slides.lockSwipes(false);
           this.slides.slideTo(2);
           this.slides.lockSwipes(true);
@@ -684,6 +874,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "goSlideActualizarUbicacion",
         value: function goSlideActualizarUbicacion() {
+          this.atras = true;
           this.slides.lockSwipes(false);
           this.slides.slideTo(3);
           this.slides.lockSwipes(true);
@@ -691,6 +882,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "goSlideActualizarHorario",
         value: function goSlideActualizarHorario() {
+          this.atras = true;
           this.slides.lockSwipes(false);
           this.slides.slideTo(4);
           this.slides.lockSwipes(true);
@@ -698,13 +890,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "goSlideActualizarFoto",
         value: function goSlideActualizarFoto() {
+          this.atras = true;
           this.slides.lockSwipes(false);
           this.slides.slideTo(5);
           this.slides.lockSwipes(true);
         }
       }, {
-        key: "goSlideAgregarCancha",
-        value: function goSlideAgregarCancha() {
+        key: "goSlideActualizarNumero",
+        value: function goSlideActualizarNumero() {
+          this.atras = true;
           this.slides.lockSwipes(false);
           this.slides.slideTo(6);
           this.slides.lockSwipes(true);

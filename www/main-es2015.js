@@ -737,7 +737,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header no-border>\n  <ion-toolbar>\n\n    <ion-buttons slot=\"start\">\n      <ion-back-button text=\"Atras\" defaultHref=\"/\"></ion-back-button>\n    </ion-buttons>\n\n\n    <ion-title text-capitalize >{{ titulo }}</ion-title>\n  </ion-toolbar>\n</ion-header>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header no-border>\n  <ion-toolbar>\n\n    <ion-buttons slot=\"start\">\n      <ion-back-button text=\"Inicio\" defaultHref=\"/\"></ion-back-button>\n    </ion-buttons>\n\n\n    <ion-title text-capitalize >{{ titulo }}</ion-title>\n  </ion-toolbar>\n</ion-header>");
 
 /***/ }),
 
@@ -1423,7 +1423,7 @@ let UsuarioService = class UsuarioService {
             edad: null,
             isAdmin: null
         };
-        this.url = 'https://juguemos.azurewebsites.net/api';
+        this.url = 'https://conmigo.armalapotra.com/api';
     }
     login(email, password) {
         const data = { email, password };
@@ -1456,7 +1456,7 @@ let UsuarioService = class UsuarioService {
         return new Promise(resolve => {
             this.http.post(`${this.url}/account/create`, usuario)
                 .subscribe(resp => {
-                console.log(resp);
+                // console.log(resp);
                 if (resp['ok']) {
                     resolve(true);
                 }
@@ -1511,8 +1511,8 @@ let UsuarioService = class UsuarioService {
                     this.http.get(`${this.url}/user`, { headers: tokenHeaders })
                         .subscribe((resp) => {
                         this.user = resp;
-                        console.log('PASO 3 >> ');
-                        console.log(this.user);
+                        // console.log( 'PASO 3 >> ' );
+                        // console.log(this.user);
                         // if (this.user.isAdmin === true) {
                         //   this.setAuxEst(true);
                         // } else {

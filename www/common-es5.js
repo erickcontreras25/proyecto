@@ -1170,15 +1170,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! @angular/common/http */
     "./node_modules/@angular/common/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _ionic_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @ionic/storage */
+    "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+    /* harmony import */
+
+
+    var _usuario_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./usuario.service */
+    "./src/app/services/usuario.service.ts");
 
     var ApiserviService =
     /*#__PURE__*/
     function () {
-      function ApiserviService(http) {
+      function ApiserviService(http, storage, usuarioSer) {
         _classCallCheck(this, ApiserviService);
 
         this.http = http;
-        this.url = 'https://juguemos.azurewebsites.net/api';
+        this.storage = storage;
+        this.usuarioSer = usuarioSer;
+        this.url = 'https://conmigo.armalapotra.com/api';
+        this.token = null;
       } // getCanchas(){
       //   return this.http.get('https://apibackend2019.herokuapp.com/api/Complejos');
       // }
@@ -1217,22 +1232,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         key: "getComplejo",
         value: function getComplejo() {
-          return this.http.get("".concat(this.url, "/complejo"));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/complejo"), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getComplejoId",
         value: function getComplejoId(id) {
-          return this.http.get("".concat(this.url, "/complejo/").concat(id));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/complejo/").concat(id), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getComplejoAdmin",
         value: function getComplejoAdmin(n1) {
-          return this.http.get("".concat(this.url, "/complejo/p?n1=").concat(n1));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/complejo/p?n1=").concat(n1), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getComplejoEstado",
         value: function getComplejoEstado(n1) {
-          return this.http.get("".concat(this.url, "/complejo/q?n1=").concat(n1));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/complejo/q?n1=").concat(n1), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "postComplejo",
@@ -1256,12 +1291,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         key: "getCanchaComplejo",
         value: function getCanchaComplejo(n1) {
-          return this.http.get("".concat(this.url, "/cancha/p?n1=").concat(n1));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/cancha/p?n1=").concat(n1), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getCanchaId",
         value: function getCanchaId(id) {
-          return this.http.get("".concat(this.url, "/cancha/").concat(id));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/cancha/").concat(id), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "postCancha",
@@ -1285,22 +1330,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         key: "getReservaciones",
         value: function getReservaciones() {
-          return this.http.get("".concat(this.url, "/reservacion"));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/reservacion"), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getReservacionXUser",
         value: function getReservacionXUser(n1) {
-          return this.http.get("".concat(this.url, "/reservacion/p?n1=").concat(n1));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/reservacion/p?n1=").concat(n1), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getReservacionComplejo",
         value: function getReservacionComplejo(n1) {
-          return this.http.get("".concat(this.url, "/reservacion/q?n1=").concat(n1));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/reservacion/q?n1=").concat(n1), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getReservacionId",
         value: function getReservacionId(id) {
-          return this.http.get("".concat(this.url, "/reservacion/").concat(id));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/reservacion/").concat(id), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "postReservacion",
@@ -1329,12 +1394,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     ApiserviService.ctorParameters = function () {
       return [{
         type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+      }, {
+        type: _ionic_storage__WEBPACK_IMPORTED_MODULE_3__["Storage"]
+      }, {
+        type: _usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"]
       }];
     };
 
     ApiserviService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
       providedIn: 'root'
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])], ApiserviService);
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _ionic_storage__WEBPACK_IMPORTED_MODULE_3__["Storage"], _usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"]])], ApiserviService);
     /***/
   },
 
@@ -1375,31 +1444,60 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! @angular/common/http */
     "./node_modules/@angular/common/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _usuario_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ./usuario.service */
+    "./src/app/services/usuario.service.ts");
+    /* harmony import */
+
+
+    var _ionic_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @ionic/storage */
+    "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
 
     var EquipoService =
     /*#__PURE__*/
     function () {
-      function EquipoService(http) {
+      function EquipoService(http, storage, usuarioSer) {
         _classCallCheck(this, EquipoService);
 
         this.http = http;
-        this.url = 'https://juguemos.azurewebsites.net/api';
+        this.storage = storage;
+        this.usuarioSer = usuarioSer;
+        this.url = 'https://conmigo.armalapotra.com/api';
       }
 
       _createClass(EquipoService, [{
         key: "getEquipos",
         value: function getEquipos() {
-          return this.http.get("".concat(this.url, "/equipo"));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/equipo"), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getEquipoxUsuario",
         value: function getEquipoxUsuario(n1) {
-          return this.http.get("".concat(this.url, "/equipo/p?n1=").concat(n1));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/equipo/p?n1=").concat(n1), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getEquipoId",
         value: function getEquipoId(id) {
-          return this.http.get("".concat(this.url, "/equipo/").concat(id));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/equipo/").concat(id), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "postEquipo",
@@ -1411,7 +1509,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         key: "putEquipo",
         value: function putEquipo(id, equipo) {
-          return this.http.put("".concat(this.url, "/equipo"), equipo, {
+          return this.http.put("".concat(this.url, "/equipo/").concat(id), equipo, {
             responseType: 'text'
           });
         }
@@ -1423,17 +1521,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         key: "getEquipoUser",
         value: function getEquipoUser() {
-          return this.http.get("".concat(this.url, "/equipoUser"));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/equipoUser"), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getEquipoUserxUsuario",
         value: function getEquipoUserxUsuario(n1) {
-          return this.http.get("".concat(this.url, "/equipoUser/p?n1=").concat(n1));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/equipoUser/p?n1=").concat(n1), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getEquipoUserId",
         value: function getEquipoUserId(id) {
-          return this.http.get("".concat(this.url, "/equipoUser/").concat(id));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/equipoUser/").concat(id), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "postEquipoUser",
@@ -1457,12 +1570,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     EquipoService.ctorParameters = function () {
       return [{
         type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+      }, {
+        type: _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"]
+      }, {
+        type: _usuario_service__WEBPACK_IMPORTED_MODULE_3__["UsuarioService"]
       }];
     };
 
     EquipoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
       providedIn: 'root'
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])], EquipoService);
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"], _usuario_service__WEBPACK_IMPORTED_MODULE_3__["UsuarioService"]])], EquipoService);
     /***/
   },
 
@@ -1503,31 +1620,60 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! @angular/common/http */
     "./node_modules/@angular/common/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _usuario_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ./usuario.service */
+    "./src/app/services/usuario.service.ts");
+    /* harmony import */
+
+
+    var _ionic_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @ionic/storage */
+    "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
 
     var TorneoService =
     /*#__PURE__*/
     function () {
-      function TorneoService(http) {
+      function TorneoService(http, storage, usuarioSer) {
         _classCallCheck(this, TorneoService);
 
         this.http = http;
-        this.url = 'https://juguemos.azurewebsites.net/api';
+        this.storage = storage;
+        this.usuarioSer = usuarioSer;
+        this.url = 'https://conmigo.armalapotra.com/api';
       }
 
       _createClass(TorneoService, [{
         key: "getTorneos",
         value: function getTorneos() {
-          return this.http.get("".concat(this.url, "/torneo"));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/torneo"), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getTorneoxUsuario",
         value: function getTorneoxUsuario(n1) {
-          return this.http.get("".concat(this.url, "/torneo/p?n1=").concat(n1));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/torneo/p?n1=").concat(n1), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getTorneooId",
         value: function getTorneooId(id) {
-          return this.http.get("".concat(this.url, "/torneo/").concat(id));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/torneo/").concat(id), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "postTorneo",
@@ -1539,7 +1685,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         key: "putTorneo",
         value: function putTorneo(id, torneo) {
-          return this.http.put("".concat(this.url, "/torneo"), torneo, {
+          return this.http.put("".concat(this.url, "/torneo/").concat(id), torneo, {
             responseType: 'text'
           });
         }
@@ -1551,17 +1697,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         key: "getTorneoEquipo",
         value: function getTorneoEquipo() {
-          return this.http.get("".concat(this.url, "/torneoEquipo"));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/torneoEquipo"), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getTorneoEquipoxUsuario",
         value: function getTorneoEquipoxUsuario(n1) {
-          return this.http.get("".concat(this.url, "/torneoEquipo/p?n1=").concat(n1));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/torneoEquipo/p?n1=").concat(n1), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "getTorneoEquipoId",
         value: function getTorneoEquipoId(id) {
-          return this.http.get("".concat(this.url, "/torneoEquipo/").concat(id));
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(this.url, "/torneoEquipo/").concat(id), {
+            headers: tokenHeaders
+          });
         }
       }, {
         key: "postTorneoEquipo",
@@ -1585,13 +1746,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     TorneoService.ctorParameters = function () {
       return [{
         type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+      }, {
+        type: _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"]
+      }, {
+        type: _usuario_service__WEBPACK_IMPORTED_MODULE_3__["UsuarioService"]
       }];
     };
 
     TorneoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
       providedIn: 'root'
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])], TorneoService);
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"], _usuario_service__WEBPACK_IMPORTED_MODULE_3__["UsuarioService"]])], TorneoService);
     /***/
+  },
+
+  /***/
+  "./src/models/cancha.models.ts":
+  /*!*************************************!*\
+    !*** ./src/models/cancha.models.ts ***!
+    \*************************************/
+
+  /*! exports provided: Cancha */
+
+  /***/
+  function srcModelsCanchaModelsTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "Cancha", function () {
+      return Cancha;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+
+    var Cancha = function Cancha(id, precio, fot, tamanio, idCom) {
+      _classCallCheck(this, Cancha);
+
+      this.idCancha = id;
+      this.precio = precio;
+      this.foto = fot;
+      this.tamanioCancha = tamanio;
+      this.idComplejo = idCom;
+    };
+    /***/
+
   },
 
   /***/
@@ -1620,18 +1824,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     /*! tslib */
     "./node_modules/tslib/tslib.es6.js");
 
-    var Complejo = function Complejo(id, nombre, loc, fot, est, lng, lat, hInicio, hCierre, adminId) {
+    var Complejo = function Complejo(id, nombre, loc, num, fot, est, lng, lat, hInicio, hCierre, par, seg, adminId) {
       _classCallCheck(this, Complejo);
 
       this.idComplejo = id;
       this.nombre = nombre;
       this.localidad = loc;
+      this.numero = num;
       this.foto = fot;
       this.estado = est;
       this.longitud = lng;
       this.latitud = lat;
       this.horaInicio = hInicio;
       this.horaCierre = hCierre;
+      this.parqueo = par;
+      this.seguridad = seg;
       this.userId = adminId;
     };
     /***/
@@ -1664,11 +1871,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     /*! tslib */
     "./node_modules/tslib/tslib.es6.js");
 
-    var Equipo = function Equipo(id, nombre, usuarioId) {
+    var Equipo = function Equipo(id, nombre, cantidad, usuarioId) {
       _classCallCheck(this, Equipo);
 
       this.idEquipo = id;
       this.nombre = nombre;
+      this.cantJugadores = cantidad;
       this.userId = usuarioId;
     };
     /***/

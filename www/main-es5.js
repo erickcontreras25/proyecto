@@ -478,7 +478,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-header no-border>\n  <ion-toolbar>\n\n    <ion-buttons slot=\"start\">\n      <ion-back-button text=\"Atras\" defaultHref=\"/\"></ion-back-button>\n    </ion-buttons>\n\n\n    <ion-title text-capitalize >{{ titulo }}</ion-title>\n  </ion-toolbar>\n</ion-header>";
+    __webpack_exports__["default"] = "<ion-header no-border>\n  <ion-toolbar>\n\n    <ion-buttons slot=\"start\">\n      <ion-back-button text=\"Inicio\" defaultHref=\"/\"></ion-back-button>\n    </ion-buttons>\n\n\n    <ion-title text-capitalize >{{ titulo }}</ion-title>\n  </ion-toolbar>\n</ion-header>";
     /***/
   },
 
@@ -1916,7 +1916,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           edad: null,
           isAdmin: null
         };
-        this.url = 'https://juguemos.azurewebsites.net/api';
+        this.url = 'https://conmigo.armalapotra.com/api';
       }
 
       _createClass(UsuarioService, [{
@@ -1987,8 +1987,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           return new Promise(function (resolve) {
             _this3.http.post("".concat(_this3.url, "/account/create"), usuario).subscribe(function (resp) {
-              console.log(resp);
-
+              // console.log(resp);
               if (resp['ok']) {
                 resolve(true);
               } else {
@@ -2158,9 +2157,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         _this4.http.get("".concat(_this4.url, "/user"), {
                           headers: tokenHeaders
                         }).subscribe(function (resp) {
-                          _this4.user = resp;
-                          console.log('PASO 3 >> ');
-                          console.log(_this4.user); // if (this.user.isAdmin === true) {
+                          _this4.user = resp; // console.log( 'PASO 3 >> ' );
+                          // console.log(this.user);
+                          // if (this.user.isAdmin === true) {
                           //   this.setAuxEst(true);
                           // } else {
                           //   console.log( 'PASO 4 >> ' + 'ESTO ES EN DONDE QUIERO');

@@ -178,8 +178,8 @@
                   <ion-row *ngFor="let item of reservasComplejo">
                     <ion-col class="bor" size="3"><h6 class="shadow">{{item.user.nombreUsuario}}</h6></ion-col>
                     <ion-col class="bor" size="3"><h6 class="shadow">{{item.horaInicial | date:'dd-MMMM HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</h6></ion-col>
-                    <ion-col class="bor" *ngIf="item.pago"><label class="shadow">Completo <ion-icon color="success" name="checkmark-done-outline"></ion-icon></label></ion-col>
-                    <ion-col class="bor" *ngIf="item.pagoParcial"><label class="shadow">50% <ion-icon color="success" name="checkmark-outline"></ion-icon></label></ion-col>
+                    <ion-col class="bor" *ngIf="item.pagoParcial"><label class="shadow">Completo <ion-icon color="success" name="checkmark-done-outline"></ion-icon></label></ion-col>
+                    <ion-col class="bor" *ngIf="item.pago"><label class="shadow">50% <ion-icon color="success" name="checkmark-outline"></ion-icon></label></ion-col>
                     <ion-col class="bor" *ngIf="!item.pago && !item.pagoParcial"><h6 class="shadow">No</h6></ion-col>
                     <ion-col class="bor" *ngIf="!item.pago && !item.pagoParcial">
                       <ion-button color="danger"

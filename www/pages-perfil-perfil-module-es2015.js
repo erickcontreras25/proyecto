@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-header titulo=\"Mi Perfil\"></app-header>\n\n<ion-content>\n  \n  <ion-card>\n    <ion-row>\n      <ion-col>\n        <ion-row><h5 style=\"color: black;\">{{user.nombreUsuario}}</h5></ion-row>\n        <!-- <ion-row><h5>{{user.email}}</h5></ion-row>       -->\n      </ion-col>\n      <ion-col><h5 style=\"color: black;\">{{user.edad}} años</h5></ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-row center>\n    <ion-button (click)=\"obtenerMisReservacion()\">Ver todas mis reservaciones</ion-button>\n  </ion-row>\n  \n\n  <!-- ------------------------------------------------------------------------------------ -->\n\n  <h2 class=\"ion-text-center\">Mis reservaciones</h2>\n\n  <div *ngFor=\"let item of reservacionesNoVencidas\">\n    <ion-card class=\"ion-text-center\" style=\"background-color: rgb(230, 230, 241); border-radius : 10px;\">      \n\n        <div style=\"display: inline-block; position:relative\">\n          <img src=\"{{item.cancha.foto}}\" alt=\"200\" width=\"500\">\n          <div style=\"display: inline-block; position:absolute; top:100%; left:50%; transform: translate(-50%, -50%)\">      \n            <img src=\"{{item.cancha.complejo.foto}}\" class=\"imgRedonda\">\n        </div>\n        </div>\n        <br><br><br><br><br>\n        <h3 class=\"ion-text-center\">{{item.cancha.complejo.nombre}}</h3>\n        <h6>\n          <ion-icon name=\"calendar-outline\" color=\"secondary\"></ion-icon>\n              {{item.horaInicial | date:'MMMM-dd HH:mm'}} a {{item.horaFinal | date:'MMMM-dd HH:mm'}}\n          </h6>\n        <h6>\n          <ion-icon name=\"cash-outline\" color=\"success\"></ion-icon>\n            Lps. {{item.cancha.precio}}\n        </h6>\n\n        <h6>\n          <ion-icon name=\"location-outline\" color=\"primary\"></ion-icon>\n            {{item.cancha.complejo.localidad}}\n        </h6>\n        <ion-row>\n          <ion-col class=\"centrado\">\n            <label>\n              <ion-icon slot=\"start\" name=\"trash-outline\" color=\"danger\" (click)=\"eliminarReservacion(item.idReservacion)\">Eliminar reservacion</ion-icon>\n            </label>\n          </ion-col>          \n          <ion-col class=\"centrado\" *ngIf=\"!item.pago || !item.pagoParcial\">\n            <ion-button (click)=\"obtenerReservacionId(item.idReservacion)\"\n                        (click)=\"obtenerCanchaId(item.idCancha)\"\n                        (click)=\"pagarCompleto()\">Pagar 100%</ion-button>\n          </ion-col>\n          <ion-col class=\"centrado\" *ngIf=\"!item.pago || !item.pagoParcial\">\n            <ion-button (click)=\"obtenerReservacionId(item.idReservacion)\"\n                        (click)=\"obtenerCanchaId(item.idCancha)\"\n                        (click)=\"pagarParcial()\"\n                        >Pagar 50%</ion-button>\n          </ion-col>\n        </ion-row>\n        \n        \n    </ion-card>\n</div>\n\n\n  \n  <!-- <div *ngFor=\"let item of reservacionesNoVencidas\" style=\"background-color: rgb(67, 179, 96);\">\n    <ion-card class=\"ion-text-center\" style=\"background-color: rgb(230, 230, 241); border-radius : 10px;\">      \n\n        <div style=\"display: inline-block; position:relative\">\n          <img src=\"{{item.cancha.foto}}\" class=\"img\">\n          <div style=\"display: inline-block; position:absolute; top:100%; left:50%; transform: translate(-50%, -50%)\">      \n            <img src=\"{{item.cancha.complejo.foto}}\" class=\"imgRedonda\">\n        </div>\n        </div>\n        <br><br><br><br><br>\n        <h3 class=\"ion-text-center\">{{item.cancha.complejo.nombre}}</h3>\n        <h6>\n          <ion-icon name=\"calendar-outline\" color=\"secondary\"></ion-icon>\n              {{item.horaInicial | date:'MMMM-dd HH:mm'}} a {{item.horaFinal | date:'MMMM-dd HH:mm'}}\n          </h6>\n        <h6>\n          <ion-icon name=\"cash-outline\" color=\"success\"></ion-icon>\n            Lps. {{item.cancha.precio}}\n        </h6>\n\n        <h6>\n          <ion-icon name=\"location-outline\" color=\"primary\"></ion-icon>\n            {{item.cancha.complejo.localidad}}\n        </h6>\n        <label>\n          <ion-icon slot=\"start\" name=\"trash-outline\" color=\"danger\" (click)=\"eliminarReservacion(item.idReservacion)\">Eliminar reservacion</ion-icon>\n        </label>\n    </ion-card>\n</div> -->\n  \n\n  <!-- <ion-button (click)=\"obtenerEquipoUsuario()\">Ver equipo</ion-button>\n  <ion-card>\n    <ion-list *ngFor=\"let item of equipos\">\n      <ion-item>{{item.usuario.nombre}}</ion-item>\n      <ion-item>\n      </ion-item>\n    </ion-list>\n  </ion-card> -->\n\n  \n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-header titulo=\"Mi Perfil\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"goSlide1()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"background\">\n\n  <div>\n    <ion-row>\n      <ion-col>\n        <ion-row><h5 class=\"shadow\" style=\"color: white;\">{{user.nombreUsuario}}</h5></ion-row>\n        <!-- <ion-row><h5>{{user.email}}</h5></ion-row>       -->\n      </ion-col>\n      <ion-col><h5 class=\"shadow\" style=\"color: white;\">{{user.edad}} años</h5></ion-col>\n    </ion-row>\n  </div>\n\n  \n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n    <ion-slide>\n      <ion-grid>\n        <form>\n\n          <!-- <ion-row center>\n            <ion-button (click)=\"obtenerMisReservacion()\">Ver mi historial reservas</ion-button>\n          </ion-row> -->\n\n          <h1 style=\"color: white;\" class=\"shadow\">Mis reservaciones</h1>\n\n          <div>\n            <ion-row class=\"ion-align-items-center bor\" >\n              <ion-col class=\"centrado\"><label class=\"shadow\">Día</label></ion-col>\n              <ion-col class=\"centrado\"><label class=\"shadow\">Horario</label></ion-col>\n              <ion-col class=\"derecha\">                \n              </ion-col>\n            </ion-row>            \n        </div>\n\n        <div *ngFor=\"let item of reservacionesNoVencidas\">\n            <ion-row class=\"ion-align-items-center\">\n              <ion-col class=\"centrado\" >\n                <label class=\"shadow\">{{item.horaInicial | date:'MMMM-dd'}}</label>\n              </ion-col>\n              <ion-col class=\"centrado\" >\n                <label class=\"shadow\">{{item.horaInicial | date:'HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</label>\n              </ion-col>\n              <ion-col class=\"derecha\">\n                <ion-button color=\"success\"\n                            class=\"derecha\"      \n                            fill=\"clear\"    \n                                       \n                            (click)=\"obtenerReservacionId(item.idReservacion)\">\n                            <ion-icon color=\"success\" class=\"size\" name=\"return-up-forward-outline\"></ion-icon>\n                            </ion-button>\n                \n              </ion-col>\n            </ion-row>            \n        </div>\n        </form>\n      </ion-grid>\n    </ion-slide>\n\n<!-- ---------------------------------------------------SLIDE 2--------------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n        <form>\n          <!-- <h2 class=\"ion-text-center\">Mis reservaciones</h2>           -->\n\n            <div style=\"background-color: rgb(211, 197, 197, 0.05);\">\n\n                  <div style=\"display: inline-block; position:relative\">\n                    <img src=\"{{cancha.foto}}\" alt=\"200\" width=\"500\">\n                    <div style=\"display: inline-block; position:absolute; top:100%; left:50%; transform: translate(-50%, -50%)\">      \n                      <img src=\"{{complejo.foto}}\" class=\"imgRedonda\">\n                  </div>\n                  </div>\n                  <br><br><br><br>\n                  <h1 class=\"ion-text-center shadow\">{{complejo.nombre}}</h1>\n                  <ion-row>\n                    <ion-col>\n                      <ion-icon class=\"shadow\" name=\"calendar-outline\" color=\"secondary\"></ion-icon>\n                      <label class=\"shadow\">{{reservacion.horaInicial | date:'MMMM-dd'}}</label>\n                      <label class=\"shadow\">                       \n                          {{reservacion.horaInicial | date:'HH:mm'}} a {{reservacion.horaFinal | date:'HH:mm'}}\n                      </label>\n                    </ion-col>\n                    <ion-col>\n                      <ion-icon class=\"shadow\" name=\"cash-outline\" color=\"success\"></ion-icon>\n                      <label class=\"shadow\">                        \n                          Lps. {{cancha.precio * auxHoras}}\n                      </label>\n                    </ion-col>\n                  </ion-row>\n                  <ion-row>\n                    <ion-col>\n                      <ion-icon class=\"shadow\" name=\"location-outline\" color=\"primary\"></ion-icon>\n                      <label class=\"shadow\">                        \n                          {{complejo.localidad}}\n                      </label>\n                    </ion-col>\n                    <ion-col>\n                      <ion-icon name=\"call-outline\" color=\"secondary\"></ion-icon>\n                      <label class=\"shadow\">                        \n                        {{complejo.numero}}\n                    </label>\n                    </ion-col>\n                  </ion-row>\n                  \n\n                  \n                  <ion-row>\n                    <ion-col>\n                          <ion-icon name=\"trash-outline\" style=\"color: red;\" (click)=\"confirmarCancelacion()\">Cancelar resereserva</ion-icon>\n                    </ion-col>          \n                    <!-- <ion-col class=\"centrado\" *ngIf=\"!reservacion.pago || !reservacion.pagoParcial\">\n                      <ion-button (click)=\"obtenerReservacionId(reservacion.idReservacion)\"\n                                  (click)=\"obtenerCanchaId(reservacion.idCancha)\"\n                                  (click)=\"pagarCompleto()\">Pagar 100%</ion-button>\n                    </ion-col> -->\n                    <ion-col class=\"derecha\" *ngIf=\"!reservacion.pago && !reservacion.pagoParcial\">\n                      <ion-button \n                                  (click)=\"pagarParcial()\"\n                                  >Pagar Reserva</ion-button>\n                    </ion-col>\n                  </ion-row>\n                  \n                  \n             </div>\n        </form>\n      </ion-grid>\n    </ion-slide>\n\n  </ion-slides>\n  \n  \n  \n\n  <!-- ------------------------------------------------------------------------------------ -->\n\n  \n\n\n  \n  <!-- <div *ngFor=\"let item of reservacionesNoVencidas\" style=\"background-color: rgb(67, 179, 96);\">\n    <ion-card class=\"ion-text-center\" style=\"background-color: rgb(230, 230, 241); border-radius : 10px;\">      \n\n        <div style=\"display: inline-block; position:relative\">\n          <img src=\"{{item.cancha.foto}}\" class=\"img\">\n          <div style=\"display: inline-block; position:absolute; top:100%; left:50%; transform: translate(-50%, -50%)\">      \n            <img src=\"{{item.cancha.complejo.foto}}\" class=\"imgRedonda\">\n        </div>\n        </div>\n        <br><br><br><br><br>\n        <h3 class=\"ion-text-center\">{{item.cancha.complejo.nombre}}</h3>\n        <h6>\n          <ion-icon name=\"calendar-outline\" color=\"secondary\"></ion-icon>\n              {{item.horaInicial | date:'MMMM-dd HH:mm'}} a {{item.horaFinal | date:'MMMM-dd HH:mm'}}\n          </h6>\n        <h6>\n          <ion-icon name=\"cash-outline\" color=\"success\"></ion-icon>\n            Lps. {{item.cancha.precio}}\n        </h6>\n\n        <h6>\n          <ion-icon name=\"location-outline\" color=\"primary\"></ion-icon>\n            {{item.cancha.complejo.localidad}}\n        </h6>\n        <label>\n          <ion-icon slot=\"start\" name=\"trash-outline\" color=\"danger\" (click)=\"eliminarReservacion(item.idReservacion)\">Eliminar reservacion</ion-icon>\n        </label>\n    </ion-card>\n</div> -->\n  \n\n  <!-- <ion-button (click)=\"obtenerEquipoUsuario()\">Ver equipo</ion-button>\n  <ion-card>\n    <ion-list *ngFor=\"let item of equipos\">\n      <ion-item>{{item.usuario.nombre}}</ion-item>\n      <ion-item>\n      </ion-item>\n    </ion-list>\n  </ion-card> -->\n\n  \n\n</ion-content>\n");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ PerfilPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".img {\n  width: 500px;\n  height: 220px;\n}\n\nion-icon {\n  font-size: 27px;\n}\n\n.imgRedonda {\n  width: 150px;\n  height: 150px;\n  border-radius: 150px;\n  border: 5px solid #666;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvcGVyZmlsL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxwZXJmaWxcXHBlcmZpbC5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3BlcmZpbC9wZXJmaWwucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksWUFBQTtFQUNBLGFBQUE7QUNDSjs7QURDRTtFQUNJLGVBQUE7QUNFTjs7QURBRTtFQUNFLFlBQUE7RUFDQSxhQUFBO0VBQ0Esb0JBQUE7RUFDQSxzQkFBQTtBQ0dKOztBREFBO0VBQ0UsaUJBQUE7QUNHRjs7QUREQTtFQUNFLGtCQUFBO0FDSUY7O0FERkE7RUFDRSxnQkFBQTtBQ0tGIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvcGVyZmlsL3BlcmZpbC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaW1nIHtcclxuICAgIHdpZHRoOiA1MDBweDtcclxuICAgIGhlaWdodDogMjIwcHg7XHJcbiAgfVxyXG4gIGlvbi1pY29uIHtcclxuICAgICAgZm9udC1zaXplOiAyN3B4O1xyXG4gIH1cclxuICAuaW1nUmVkb25kYSB7XHJcbiAgICB3aWR0aDoxNTBweDtcclxuICAgIGhlaWdodDoxNTBweDtcclxuICAgIGJvcmRlci1yYWRpdXM6MTUwcHg7XHJcbiAgICBib3JkZXI6NXB4IHNvbGlkICM2NjY7XHJcbn1cclxuXHJcbi5kZXJlY2hhe1xyXG4gIHRleHQtYWxpZ246IHJpZ2h0O1xyXG59XHJcbi5jZW50cmFkb3tcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuLml6cXVpZXJkYXtcclxuICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG59IiwiLmltZyB7XG4gIHdpZHRoOiA1MDBweDtcbiAgaGVpZ2h0OiAyMjBweDtcbn1cblxuaW9uLWljb24ge1xuICBmb250LXNpemU6IDI3cHg7XG59XG5cbi5pbWdSZWRvbmRhIHtcbiAgd2lkdGg6IDE1MHB4O1xuICBoZWlnaHQ6IDE1MHB4O1xuICBib3JkZXItcmFkaXVzOiAxNTBweDtcbiAgYm9yZGVyOiA1cHggc29saWQgIzY2Njtcbn1cblxuLmRlcmVjaGEge1xuICB0ZXh0LWFsaWduOiByaWdodDtcbn1cblxuLmNlbnRyYWRvIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uaXpxdWllcmRhIHtcbiAgdGV4dC1hbGlnbjogbGVmdDtcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".img {\n  width: 500px;\n  height: 220px;\n}\n\nion-icon {\n  font-size: 30px;\n}\n\n.imgRedonda {\n  width: 150px;\n  height: 150px;\n  border-radius: 150px;\n  border: 5px solid #666;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n\n.bor {\n  border-bottom: white 2px solid;\n}\n\nion-content.background {\n  --background: url(/assets/img/bueno.jpg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.shadow {\n  text-shadow: 2px 2px #080808;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvcGVyZmlsL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxwZXJmaWxcXHBlcmZpbC5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3BlcmZpbC9wZXJmaWwucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksWUFBQTtFQUNBLGFBQUE7QUNDSjs7QURDRTtFQUNJLGVBQUE7QUNFTjs7QURBRTtFQUNFLFlBQUE7RUFDQSxhQUFBO0VBQ0Esb0JBQUE7RUFDQSxzQkFBQTtBQ0dKOztBREFBO0VBQ0UsaUJBQUE7QUNHRjs7QUREQTtFQUNFLGtCQUFBO0FDSUY7O0FERkE7RUFDRSxnQkFBQTtBQ0tGOztBREZBO0VBQ0UsOEJBQUE7QUNLRjs7QURGQTtFQUNFLGdFQUFBO0VBQ0EsWUFBQTtBQ0tGOztBREZBO0VBQ0UsNEJBQUE7QUNLRiIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL3BlcmZpbC9wZXJmaWwucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmltZyB7XHJcbiAgICB3aWR0aDogNTAwcHg7XHJcbiAgICBoZWlnaHQ6IDIyMHB4O1xyXG4gIH1cclxuICBpb24taWNvbiB7XHJcbiAgICAgIGZvbnQtc2l6ZTogMzBweDtcclxuICB9XHJcbiAgLmltZ1JlZG9uZGEge1xyXG4gICAgd2lkdGg6MTUwcHg7XHJcbiAgICBoZWlnaHQ6MTUwcHg7XHJcbiAgICBib3JkZXItcmFkaXVzOjE1MHB4O1xyXG4gICAgYm9yZGVyOjVweCBzb2xpZCAjNjY2O1xyXG59XHJcblxyXG4uZGVyZWNoYXtcclxuICB0ZXh0LWFsaWduOiByaWdodDtcclxufVxyXG4uY2VudHJhZG97XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbi5penF1aWVyZGF7XHJcbiAgdGV4dC1hbGlnbjogbGVmdDtcclxufVxyXG5cclxuLmJvciB7XHJcbiAgYm9yZGVyLWJvdHRvbTogd2hpdGUgMnB4IHNvbGlkO1xyXG59XHJcblxyXG5pb24tY29udGVudC5iYWNrZ3JvdW5ke1xyXG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL2J1ZW5vLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XHJcbiAgb3BhY2l0eTogMC44O1xyXG59XHJcblxyXG4uc2hhZG93IHtcclxuICB0ZXh0LXNoYWRvdzogMnB4IDJweCAjMDgwODA4O1xyXG59IiwiLmltZyB7XG4gIHdpZHRoOiA1MDBweDtcbiAgaGVpZ2h0OiAyMjBweDtcbn1cblxuaW9uLWljb24ge1xuICBmb250LXNpemU6IDMwcHg7XG59XG5cbi5pbWdSZWRvbmRhIHtcbiAgd2lkdGg6IDE1MHB4O1xuICBoZWlnaHQ6IDE1MHB4O1xuICBib3JkZXItcmFkaXVzOiAxNTBweDtcbiAgYm9yZGVyOiA1cHggc29saWQgIzY2Njtcbn1cblxuLmRlcmVjaGEge1xuICB0ZXh0LWFsaWduOiByaWdodDtcbn1cblxuLmNlbnRyYWRvIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uaXpxdWllcmRhIHtcbiAgdGV4dC1hbGlnbjogbGVmdDtcbn1cblxuLmJvciB7XG4gIGJvcmRlci1ib3R0b206IHdoaXRlIDJweCBzb2xpZDtcbn1cblxuaW9uLWNvbnRlbnQuYmFja2dyb3VuZCB7XG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL2J1ZW5vLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XG4gIG9wYWNpdHk6IDAuODtcbn1cblxuLnNoYWRvdyB7XG4gIHRleHQtc2hhZG93OiAycHggMnB4ICMwODA4MDg7XG59Il19 */");
 
 /***/ }),
 
@@ -123,10 +123,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_apiservi_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/apiservi.service */ "./src/app/services/apiservi.service.ts");
 /* harmony import */ var src_models_reservacion_models__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/models/reservacion.models */ "./src/models/reservacion.models.ts");
 /* harmony import */ var src_app_services_usuario_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/usuario.service */ "./src/app/services/usuario.service.ts");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/paypal/ngx */ "./node_modules/@ionic-native/paypal/ngx/index.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/fesm2015/ionic-angular.js");
+/* harmony import */ var src_models_cancha_models__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/models/cancha.models */ "./src/models/cancha.models.ts");
+/* harmony import */ var src_models_complejo_models__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/models/complejo.models */ "./src/models/complejo.models.ts");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic-native/paypal/ngx */ "./node_modules/@ionic-native/paypal/ngx/index.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/fesm2015/ionic-angular.js");
+
+
 
 
 
@@ -144,9 +148,12 @@ let PerfilPage = class PerfilPage {
         this.navCtrl = navCtrl;
         this.parcial = false;
         this.completo = false;
+        this.atras = false;
         this.reservacion = new src_models_reservacion_models__WEBPACK_IMPORTED_MODULE_3__["Reservacion"](0, new Date(), new Date(), false, false, 0, '');
         this.reservaciones = [];
         this.reservacionesNoVencidas = [];
+        this.cancha = new src_models_cancha_models__WEBPACK_IMPORTED_MODULE_5__["Cancha"](0, null, null, '', null);
+        this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_6__["Complejo"](0, null, null, null, null, false, 0.0, 0.0, null, null, false, false, null);
         this.equipos = [];
         // perfil: User;
         this.user = {
@@ -160,6 +167,7 @@ let PerfilPage = class PerfilPage {
     ngOnInit() {
         this.user = this.usuarioService.getUsuario();
         console.log(this.user);
+        this.slides.lockSwipes(true);
         this.obtenerMisReservacion();
     }
     // agregarUsuario() {
@@ -203,7 +211,8 @@ let PerfilPage = class PerfilPage {
             .subscribe((resp) => {
             this.reservacion = resp;
             this.valorPagar();
-            console.log('EJECUTADO CON EXITO');
+            // console.log('EJECUTADO CON EXITO');
+            this.obtenerCanchaId(this.reservacion.idCancha);
         });
     }
     obtenerMisReservacion() {
@@ -214,10 +223,12 @@ let PerfilPage = class PerfilPage {
             this.noVencidas();
         });
     }
-    eliminarReservacion(rese) {
-        this.apiServi.deleteReservacion(rese)
+    eliminarReservacion() {
+        this.apiServi.deleteReservacion(this.reservacion.idReservacion)
             .subscribe(resp => {
             console.log('ELIMINADO CON EXITO');
+            this.obtenerMisReservacion();
+            this.navCtrl.navigateRoot('/inicio');
         });
     }
     modificarReservacion(id) {
@@ -230,6 +241,22 @@ let PerfilPage = class PerfilPage {
             console.log(error);
         });
     }
+    obtenerCanchaId(id) {
+        this.apiServi.getCanchaId(id)
+            .subscribe((resp) => {
+            this.cancha = resp;
+            this.getComplejoId(this.cancha.idComplejo);
+            // console.log('EJECUTADO CON EXITO');
+        });
+    }
+    getComplejoId(id) {
+        this.apiServi.getComplejoId(id)
+            .subscribe((resp) => {
+            this.complejo = resp;
+            this.goSlide2();
+            // console.log('EJECUTADO CON EXITO');
+        });
+    }
     // obtenerEquipoUsuario() {
     //   this.apiServi.getEquipoUsuario(this.idUsuario)
     //   .subscribe( (resp: Equipo[]) => {
@@ -238,24 +265,42 @@ let PerfilPage = class PerfilPage {
     //   });
     // }
     noVencidas() {
-        const ini = moment__WEBPACK_IMPORTED_MODULE_5__().format('MM-DD-YYYY H');
+        const ini = moment__WEBPACK_IMPORTED_MODULE_7__().format('MM-DD-YYYY HH:mm');
         let valor = 0;
         for (let i = 0; i < this.reservaciones.length; i++) {
-            const val = moment__WEBPACK_IMPORTED_MODULE_5__(this.reservaciones[i].horaFinal).format('MM-DD-YYYY H');
+            const val = moment__WEBPACK_IMPORTED_MODULE_7__(this.reservaciones[i].horaFinal).format('MM-DD-YYYY HH:mm');
             if (ini < val) {
                 this.reservacionesNoVencidas[valor] = this.reservaciones[i];
                 valor++;
             }
         }
     }
-    obtenerCanchaId(id) {
-        this.apiServi.getCanchaId(id)
-            .subscribe((resp) => {
-            this.cancha = resp;
-            console.log('EJECUTADO CON EXITO');
+    // --------------------------------------------------------------------------------------------------
+    confirmarCancelacion() {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            const alert = yield this.alertController.create({
+                header: '¿Quieres cancelar la reserva?',
+                message: '<strong>Click Ok </strong>',
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: (blah) => {
+                            console.log('Confirm Cancel: blah');
+                        }
+                    }, {
+                        text: 'Okay',
+                        handler: () => {
+                            this.eliminarReservacion();
+                            console.log('Confirm Okay');
+                        }
+                    }
+                ]
+            });
+            yield alert.present();
         });
     }
-    // --------------------------------------------------------------------------------------------------
     pagarCompleto() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             const alert = yield this.alertController.create({
@@ -288,7 +333,7 @@ let PerfilPage = class PerfilPage {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             const alert = yield this.alertController.create({
                 header: 'Confirmar pago',
-                message: '<strong>--</strong>??',
+                message: '<strong>Cuanto quieres pagar</strong>??',
                 buttons: [
                     {
                         text: 'Cancel',
@@ -298,10 +343,19 @@ let PerfilPage = class PerfilPage {
                             console.log('Confirm Cancel: blah');
                         }
                     }, {
-                        text: 'Okay',
+                        text: 'Pagar 50%',
                         handler: () => {
                             this.totalPagar = this.auxHoras * this.cancha.precio * 0.50;
                             this.parcial = true;
+                            this.pagar();
+                            console.log(this.totalPagar);
+                            console.log('Confirm Okay');
+                        }
+                    }, {
+                        text: 'Pagar 100%',
+                        handler: () => {
+                            this.totalPagar = this.auxHoras * this.cancha.precio;
+                            this.completo = true;
                             this.pagar();
                             console.log(this.totalPagar);
                             console.log('Confirm Okay');
@@ -313,8 +367,8 @@ let PerfilPage = class PerfilPage {
         });
     }
     valorPagar() {
-        const inic = moment__WEBPACK_IMPORTED_MODULE_5__(this.reservacion.horaInicial);
-        const fin = moment__WEBPACK_IMPORTED_MODULE_5__(this.reservacion.horaFinal);
+        const inic = moment__WEBPACK_IMPORTED_MODULE_7__(this.reservacion.horaInicial);
+        const fin = moment__WEBPACK_IMPORTED_MODULE_7__(this.reservacion.horaFinal);
         this.auxHoras = fin.diff(inic, 'hours');
     }
     // ----------------------------------------------------------------------------------------
@@ -324,11 +378,11 @@ let PerfilPage = class PerfilPage {
             PayPalEnvironmentSandbox: 'Adx-VcPcx3n-_g5CtBrAa78tHzUAEOoX9C5Tu2xsOVZns8hsuaqAr01SBshIr70HGbIvCAP4KJOtdImR' //Sandbox
         }).then(() => {
             // Entornos: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
-            this.payPal.prepareToRender('PayPalEnvironmentSandbox', new _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_6__["PayPalConfiguration"]({
+            this.payPal.prepareToRender('PayPalEnvironmentSandbox', new _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__["PayPalConfiguration"]({
             // Solo lo necesitas si necesitas controlar los errores posteriores al login de paypal "Internal Service Error".
             //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
             })).then(() => {
-                let cobro = new _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_6__["PayPalPayment"](this.totalPagar, 'USD', 'Description', 'Reserva');
+                let cobro = new _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__["PayPalPayment"](this.totalPagar, 'USD', 'Description', 'Reserva');
                 this.payPal.renderSinglePaymentUI(cobro).then(() => {
                     if (this.parcial === true) {
                         this.reservacion.pagoParcial = true;
@@ -366,14 +420,36 @@ let PerfilPage = class PerfilPage {
             // Ha petado la inicialización o el dispositivo no permite usar PayPal
         });
     }
+    goSlide1() {
+        this.atras = false;
+        this.slides.lockSwipes(false);
+        this.slides.slideTo(0);
+        this.slides.lockSwipes(true);
+    }
+    goSlide2() {
+        this.atras = true;
+        this.slides.lockSwipes(false);
+        this.slides.slideTo(1);
+        this.slides.lockSwipes(true);
+    }
+    goSlide3() {
+        this.atras = true;
+        this.slides.lockSwipes(false);
+        this.slides.slideTo(2);
+        this.slides.lockSwipes(true);
+    }
 };
 PerfilPage.ctorParameters = () => [
     { type: src_app_services_apiservi_service__WEBPACK_IMPORTED_MODULE_2__["ApiserviService"] },
     { type: src_app_services_usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"] },
-    { type: _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_6__["PayPal"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["AlertController"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["NavController"] }
+    { type: _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__["PayPal"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["AlertController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["NavController"] }
 ];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('slidePrincipal', { static: true }),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["IonSlides"])
+], PerfilPage.prototype, "slides", void 0);
 PerfilPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-perfil',
@@ -382,9 +458,9 @@ PerfilPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     }),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_services_apiservi_service__WEBPACK_IMPORTED_MODULE_2__["ApiserviService"],
         src_app_services_usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"],
-        _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_6__["PayPal"],
-        _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["AlertController"],
-        _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["NavController"]])
+        _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__["PayPal"],
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["AlertController"],
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["NavController"]])
 ], PerfilPage);
 
 

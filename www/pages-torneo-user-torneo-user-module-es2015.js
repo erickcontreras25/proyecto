@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-header titulo=\"Torneos\"></app-header>\n\n<ion-content>\n  \n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n    <ion-slide>\n      <ion-grid>\n\n        <h1 style=\"text-shadow: 1px 1px 1px black; color: black;\">Torneos</h1>\n        <div>\n            <ion-row class=\"ion-align-items-center bor\" >\n              <ion-col class=\"centrado\"><h5>Torneo</h5></ion-col>\n              <ion-col class=\"izquierda\"><h5>Complejo</h5></ion-col>\n              <ion-col>\n                <h5>Dia Torneo</h5>\n              </ion-col>\n              <ion-col class=\"derecha\">                \n              </ion-col>\n            </ion-row>            \n        </div>\n        <div *ngFor=\"let item of torneosNoVen\">\n          <ion-card class=\"blanco\">\n            <ion-row class=\"ion-align-items-center\">\n              <ion-col class=\"izquierda\"><h5>{{item.nombre}}</h5></ion-col>\n              <ion-col class=\"izquierda\"><h5>{{item.complejo.nombre}}</h5></ion-col>\n              <ion-col *ngIf=\"item.diaTorneo > hoy\">\n                <label  style=\"color: rgb(16, 122, 243);\"> {{item.diaTorneo | date:'dd-MMMM-yyyy'}}</label>\n              </ion-col>\n              <ion-col class=\"derecha\">\n                <ion-button color=\"success\"\n                            class=\"derecha\"      \n                            shape=\"round\" fill=\"clear\"                \n                            (click)=\"getTorneoId(item.idTorneo)\">VER</ion-button>\n                \n              </ion-col>\n            </ion-row>            \n          </ion-card>  \n        </div>\n      </ion-grid>\n    </ion-slide>\n\n    \n<!-- ---------------------------------------------------SLIDE 2---------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n\n        <form>\n          <ion-card class=\"ion-text-center\" style=\"background-color: #F1F1F6; border-radius : 10px;\">\n            <img src=\"{{torneo.premioFoto}}\" alt=\"200\" width=\"500\">\n            <ion-card-title>{{torneo.nombre}}</ion-card-title>\n\n            <ion-row>\n              <ion-col>\n                <h6>\n                  <ion-icon class=\"size\" name=\"calendar-outline\" color=\"secondary\"></ion-icon>\n                      Dia del torneo:\n                </h6>\n                <h6>{{torneo.diaTorneo | date:'dd-MMMM-yyyy'}}</h6>\n              </ion-col>\n              <ion-col>\n                <h6>\n                  <ion-icon class=\"size\" name=\"location-outline\" color=\"primary\"></ion-icon>\n                    Direccion:\n                </h6>\n                <h6>{{complejo.localidad}}</h6>\n              </ion-col>\n            </ion-row>\n            \n            <h6 *ngIf=\"torneo.descripcion != ''\">\n              <ion-label>{{torneo.descripcion}}</ion-label>\n            </h6>\n              \n              <h5 class=\"ion-text-center\">Complejo: {{complejo.nombre}}</h5>\n              <ion-row>\n                <ion-col>\n                  <ion-list>\n                    <ion-item borde=\"none\">\n                      <ion-label>Elige tu equipo</ion-label>\n                      <ion-select [(ngModel)]=\"equipo.idEquipo\"\n                                  name=\"equipoId\"\n                                  (ngModelChange)=\"llenar()\">\n                        <ion-select-option *ngFor=\"let item of equipos\" value=\"{{item.idEquipo}}\" >{{item.nombre}}</ion-select-option>\n                      </ion-select>\n                    </ion-item>\n                  </ion-list>\n                </ion-col>\n              </ion-row>\n            <ion-row>\n              <ion-col>\n                <ion-button color=\"success\"\n                            shape=\"round\"\n                          (click)=\"goSlide1()\">Regresar</ion-button>\n              </ion-col>\n              <ion-col>\n                <ion-button color=\"success\"\n                           (click)=\"registrar()\" \n                          >Registrar mi equipo</ion-button>\n              </ion-col>\n            </ion-row>          \n          </ion-card>\n        </form>\n\n      </ion-grid>\n    </ion-slide>\n\n\n\n\n  </ion-slides>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-header titulo=\"Torneos\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"goSlide1()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"background\">\n  \n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n    <ion-slide>\n      <ion-grid>\n\n        <!-- <h1 style=\"text-shadow: 1px 1px 1px black; color: black;\">Torneos</h1> -->\n        <div>\n            <ion-row class=\"ion-align-items-center bor\" >\n              <ion-col class=\"centrado\"><h5>Torneo</h5></ion-col>\n              <ion-col class=\"izquierda\"><h5>Complejo</h5></ion-col>\n              <ion-col>\n                <h5>Dia Torneo</h5>\n              </ion-col>\n              <ion-col class=\"derecha\">                \n              </ion-col>\n            </ion-row>            \n        </div>\n        <div *ngFor=\"let item of torneosNoVen\">\n          <ion-card class=\"blanco\">\n            <ion-row class=\"ion-align-items-center\">\n              <ion-col class=\"izquierda\"><h5>{{item.nombre}}</h5></ion-col>\n              <ion-col class=\"izquierda\"><h5>{{item.complejo.nombre}}</h5></ion-col>\n              <ion-col *ngIf=\"item.diaTorneo > hoy\">\n                <label  style=\"color: rgb(16, 122, 243);\"> {{item.diaTorneo | date:'dd-MMMM-yyyy'}}</label>\n              </ion-col>\n              <ion-col class=\"derecha\">\n                <ion-button color=\"success\"\n                            class=\"derecha\"      \n                            shape=\"round\" fill=\"clear\"                \n                            (click)=\"getTorneoId(item.idTorneo)\">VER</ion-button>\n                \n              </ion-col>\n            </ion-row>            \n          </ion-card>  \n        </div>\n      </ion-grid>\n    </ion-slide>\n\n    \n<!-- ---------------------------------------------------SLIDE 2---------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n\n        <form>\n          <ion-card class=\"ion-text-center\" style=\"background-color: #F1F1F6; border-radius : 10px;\">\n            <img src=\"{{torneo.premioFoto}}\" alt=\"200\" width=\"500\">\n            <ion-card-title style=\"color: black;\">{{torneo.nombre}}</ion-card-title>\n\n            <ion-row>\n              <ion-col>\n                <h6>\n                  <ion-icon class=\"size\" name=\"calendar-outline\" color=\"secondary\"></ion-icon>\n                      Dia del torneo:\n                </h6>\n                <h6>{{torneo.diaTorneo | date:'dd-MMMM-yyyy'}}</h6>\n              </ion-col>\n              <ion-col>\n                <h6>\n                  <ion-icon class=\"size\" name=\"location-outline\" color=\"primary\"></ion-icon>\n                    Direccion:\n                </h6>\n                <h6>{{complejo.localidad}}</h6>\n              </ion-col>\n            </ion-row>\n            \n            <h6 *ngIf=\"torneo.descripcion != ''\">\n              <ion-label>{{torneo.descripcion}}</ion-label>\n            </h6>\n              \n                <h5 class=\"ion-text-center\" style=\"color: black;\">Complejo: {{complejo.nombre}}</h5>\n\n                <h5 class=\"ion-text-center\"><ion-icon name=\"call-outline\" color=\"primary\"></ion-icon>\n                  {{complejo.numero}}</h5>\n              <ion-row>\n                <ion-col *ngIf=\"ver\">\n                  <ion-list>\n                    <ion-item borde=\"none\">\n                      <ion-label>Elige tu equipo</ion-label>\n                      <ion-select [(ngModel)]=\"equipo.idEquipo\"\n                                  name=\"equipoId\"\n                                  (ngModelChange)=\"llenar()\">\n                        <ion-select-option *ngFor=\"let item of equipos\" value=\"{{item.idEquipo}}\" >{{item.nombre}}</ion-select-option>\n                      </ion-select>\n                    </ion-item>\n                  </ion-list>\n                </ion-col>\n              </ion-row>\n            <ion-row>\n              <!-- <ion-col>\n                <ion-button color=\"success\"\n                            shape=\"round\"\n                          (click)=\"goSlide1()\">Regresar</ion-button>\n              </ion-col> -->\n              <ion-col *ngIf=\"ver\">\n                <ion-button color=\"success\"\n                           (click)=\"registrar()\" \n                          >Registrar mi equipo</ion-button>\n              </ion-col>\n              <ion-col *ngIf=\"!ver\">\n                <h4 style=\"color: red;\">Torneo lleno</h4>\n              </ion-col>\n            </ion-row>          \n          </ion-card>\n        </form>\n\n      </ion-grid>\n    </ion-slide>\n\n\n\n\n  </ion-slides>\n\n</ion-content>\n");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ TorneoUserPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n\n.bor {\n  border-bottom: black 2px solid;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvdG9ybmVvLXVzZXIvQzpcXFVzZXJzXFxlcmlja1xcT25lRHJpdmVcXERlc2t0b3BcXGlvbmljXFxwcm95ZWN0by9zcmNcXGFwcFxccGFnZXNcXHRvcm5lby11c2VyXFx0b3JuZW8tdXNlci5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3Rvcm5lby11c2VyL3Rvcm5lby11c2VyLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFBO0FDQ0o7O0FEQ0E7RUFDSSxrQkFBQTtBQ0VKOztBREFBO0VBQ0ksZ0JBQUE7QUNHSjs7QURBQTtFQUNJLDhCQUFBO0FDR0oiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy90b3JuZW8tdXNlci90b3JuZW8tdXNlci5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZGVyZWNoYXtcclxuICAgIHRleHQtYWxpZ246IHJpZ2h0O1xyXG59XHJcbi5jZW50cmFkb3tcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICB9XHJcbi5penF1aWVyZGF7XHJcbiAgICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG59XHJcblxyXG4uYm9yIHtcclxuICAgIGJvcmRlci1ib3R0b206IGJsYWNrIDJweCBzb2xpZDtcclxufSIsIi5kZXJlY2hhIHtcbiAgdGV4dC1hbGlnbjogcmlnaHQ7XG59XG5cbi5jZW50cmFkbyB7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLml6cXVpZXJkYSB7XG4gIHRleHQtYWxpZ246IGxlZnQ7XG59XG5cbi5ib3Ige1xuICBib3JkZXItYm90dG9tOiBibGFjayAycHggc29saWQ7XG59Il19 */");
+/* harmony default export */ __webpack_exports__["default"] = (".derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n\n.bor {\n  border-bottom: black 2px solid;\n}\n\nion-content.background {\n  --background: url(/assets/img/trofeo.png) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvdG9ybmVvLXVzZXIvQzpcXFVzZXJzXFxlcmlja1xcT25lRHJpdmVcXERlc2t0b3BcXGlvbmljXFxwcm95ZWN0by9zcmNcXGFwcFxccGFnZXNcXHRvcm5lby11c2VyXFx0b3JuZW8tdXNlci5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3Rvcm5lby11c2VyL3Rvcm5lby11c2VyLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFBO0FDQ0o7O0FEQ0E7RUFDSSxrQkFBQTtBQ0VKOztBREFBO0VBQ0ksZ0JBQUE7QUNHSjs7QURBQTtFQUNJLDhCQUFBO0FDR0o7O0FEQUE7RUFDSSxpRUFBQTtFQUNBLFlBQUE7QUNHSiIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL3Rvcm5lby11c2VyL3Rvcm5lby11c2VyLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5kZXJlY2hhe1xyXG4gICAgdGV4dC1hbGlnbjogcmlnaHQ7XHJcbn1cclxuLmNlbnRyYWRve1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIH1cclxuLml6cXVpZXJkYXtcclxuICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbn1cclxuXHJcbi5ib3Ige1xyXG4gICAgYm9yZGVyLWJvdHRvbTogYmxhY2sgMnB4IHNvbGlkO1xyXG59XHJcblxyXG5pb24tY29udGVudC5iYWNrZ3JvdW5ke1xyXG4gICAgLS1iYWNrZ3JvdW5kOiB1cmwoL2Fzc2V0cy9pbWcvdHJvZmVvLnBuZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XHJcbiAgICBvcGFjaXR5OiAwLjg7XHJcbiAgfSIsIi5kZXJlY2hhIHtcbiAgdGV4dC1hbGlnbjogcmlnaHQ7XG59XG5cbi5jZW50cmFkbyB7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLml6cXVpZXJkYSB7XG4gIHRleHQtYWxpZ246IGxlZnQ7XG59XG5cbi5ib3Ige1xuICBib3JkZXItYm90dG9tOiBibGFjayAycHggc29saWQ7XG59XG5cbmlvbi1jb250ZW50LmJhY2tncm91bmQge1xuICAtLWJhY2tncm91bmQ6IHVybCgvYXNzZXRzL2ltZy90cm9mZW8ucG5nKSAwIDAvMTAwJSAxMDAlIG5vLXJlcGVhdDtcbiAgb3BhY2l0eTogMC44O1xufSJdfQ== */");
 
 /***/ }),
 
@@ -154,15 +154,17 @@ let TorneoUserPage = class TorneoUserPage {
         this.alertaService = alertaService;
         this.navCtrl = navCtrl;
         this.equipoService = equipoService;
+        this.ver = false;
+        this.atras = false;
         this.torneos = [];
         this.torneosNoVen = [];
         this.torneo = new src_models_torneo_models__WEBPACK_IMPORTED_MODULE_7__["Torneo"](0, '', null, '', '', new Date(), '', 0);
         this.torneoEquipo = new src_models_torneoEquipo_models__WEBPACK_IMPORTED_MODULE_8__["TorneoEquipo"](0, 0);
         this.torneosEquipos = [];
         this.torneoEquipos = [];
-        this.equipo = new src_models_equipo_models__WEBPACK_IMPORTED_MODULE_9__["Equipo"](0, '', '');
+        this.equipo = new src_models_equipo_models__WEBPACK_IMPORTED_MODULE_9__["Equipo"](0, '', 0, '');
         this.equipos = [];
-        this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_12__["Complejo"](0, '', '', '', false, 0.0, 0.0, new Date(), new Date(), '');
+        this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_12__["Complejo"](0, null, null, null, null, false, 0.0, 0.0, new Date(), new Date(), false, false, null);
         this.hoy = moment__WEBPACK_IMPORTED_MODULE_10__().format('YYYY-MM-DDTHH:mm');
     }
     ngOnInit() {
@@ -203,9 +205,16 @@ let TorneoUserPage = class TorneoUserPage {
         this.torneoService.getTorneoEquipoId(id)
             .subscribe((resp) => {
             this.torneosEquipos = resp;
+            this.verificarCanEquipos();
         }, error => {
             console.log(error);
         });
+    }
+    verificarCanEquipos() {
+        console.log(this.torneosEquipos.length + ' ' + this.torneo.cantEquipos);
+        if (this.torneosEquipos.length < this.torneo.cantEquipos) {
+            this.ver = true;
+        }
     }
     registrar() {
         this.torneoEquipo.torneoId = this.torneo.idTorneo;
@@ -220,16 +229,11 @@ let TorneoUserPage = class TorneoUserPage {
         console.log('IDTORNEO: ' + this.torneoEquipo.torneoId + ' IDEQUIPO: ' + this.torneoEquipo.equipoId);
         this.torneoService.postTorneoEquipo(this.torneoEquipo)
             .subscribe(data => {
-            if (data === 'Torneo ya esta lleno.') {
-                this.alertaService.alertaInformativa(data);
-            }
-            else {
-                this.torneoEquipos.push(this.torneoEquipo);
-                this.alertaService.alertaInformativa('Registrado!!');
-                this.navCtrl.navigateRoot('/inicio');
-            }
+            this.torneoEquipos.push(this.torneoEquipo);
+            this.alertaService.alertaInformativa('Registrado!!');
+            this.navCtrl.navigateRoot('/inicio');
         }, (error) => {
-            this.alertaService.alertaInformativa('El equipo ya esta inscrito. Puedes verlo en Mis Torneos');
+            this.alertaService.alertaInformativa(error['error']);
         });
     }
     validar() {
@@ -259,15 +263,17 @@ let TorneoUserPage = class TorneoUserPage {
         });
     }
     clea() {
-        this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_12__["Complejo"](0, '', '', '', false, 0.0, 0.0, new Date(), new Date(), '');
+        this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_12__["Complejo"](0, null, null, null, null, false, 0.0, 0.0, new Date(), new Date(), false, false, null);
     }
     // -------------------------------------------------SLIDE--------------------------------
     goSlide1() {
+        this.atras = false;
         this.slides.lockSwipes(false);
         this.slides.slideTo(0);
         this.slides.lockSwipes(true);
     }
     goSlide2() {
+        this.atras = true;
         this.slides.lockSwipes(false);
         this.slides.slideTo(1);
         this.slides.lockSwipes(true);

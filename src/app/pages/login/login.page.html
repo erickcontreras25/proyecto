@@ -150,6 +150,9 @@
                             <ion-label>Password</ion-label>
                             <ion-input name="password"
                                         type="password"
+                                        pattern="[A-Za-z]+"
+                                        minlength="6"
+                                        title="Debe tener al menos 6 caracteres entre mayúsculas y minúsculas"
                                         [(ngModel)]="perfil.password"
                                         required></ion-input>
                             </ion-item>
