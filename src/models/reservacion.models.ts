@@ -1,13 +1,13 @@
 export class Reservacion {
     idReservacion: number;
-    horaInicial: Date;
-    horaFinal: Date;
+    horaInicial;
+    horaFinal;
     pago: boolean;
     pagoParcial: boolean;
     idCancha: number;
     userId: string;
 
-    constructor(id: number, hInicial: Date, hFinal: Date, pago: boolean, pagoP: boolean, idCan: number, idUsu: string) {
+    constructor(id: number, hInicial, hFinal, pago: boolean, pagoP: boolean, idCan: number, idUsu: string) {
         this.idReservacion = id;
         this.horaInicial = hInicial;
         this.horaFinal = hFinal;

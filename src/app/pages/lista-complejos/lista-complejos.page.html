@@ -29,55 +29,58 @@
           <ion-row class="center">
             <ion-col>
               
-                <div *ngFor='let user of complejos' style="background-color: rgb(211, 197, 197, 0.1);">
+                <div class="borA" *ngFor='let user of complejos' style="background-color: rgb(211, 197, 197, 0);">
   
                   <ion-row class="ion-align-items-center">
                     <ion-col class="izquierda">
-                  <ion-button fill="clear"
-                              (click)="obtenerComplejo(user.idComplejo)"
-                              (click)="presentActionSheet()">
-                    <ion-icon class="size" color="success" slot="start" name="reorder-three-outline"></ion-icon>
-                  </ion-button>
-                </ion-col>
-                <ion-col class="derecha">
-                  <h6 *ngIf="user.estado" style="color: green;" 
-                      (click)="obtenerComplejoId(user.idComplejo)"
-                      (click)="presentAlertConfirm()">&#8226;Abierto Ahora</h6>
-                  <h6 *ngIf="!user.estado" style="color: green;"
-                      (click)="obtenerComplejoId(user.idComplejo)"
-                      (click)="presentAlertConfirm()">&#8226;Cerrado Ahora</h6>
-                </ion-col>
+                      <h4 *ngIf="user.estado" 
+                      >Abierto Ahora</h4>
+                      <h4 *ngIf="!user.estado"
+                      >Cerrado Ahora</h4>
+                    </ion-col>
+                    <ion-col class="derecha">
+                        <ion-icon class="size" 
+                                  (click)="obtenerComplejoId(user.idComplejo)"
+                                  name="ellipsis-vertical"></ion-icon>
+                    </ion-col>
                 </ion-row>
 
-                  <img src="{{user.foto}}" alt="200" width="500">
-                  <h4 >
+                  <img class="img" src="{{user.foto}}">
+                  <h3 >
                     {{user.nombre}}
-                  </h4>
-                  <h5>
-                    <ion-icon name="location-outline" color="danger"></ion-icon>
-                    {{user.localidad}}
-                  </h5>
+                  </h3>
+                  <ion-row>
+                    <ion-col>
+                      <label>
+                        <ion-icon name="location-outline" color="danger"></ion-icon>
+                        {{user.localidad}}
+                      </label>
+                    </ion-col>
+                    <ion-col>
+                      <ion-label>
+                        <ion-icon name="call-outline" color="secondary"></ion-icon>
+                        {{user.numero}}
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  
 
                   <ion-row>
                     <ion-col *ngIf="user.parqueo">
-                      <label style="color: blue;"
-                      (click)="obtenerComplejoId(user.idComplejo)"
-                      (click)="parqueo()">&#8226;Con parqueo</label>
+                      <label><ion-icon name="car-outline" color="tertiary"></ion-icon>
+                        Con parqueo</label>
                     </ion-col>
                     <ion-col *ngIf="!user.parqueo">
-                      <label style="color: blue;" 
-                      (click)="obtenerComplejoId(user.idComplejo)"
-                      (click)="parqueo()">&#8226;Sin parqueo</label>
+                      <label><ion-icon name="car-outline" color="tertiary"></ion-icon>
+                        Sin parqueo</label>
                     </ion-col>
                     <ion-col *ngIf="user.seguridad">
-                      <label style="color: blue;" 
-                      (click)="obtenerComplejoId(user.idComplejo)"
-                      (click)="seguridad()">&#8226;Con seguridad</label>
+                      <label><ion-icon name="lock-closed-outline" color="danger"></ion-icon>
+                        Con seguridad</label>
                     </ion-col>
                     <ion-col *ngIf="!user.seguridad">
-                      <label style="color: blue;" 
-                      (click)="obtenerComplejoId(user.idComplejo)"
-                      (click)="seguridad()">&#8226;Sin seguridad</label>
+                      <label><ion-icon name="lock-open-outline" color="danger"></ion-icon>
+                        Sin seguridad</label>
                     </ion-col>
                   </ion-row>
 
@@ -178,14 +181,14 @@
                   <ion-row *ngFor="let item of reservasComplejo">
                     <ion-col class="bor" size="3"><h6 class="shadow">{{item.user.nombreUsuario}}</h6></ion-col>
                     <ion-col class="bor" size="3"><h6 class="shadow">{{item.horaInicial | date:'dd-MMMM HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</h6></ion-col>
-                    <ion-col class="bor" *ngIf="item.pagoParcial"><label class="shadow">Completo <ion-icon color="success" name="checkmark-done-outline"></ion-icon></label></ion-col>
-                    <ion-col class="bor" *ngIf="item.pago"><label class="shadow">50% <ion-icon color="success" name="checkmark-outline"></ion-icon></label></ion-col>
+                    <ion-col class="bor" *ngIf="item.pago"><label class="shadow">Completo <ion-icon color="success" name="checkmark-done-outline"></ion-icon></label></ion-col>
+                    <ion-col class="bor" *ngIf="item.pagoParcial"><label class="shadow">50% <ion-icon color="success" name="checkmark-outline"></ion-icon></label></ion-col>
                     <ion-col class="bor" *ngIf="!item.pago && !item.pagoParcial"><h6 class="shadow">No</h6></ion-col>
                     <ion-col class="bor" *ngIf="!item.pago && !item.pagoParcial">
                       <ion-button color="danger"
                                   class="centrado"      
                                   fill="clear"                
-                                  (click)="eliminar(item.idReservacion, item.horaInicial)">
+                                  (click)="eliminar(item.idReservacion)">
                                   <ion-icon name="trash-outline"></ion-icon>
                                   </ion-button>
                       
@@ -252,8 +255,8 @@
 
     <!-- --------------------------------------SLIDE ACTUALIZAR UBICACION------------------------------------ -->
     <ion-slide>
-      <ion-grid fixed>
-            <form>
+      <ion-grid>
+            <form  #formulario="ngForm">
  
               <ion-row>
                 <ion-col>  
@@ -282,11 +285,13 @@
                 </ion-button>
               </ion-col> -->
               <ion-col>
-                <ion-button type="submit"
+                <ion-button *ngIf="listo"
+                            type="submit"
                             fill="outline"
                             color="success"
                             shape="round"
-                            (click)="modificarSinFoto()">
+                            (click)="modificarSinFoto()"
+                            (click)="goSlide1()">
                             <ion-icon name="sync-outline"></ion-icon>
                     Actualizar
                 </ion-button>  
@@ -301,7 +306,7 @@
 
     <!-- --------------------------------------SLIDE ACTUALIZAR HORARIO------------------------------------ -->
     <ion-slide>
-      <ion-grid fixed>
+      <ion-grid>
             <form>
  
                 <ion-row>
@@ -314,7 +319,7 @@
                         <ion-datetime displayFormat="HH:mm" 
                                       minuteValues="0"
                                     name="horaInicio"
-                                    [(ngModel)]="complejo.horaInicio"
+                                    [(ngModel)]="abre"
                                     (ngModelChange)='verificar()'>
                         </ion-datetime>
                       </ion-item>
@@ -323,7 +328,7 @@
                         <ion-datetime displayFormat="HH:mm" 
                                       minuteValues="0"
                                     name="horaCierre"
-                                    [(ngModel)]="complejo.horaCierre"
+                                    [(ngModel)]="cierr"
                                     (ngModelChange)='verificar()'>
                         </ion-datetime>
 
@@ -349,7 +354,8 @@
                                 fill="outline"
                                 color="success"
                                 shape="round"
-                                (click)="modificarSinFoto()">
+                                (click)="modificarSinFoto()"
+                                (click)="goSlide1()">
                                 <ion-icon name="sync-outline"></ion-icon>
                         Actualizar
                     </ion-button>  
@@ -370,9 +376,9 @@
               <ion-row>
                 <ion-col>
                     <h4>Imagen Actual</h4>
-                  <ion-card class="ion-text-center">
-                      <img src="{{complejo.foto}}" alt="200" width="500" class="bort">
-                  </ion-card>                  
+                  <div>
+                      <img class="img" src="{{complejo.foto}}">
+                  </div>                  
                 </ion-col>
               </ion-row>
  
@@ -392,23 +398,14 @@
                 </ion-row>
 
                 <ion-row>
-                  <!-- <ion-col>
-                    <ion-button fill="outline"
-                                type="submit"
-                                color="success"
-                                shape="round"
-                                (click)="goSlide1()">
-                        <ion-icon name="caret-back-outline"></ion-icon>
-                      Regresar
-                    </ion-button>
-                  </ion-col> -->
                   <ion-col>
                     <ion-button fill="outline"
                                 type="submit"
                                 color="success"
                                 shape="round"
                                 [disabled]="formulario.invalid"
-                                (click)="modificarComplejo()">
+                                (click)="modificarComplejo()"
+                                (click)="goSlide1()">
                                 <ion-icon name="sync-outline"></ion-icon>
                         Actualizar
                     </ion-button>  

@@ -84,6 +84,8 @@
 
 <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
     
+  <!-- --------------------------------------------------SLIDE 1---------------------------------------- -->
+
   <ion-slide >
     <form #formulario="ngForm">
       <ion-grid>
@@ -99,7 +101,7 @@
           <ion-col>
               <div>
 
-                <h3 style="color: white;">Dale un nombre al complejo</h3>
+                <h3 style="color: white;">Dale nombre al complejo</h3>
                 <ion-item class="ion-text-center">
                   <ion-input type="text"
                               class="ion-text-left"                              
@@ -114,7 +116,7 @@
 
                 <br>
 
-                <h4 style="color: white;">Seleccion una imagen para tu complejo</h4>
+                <h4 style="color: white;">Agreag una imagen del complejo</h4>
                 <ion-item>
                     <input type="file"
                            id="img"
@@ -135,7 +137,7 @@
                         (click)="goSlide2()"
                         [disabled]="formulario.invalid">
               Siguiente
-              <ion-icon name="caret-forward-outline"></ion-icon>
+              <!-- <ion-icon name="caret-forward-outline"></ion-icon> -->
             </ion-button>
           </ion-col>
         </ion-row>
@@ -151,14 +153,14 @@
             <ion-row>
               <ion-col>
                 <!-- <img src="/assets/img/im2.png"> -->
-                <ion-icon class="size" color="dark" name="time-outline"></ion-icon>
+                <ion-icon class="size" color="dark" name="location-outline"></ion-icon>
               </ion-col>
             </ion-row>
               <ion-row class="center">
                   <ion-col>  
 
                       <div>
-                        <h4 style="color: white;">Coloca la direccion donde se ubica el complejo</h4>
+                        <label style="color: white;">Coloca la dirección donde se ubica el complejo</label>
                         <ion-item class="ion-text-center">
                           <ion-input type="string"
                                       class="ion-text-left"
@@ -170,15 +172,23 @@
                                      required>
                           </ion-input>
                         </ion-item>
+                        <br>
 
-                        <h4 style="color: white;">En que horario te gustaria que reservaran tus clientes</h4>
+                        <ion-row>
+                          <ion-col>
+                            <ion-icon class="size" color="dark" name="time-outline"></ion-icon>
+                          </ion-col>
+                        </ion-row>
+
+                        <label style="color: white;">¿En qué horario te gustaria que reservaran tus clientes?</label>
 
                         <ion-item>
                           <ion-label>Hora Inicio</ion-label>
                           <ion-datetime displayFormat="HH:mm" 
                                       name="horaInicio"
-                                      minuteValues="0" 
-                                      [(ngModel)]="complejo.horaInicio"
+                                      minuteValues="0"
+                                      required
+                                      [(ngModel)]="abre"
                                       >
                           </ion-datetime>
                         </ion-item>
@@ -187,7 +197,8 @@
                           <ion-datetime displayFormat="HH:mm" 
                                       name="horaCierre"
                                       minuteValues="0"
-                                      [(ngModel)]="complejo.horaCierre"
+                                      required
+                                      [(ngModel)]="cierr"
                                       >
                           </ion-datetime>
 
@@ -198,15 +209,6 @@
               </ion-row>
 
               <ion-row>
-              <!-- <ion-col class="derecha">
-                <ion-button type="submit"
-                          color="tertiary"
-                          shape="round"
-                          (click)="goSlide1()">
-                          <ion-icon name="caret-back-outline"></ion-icon>
-                          Regresar
-                        </ion-button>
-              </ion-col> -->
               <ion-col>
                   <ion-button type="submit"
                               color="success"
@@ -214,7 +216,7 @@
                               (click)="verificar()"
                               [disabled]="formulario2.invalid">
                       Siguiente
-                      <ion-icon name="caret-forward-outline"></ion-icon>
+                      <!-- <ion-icon name="caret-forward-outline"></ion-icon> -->
                   </ion-button>
               </ion-col>
           </ion-row>
@@ -232,16 +234,16 @@
           <ion-row>
             <ion-col>
               <!-- <img src="/assets/img/im2.png"> -->
-              <ion-icon class="size" color="dark" name="time-outline"></ion-icon>
+              <ion-icon class="size" color="dark" name="call-outline"></ion-icon>
             </ion-col>
           </ion-row>
             <ion-row class="center">
                 <ion-col>  
 
                     <div>
-                      <h4 style="color: white;">Ingresa tu número de telefono</h4>
+                      <h4 style="color: white;">Ingresa tu número de teléfono</h4>
                       <ion-item class="ion-text-center">
-                        <ion-input type="string"
+                        <ion-input type="text"
                                     class="ion-text-left"
                                     placeholder="Teléfono"
                                     name="numero"
@@ -277,15 +279,6 @@
             </ion-row>
 
             <ion-row>
-            <!-- <ion-col class="derecha">
-              <ion-button type="submit"
-                        color="tertiary"
-                        shape="round"
-                        (click)="goSlide2()">
-                        <ion-icon name="caret-back-outline"></ion-icon>
-                        Regresar
-                      </ion-button>
-            </ion-col> -->
             <ion-col>
                 <ion-button type="submit"
                             color="success"
@@ -293,7 +286,7 @@
                             (click)="goSlide4()"
                             [disabled]="formulario3.invalid">
                     Siguiente
-                    <ion-icon name="caret-forward-outline"></ion-icon>
+                    <!-- <ion-icon name="caret-forward-outline"></ion-icon> -->
                 </ion-button>
             </ion-col>
         </ion-row>
@@ -315,12 +308,12 @@
                 <ion-row>
                     <ion-col>  
   
-                      <h4 style="color: white;">Obten tu ubicación para que tu complejo pueda salir en el mapa</h4>
+                      <label style="color: white;">Obtén tu ubicación para que el complejo pueda salir en el mapa</label>
 
                       <ion-item class="ion-text-center">
                         <ion-spinner name="lines-small"
                                      *ngIf="cargando"></ion-spinner>
-                        <ion-button (click)="localizacion()">Obtener mi ubicacion actual</ion-button>
+                        <ion-button (click)="localizacion()">Obtener mi ubicación actual</ion-button>
                         <ion-label *ngIf="listo">
                           <ion-icon class="size" color="success" name="checkmark-done-outline"></ion-icon>
                         </ion-label>
@@ -328,29 +321,19 @@
                         
                     </ion-col>
                 </ion-row>
-                <!-- <ion-row class="center">
-                  <ion-col>
-                    <ion-button type="submit"
-                                color="tertiary"
-                                shape="round"
-                                (click)="goSlide3()">
-                                <ion-icon name="caret-back-outline"></ion-icon>
-                        Regresar
-                    </ion-button>
-                </ion-col>
-            </ion-row> -->
 
             <ion-row>
               <ion-col>
-                <h4 style="color: white;">Tambien puedes colocarla despues</h4>
+                <h2 style="color: white;">También puedes colocarla después</h2>
               </ion-col>
             </ion-row>
             <ion-row class="center">
               <ion-col>
                 <ion-button type="submit"
-                                color="success"
-                                shape="round"
-                                (click)="crearComplejo()">
+                            color="success"
+                            shape="round"
+                            expand="full"
+                            (click)="crearComplejo()">
                         Crear complejo
                     </ion-button>
               </ion-col>

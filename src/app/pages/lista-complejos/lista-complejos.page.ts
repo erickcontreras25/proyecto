@@ -33,6 +33,8 @@ export class ListaComplejosPage implements OnInit {
   // };
   complejo: Complejo = new Complejo(0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
   complejos: Complejo[] = [];
+  abre;
+  cierr;
 
   atras = false;
   cargando = false;
@@ -87,7 +89,10 @@ export class ListaComplejosPage implements OnInit {
     this.apiServi.getComplejoId(id)
     .subscribe( (resp: Complejo) => {
       this.complejo = resp;
-      console.log(this.complejo);                
+      this.abre = this.complejo.horaInicio;
+      this.cierr = this.complejo.horaCierre;
+      this.presentActionSheet();
+      console.log(this.complejo);
     });
   }
 
@@ -102,14 +107,16 @@ export class ListaComplejosPage implements OnInit {
   modificarSinFoto() {
     // this.complejo.latitud = 15.51789;
     // this.complejo.longitud = -88.03639;
-    console.log(this.complejo.horaInicio + ' ' + this.complejo.horaCierre);
+    this.complejo.horaInicio = moment(this.abre).subtract(6, 'hour');
+    this.complejo.horaCierre = moment(this.cierr).subtract(6, 'hour');
+    console.log(moment(this.abre).format('YYYY-MM-DDTHH:mm') + ' ' + moment(this.cierr).format('YYYY-MM-DDTHH:mm'));
     this.apiServi.putComplejo(this.complejo.idComplejo, this.complejo)
       .subscribe((data) => {
-        this.complejos.push(this.complejo);
+        // this.complejos.push(this.complejo);
         this.clear();
+        // this.navCtrl.navigateRoot('/inicio');
+        this.alertaService.alertaInformativa('Actualizado!!');
         this.obtenerComplejos();
-        this.alertaService.alertaInformativa('Actualizado con exito');
-        this.navCtrl.navigateRoot('/inicio');
       },
       (error) => {
         console.log(error);
@@ -238,6 +245,8 @@ export class ListaComplejosPage implements OnInit {
 
     this.apiServi.deleteReservacion(id)
     .subscribe( resp => {
+      this.goSlide1();
+      this.alertaService.alertaInformativa('Realizado con exito');
       console.log('ELIMINADO CON EXITO');
     });
   }
@@ -297,11 +306,39 @@ export class ListaComplejosPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Actualizar',
       buttons: [{
+        text: 'Estado',
+        icon: 'alert',
+        cssClass: 'estado',
+        handler: () => {
+          this.presentAlertConfirm();
+        }
+      }, {
         text: 'Direccion',
         icon: 'location',
         cssClass: 'rojo',
         handler: () => {
-          this.goSlideActualizarDireccion();
+          this.actualizarDireccion();
+        }
+      }, {
+        text: 'Teléfono',
+        icon: 'call',
+        cssClass: 'azul',
+        handler: () => {
+          this.actualizarTelefono();
+        }
+      }, {
+        text: 'Parqueo',
+        icon: 'car',
+        cssClass: 'blanco',
+        handler: () => {
+          this.parqueo();
+        }
+      }, {
+        text: 'Seguridad',
+        icon: 'lock-open',
+        cssClass: 'morado',
+        handler: () => {
+          this.seguridad();
         }
       }, {
         text: 'Ubicacion',
@@ -325,13 +362,6 @@ export class ListaComplejosPage implements OnInit {
           this.goSlideActualizarFoto();
         }
       }, {
-        text: 'Teléfono',
-        icon: 'call',
-        cssClass: 'azul',
-        handler: () => {
-          this.goSlideActualizarNumero();
-        }
-      }, {
         text: 'Cancel',
         icon: 'close',
         role: 'cancel',
@@ -343,6 +373,83 @@ export class ListaComplejosPage implements OnInit {
     await actionSheet.present();
   }
 
+
+  async actualizarDireccion() {
+    const alert = await this.alertController.create({
+      header: 'Cambia la dirección del complejo!',
+      message: '<strong>Dirección actual: ' + this.complejo.localidad + ' </strong>',
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          min: 5,
+          max: 15
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            this.clear();
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            if (data.name.length < 5) {
+              return this.alertaService.alertaInformativa('La dirección debe tener al menos 5 caracteres');
+            } else {
+              console.log('Confirm Ok');
+              this.complejo.localidad = data.name;
+              this.modificarSinFoto();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+  async actualizarTelefono() {
+    const alert = await this.alertController.create({
+      header: 'Cambia la dirección del complejo!',
+      message: '<strong>Dirección actual: ' + this.complejo.numero + ' </strong>',
+      inputs: [
+        {
+          name: 'numero',
+          type: 'number',
+          min: 5,
+          max: 15
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            this.clear();
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            if (data.numero.length < 8 ) {
+              return this.alertaService.alertaInformativa('El número debe tener 8 digitos');
+            } else {
+              console.log('Confirm Ok');
+              this.complejo.numero = data.numero;
+              this.modificarSinFoto();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 
   async presentAlertConfirm() {
@@ -425,7 +532,7 @@ export class ListaComplejosPage implements OnInit {
 
   async eliminar(id: number) {
     const alert = await this.alertController.create({
-      header: 'Quieres eliminar esta reservacón!',
+      header: '¿Quieres eliminar esta reserva?',
       message: '<strong>Confirma dando OK</strong>',
       buttons: [
         {
@@ -451,6 +558,7 @@ export class ListaComplejosPage implements OnInit {
 
   // -------------------------------------------------SLIDE--------------------------------
   goSlide1() {
+    this.clear();
     this.atras = false;
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);

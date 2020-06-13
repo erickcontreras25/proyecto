@@ -9,8 +9,8 @@ import { User } from 'src/models/user.models';
 
 import * as Mapboxgl from 'mapbox-gl';
 
-declare var google;
-declare var mapboxgl: any;
+// declare var google;
+// declare var mapboxgl: any;
 
 @Component({
   selector: 'app-inicio',

@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-header titulo=\"crear usuario\"></app-header>\n\n\n<ion-content>\n\n  <form #formulario=\"ngForm\" (ngSubmit)=\"agregarUsuario()\">\n    <ion-list>\n\n      <ion-item>\n        <ion-label position=\"floating\">Nombre de usuario</ion-label>\n        <ion-input type=\"text\"\n                    name=\"nombreUsuario\"\n                   [(ngModel)]=\"perfil.nombreUsuario\"\n                   required>\n                  </ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label position=\"floating\">Edad</ion-label>\n        <ion-input type =\"number\"\n                    name =\"edad\"\n                   [(ngModel)]=\"perfil.edad\"\n                   >\n                  </ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label position=\"floating\">Email</ion-label>\n        <ion-input type=\"email\"\n                    name=\"email\"\n                   [(ngModel)]=\"perfil.email\"\n                   required>\n                  </ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label position=\"floating\">Password</ion-label>\n        <ion-input type=\"password\"\n                    name=\"password\"\n                   [(ngModel)]=\"perfil.password\"\n                   required>\n                  </ion-input>\n      </ion-item>\n    </ion-list>\n    <ion-button expand=\"full\" type=\"submit\"\n    [disabled]=\"formulario.invalid\" routerLink=\"/login\">\n        Guardar\n    </ion-button>\n  \n  </form>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-header titulo=\"crear usuario\"></app-header>\n\n\n<ion-content>\n\n  <!-- <form #formulario=\"ngForm\" (ngSubmit)=\"agregarUsuario()\">\n    <ion-list>\n\n      <ion-item>\n        <ion-label position=\"floating\">Nombre de usuario</ion-label>\n        <ion-input type=\"text\"\n                    name=\"nombreUsuario\"\n                   [(ngModel)]=\"perfil.nombreUsuario\"\n                   required>\n                  </ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label position=\"floating\">Edad</ion-label>\n        <ion-input type =\"number\"\n                    name =\"edad\"\n                   [(ngModel)]=\"perfil.edad\"\n                   >\n                  </ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label position=\"floating\">Email</ion-label>\n        <ion-input type=\"email\"\n                    name=\"email\"\n                   [(ngModel)]=\"perfil.email\"\n                   required>\n                  </ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label position=\"floating\">Password</ion-label>\n        <ion-input type=\"password\"\n                    name=\"password\"\n                   [(ngModel)]=\"perfil.password\"\n                   required>\n                  </ion-input>\n      </ion-item>\n    </ion-list>\n    <ion-button expand=\"full\" type=\"submit\"\n    [disabled]=\"formulario.invalid\" routerLink=\"/login\">\n        Guardar\n    </ion-button>\n  \n  </form> -->\n\n  <form method=\"post\" action=\"\">\n    <label for=\"nombre\">Nombre:</label>\n    <input type=\"text\" name=\"nombre\" id=\"nombre\"><br><br>\n\n    <label for=\"nombre\">Asunto:</label>\n    <input type=\"text\" name=\"asunto\" id=\"asunto\"><br><br>\n\n    <label for=\"nombre\">Mensaje:</label>\n    <textarea name=\"mensaje\" id=\"mensaje\" cols=\"30\" rows=\"10\"></textarea>\n\n    <input type=\"submit\">\n  </form>\n\n\n</ion-content>\n");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ CrearPerfilPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL2NyZWFyLXBlcmZpbC9jcmVhci1wZXJmaWwucGFnZS5zY3NzIn0= */");
+/* harmony default export */ __webpack_exports__["default"] = ("label {\n  width: 150px;\n  display: inline-block;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvY3JlYXItcGVyZmlsL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxjcmVhci1wZXJmaWxcXGNyZWFyLXBlcmZpbC5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL2NyZWFyLXBlcmZpbC9jcmVhci1wZXJmaWwucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksWUFBQTtFQUNBLHFCQUFBO0FDQ0oiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy9jcmVhci1wZXJmaWwvY3JlYXItcGVyZmlsLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImxhYmVsIHtcclxuICAgIHdpZHRoOiAxNTBweDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxufSIsImxhYmVsIHtcbiAgd2lkdGg6IDE1MHB4O1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG59Il19 */");
 
 /***/ }),
 
@@ -133,6 +133,8 @@ let CrearPerfilPage = class CrearPerfilPage {
         this.perfil = new src_models_usuario_models__WEBPACK_IMPORTED_MODULE_3__["Usuario"](null, null, null, null, false);
     }
     ngOnInit() {
+    }
+    enviar() {
     }
 };
 CrearPerfilPage.ctorParameters = () => [

@@ -32,40 +32,34 @@ export class ReservarPage implements OnInit {
   auxHoras;
 
   complejos: Complejo[];
-  // complejo = {
-  //   idComplejo: 0,
-  //   nombre: '',
-  //   localidad: '',
-  //   foto: null,
-  //   estado: false,
-  //   longitud: 0,
-  //   latitud: 0,
-  //   horaInicio: new Date(),
-  //   horaCierre: new Date(),
-  //   userId: ''
-  // };
+
   complejo = new Complejo(0, '', '', null, '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
 
-  canchaId = {
-    idCancha: 0,
-    precio: null,
-    foto: null,
-    idComplejo: null
-  };
+  canchaId = new Cancha(0, null, null, null, 0);
+  //  {
+  //   idCancha: 0,
+  //   precio: null,
+  //   foto: null,
+  //   idComplejo: null
+  // };
 
   reservaciones: Reservacion[] = [];
   reser: Reservacion[] = [];
 
-  reservacion = {
-    idReservacion: 0,
-    horaInicial: new Date(),
-    horaFinal: new Date(),
-    pago: false,
-    pagoParcial: false,
-    idCancha: 0,
-    userId: ''
-  };
-  torneo: Torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
+  reservacion = new Reservacion(0, null, null, false, false, 0, '');
+  //  {
+  //   idReservacion: 0,
+  //   horaInicial: null,
+  //   horaFinal: null,
+  //   pago: false,
+  //   pagoParcial: false,
+  //   idCancha: 0,
+  //   userId: ''
+  // };
+  hInicio;
+  hFin;
+  torneo: Torneo[] = [];
+  diaTorneo = false;
 
 
   perfil: User;
@@ -82,7 +76,7 @@ export class ReservarPage implements OnInit {
     this.slides.lockSwipes(true);
 
     this.reservacion.userId = this.perfil.id;
-    console.log('ESTE ES EL ID OBTENIDO > > ' + this.reservacion.userId);
+    // console.log('ESTE ES EL ID OBTENIDO > > ' + this.reservacion.userId);
 
 
     this.obtenerComplejos();
@@ -98,7 +92,7 @@ export class ReservarPage implements OnInit {
     this.apiServi.getComplejo()
     .subscribe((resp: Complejo[]) => {
       this.complejos = resp;
-      console.log('SERVICIO ', resp);
+      // console.log('SERVICIO ', resp);
     });
   }
 
@@ -124,10 +118,13 @@ export class ReservarPage implements OnInit {
   obtenerReservacionId() {
     this.apiServi.getReservacionId(this.reservacion.idReservacion)
     .subscribe( resp => {
-      console.log('EJECUTADO CON EXITO');
+      // console.log('EJECUTADO CON EXITO');
     });
   }
   agregarReservacion() {
+    this.reservacion.horaInicial = moment(this.hInicio).subtract(6, 'hour');
+    this.reservacion.horaFinal = moment(this.hFin).subtract(6, 'hour');
+
     this.apiServi.postReservacion(this.reservacion)
     .subscribe((data) => {
       this.reservaciones.push(this.reservacion);
@@ -140,7 +137,7 @@ export class ReservarPage implements OnInit {
         idCancha: 0,
         userId: ''
       };
-      this.alertaService.alertaInformativa('Su reserva se realizo con exito. \n Puede verla ingresando a su Mi Perfil en Mis Reservas');
+      this.alertaService.alertaInformativa('Su reserva se realizó con éxito. \n Puede verla ingresando a Mi Perfil');
       this.navCtrl.navigateRoot('/inicio');
     },
     (error) => {
@@ -162,7 +159,7 @@ export class ReservarPage implements OnInit {
         idCancha: 0,
         userId: ''
       };
-      window.alert('ACTUALIZADO CON EXITO');
+      window.alert('Actualizado');
     },
     (error) => {
       console.log(error);
@@ -176,8 +173,6 @@ export class ReservarPage implements OnInit {
     });
   }
 
-
-
   volver() {
     this.auxReser = false;
   }
@@ -190,7 +185,6 @@ export class ReservarPage implements OnInit {
     .subscribe((resp: Cancha[]) => {
       this.canchas = resp;
       this.obtenerComplejoId(id);
-      
       // console.log('CANCHAS ', this.canchas);
     });
   }
@@ -207,15 +201,18 @@ export class ReservarPage implements OnInit {
     this.apiServi.getReservacionComplejo(id)
     .subscribe((resp: Reservacion[]) => {
       this.reser = resp;
-      console.log(this.reser);
+      // console.log(this.reser);
     });
   }
 
   getTorneoId(id: number) {
     this.torneoService.getTorneooId(id)
-    .subscribe( (resp: Torneo) => {
+    .subscribe( (resp: Torneo[]) => {
       this.torneo = resp;
-      // console.log(resp);
+      if (this.torneo != null) {
+        this.diaTorneo = true;
+      }
+      // console.log(this.torneo);
     });
   }
 
@@ -224,15 +221,15 @@ export class ReservarPage implements OnInit {
 
     const ini = moment().format('MM-DD-YYYY HH:mm');
 
-    const dInicial = moment(this.reservacion.horaInicial).format('MM-DD-YYYY HH:mm');
-    const dFinal = moment(this.reservacion.horaFinal).format('MM-DD-YYYY HH:mm');
+    const dInicial = moment(this.hInicio).format('MM-DD-YYYY HH:mm');
+    const dFinal = moment(this.hFin).format('MM-DD-YYYY HH:mm');
 
-    const abre = moment(this.reservacion.horaInicial).format('HH');
-    const cierra = moment(this.reservacion.horaFinal).format('HH');
+    const abre = moment(this.hInicio).format('HH');
+    const cierra = moment(this.hFin).format('HH');
     const abreComplejo = moment(this.complejo.horaInicio).format('HH');
     const cierraComplejo = moment(this.complejo.horaCierre).format('HH');
 
-    const diaReserva = moment(this.reservacion.horaInicial).format('MM-DD-YYYY');
+    const diaReserva = moment(this.hInicio).format('MM-DD-YYYY');
 
 
     if (dInicial <= ini || dFinal <= ini) {
@@ -255,9 +252,14 @@ export class ReservarPage implements OnInit {
       return alert('Solo puede reservar en horario que permite el complejo');
     }
 
-    // if (this.torneo.diaTorneo !== null || this.torneo.diaTorneo !== undefined) {
-    //   if (diaReserva === moment(this.torneo.diaTorneo).format('MM-DD-YYYY')) {
-    //     return alert('Este dia no esta disponible ya que se realizará un torneo');
+    // if (this.diaTorneo === true) {
+    //   console.log(this.torneo.length);
+    //   for (let i = 0; i < this.torneo.length; i++) {
+    //     console.log(this.diaTorneo);
+    //     if (diaReserva === moment(this.torneo[i].diaTorneo).format('MM-DD-YYYY')) {
+    //       return alert('Este dia no esta disponible ya que se realizará un torneo');
+    //     }
+    //     console.log('diaaa ' + diaReserva + ' ' + moment(this.torneo[i].diaTorneo).format('MM-DD-YYYY'));
     //   }
     // }
 
@@ -276,8 +278,8 @@ export class ReservarPage implements OnInit {
       }
 
     }
-    const inic = moment(this.reservacion.horaInicial);
-    const fin = moment(this.reservacion.horaFinal);
+    const inic = moment(this.hInicio);
+    const fin = moment(this.hFin);
     this.auxHoras = fin.diff(inic, 'hours');
 
     if (this.auxHoras >= 4) {
@@ -354,6 +356,7 @@ slideAtras() {
   this.slides.lockSwipes(true);
   this.slides.isBeginning().then(data => {
     if (data === true) {
+      this.diaTorneo = false;
       this.atras = false;
     }
   });

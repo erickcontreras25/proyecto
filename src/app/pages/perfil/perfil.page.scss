@@ -2,14 +2,14 @@
     width: 500px;
     height: 220px;
   }
-  ion-icon {
-      font-size: 30px;
+  ion-icon.size {
+      font-size: 35px;
   }
   .imgRedonda {
     width:150px;
     height:150px;
     border-radius:150px;
-    border:5px solid #666;
+    border:5px solid rgb(255, 255, 255);
 }
 
 .derecha{
@@ -33,4 +33,14 @@ ion-content.background{
 
 .shadow {
   text-shadow: 2px 2px #080808;
+}
+
+label, ion-label, h1, h2, h3, h4, h5, h6 {
+  text-shadow: 2px 2px 8px #080808;
+}
+
+.img {
+  min-height: 250px;
+  max-height: 570px;
+  width: 100%;
 }

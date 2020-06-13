@@ -103,7 +103,7 @@
 
       
       <ion-grid fixed>
-            <form>
+            <form #formulario1="ngForm">
               <ion-row>
                 <ion-col>
                   <img src="/assets/img/im2.png">
@@ -125,34 +125,36 @@
                     <ion-col>  
                         <ion-list>
 
-                            <ion-item>
-                              <ion-label>Nombre de usuario</ion-label>
+                            <ion-item class="bor">
+                              <ion-label position="floating">Nombre de usuario</ion-label>
                               <ion-input type="text"
                                          name="nombreUsuario"
+                                         minlength="5"
+                                         maxlength="20"
                                          [(ngModel)]="perfil.nombreUsuario"
                                          required></ion-input>
                               </ion-item>
-                              <ion-item>
-                                <ion-label>Edad</ion-label>
+                              <ion-item class="bor">
+                                <ion-label position="floating">Edad</ion-label>
                                 <ion-input type="number"
                                            name="edad"
                                            [(ngModel)]="perfil.edad"
                                            required></ion-input>
                                 </ion-item>
-                            <ion-item>
-                            <ion-label>Email</ion-label>
+                            <ion-item class="bor">
+                            <ion-label position="floating">Email</ion-label>
                             <ion-input name="email" 
                                         type="email"
+                                        pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{3,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{3,})"
                                         [(ngModel)]="perfil.email"
                                         required></ion-input>
                             </ion-item>
-                            <ion-item>
-                            <ion-label>Password</ion-label>
+                            <ion-item class="bor">
+                            <ion-label position="floating">Password</ion-label>
                             <ion-input name="password"
                                         type="password"
-                                        pattern="[A-Za-z]+"
-                                        minlength="6"
-                                        title="Debe tener al menos 6 caracteres entre mayúsculas y minúsculas"
+                                        pattern="(?=.*[A-Z])(?=.*[a-z]).{6,}"
+                                        placeholder="Mínimo 6 caracteres entre mayúsculas y minúsculas"
                                         [(ngModel)]="perfil.password"
                                         required></ion-input>
                             </ion-item>
@@ -164,6 +166,7 @@
                     <ion-button type="submit"
                                 color="tertiary"
                                 shape="round"
+                                [disabled]="formulario1.invalid"
                                 (click)="registro()">
                         Crear usuario
                     </ion-button>

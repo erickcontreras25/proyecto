@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionSheetController, NavController, IonSlides } from '@ionic/angular';
+import { ActionSheetController, NavController, IonSlides, AlertController } from '@ionic/angular';
 import { User } from 'src/models/user.models';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ApiserviService } from 'src/app/services/apiservi.service';
@@ -21,7 +21,6 @@ export class TorneoPage implements OnInit {
   complejos: Complejo[] = [];
   complejo: Complejo = new Complejo(0, null, null, null, null, false, 0.0, 0.0, new Date(), new Date(), false, false, null);
 
-  torneo: Torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
   torneoUser: Torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
   torneos: Torneo[] = [];
   torneosxUser: Torneo[] = [];
@@ -31,12 +30,11 @@ export class TorneoPage implements OnInit {
 
   mostrarCrear = false;
 
-  hoy = moment().format('YYYY-MM-DD');
+  hoy;
   ver = false;
-  ocupado = 0;
-  libre = 0;
   mE = false;
   atras = false;
+  mD = false;
 
 
   perfil: User;
@@ -46,7 +44,8 @@ export class TorneoPage implements OnInit {
               private apiServi: ApiserviService,
               private torneoService: TorneoService,
               private alertaService: AlertaServiceService,
-              private navCtrl: NavController) { }
+              private navCtrl: NavController,
+              private alertController: AlertController) { }
 
   ngOnInit() {
     this.perfil = this.usuarioService.getUsuario();
@@ -81,49 +80,41 @@ export class TorneoPage implements OnInit {
   }
 
   validar() {
-    const dia = moment(this.torneo.diaTorneo).format('YYYY-MM-DD');
+    this.hoy = moment().format('YYYY-MM-DD');
+    const dia = moment(this.torneoUser.diaTorneo).format('YYYY-MM-DD');
     if (dia <= this.hoy) {
       this.ver = true;
     }
   }
 
-  crearTorneoConImagen() {
+  modificarTorneoConImagen() {
     const fileInput: any = document.getElementById('img');
     const file = fileInput.files[0];
 
     const imgPromise = this.getFileBlob(file);
 
     imgPromise.then(blob => {
-      this.torneo.premioFoto = blob;
+      this.torneoUser.premioFoto = blob;
       // console.log("ESTE ES MI BLOB: " + blob);
 
-      this.postTorneo();
+      this.modificarTorneo();
 
     });
   }
 
-  crearTorneo() {
-    if (this.torneo.premioFoto !== '') {
-      this.crearTorneoConImagen();
-    } else {
-      this.postTorneo();
-    }
-  }
-
-  postTorneo() {
-    this.torneo.usuarioId = this.perfil.id;
-    this.torneoService.postTorneo(this.torneo)
-    .subscribe((data) => {
-      this.torneos.push(this.torneo);
-      this.clea();
-      this.mostrarCrear = false;
-      this.alertaService.alertaInformativa('Torneo creado con exito');
+  modificarTorneo() {
+    this.torneoService.putTorneo(this.torneoUser.idTorneo, this.torneoUser)
+    .subscribe(data => {
+      // this.clea();
+      // this.goSlide1();
+      this.alertaService.alertaInformativa('Actualizado');
+      this.obtenerComplejos();
       this.getTorneoxUser();
     },
     (error) => {
-      console.log('ERROR: ', error);
-    }
-    );
+      console.log(error['error']);
+      this.alertaService.alertaInformativa(error['error']);
+    });
   }
 
 
@@ -144,7 +135,7 @@ export class TorneoPage implements OnInit {
 
 
   clea() {
-    this.torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
+    this.torneoUser = new Torneo(0, '', null, '', '', new Date(), '', 0);
   }
 
 
@@ -154,17 +145,13 @@ export class TorneoPage implements OnInit {
     this.torneoService.getTorneoEquipoId(id)
     .subscribe((resp: TorneoEquipo[]) => {
        this.equipoxTorneo = resp;
-       this.calcular();
       //  this.goSlide3();
     },
     error => {
       console.log(error);
     });
   }
-  calcular() {
-    this.ocupado = this.equipoxTorneo.length;
-    this.libre = this.torneoUser.cantEquipos - this.equipoxTorneo.length;
-  }
+
 
   sacardTorneo(idT: number, idE: number) {
     this.torneoService.deleteTorneoEquipo(idT, idE)
@@ -182,14 +169,6 @@ export class TorneoPage implements OnInit {
     });
   }
 
-  getIdComplejo() {
-    this.torneo.idComplejo = this.complejo.idComplejo;
-    // console.log(this.torneo.idComplejo);
-  }
-
-
-
-
 
 
   mostrarDel() {
@@ -204,6 +183,153 @@ export class TorneoPage implements OnInit {
   }
 
 
+// -------------------------------------------------------------------------------------------------------
+  async actualizar() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Actualizar',
+      buttons: [{
+        text: 'Cantidad de equipos a admitir',
+        icon: 'people',
+        cssClass: 'azul',
+        handler: () => {
+          this.actualizarCantidad();
+        }
+      }, {
+        text: 'Nombre del torneo',
+        icon: 'receipt',
+        cssClass: 'rojo',
+        handler: () => {
+          this.actualizarNombre();
+        }
+      }, {
+        text: 'Día del torneo',
+        icon: 'calendar',
+        cssClass: 'verde',
+        handler: () => {
+          this.actualizarDiaT();
+        }
+      }, {
+        text: 'Imagen',
+        icon: 'camera-reverse',
+        cssClass: 'morado',
+        handler: () => {
+          this.goSlide4();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  async actualizarCantidad() {
+    const alert = await this.alertController.create({
+      header: 'Aumenta o disminuye la cantidad de equipos que quieres que tenga el torneo.',
+      message: '<strong>Actualmente el máximo de equipos es de: ' + this.torneoUser.cantEquipos + ' </strong>',
+      inputs: [
+        {
+          name: 'cantEquipos',
+          type: 'number',
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            if (data.cantEquipos < this.equipoxTorneo.length) {
+              return this.alertaService.alertaInformativa('La cantidad de cupos admitidos no puede ser menor que los equipos inscritos.');
+            } else {
+              console.log('Confirm Ok');
+              this.torneoUser.cantEquipos = data.cantEquipos;
+              this.modificarTorneo();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async actualizarNombre() {
+    const alert = await this.alertController.create({
+      header: 'Cambiale el nombre al torneo',
+      message: '<strong>Actualmente se llama: ' + this.torneoUser.nombre + ' </strong>',
+      inputs: [
+        {
+          name: 'nombre',
+          type: 'text',
+        }
+      ], buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: data => {
+            if (data.nombre.length < 5) {
+              return this.alertaService.alertaInformativa('El nombre debe tener mas de 5 caracteres');
+            } else {
+              this.torneoUser.nombre = data.nombre;
+              this.modificarTorneo();
+              console.log('Confirm Okay');
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async actualizarDiaT() {
+    const alert = await this.alertController.create({
+      header: 'Cambia el día del torneo',
+      message: '<strong>Actualmente el día que se llevará a cabo es: '+ moment(this.torneoUser.diaTorneo).format('DD-MM-YYYY') +'</strong>',
+      inputs: [
+        {
+          name: 'diaTorneo',
+          type: 'date',
+          min: this.hoy,
+        }
+      ], buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: data => {
+            this.torneoUser.diaTorneo = data.diaTorneo;
+            this.modificarTorneo();
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 
 
 
@@ -211,6 +337,7 @@ export class TorneoPage implements OnInit {
 
     // -------------------------------------------------SLIDE--------------------------------
 goSlide1() {
+  this.clea();
   this.slides.lockSwipes(false);
   this.slides.slideTo(0);
   this.slides.lockSwipes(true);
@@ -218,6 +345,7 @@ goSlide1() {
 
 goSlide2() {
   this.atras = true;
+  this.mD = false;
   this.slides.lockSwipes(false);
   this.slides.slideTo(1);
   this.slides.lockSwipes(true);
@@ -226,6 +354,12 @@ goSlide2() {
 goSlide3() {
   this.slides.lockSwipes(false);
   this.slides.slideTo(2);
+  this.slides.lockSwipes(true);
+}
+goSlide4() {
+  this.mD = true;
+  this.slides.lockSwipes(false);
+  this.slides.slideTo(3);
   this.slides.lockSwipes(true);
 }
 

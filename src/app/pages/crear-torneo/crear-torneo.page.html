@@ -17,8 +17,8 @@
     <ion-slide>
       <form #formulario="ngForm">
       <ion-grid>
-        <div class="ion-margin-top">
-          <ion-label class="shadow">¿Donde se realizara el torneo?</ion-label>
+        <div class="ion-margin-top bor">
+          <ion-label class="shadow">¿Dónde se realizará el torneo?</ion-label>
           <ion-select [(ngModel)]="complejo.idComplejo"
                       name="idComplejo"
                       (ngModelChange)="getIdComplejo()">
@@ -26,8 +26,7 @@
           </ion-select>
         </div>
             
-        <br>
-        <div *ngIf="complejo.idComplejo!=0">
+        <div *ngIf="complejo.idComplejo!=0" class="bor">
           <h4 class="shadow">Dale nombre al torneo</h4>
           <ion-item>
             <ion-input name="nombre"
@@ -39,9 +38,8 @@
                         [(ngModel)]="torneo.nombre"></ion-input>
           </ion-item>
         </div>
-        <br>
-        <div *ngIf="complejo.idComplejo!=0">
-          <h4 class="shadow">Cuantos equipos quieres que participen</h4>
+        <div *ngIf="complejo.idComplejo!=0" class="bor">
+          <h4 class="shadow">¿Cuántos equipos quieres que participen?</h4>
           <ion-item>
             <ion-input name="cantEquipos"
                         type="number"
@@ -53,9 +51,9 @@
         <ion-row *ngIf="complejo.idComplejo!=0">
           <ion-col>
             <ion-button color="success"
-                        shape="round" fill="outline"
+                        shape="round"
                         (click)="goSlide2()"
-                        [disabled]="formulario.invalid">Continuar</ion-button>
+                        [disabled]="formulario.invalid">Siguiente</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -67,38 +65,47 @@
     <ion-slide>
       <ion-grid>
         <form #formulario1="ngForm">
-        <div>
-          <h5 class="shadow">Agrega una descripción si deseas.</h5>
-
-          <ion-item>
-            <ion-input name="descripcion"
-                        type="text"
-                        placeholder="descripcion"
-                        minlength="5"                        
-                        [(ngModel)]="torneo.descripcion"></ion-input>
-          </ion-item>
+          <div class="bor">
+            <h4>Si quieres, agrega una descripción para el torneo</h4>
+            <ion-item class="bor">
+              <ion-input name="descripcion"
+                          type="text"
+                          placeholder="descripcion"
+                          minlength="5"                        
+                          [(ngModel)]="torneo.descripcion"></ion-input>
+            </ion-item>
+          </div>
           <br>
-          <h5 class="shadow">Coloca una foto con los premios y reglas del torneo</h5>
+          <div class="bor">
+            <h4>Agrega una imagen donde se indiquen las reglas y premios del torneo</h4>
+            <ion-item>
+              <input type="file"
+                    id="img"
+                    name="img"
+                    ngModel
+                    required>
+            </ion-item>
+          </div>
+          <br><br>
+          <div class="bor">
           <ion-item>
-            <input type="file"
-                   id="img"
-                   name="img"
-                   ngModel
-                   required>
+            <ion-label>¿Cuándo se realizará el torneo?</ion-label>
+            <ion-datetime displayFormat="D MMM YYYY" 
+                                      name="diaTorneo"
+                                      [(ngModel)]="torneo.diaTorneo"
+                                      (ngModelChange)='verificar()'>
+                        </ion-datetime>
           </ion-item>
         </div>
         <ion-row>
           <ion-col>
-            <ion-button color="success"
-                        shape="round" fill="outline"
-                        (click)="goSlide1()"
-                        >Regresar</ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-button color="success"
-                        shape="round" fill="outline"
-                        (click)="goSlide3()"
-                        [disabled]="formulario1.invalid">Continuar</ion-button>
+            <ion-button *ngIf="ver"
+                        color="success"
+                        expand="full"
+                        (click)="crearTorneoConImagen()"
+                        [disabled]="formulario1.invalid">
+                Crear Torneo
+              </ion-button>
           </ion-col>
         </ion-row>
       </form>
@@ -110,6 +117,7 @@
     <ion-slide>
       <ion-grid>
         <form #formulario2="ngForm">
+          <br>
         <ion-item>
           <ion-label class="shadow">¿Cuándo se realizara el torneo?</ion-label>
           <ion-datetime displayFormat="D MMM YYYY" 
@@ -119,12 +127,6 @@
                       </ion-datetime>
         </ion-item>
         <ion-row>
-          <!-- <ion-col>
-            <ion-button color="success"
-                        shape="round" fill="outline"
-                        (click)="goSlide1()"
-                        >Regresar</ion-button>
-          </ion-col> -->
           <ion-col>
             <!-- <ion-button color="success"
                         shape="round" fill="outline"

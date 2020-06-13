@@ -23,6 +23,8 @@ export class ComplejoPage implements OnInit {
   complejos: Complejo[] = [];
 
   complejo = new Complejo(0, null, null, null, null, false, 0.0, 0.0, null, null, false, false, null);
+  abre;
+  cierr;
 
   cargando = false;
   listo = false;
@@ -71,6 +73,8 @@ export class ComplejoPage implements OnInit {
   }
 
   crearComplejo() {
+    this.complejo.horaInicio = moment(this.abre).subtract(6, 'hour');
+    this.complejo.horaCierre = moment(this.cierr).subtract(6, 'hour');
 
     const fileInput: any = document.getElementById('img');
     const file = fileInput.files[0];
@@ -86,7 +90,7 @@ export class ComplejoPage implements OnInit {
       this.complejos.push(this.complejo);
       this.limpiar();
       this.listo = false;
-      this.alertaService.alertaInformativa('Cambia el estado de complejo a ABIERTO AHORA para que tus clientes sepan que pueden visitarte');
+      // this.alertaService.alertaInformativa('Cambia el estado de complejo a ABIERTO AHORA para que tus clientes sepan que pueden visitarte');
       this.alertaService.alertaInformativa('Complejo creado. \n Puedes verlo en Mis Complejos.');
       this.navCtrl.navigateRoot('/inicio');
     },
@@ -157,8 +161,8 @@ export class ComplejoPage implements OnInit {
 
   verificar() {
     const hoy = moment().format('MM-DD-YYYY HH:mm');
-    const inicio = moment(this.complejo.horaInicio).format('MM-DD-YYYY HH:mm');
-    const cierre = moment(this.complejo.horaCierre).format('MM-DD-YYYY HH:mm');
+    const inicio = moment(this.abre).format('MM-DD-YYYY HH:mm');
+    const cierre = moment(this.cierr).format('MM-DD-YYYY HH:mm');
 
     if (cierre < inicio) {
       this.ver = false;

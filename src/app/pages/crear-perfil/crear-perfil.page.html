@@ -3,7 +3,7 @@
 
 <ion-content>
 
-  <form #formulario="ngForm" (ngSubmit)="agregarUsuario()">
+  <!-- <form #formulario="ngForm" (ngSubmit)="agregarUsuario()">
     <ion-list>
 
       <ion-item>
@@ -44,6 +44,20 @@
         Guardar
     </ion-button>
   
+  </form> -->
+
+  <form method="post" action="">
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre"><br><br>
+
+    <label for="nombre">Asunto:</label>
+    <input type="text" name="asunto" id="asunto"><br><br>
+
+    <label for="nombre">Mensaje:</label>
+    <textarea name="mensaje" id="mensaje" cols="30" rows="10"></textarea>
+
+    <input type="submit">
   </form>
+
 
 </ion-content>

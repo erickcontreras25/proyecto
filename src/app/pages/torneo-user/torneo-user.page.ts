@@ -61,7 +61,7 @@ export class TorneoUserPage implements OnInit {
     this.torneoService.getTorneos()
     .subscribe((resp: Torneo[]) => {
       this.torneos = resp;
-      console.log(resp);
+      // console.log(resp);
       this.noVencidas();
     });
   }
@@ -102,7 +102,7 @@ export class TorneoUserPage implements OnInit {
     });
   }
   verificarCanEquipos() {
-    console.log(this.torneosEquipos.length + ' ' + this.torneo.cantEquipos);
+    // console.log(this.torneosEquipos.length + ' ' + this.torneo.cantEquipos);
     if (this.torneosEquipos.length < this.torneo.cantEquipos) {
       this.ver = true;
     }
@@ -111,7 +111,7 @@ export class TorneoUserPage implements OnInit {
   registrar() {
     this.torneoEquipo.torneoId = this.torneo.idTorneo;
     if (this.torneoEquipo.equipoId === 0 || this.torneoEquipo.equipoId === undefined) {
-      this.alertaService.alertaInformativa('Primero debes elegir un equipo donde seas capitan.');
+      this.alertaService.alertaInformativa('Primero debes elegir un equipo donde seas capitán.');
     } else {
       this.validar();
     }

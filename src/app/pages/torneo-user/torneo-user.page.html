@@ -14,6 +14,8 @@
   
   <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
 
+
+<!-- ---------------------------------------------------SLIDE 1---------------------------------------- -->
     <ion-slide>
       <ion-grid>
 
@@ -23,17 +25,16 @@
               <ion-col class="centrado"><h5>Torneo</h5></ion-col>
               <ion-col class="izquierda"><h5>Complejo</h5></ion-col>
               <ion-col>
-                <h5>Dia Torneo</h5>
+                <h5>Día Torneo</h5>
               </ion-col>
               <ion-col class="derecha">                
               </ion-col>
             </ion-row>            
         </div>
         <div *ngFor="let item of torneosNoVen">
-          <ion-card class="blanco">
             <ion-row class="ion-align-items-center">
-              <ion-col class="izquierda"><h5>{{item.nombre}}</h5></ion-col>
-              <ion-col class="izquierda"><h5>{{item.complejo.nombre}}</h5></ion-col>
+              <ion-col class="izquierda"><label>{{item.nombre}}</label></ion-col>
+              <ion-col class="izquierda"><label>{{item.complejo.nombre}}</label></ion-col>
               <ion-col *ngIf="item.diaTorneo > hoy">
                 <label  style="color: rgb(16, 122, 243);"> {{item.diaTorneo | date:'dd-MMMM-yyyy'}}</label>
               </ion-col>
@@ -41,11 +42,12 @@
                 <ion-button color="success"
                             class="derecha"      
                             shape="round" fill="clear"                
-                            (click)="getTorneoId(item.idTorneo)">VER</ion-button>
+                            (click)="getTorneoId(item.idTorneo)">
+                            <ion-icon color="success" class="size" name="return-up-forward-outline"></ion-icon>
+                          </ion-button>
                 
               </ion-col>
             </ion-row>            
-          </ion-card>  
         </div>
       </ion-grid>
     </ion-slide>
@@ -57,22 +59,22 @@
       <ion-grid>
 
         <form>
-          <ion-card class="ion-text-center" style="background-color: #F1F1F6; border-radius : 10px;">
+          <div class="ion-text-center" style="background-color: rgb(210, 210, 233, 0);">
             <img src="{{torneo.premioFoto}}" alt="200" width="500">
-            <ion-card-title style="color: black;">{{torneo.nombre}}</ion-card-title>
+            <h1>{{torneo.nombre}}</h1>
 
             <ion-row>
               <ion-col>
                 <h6>
                   <ion-icon class="size" name="calendar-outline" color="secondary"></ion-icon>
-                      Dia del torneo:
+                      Día del torneo:
                 </h6>
                 <h6>{{torneo.diaTorneo | date:'dd-MMMM-yyyy'}}</h6>
               </ion-col>
               <ion-col>
                 <h6>
                   <ion-icon class="size" name="location-outline" color="primary"></ion-icon>
-                    Direccion:
+                    Dirección:
                 </h6>
                 <h6>{{complejo.localidad}}</h6>
               </ion-col>
@@ -82,9 +84,9 @@
               <ion-label>{{torneo.descripcion}}</ion-label>
             </h6>
               
-                <h5 class="ion-text-center" style="color: black;">Complejo: {{complejo.nombre}}</h5>
+                <h5 class="ion-text-center">Complejo: {{complejo.nombre}}</h5>
 
-                <h5 class="ion-text-center"><ion-icon name="call-outline" color="primary"></ion-icon>
+                <h5 class="ion-text-center"><ion-icon name="call-outline" style="color: red;"></ion-icon>
                   {{complejo.numero}}</h5>
               <ion-row>
                 <ion-col *ngIf="ver">
@@ -108,6 +110,7 @@
               </ion-col> -->
               <ion-col *ngIf="ver">
                 <ion-button color="success"
+                            fill="outline"
                            (click)="registrar()" 
                           >Registrar mi equipo</ion-button>
               </ion-col>
@@ -115,7 +118,7 @@
                 <h4 style="color: red;">Torneo lleno</h4>
               </ion-col>
             </ion-row>          
-          </ion-card>
+          </div>
         </form>
 
       </ion-grid>

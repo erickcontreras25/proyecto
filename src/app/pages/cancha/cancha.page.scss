@@ -3,10 +3,38 @@
 }
 
 ion-content.background{
-    --background: url(/assets/img/cancha.jpg) 0 0/100% 100% no-repeat;
+    --background: url(/assets/img/bueno.jpg) 0 0/100% 100% no-repeat;
     opacity: 0.8;
   }
 
   .shadow {
-    text-shadow: 2px 2px #080808;
+    text-shadow: 2px 2px 8px #080808;
   }
+
+  .img {
+    min-height: 250px;
+    max-height: 570px;
+    
+    width: 1000px;
+  }
+
+  .derecha{
+    text-align: right;
+  }
+  .centrado{
+    text-align: center;
+  }
+  .izquierda{
+    text-align: left;
+  }
+  ion-icon.size {
+    font-size: 35px;
+  }
+
+  .bor {
+    border-bottom: white 1px solid;
+  }
+
+label, ion-label, h1, h2, h3, h4, h5, h6 {
+    text-shadow: 2px 2px 8px #080808;
+}

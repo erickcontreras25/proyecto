@@ -6,3 +6,16 @@ ion-content.background{
   .shadow {
     text-shadow: 2px 2px #080808;
   }
+
+  .img {
+    alt: 200px;
+    width: 1000px;
+  }
+
+.bor {
+    border-bottom: rgba(255, 255, 255, 0.877) 1px solid;
+}
+
+label, ion-label, h1, h2, h3, h4, h5, h6 {
+  text-shadow: 2px 2px 8px #080808;
+}

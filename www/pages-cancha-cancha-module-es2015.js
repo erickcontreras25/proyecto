@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-header titulo=\"Cancha\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"goSlide1()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n\n<!-- <form #formulario=\"ngForm\" (ngSubmit)=\"agregarCancha()\">\n\n  <ion-item>\n    <ion-label>Foto</ion-label>\n    <input type=\"file\"\n    id=\"img\"\n    name=\"img\"\n   ngModel\n   required>\n  </ion-item>\n  <ion-list>\n    <ion-item>\n      <ion-label position=\"floating\">Precio</ion-label>\n      <ion-input type=\"text\"\n                  name=\"precio\"\n                 [(ngModel)]=\"cancha.precio\"\n                 required>\n                </ion-input>\n    </ion-item>\n    <ion-list>\n      <ion-item>\n        <ion-label>Complejo</ion-label>\n        <ion-select [(ngModel)]=\"cancha.idComplejo\"\n                    name=\"idCancha\">\n          <ion-select-option *ngFor=\"let user of complejos\" value=\"{{user.idComplejo}}\" >{{user.nombre}}</ion-select-option>\n        </ion-select>\n      </ion-item>\n    </ion-list>\n\n  </ion-list>\n\n  <ion-button expand=\"full\" type=\"submit\"\n  [disabled]=\"formulario.invalid\" routerLink=\"/inicio\">\n      Guardar\n  </ion-button>\n</form> -->\n\n\n<ion-content center class=\"background\">\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n    \n    <ion-slide>  \n      <form #formulario=\"ngForm\">\n        <ion-grid>\n  \n          <ion-row>\n            <ion-col>\n              <!-- <img src=\"/assets/img/im2.png\" alt=\"10\" width=\"20\"> -->\n            </ion-col>\n          </ion-row>\n        \n          <ion-row class=\"center\">\n            <ion-col>\n              \n                <div *ngFor='let user of complejos'>\n  \n                <ion-card class=\"ion-text-center back\">\n\n                  <img src=\"{{user.foto}}\" alt=\"200\" width=\"500\">\n                  <ion-card-title style=\"color: black;\">\n                    Complejo: {{user.nombre}}\n                  </ion-card-title>\n                  \n              <ion-row>\n                <ion-col size=\"6\">\n                  <ion-button type=\"submit\"\n                      color=\"tertiary\"\n                      (click)=\"obtenerIdComplejo2(user.idComplejo)\"\n                      (click)=\"goSlideCancha()\">\n                      Crear cancha\n                  </ion-button>\n                </ion-col>\n                <ion-col size=\"6\">\n                  <ion-button type=\"submit\"\n                      color=\"tertiary\"\n                      (click)=\"obtenerIdComplejo(user.idComplejo)\"\n                      >\n                      Ver cancha\n                  </ion-button>\n                </ion-col>\n              </ion-row>\n  \n                </ion-card>\n  \n                </div>\n            </ion-col>\n          </ion-row>\n  \n\n  \n        </ion-grid>\n      </form>\n    </ion-slide>\n  \n<!-- ----------------------------------------SLIDE AGREGAR CANCHA---------------------------------------- -->\n    <ion-slide>\n      <ion-grid>\n            <form #formulario=\"ngForm\">\n\n                <ion-row>\n                    <ion-col>  \n  \n                      \n                        <ion-label class=\"ion-text-center\">Cual sera el precio por hora que tendra esta cancha?</ion-label>                      \n                      \n\n                      <ion-item>\n                        <ion-label position=\"floating\">Precio Lps.</ion-label>\n                        <ion-input type=\"number\"\n                                    name=\"precio\"\n                                   [(ngModel)]=\"cancha.precio\"\n                                   required>\n                                  </ion-input>\n                      </ion-item>\n                      <br>\n\n                      <ion-list>\n                        <ion-label>¿Qué tamaño tiene la cancha?</ion-label>\n                        <ion-item>\n                            <ion-select [(ngModel)]=\"cancha.tamanioCancha\"\n                                        name=\"tamanioCancha\"\n                                        required>\n                              <ion-select-option value=\"Pequeña\" >Pequeña</ion-select-option>\n                              <ion-select-option value=\"Mediana\" >Mediana</ion-select-option>\n                              <ion-select-option value=\"Grande\" >Grande</ion-select-option>\n                            </ion-select>\n                        </ion-item>\n                      </ion-list>\n\n                      \n                          <h4>Agrega una foto de la cancha</h4>\n                        <ion-item class=\"ion-text-center\">\n                        <input type=\"file\"\n                        id=\"imgCancha\"\n                        name=\"imgCancha\"\n                        ngModel\n                        required>\n                      </ion-item>\n                        \n                    </ion-col>\n                </ion-row>\n\n            <ion-row>\n              <!-- <ion-col>\n                <ion-button type=\"submit\"\n                          color=\"success\"\n                          shape=\"round\"\n                          expand=\"full\"\n                          (click)=\"goSlide1()\">\n                          <ion-icon name=\"caret-back-outline\"></ion-icon>\n                          Regresar\n                        </ion-button>\n              </ion-col> -->\n              <ion-col>\n                <ion-button type=\"submit\"\n                            color=\"success\"\n                            expand=\"full\"\n                            [disabled]=\"formulario.invalid\"\n                            (click)=\"agregarCancha()\">\n                            <ion-icon name=\"add-circle-outline\"></ion-icon>\n                        Crear cancha\n                    </ion-button>\n              </ion-col>\n              </ion-row>\n\n            </form>\n        </ion-grid>  \n      </ion-slide>\n    \n\n<!-- ------------------------------------------SLIDE VER CANCHAS---------------------------------------------- -->\n\n  <ion-slide>  \n    <form>\n      <ion-grid>\n\n        <!-- <ion-row class=\"center\">\n          <ion-col>\n            <ion-button type=\"submit\"\n                        color=\"success\"\n                        shape=\"round\"\n                        (click)=\"goSlide1()\">\n                        <ion-icon name=\"caret-back-outline\"></ion-icon>\n              Regresar\n            </ion-button>\n          </ion-col>\n        </ion-row> -->\n\n      \n        <ion-row class=\"center\">\n          <ion-col>\n            \n              <div *ngFor='let user of canchas' style=\"background-color: rgb(211, 197, 197, 0.1);\">\n\n                <ion-row>\n                  <ion-col>\n                      <h4 class=\"shadow\">Precio</h4>\n                      <h5 (click)=\"getCanchaId(user.idCancha)\"\n                                          (click)=\"presentAlertPrompt()\"\n                                          style=\"color: blue;\"><u>&#8226; Lps. {{user.precio}}</u>\n                                        </h5>\n                  </ion-col>\n                  <ion-col>\n                      <h4 class=\"shadow\">Tamaño</h4>\n                      <h5 style=\"color: blue;\"\n                      ><u>&#8226;{{user.tamanioCancha}}</u>\n                                        </h5>\n                  </ion-col>\n                </ion-row>\n                \n\n                <img class=\"img\" src=\"{{user.foto}}\" alt=\"200\" width=\"500\">\n                \n\n\n              </div>\n          </ion-col>\n        </ion-row>\n\n        \n\n      </ion-grid>\n    </form>\n  </ion-slide>\n  \n  </ion-slides>\n  \n\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-header titulo=\"Cancha\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"goSlide1()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n\n<!-- <form #formulario=\"ngForm\" (ngSubmit)=\"agregarCancha()\">\n\n  <ion-item>\n    <ion-label>Foto</ion-label>\n    <input type=\"file\"\n    id=\"img\"\n    name=\"img\"\n   ngModel\n   required>\n  </ion-item>\n  <ion-list>\n    <ion-item>\n      <ion-label position=\"floating\">Precio</ion-label>\n      <ion-input type=\"text\"\n                  name=\"precio\"\n                 [(ngModel)]=\"cancha.precio\"\n                 required>\n                </ion-input>\n    </ion-item>\n    <ion-list>\n      <ion-item>\n        <ion-label>Complejo</ion-label>\n        <ion-select [(ngModel)]=\"cancha.idComplejo\"\n                    name=\"idCancha\">\n          <ion-select-option *ngFor=\"let user of complejos\" value=\"{{user.idComplejo}}\" >{{user.nombre}}</ion-select-option>\n        </ion-select>\n      </ion-item>\n    </ion-list>\n\n  </ion-list>\n\n  <ion-button expand=\"full\" type=\"submit\"\n  [disabled]=\"formulario.invalid\" routerLink=\"/inicio\">\n      Guardar\n  </ion-button>\n</form> -->\n\n\n<ion-content center class=\"background\">\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n    \n<!-- ----------------------------------------SLIDE COMPLEJOS---------------------------------------- -->\n\n    <ion-slide>  \n      <form #formulario=\"ngForm\">\n        <ion-grid>\n  \n          <ion-row>\n            <ion-col>\n              <!-- <img src=\"/assets/img/im2.png\" alt=\"10\" width=\"20\"> -->\n            </ion-col>\n          </ion-row>\n        \n          <ion-row class=\"center\">\n            <ion-col>\n              \n                <div *ngFor='let user of complejos'>\n  \n\n                  <img class=\"img\" src=\"{{user.foto}}\">\n                  <h1 class=\"shadow\">\n                    Complejo: {{user.nombre}}\n                  </h1>\n                  \n              <ion-row>\n                <ion-col size=\"6\">\n                  <ion-button type=\"submit\"\n                      fill=\"outline\"\n                      color=\"success\"\n                      shape=\"round\"\n                      (click)=\"obtenerIdComplejo2(user.idComplejo)\"\n                      (click)=\"goSlideCancha()\">\n                      Crear cancha\n                  </ion-button>\n                </ion-col>\n                <ion-col size=\"6\">\n                  <ion-button type=\"submit\"\n                      fill=\"outline\"\n                      color=\"success\"\n                      shape=\"round\"\n                      (click)=\"obtenerIdComplejo(user.idComplejo)\"\n                      >\n                      Ver cancha\n                  </ion-button>\n                </ion-col>\n              </ion-row>\n  \n  \n                </div>\n            </ion-col>\n          </ion-row>\n  \n\n  \n        </ion-grid>\n      </form>\n    </ion-slide>\n  \n<!-- ----------------------------------------SLIDE AGREGAR CANCHA---------------------------------------- -->\n    <ion-slide>\n      <ion-grid>\n            <form #formulario2=\"ngForm\">\n\n                <ion-row>\n                    <ion-col>  \n  \n                      \n                        <ion-label class=\"ion-text-center\">Coloca el precio por hora que tendrá esta cancha</ion-label>                      \n                      \n\n                      <ion-item>\n                        <ion-label position=\"floating\">Precio Lps.</ion-label>\n                        <ion-input type=\"number\"\n                                    name=\"precio\"\n                                   [(ngModel)]=\"cancha.precio\"\n                                   required>\n                                  </ion-input>\n                      </ion-item>\n                      <br>\n\n                      <ion-list>\n                        <ion-label>¿Qué tamaño tiene la cancha?</ion-label>\n                        <ion-item>\n                            <ion-select [(ngModel)]=\"cancha.tamanioCancha\"\n                                        name=\"tamanioCancha\"\n                                        required>\n                              <ion-select-option value=\"Pequeña\" >Pequeña</ion-select-option>\n                              <ion-select-option value=\"Mediana\" >Mediana</ion-select-option>\n                              <ion-select-option value=\"Grande\" >Grande</ion-select-option>\n                            </ion-select>\n                        </ion-item>\n                      </ion-list>\n\n                      \n                          <h4>Agrega una imagen de la cancha</h4>\n                        <ion-item class=\"ion-text-center\">\n                        <input type=\"file\"\n                        id=\"imgCancha\"\n                        name=\"imgCancha\"\n                        ngModel\n                        required>\n                      </ion-item>\n                        \n                    </ion-col>\n                </ion-row>\n\n            <ion-row>\n              <!-- <ion-col>\n                <ion-button type=\"submit\"\n                          color=\"success\"\n                          shape=\"round\"\n                          expand=\"full\"\n                          (click)=\"goSlide1()\">\n                          <ion-icon name=\"caret-back-outline\"></ion-icon>\n                          Regresar\n                        </ion-button>\n              </ion-col> -->\n              <ion-col>\n                <ion-button type=\"submit\"\n                            color=\"success\"\n                            shape=\"round\"\n                            expand=\"full\"\n                            [disabled]=\"formulario2.invalid\"\n                            (click)=\"agregarCancha()\">\n                            <ion-icon name=\"add-circle-outline\"></ion-icon>\n                        Crear cancha\n                    </ion-button>\n              </ion-col>\n              </ion-row>\n\n            </form>\n        </ion-grid>  \n      </ion-slide>\n    \n\n<!-- ------------------------------------------SLIDE VER CANCHAS---------------------------------------------- -->\n\n  <ion-slide>  \n    <form #formulario3=\"ngForm\">\n      <ion-grid>\n      \n        <ion-row class=\"center\">\n          <ion-col>\n            \n              <div class=\"bor\" *ngFor='let user of canchas' style=\"background-color: rgb(211, 197, 197, 0);\">\n                <br>\n                <!-- <ion-row>\n\n                  <ion-col class=\"derecha\">\n                    <ion-button fill=\"clear\"\n                                (click)=\"getCanchaId(user.idCancha)\"\n                                >\n                    <ion-icon class=\"size\" color=\"success\" slot=\"start\" name=\"ellipsis-vertical-outline\"></ion-icon>\n                    </ion-button>\n                  </ion-col>\n                </ion-row> -->\n                \n\n                <div style=\"display: inline-block; position:relative\">\n                  <img class=\"img\" src=\"{{user.foto}}\" >\n                  <div style=\"display: inline-block; position:absolute; top:4%; left:97%; transform: translate(-50%, -50%)\">\n                    <ion-icon class=\"size\" \n                              color=\"dark\" \n                              slot=\"start\" \n                              (click)=\"getCanchaId(user.idCancha)\"\n                              name=\"ellipsis-vertical\"></ion-icon>\n                  </div>\n                </div>\n\n                \n                <ion-row>\n                  <ion-col>\n                      <label>Precio: Lps. {{user.precio}}</label>\n                  </ion-col>\n                  <ion-col>\n                      <label>Tamaño: {{user.tamanioCancha}}</label>\n                  </ion-col>\n                </ion-row>\n                <br>\n              </div>\n          </ion-col>\n        </ion-row>        \n\n      </ion-grid>\n    </form>\n  </ion-slide>\n\n  <!-- ------------------------------------------SLIDE ACT IMAGEN---------------------------------------------- -->\n\n  <ion-slide>  \n    <form #formulario4=\"ngForm\">\n      <ion-grid>\n      \n        <ion-row class=\"center\">\n          <ion-col>\n            \n            <ion-row>\n              <ion-col>\n                  <h4>Imagen Actual</h4>\n                <div>\n                    <img class=\"img\" src=\"{{cancha.foto}}\">\n                </div>                  \n              </ion-col>\n            </ion-row>\n\n              <ion-row>\n                <ion-col>\n                  <div>\n                    <h4>Cambia la imagen</h4>                        \n                    <ion-item>\n                        <input type=\"file\"\n                               id=\"img\"\n                               name=\"img\"\n                               ngModel\n                               required>\n                    </ion-item>\n                  </div>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col>\n                  <ion-button fill=\"outline\"\n                              type=\"submit\"\n                              color=\"success\"\n                              shape=\"round\"\n                              [disabled]=\"formulario4.invalid\"\n                              (click)=\"modificarCanchaFoto()\">\n                              <ion-icon name=\"sync-outline\"></ion-icon>\n                      Actualizar\n                  </ion-button>  \n                </ion-col>\n              </ion-row>\n              \n          </ion-col>\n        </ion-row>        \n\n      </ion-grid>\n    </form>\n  </ion-slide>\n  \n  </ion-slides>\n  \n\n\n</ion-content>\n");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ CanchaPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".back {\n  background-color: #c5d8c9;\n}\n\nion-content.background {\n  --background: url(/assets/img/cancha.jpg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.shadow {\n  text-shadow: 2px 2px #080808;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvY2FuY2hhL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxjYW5jaGFcXGNhbmNoYS5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL2NhbmNoYS9jYW5jaGEucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0kseUJBQUE7QUNDSjs7QURFQTtFQUNJLGlFQUFBO0VBQ0EsWUFBQTtBQ0NKOztBREVFO0VBQ0UsNEJBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL2NhbmNoYS9jYW5jaGEucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmJhY2sge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiKDE5NywgMjE2LCAyMDEpO1xyXG59XHJcblxyXG5pb24tY29udGVudC5iYWNrZ3JvdW5ke1xyXG4gICAgLS1iYWNrZ3JvdW5kOiB1cmwoL2Fzc2V0cy9pbWcvY2FuY2hhLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XHJcbiAgICBvcGFjaXR5OiAwLjg7XHJcbiAgfVxyXG5cclxuICAuc2hhZG93IHtcclxuICAgIHRleHQtc2hhZG93OiAycHggMnB4ICMwODA4MDg7XHJcbiAgfSIsIi5iYWNrIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2M1ZDhjOTtcbn1cblxuaW9uLWNvbnRlbnQuYmFja2dyb3VuZCB7XG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL2NhbmNoYS5qcGcpIDAgMC8xMDAlIDEwMCUgbm8tcmVwZWF0O1xuICBvcGFjaXR5OiAwLjg7XG59XG5cbi5zaGFkb3cge1xuICB0ZXh0LXNoYWRvdzogMnB4IDJweCAjMDgwODA4O1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = (".back {\n  background-color: #c5d8c9;\n}\n\nion-content.background {\n  --background: url(/assets/img/bueno.jpg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.shadow {\n  text-shadow: 2px 2px 8px #080808;\n}\n\n.img {\n  min-height: 250px;\n  max-height: 570px;\n  width: 1000px;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n\nion-icon.size {\n  font-size: 35px;\n}\n\n.bor {\n  border-bottom: white 1px solid;\n}\n\nlabel, ion-label, h1, h2, h3, h4, h5, h6 {\n  text-shadow: 2px 2px 8px #080808;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvY2FuY2hhL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxjYW5jaGFcXGNhbmNoYS5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL2NhbmNoYS9jYW5jaGEucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0kseUJBQUE7QUNDSjs7QURFQTtFQUNJLGdFQUFBO0VBQ0EsWUFBQTtBQ0NKOztBREVFO0VBQ0UsZ0NBQUE7QUNDSjs7QURFRTtFQUNFLGlCQUFBO0VBQ0EsaUJBQUE7RUFFQSxhQUFBO0FDQUo7O0FER0U7RUFDRSxpQkFBQTtBQ0FKOztBREVFO0VBQ0Usa0JBQUE7QUNDSjs7QURDRTtFQUNFLGdCQUFBO0FDRUo7O0FEQUU7RUFDRSxlQUFBO0FDR0o7O0FEQUU7RUFDRSw4QkFBQTtBQ0dKOztBREFBO0VBQ0ksZ0NBQUE7QUNHSiIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL2NhbmNoYS9jYW5jaGEucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmJhY2sge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiKDE5NywgMjE2LCAyMDEpO1xyXG59XHJcblxyXG5pb24tY29udGVudC5iYWNrZ3JvdW5ke1xyXG4gICAgLS1iYWNrZ3JvdW5kOiB1cmwoL2Fzc2V0cy9pbWcvYnVlbm8uanBnKSAwIDAvMTAwJSAxMDAlIG5vLXJlcGVhdDtcclxuICAgIG9wYWNpdHk6IDAuODtcclxuICB9XHJcblxyXG4gIC5zaGFkb3cge1xyXG4gICAgdGV4dC1zaGFkb3c6IDJweCAycHggOHB4ICMwODA4MDg7XHJcbiAgfVxyXG5cclxuICAuaW1nIHtcclxuICAgIG1pbi1oZWlnaHQ6IDI1MHB4O1xyXG4gICAgbWF4LWhlaWdodDogNTcwcHg7XHJcbiAgICBcclxuICAgIHdpZHRoOiAxMDAwcHg7XHJcbiAgfVxyXG5cclxuICAuZGVyZWNoYXtcclxuICAgIHRleHQtYWxpZ246IHJpZ2h0O1xyXG4gIH1cclxuICAuY2VudHJhZG97XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgfVxyXG4gIC5penF1aWVyZGF7XHJcbiAgICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG4gIH1cclxuICBpb24taWNvbi5zaXplIHtcclxuICAgIGZvbnQtc2l6ZTogMzVweDtcclxuICB9XHJcblxyXG4gIC5ib3Ige1xyXG4gICAgYm9yZGVyLWJvdHRvbTogd2hpdGUgMXB4IHNvbGlkO1xyXG4gIH1cclxuXHJcbmxhYmVsLCBpb24tbGFiZWwsIGgxLCBoMiwgaDMsIGg0LCBoNSwgaDYge1xyXG4gICAgdGV4dC1zaGFkb3c6IDJweCAycHggOHB4ICMwODA4MDg7XHJcbn0iLCIuYmFjayB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNjNWQ4Yzk7XG59XG5cbmlvbi1jb250ZW50LmJhY2tncm91bmQge1xuICAtLWJhY2tncm91bmQ6IHVybCgvYXNzZXRzL2ltZy9idWVuby5qcGcpIDAgMC8xMDAlIDEwMCUgbm8tcmVwZWF0O1xuICBvcGFjaXR5OiAwLjg7XG59XG5cbi5zaGFkb3cge1xuICB0ZXh0LXNoYWRvdzogMnB4IDJweCA4cHggIzA4MDgwODtcbn1cblxuLmltZyB7XG4gIG1pbi1oZWlnaHQ6IDI1MHB4O1xuICBtYXgtaGVpZ2h0OiA1NzBweDtcbiAgd2lkdGg6IDEwMDBweDtcbn1cblxuLmRlcmVjaGEge1xuICB0ZXh0LWFsaWduOiByaWdodDtcbn1cblxuLmNlbnRyYWRvIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uaXpxdWllcmRhIHtcbiAgdGV4dC1hbGlnbjogbGVmdDtcbn1cblxuaW9uLWljb24uc2l6ZSB7XG4gIGZvbnQtc2l6ZTogMzVweDtcbn1cblxuLmJvciB7XG4gIGJvcmRlci1ib3R0b206IHdoaXRlIDFweCBzb2xpZDtcbn1cblxubGFiZWwsIGlvbi1sYWJlbCwgaDEsIGgyLCBoMywgaDQsIGg1LCBoNiB7XG4gIHRleHQtc2hhZG93OiAycHggMnB4IDhweCAjMDgwODA4O1xufSJdfQ== */");
 
 /***/ }),
 
@@ -133,12 +133,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let CanchaPage = class CanchaPage {
-    constructor(apiServi, usuarioService, navCtrl, alertaService, alertController) {
+    constructor(apiServi, usuarioService, navCtrl, alertaService, alertController, actionSheetController) {
         this.apiServi = apiServi;
         this.usuarioService = usuarioService;
         this.navCtrl = navCtrl;
         this.alertaService = alertaService;
         this.alertController = alertController;
+        this.actionSheetController = actionSheetController;
         this.canchas = [];
         this.complejos = [];
         this.atras = false;
@@ -171,6 +172,15 @@ let CanchaPage = class CanchaPage {
             this.goSlide1();
         }, (error) => {
             console.log(error);
+        });
+    }
+    modificarCanchaFoto() {
+        const fileInput = document.getElementById('img');
+        const file = fileInput.files[0];
+        const imgPromise = this.getFileBlobCancha(file);
+        imgPromise.then(blob => {
+            this.cancha.foto = blob;
+            this.modificarCancha();
         });
     }
     eliminarCancha() {
@@ -220,6 +230,7 @@ let CanchaPage = class CanchaPage {
         this.apiServi.getCanchaId(id)
             .subscribe((resp) => {
             this.cancha = resp;
+            this.presentActionSheet();
             console.log(this.cancha);
         }, error => console.log(error));
     }
@@ -238,6 +249,43 @@ let CanchaPage = class CanchaPage {
         });
     }
     // ------------------------------------------------ALERT CONTROLLER-------------------------------------
+    presentActionSheet() {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            const actionSheet = yield this.actionSheetController.create({
+                header: 'Actualizar',
+                buttons: [{
+                        text: 'Precio',
+                        icon: 'cash',
+                        cssClass: 'verde',
+                        handler: () => {
+                            this.presentAlertPrompt();
+                        }
+                    }, {
+                        text: 'Tamanio cancha',
+                        icon: 'file-tray',
+                        cssClass: 'azul',
+                        handler: () => {
+                            this.tamanio();
+                        }
+                    }, {
+                        text: 'Imagen cancha',
+                        icon: 'camera-reverse',
+                        cssClass: 'morado',
+                        handler: () => {
+                            this.goSlideImagen();
+                        }
+                    }, {
+                        text: 'Cancel',
+                        icon: 'close',
+                        role: 'cancel',
+                        handler: () => {
+                            console.log('Cancel clicked');
+                        }
+                    }]
+            });
+            yield actionSheet.present();
+        });
+    }
     presentAlertConfirm() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             const alert = yield this.alertController.create({
@@ -266,6 +314,7 @@ let CanchaPage = class CanchaPage {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             const alert = yield this.alertController.create({
                 header: 'Cambia el precio de la cancha!',
+                message: '<strong>Precio actual: Lps.' + this.cancha.precio + ' </strong>',
                 inputs: [
                     {
                         name: 'name',
@@ -280,6 +329,7 @@ let CanchaPage = class CanchaPage {
                         role: 'cancel',
                         cssClass: 'secondary',
                         handler: () => {
+                            this.clean();
                             console.log('Confirm Cancel');
                         }
                     }, {
@@ -288,6 +338,47 @@ let CanchaPage = class CanchaPage {
                             console.log('Confirm Ok');
                             this.cancha.precio = data.name;
                             this.modificarCancha();
+                        }
+                    }
+                ]
+            });
+            yield alert.present();
+        });
+    }
+    tamanio() {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            const alert = yield this.alertController.create({
+                header: 'Cambiar tamanio',
+                message: '<strong>Tamaño actual: ' + this.cancha.tamanioCancha + ' </strong>',
+                buttons: [
+                    {
+                        text: 'Pequeña',
+                        handler: () => {
+                            this.cancha.tamanioCancha = 'Pequeña';
+                            this.modificarCancha();
+                            console.log('Confirm Okay');
+                        }
+                    }, {
+                        text: 'Mediana',
+                        handler: () => {
+                            this.cancha.tamanioCancha = 'Mediana';
+                            this.modificarCancha();
+                            console.log('Confirm Okay');
+                        }
+                    }, {
+                        text: 'Grande',
+                        handler: () => {
+                            this.cancha.tamanioCancha = 'Grande';
+                            this.modificarCancha();
+                            console.log('Confirm Okay');
+                        }
+                    }, {
+                        text: 'Cancel',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: (blah) => {
+                            this.clean();
+                            console.log('Confirm Cancel: blah');
                         }
                     }
                 ]
@@ -315,13 +406,20 @@ let CanchaPage = class CanchaPage {
         this.slides.slideTo(2);
         this.slides.lockSwipes(true);
     }
+    goSlideImagen() {
+        this.atras = true;
+        this.slides.lockSwipes(false);
+        this.slides.slideTo(3);
+        this.slides.lockSwipes(true);
+    }
 };
 CanchaPage.ctorParameters = () => [
     { type: src_app_services_apiservi_service__WEBPACK_IMPORTED_MODULE_3__["ApiserviService"] },
     { type: src_app_services_usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"] },
     { type: src_app_services_alerta_service_service__WEBPACK_IMPORTED_MODULE_6__["AlertaServiceService"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ActionSheetController"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('slidePrincipal', { static: true }),
@@ -337,7 +435,8 @@ CanchaPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         src_app_services_usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"],
         _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"],
         src_app_services_alerta_service_service__WEBPACK_IMPORTED_MODULE_6__["AlertaServiceService"],
-        _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"]])
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"],
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ActionSheetController"]])
 ], CanchaPage);
 
 

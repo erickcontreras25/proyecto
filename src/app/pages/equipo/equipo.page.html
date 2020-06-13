@@ -7,6 +7,12 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-buttons slot="end" *ngIf="perfil.id == equipo.userId">
+      <ion-icon class="size shadow" 
+                style="color: white;" 
+                (click)="actualizar()"
+                name="ellipsis-vertical"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,21 +24,10 @@
     <ion-slide>
       <ion-grid>
 
-        <br>
         <ion-row>
           <ion-col>
-            <div >
-              <ion-button color="success" 
-                          routerLink="/unirme-equipo" routerDirection="forward"
-                          fill="solid">
-                          <ion-icon name="search-outline" class="size"></ion-icon>
-                          BUSCAR EQUIPO                          
-                        </ion-button>
-              </div>
-          </ion-col>
-          <ion-col>
             <div *ngIf="!mostrarCrear">
-              <ion-button color="tertiary" 
+              <ion-button color="success" 
                           (click)="mostrarCrear=true"
                           fill="solid">
                           <ion-icon name="add-circle-outline" class="size"></ion-icon>
@@ -42,6 +37,15 @@
               <div *ngIf="mostrarCrear">
                 <ion-button color="tertiary" 
                       (click)="mostrarCrear=false">OCULTAR</ion-button>
+              </div>
+          </ion-col>
+          <ion-col class="derecha">
+            <div >
+              <ion-button color="light" 
+                          routerLink="/unirme-equipo" routerDirection="forward"
+                          class="redondo">
+                          <ion-icon color="success" name="search-outline" class="size"></ion-icon>
+                        </ion-button>
               </div>
           </ion-col>
         </ion-row>
@@ -63,7 +67,7 @@
                           [(ngModel)]="equipo.nombre"></ion-input>
             </ion-item>
 
-            <h4>Cuantos miembros se permitiran en el aquipo</h4>
+            <h4>¿Cuántos miembros se permitirán en el equipo?</h4>
             <ion-item>
               <ion-input name="cantJugadores"
                           type="number"
@@ -75,6 +79,7 @@
 
           <ion-button expand="full" 
                       type="submit"
+                      color="success"
                       [disabled]="formulario.invalid"
                       (click)="crearEquipo()">
               CREAR
@@ -87,13 +92,11 @@
 
         </div>
 
-
-      <h1 style="color: white;">Mis equipos</h1>  
-
         <div>
+          <h1 style="color: white;">Mis equipos</h1> 
             <ion-row class="ion-align-items-center bor" *ngFor="let user of equipoUserUser">
-              <ion-col size="6" class="izquierda">
-                <h5 style="color: white;">{{user.equipo.nombre}}</h5>
+              <ion-col size="8" class="izquierda">
+                <h4 style="color: white;">{{user.equipo.nombre}}</h4>
               </ion-col>
               
               <ion-col class="derecha">
@@ -113,7 +116,7 @@
       <h2 style="color: white;" *ngIf="mostrarEIncomp.length != 0">Completar creación</h2>
         <div>          
             <ion-row class="bor" *ngFor="let item of mostrarEIncomp">
-              <ion-col class="izquierda"><h5 style="color: white;">{{item.nombre}}</h5></ion-col>
+              <ion-col class="izquierda"><h4 style="color: white;">{{item.nombre}}</h4></ion-col>
               <!-- A PARTIR DE AQUI YA ESTABA COMENTADO  <ion-col class="derecha">
                 <ion-button *ngIf="!unido" color="success"
                             (click)="llenar(user.idEquipo)"
@@ -122,7 +125,7 @@
               <ion-col class="derecha">
                 <ion-button color="success"
                             class="derecha"
-                            shape="round" fill="clear"
+                            shape="round"
                             (click)="uniraEquipo(item.idEquipo)">Completar creacion</ion-button>              
               </ion-col>
             </ion-row>
@@ -132,7 +135,7 @@
   </ion-slide>
 
 
-
+<!-- -------------------------------------------------------------------------------------------------  -->
 
 
   <ion-slide>
@@ -140,18 +143,44 @@
     <div>
 
       <div>
-        <ion-card-title *ngIf="perfil.id == equipo.userId" style="color: white;">Mi Equipo</ion-card-title>
-        <ion-card-title *ngIf="perfil.id != equipo.userId" style="color: white;">Miembros</ion-card-title>
-        <h6 *ngIf="perfil.id == equipo.userId" style="color: green;"
-                      (click)="presentAlertPrompt()">&#8226;Cantidad de cupos: {{equipo.cantJugadores}} </h6>
+        <h1 *ngIf="perfil.id == equipo.userId">{{equipo.nombre}}</h1>
+        <h2 *ngIf="perfil.id == equipo.userId">Soy capitán</h2>
+        <h1 *ngIf="perfil.id != equipo.userId">{{equipo.nombre}}</h1>
+        <h2 *ngIf="perfil.id != equipo.userId">Miembros</h2>
+        
+        <ion-row *ngIf="perfil.id == equipo.userId" class="bor">
+          <ion-col class="izquierda" size="9">
+              Jugadores permitidos: 
+          </ion-col>
+          <ion-col class="derecha">
+            {{equipo.cantJugadores}} 
+          </ion-col>          
+        </ion-row>
+        <ion-row *ngIf="perfil.id == equipo.userId" class="bor">
+          <ion-col class="izquierda" size="9">
+            Jugadores en el equipo:
+          </ion-col>
+          <ion-col class="derecha">
+            {{equipoUsers.length}} 
+          </ion-col>          
+        </ion-row>
+        <br>
+        <h2 *ngIf="perfil.id == equipo.userId">Miembros</h2><br>
+
         <ion-row class="ion-align-items-center bor" *ngFor="let user of equipoUsers">
           <ion-col>        
-            <h5 class="izquierda" style="color: white;">{{user.user.nombreUsuario}}</h5>                  
+            <h4 class="izquierda">{{user.user.nombreUsuario}}</h4>                  
           </ion-col>
           <ion-col *ngIf="user.userId == equipo.userId" class="derecha">
-            <h5>Capitan</h5>
+            <h6>Capitán</h6>
           </ion-col>
           <ion-col *ngIf="user.userId != equipo.userId && equipo.userId == perfil.id" class="derecha">
+            <ion-icon class="size shadow" 
+                style="color: green" 
+                (click)="actualizarCapitan(user.userId)"
+                name="ellipsis-vertical"></ion-icon>
+          </ion-col>
+          <!-- <ion-col *ngIf="user.userId != equipo.userId && equipo.userId == perfil.id" class="derecha">
             <ion-button color="success"
                         class="derecha"
                         (click)="cambiarCapitan(user.userId)">
@@ -164,12 +193,9 @@
                         (click)="sacarEquipo(user.userId)">
                         <ion-icon color="light" name="person-remove-outline"></ion-icon>
                       </ion-button>
-          </ion-col> 
+          </ion-col>  -->
           <ion-col *ngIf="user.userId == perfil.id && user.userId!=equipo.userId" class="derecha">
-            <ion-button color="warning"
-                        class="derecha"
-                        fill="clear"                                            
-                        (click)="salirEquipo(user.equipoId)">SALIRME</ion-button>
+            <h5 style="color: red;" (click)="salirEquipo(user.equipoId)">Salirme</h5>
           </ion-col>
         </ion-row>
         

@@ -9,7 +9,8 @@ import { Cancha } from 'src/models/cancha.models';
 import { Complejo } from 'src/models/complejo.models';
 import * as moment from 'moment';
 import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
-import { AlertController, NavController, IonSlides } from '@ionic/angular';
+import { AlertController, NavController, IonSlides, ActionSheetController } from '@ionic/angular';
+import { AlertaServiceService } from 'src/app/services/alerta-service.service';
 
 @Component({
   selector: 'app-perfil',
@@ -26,12 +27,16 @@ export class PerfilPage implements OnInit {
   totalPagar;
   auxHoras;
   auxPrecio;
+  auxReser = false;
   parcial = false;
   completo = false;
   atras = false;
 
   reservacion: Reservacion = new Reservacion(0, new Date(), new Date(), false, false, 0, '');
   reservaciones: Reservacion[] = [];
+  reser: Reservacion[] = [];
+  hInicio;
+  hFin;
 
   reservacionesNoVencidas: Reservacion[] = [];
 
@@ -57,12 +62,14 @@ export class PerfilPage implements OnInit {
               private usuarioService: UsuarioService,
               private payPal: PayPal,
               public alertController: AlertController,
-              private navCtrl: NavController) { }
+              private navCtrl: NavController,
+              private alertaService: AlertaServiceService,
+              public actionSheetController: ActionSheetController) { }
 
   ngOnInit() {
 
     this.user = this.usuarioService.getUsuario();
-    console.log(this.user);
+    // console.log(this.user);
     this.slides.lockSwipes(true);
 
     this.obtenerMisReservacion();
@@ -118,7 +125,7 @@ export class PerfilPage implements OnInit {
     this.apiServi.getReservacionXUser(this.user.id)
     .subscribe((resp: Reservacion[]) => {
       this.reservaciones = resp;
-      console.log('SERVICIO', resp);
+      // console.log('SERVICIO', resp);
       this.noVencidas();
     });
   }
@@ -127,16 +134,19 @@ export class PerfilPage implements OnInit {
     .subscribe( resp => {
       console.log('ELIMINADO CON EXITO');
       this.obtenerMisReservacion();
-      this.navCtrl.navigateRoot('/inicio');
+      this.goSlide1();
     });
   }
 
-  modificarReservacion(id: number) {
-    this.apiServi.putReservacion(id, this.reservacion)
+  modificarReservacion() {
+    this.reservacion.horaInicial = moment(this.hInicio).subtract(6, 'hour');
+    this.reservacion.horaFinal = moment(this.hFin).subtract(6, 'hour');
+    this.apiServi.putReservacion(this.reservacion.idReservacion, this.reservacion)
     .subscribe((data) => {
-      this.reservacion = new Reservacion(0, new Date(), new Date(), false, false, 0, '');
-      this.navCtrl.navigateRoot('/inicio');
-      window.alert('ACTUALIZADO CON EXITO');
+      // this.clear();
+      this.obtenerMisReservacion();
+      this.goSlide1();
+      window.alert('Actualizado!!');
     },
     (error) => {
       console.log(error);
@@ -157,6 +167,7 @@ export class PerfilPage implements OnInit {
     this.apiServi.getComplejoId(id)
     .subscribe( (resp: Complejo) => {
       this.complejo = resp;
+      this.obtenerReservas(id);
       this.goSlide2();
       // console.log('EJECUTADO CON EXITO');
     });
@@ -185,6 +196,97 @@ export class PerfilPage implements OnInit {
     }
   }
 
+  obtenerReservas(id: number) {
+    this.apiServi.getReservacionComplejo(id)
+    .subscribe((resp: Reservacion[]) => {
+      this.reser = resp;
+      // console.log(this.reser);
+    });
+  }
+
+  validarFecha() {
+
+    const ini = moment().format('MM-DD-YYYY HH:mm');
+
+    const dInicial = moment(this.hInicio).format('MM-DD-YYYY HH:mm');
+    const dFinal = moment(this.hFin).format('MM-DD-YYYY HH:mm');
+
+    const abre = moment(this.hInicio).format('HH');
+    const cierra = moment(this.hFin).format('HH');
+    const abreComplejo = moment(this.complejo.horaInicio).format('HH');
+    const cierraComplejo = moment(this.complejo.horaCierre).format('HH');
+
+    const diaReserva = moment(this.hInicio).format('MM-DD-YYYY');
+
+
+    if (dInicial <= ini || dFinal <= ini) {
+      this.volver();
+      return alert('La hora inicial o final no puede ser menor que la hora actual');
+    }
+
+    if (dFinal < dInicial) {
+      this.volver();
+      return alert('La hora final no puede ser menor que la hora inicial.');
+    }
+
+    if (dInicial === dFinal) {
+      this.volver();
+      return alert('La hora final no puede ser igual que la inicial');
+    }
+
+    if (abre < abreComplejo || cierra > cierraComplejo) {
+      this.volver();
+      return alert('Solo puede reservar en horario que permite el complejo');
+    }
+
+    for (let i = 0; i < this.reser.length; i++) {
+      const fechInicial = moment(this.reser[i].horaInicial).format('MM-DD-YYYY H:mm');
+      const fechFinal = moment(this.reser[i].horaFinal).format('MM-DD-YYYY H:mm');
+
+      if (dInicial > fechInicial && dInicial < fechFinal || dFinal > fechInicial && dFinal < fechFinal) {
+        this.volver();
+        return alert('El horario de ' + fechInicial + ' a ' + fechFinal + ' no esta disponible');
+      }
+
+      if (dInicial === fechInicial || dFinal === fechFinal) {
+        this.volver();
+        return alert('Este horario no esta disponible');
+      }
+
+    }
+    const inic = moment(this.hInicio);
+    const fin = moment(this.hFin);
+    this.auxHoras = fin.diff(inic, 'hours');
+
+    if (this.auxHoras >= 4) {
+      this.volver();
+      return alert('No puedes reservar por más de 3 horas.');
+    }
+
+    this.auxReser = true;
+    return alert('Horario disponible');
+  }
+  volver() {
+    this.auxReser = false;
+  }
+  validarSiPago() {
+    if (this.reservacion.pago === true || this.reservacion.pagoParcial === true) {
+      return this.alertaService.alertaInformativa('No puedes cancelar porque ya pagaste.\nComunícate con el encargado del complejo.');
+    } else {
+      this.eliminarReservacion();
+    }
+  }
+  validarSiPago2() {
+    if (this.reservacion.pago === true || this.reservacion.pagoParcial === true) {
+      return this.alertaService.alertaInformativa('No puedes hacer cambios porque ya pagaste.\nComunícate con el encargado del complejo.');
+    } else {
+      this.goSlide3();
+    }
+  }
+  clear() {
+    this.reservacion = new Reservacion(0, new Date(), new Date(), false, false, 0, '');
+  }
+
 
 // --------------------------------------------------------------------------------------------------
 async confirmarCancelacion() {
@@ -202,7 +304,7 @@ async confirmarCancelacion() {
       }, {
         text: 'Okay',
         handler: () => {
-          this.eliminarReservacion();
+          this.validarSiPago();
           console.log('Confirm Okay');
         }
       }
@@ -211,45 +313,47 @@ async confirmarCancelacion() {
   await alert.present();
 }
 
-
-  async pagarCompleto() {
-    const alert = await this.alertController.create({
-      header: 'Confirmar pago',
-      message: '<strong>--</strong>??',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            this.totalPagar = this.auxHoras * this.cancha.precio;
-            this.completo = true;
-            this.pagar();
-            console.log(this.totalPagar);
-            console.log('Confirm Okay');
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
+async actualizar() {
+  const actionSheet = await this.actionSheetController.create({
+    header: 'Actualizar',
+    buttons: [{
+      text: 'Dia reserva',
+      icon: 'calendar',
+      cssClass: 'azul',
+      handler: () => {
+        this.validarSiPago2();
+      }
+    }, {
+      text: 'Cancelar reserva',
+      icon: 'trash',
+      cssClass: 'rojo',
+      handler: () => {
+        this.confirmarCancelacion();
+      }
+    }, {
+      text: 'Cancel',
+      icon: 'close',
+      role: 'cancel',
+      handler: () => {
+        console.log('Cancel clicked');
+      }
+    }]
+  });
+  await actionSheet.present();
+}
 
   async pagarParcial() {
     const alert = await this.alertController.create({
-      header: 'Confirmar pago',
-      message: '<strong>Cuanto quieres pagar</strong>??',
+      header: 'Confirma el pago',
+      message: '<strong>¿Cuánto quieres pagar</strong>?',
       buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
+            this.parcial = false;
+            this.completo = false;
             console.log('Confirm Cancel: blah');
           }
         }, {
@@ -298,11 +402,11 @@ async confirmarCancelacion() {
         this.payPal.renderSinglePaymentUI(cobro).then(() => {
           if (this.parcial === true) {
             this.reservacion.pagoParcial = true;
-            this.modificarReservacion(this.reservacion.idReservacion);
+            this.modificarReservacion();
           }
           if (this.completo === true) {
             this.reservacion.pago = true;
-            this.modificarReservacion(this.reservacion.idReservacion);
+            this.modificarReservacion();
           }
           // Se ha realizado el cobro correctamente
           // En caso de estar en desarrollo, este el código de la Sandbox
@@ -323,18 +427,25 @@ async confirmarCancelacion() {
           //   }
           // }
         }, () => {
+          this.parcial = false;
+          this.completo = false;
           // Ha petado el cuadro de diálogo
         });
       }, () => {
+        this.parcial = false;
+        this.completo = false;
         // Ha petado la configuración
       });
     }, () => {
+      this.parcial = false;
+      this.completo = false;
       // Ha petado la inicialización o el dispositivo no permite usar PayPal
     });
   }
 
 
   goSlide1() {
+    this.clear();
     this.atras = false;
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);

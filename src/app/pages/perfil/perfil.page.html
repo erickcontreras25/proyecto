@@ -14,11 +14,11 @@
 
   <div>
     <ion-row>
-      <ion-col>
-        <ion-row><h5 class="shadow" style="color: white;">{{user.nombreUsuario}}</h5></ion-row>
+      <ion-col class="centrado">
+        <h5>{{user.nombreUsuario}}</h5>
         <!-- <ion-row><h5>{{user.email}}</h5></ion-row>       -->
       </ion-col>
-      <ion-col><h5 class="shadow" style="color: white;">{{user.edad}} años</h5></ion-col>
+      <ion-col class="centrado"><h5 >{{user.edad}} años</h5></ion-col>
     </ion-row>
   </div>
 
@@ -26,13 +26,11 @@
 
   <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
 
+<!-- ---------------------------------------------------SLIDE 1--------------------------------------------- -->
+
     <ion-slide>
       <ion-grid>
         <form>
-
-          <!-- <ion-row center>
-            <ion-button (click)="obtenerMisReservacion()">Ver mi historial reservas</ion-button>
-          </ion-row> -->
 
           <h1 style="color: white;" class="shadow">Mis reservaciones</h1>
 
@@ -56,8 +54,7 @@
               <ion-col class="derecha">
                 <ion-button color="success"
                             class="derecha"      
-                            fill="clear"    
-                                       
+                            fill="clear"                                       
                             (click)="obtenerReservacionId(item.idReservacion)">
                             <ion-icon color="success" class="size" name="return-up-forward-outline"></ion-icon>
                             </ion-button>
@@ -76,10 +73,18 @@
         <form>
           <!-- <h2 class="ion-text-center">Mis reservaciones</h2>           -->
 
-            <div style="background-color: rgb(211, 197, 197, 0.05);">
+            <div class="bor" style="background-color: rgb(211, 197, 197, 0);">
+              <br>
 
                   <div style="display: inline-block; position:relative">
-                    <img src="{{cancha.foto}}" alt="200" width="500">
+                    <img class="img" src="{{cancha.foto}}">
+                    <div style="display: inline-block; position:absolute; top:5%; left:96%; transform: translate(-50%, -50%)">
+                        <ion-icon class="size shadow" 
+                                  style="color: white;" 
+                                  slot="start"
+                                  (click)="actualizar()"
+                                  name="ellipsis-vertical"></ion-icon>
+                    </div>
                     <div style="display: inline-block; position:absolute; top:100%; left:50%; transform: translate(-50%, -50%)">      
                       <img src="{{complejo.foto}}" class="imgRedonda">
                   </div>
@@ -89,7 +94,7 @@
                   <ion-row>
                     <ion-col>
                       <ion-icon class="shadow" name="calendar-outline" color="secondary"></ion-icon>
-                      <label class="shadow">{{reservacion.horaInicial | date:'MMMM-dd'}}</label>
+                      <label class="shadow">{{reservacion.horaInicial | date:'dd-MMMM'}}</label>
                       <label class="shadow">                       
                           {{reservacion.horaInicial | date:'HH:mm'}} a {{reservacion.horaFinal | date:'HH:mm'}}
                       </label>
@@ -119,16 +124,9 @@
 
                   
                   <ion-row>
-                    <ion-col>
-                          <ion-icon name="trash-outline" style="color: red;" (click)="confirmarCancelacion()">Cancelar resereserva</ion-icon>
-                    </ion-col>          
-                    <!-- <ion-col class="centrado" *ngIf="!reservacion.pago || !reservacion.pagoParcial">
-                      <ion-button (click)="obtenerReservacionId(reservacion.idReservacion)"
-                                  (click)="obtenerCanchaId(reservacion.idCancha)"
-                                  (click)="pagarCompleto()">Pagar 100%</ion-button>
-                    </ion-col> -->
-                    <ion-col class="derecha" *ngIf="!reservacion.pago && !reservacion.pagoParcial">
-                      <ion-button 
+                    <ion-col *ngIf="!reservacion.pago && !reservacion.pagoParcial">
+                      <ion-button color="success"
+                                  fill="outline"
                                   (click)="pagarParcial()"
                                   >Pagar Reserva</ion-button>
                     </ion-col>
@@ -140,14 +138,83 @@
       </ion-grid>
     </ion-slide>
 
+
+    <!-- ---------------------------------------------------SLIDE 3--------------------------------------------- -->
+
+    <ion-slide>
+      <ion-grid>
+        <form>
+
+          <ion-row>
+            <ion-col>
+              <h2>Cambia el día y hora de la reserva</h2>
+              <label>
+                Recuerda que en este complejo solo puedes reservar en horario de:
+              </label>
+              <h4>
+              <b style="color: red;">{{complejo.horaInicio | date:'HH'}}:00</b>
+                a 
+              <b style="color: red;">{{complejo.horaCierre | date:'HH'}}:00</b>
+            </h4>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col>  
+
+                <ion-item>
+                  <ion-label>Hora Inicial</ion-label>
+                  <ion-datetime displayFormat="D MMM YYYY HH:mm" 
+                                name="horaInicial"
+                                minuteValues="0" min="10:00" 
+                                [(ngModel)]="hInicio"
+                                (ngModelChange)="volver()">
+                  </ion-datetime>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Hora Final</ion-label>
+                  <ion-datetime displayFormat="D MMM YYYY HH:mm" 
+                                name="horaFinal"
+                                minuteValues="0" min="11:00" 
+                                [(ngModel)]="hFin"
+                                (ngModelChange)="volver()">
+                  </ion-datetime>
+                </ion-item>
+                  
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                <ion-button type="submit"
+                            color="success"
+                            fill="outline"
+                            (click)="validarFecha()">
+                            Verificar Horario
+                </ion-button>
+            </ion-col>
+              <ion-col>
+                  <ion-button type="submit"
+                              color="success"
+                              fill="outline"
+                              *ngIf="auxReser==true"
+                              (click)="modificarReservacion()">
+                      Actualizar
+                  </ion-button>
+              </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <label style="color: white;">Estas reservando por un tiempo de </label>
+              <h2 *ngIf="auxHoras!=null">{{auxHoras}} h</h2>
+            </ion-col>
+          </ion-row>
+
+        </form>
+      </ion-grid>
+    </ion-slide>
+
   </ion-slides>
-  
-  
-  
-
-  <!-- ------------------------------------------------------------------------------------ -->
-
-  
 
 
   

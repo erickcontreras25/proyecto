@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-header titulo=\"Equipo\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"slideAtras()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n\n<ion-content class=\"background\">\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n    <ion-slide>\n      <ion-grid>\n\n        <br>\n        <ion-row>\n          <ion-col>\n            <div >\n              <ion-button color=\"success\" \n                          routerLink=\"/unirme-equipo\" routerDirection=\"forward\"\n                          fill=\"solid\">\n                          <ion-icon name=\"search-outline\" class=\"size\"></ion-icon>\n                          BUSCAR EQUIPO                          \n                        </ion-button>\n              </div>\n          </ion-col>\n          <ion-col>\n            <div *ngIf=\"!mostrarCrear\">\n              <ion-button color=\"tertiary\" \n                          (click)=\"mostrarCrear=true\"\n                          fill=\"solid\">\n                          <ion-icon name=\"add-circle-outline\" class=\"size\"></ion-icon>\n                          CREAR EQUIPO                          \n                        </ion-button>\n              </div>\n              <div *ngIf=\"mostrarCrear\">\n                <ion-button color=\"tertiary\" \n                      (click)=\"mostrarCrear=false\">OCULTAR</ion-button>\n              </div>\n          </ion-col>\n        </ion-row>\n        \n        \n        \n        <br>\n        <div *ngIf=\"mostrarCrear\">\n          <form #formulario=\"ngForm\">\n          <ion-list>\n            <h4>Dale nombre al equipo</h4>\n            <ion-item>\n              <ion-input name=\"nombre\"\n                          type=\"nombre\"\n                          minlength=\"5\"\n                          maxlength=\"15\"\n                          placeholder=\"Nombre\"                          \n                          required\n                          [(ngModel)]=\"equipo.nombre\"></ion-input>\n            </ion-item>\n\n            <h4>Cuantos miembros se permitiran en el aquipo</h4>\n            <ion-item>\n              <ion-input name=\"cantJugadores\"\n                          type=\"number\"\n                          placeholder=\"0\"\n                          required\n                          [(ngModel)]=\"equipo.cantJugadores\"></ion-input>\n            </ion-item>\n          </ion-list>\n\n          <ion-button expand=\"full\" \n                      type=\"submit\"\n                      [disabled]=\"formulario.invalid\"\n                      (click)=\"crearEquipo()\">\n              CREAR\n          </ion-button>\n\n          <!-- <ion-button color=\"success\" \n                      (click)=\"mostrarCrear=false\">OCULTAR</ion-button> -->         \n          \n          </form>\n\n        </div>\n\n\n      <h1 style=\"color: white;\">Mis equipos</h1>  \n\n        <div>\n            <ion-row class=\"ion-align-items-center bor\" *ngFor=\"let user of equipoUserUser\">\n              <ion-col size=\"6\" class=\"izquierda\">\n                <h5 style=\"color: white;\">{{user.equipo.nombre}}</h5>\n              </ion-col>\n              \n              <ion-col class=\"derecha\">\n                <ion-button class=\"derecha\"      \n                            shape=\"round\" fill=\"clear\"\n                            (click)=\"obtenerEquipoId(user.equipoId)\"\n                            (click)=\"getEquipoUserxIdEquipo(user.equipoId)\"\n                            >\n                            <ion-icon color=\"success\" class=\"size\" name=\"return-up-forward-outline\"></ion-icon>\n                          </ion-button>\n                \n              </ion-col>\n            </ion-row>\n            \n        </div>\n\n      <h2 style=\"color: white;\" *ngIf=\"mostrarEIncomp.length != 0\">Completar creación</h2>\n        <div>          \n            <ion-row class=\"bor\" *ngFor=\"let item of mostrarEIncomp\">\n              <ion-col class=\"izquierda\"><h5 style=\"color: white;\">{{item.nombre}}</h5></ion-col>\n              <!-- A PARTIR DE AQUI YA ESTABA COMENTADO  <ion-col class=\"derecha\">\n                <ion-button *ngIf=\"!unido\" color=\"success\"\n                            (click)=\"llenar(user.idEquipo)\"\n                            (click)=\"uniraEquipo()\">UNIRME</ion-button>\n              </ion-col> HASTA AQUI ESTABA COMENTADO -->\n              <ion-col class=\"derecha\">\n                <ion-button color=\"success\"\n                            class=\"derecha\"\n                            shape=\"round\" fill=\"clear\"\n                            (click)=\"uniraEquipo(item.idEquipo)\">Completar creacion</ion-button>              \n              </ion-col>\n            </ion-row>\n        </div>\n\n    </ion-grid>\n  </ion-slide>\n\n\n\n\n\n  <ion-slide>\n    <ion-grid>\n    <div>\n\n      <div>\n        <ion-card-title *ngIf=\"perfil.id == equipo.userId\" style=\"color: white;\">Mi Equipo</ion-card-title>\n        <ion-card-title *ngIf=\"perfil.id != equipo.userId\" style=\"color: white;\">Miembros</ion-card-title>\n        <h6 *ngIf=\"perfil.id == equipo.userId\" style=\"color: green;\"\n                      (click)=\"presentAlertPrompt()\">&#8226;Cantidad de cupos: {{equipo.cantJugadores}} </h6>\n        <ion-row class=\"ion-align-items-center bor\" *ngFor=\"let user of equipoUsers\">\n          <ion-col>        \n            <h5 class=\"izquierda\" style=\"color: white;\">{{user.user.nombreUsuario}}</h5>                  \n          </ion-col>\n          <ion-col *ngIf=\"user.userId == equipo.userId\" class=\"derecha\">\n            <h5>Capitan</h5>\n          </ion-col>\n          <ion-col *ngIf=\"user.userId != equipo.userId && equipo.userId == perfil.id\" class=\"derecha\">\n            <ion-button color=\"success\"\n                        class=\"derecha\"\n                        (click)=\"cambiarCapitan(user.userId)\">\n                        Elegir como capitan\n                      </ion-button>\n          </ion-col> \n          <ion-col *ngIf=\"user.userId != equipo.userId && equipo.userId == perfil.id\" class=\"derecha\">\n            <ion-button color=\"danger\"\n                        class=\"derecha\"\n                        (click)=\"sacarEquipo(user.userId)\">\n                        <ion-icon color=\"light\" name=\"person-remove-outline\"></ion-icon>\n                      </ion-button>\n          </ion-col> \n          <ion-col *ngIf=\"user.userId == perfil.id && user.userId!=equipo.userId\" class=\"derecha\">\n            <ion-button color=\"warning\"\n                        class=\"derecha\"\n                        fill=\"clear\"                                            \n                        (click)=\"salirEquipo(user.equipoId)\">SALIRME</ion-button>\n          </ion-col>\n        </ion-row>\n        \n\n      </div>\n    </div>\n  </ion-grid>\n  </ion-slide>\n\n\n\n\n\n  <ion-slide>\n    <!-- <ion-grid>\n    <div>\n      <ion-card class=\"blanco\">\n        <ion-row *ngFor=\"let user of equipoUsers\">\n          <ion-col size=\"6\" class=\"izquierda\">        \n            <h5 style=\"color: black;\">{{user.user.nombreUsuario}}</h5>                  \n          </ion-col>\n          <ion-col class=\"derecha\" *ngIf=\"user.userId == equipo.userId\">\n            <h5>Capitan</h5>\n          </ion-col>\n          <ion-col *ngIf=\"user.userId != equipo.userId\" class=\"derecha\">\n            <ion-button color=\"danger\"\n                        class=\"derecha\"\n                        (click)=\"sacarEquipo(user.userId)\">\n                        <ion-icon color=\"light\" name=\"person-remove-outline\"></ion-icon>\n                      </ion-button>\n          </ion-col>    \n        </ion-row>\n        <ion-row>\n          <ion-col>\n          <ion-button   color=\"success\"\n                        expand=\"full\"\n                        (click)=\"ocultar()\"\n                        (click)=\"goSlide1()\">Regresar</ion-button>\n                      </ion-col>\n        </ion-row>\n      </ion-card>\n    </div>  \n  </ion-grid> -->\n  </ion-slide>\n  \n  \n</ion-slides>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-header titulo=\"Equipo\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"slideAtras()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-buttons slot=\"end\" *ngIf=\"perfil.id == equipo.userId\">\n      <ion-icon class=\"size shadow\" \n                style=\"color: white;\" \n                (click)=\"actualizar()\"\n                name=\"ellipsis-vertical\"></ion-icon>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n\n<ion-content class=\"background\">\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n    <ion-slide>\n      <ion-grid>\n\n        <br>\n        <ion-row>\n          <ion-col>\n            <div >\n              <ion-button color=\"success\" \n                          routerLink=\"/unirme-equipo\" routerDirection=\"forward\"\n                          fill=\"solid\">\n                          <ion-icon name=\"search-outline\" class=\"size\"></ion-icon>\n                          BUSCAR EQUIPO                          \n                        </ion-button>\n              </div>\n          </ion-col>\n          <ion-col>\n            <div *ngIf=\"!mostrarCrear\">\n              <ion-button color=\"tertiary\" \n                          (click)=\"mostrarCrear=true\"\n                          fill=\"solid\">\n                          <ion-icon name=\"add-circle-outline\" class=\"size\"></ion-icon>\n                          CREAR EQUIPO                          \n                        </ion-button>\n              </div>\n              <div *ngIf=\"mostrarCrear\">\n                <ion-button color=\"tertiary\" \n                      (click)=\"mostrarCrear=false\">OCULTAR</ion-button>\n              </div>\n          </ion-col>\n        </ion-row>\n        \n        \n        \n        <br>\n        <div *ngIf=\"mostrarCrear\">\n          <form #formulario=\"ngForm\">\n          <ion-list>\n            <h4>Dale nombre al equipo</h4>\n            <ion-item>\n              <ion-input name=\"nombre\"\n                          type=\"nombre\"\n                          minlength=\"5\"\n                          maxlength=\"15\"\n                          placeholder=\"Nombre\"                          \n                          required\n                          [(ngModel)]=\"equipo.nombre\"></ion-input>\n            </ion-item>\n\n            <h4>Cuantos miembros se permitiran en el aquipo</h4>\n            <ion-item>\n              <ion-input name=\"cantJugadores\"\n                          type=\"number\"\n                          placeholder=\"0\"\n                          required\n                          [(ngModel)]=\"equipo.cantJugadores\"></ion-input>\n            </ion-item>\n          </ion-list>\n\n          <ion-button expand=\"full\" \n                      type=\"submit\"\n                      [disabled]=\"formulario.invalid\"\n                      (click)=\"crearEquipo()\">\n              CREAR\n          </ion-button>\n\n          <!-- <ion-button color=\"success\" \n                      (click)=\"mostrarCrear=false\">OCULTAR</ion-button> -->         \n          \n          </form>\n\n        </div>\n\n\n      <h1 style=\"color: white;\">Mis equipos</h1>  \n\n        <div>\n            <ion-row class=\"ion-align-items-center bor\" *ngFor=\"let user of equipoUserUser\">\n              <ion-col size=\"6\" class=\"izquierda\">\n                <h5 style=\"color: white;\">{{user.equipo.nombre}}</h5>\n              </ion-col>\n              \n              <ion-col class=\"derecha\">\n                <ion-button class=\"derecha\"      \n                            shape=\"round\" fill=\"clear\"\n                            (click)=\"obtenerEquipoId(user.equipoId)\"\n                            (click)=\"getEquipoUserxIdEquipo(user.equipoId)\"\n                            >\n                            <ion-icon color=\"success\" class=\"size\" name=\"return-up-forward-outline\"></ion-icon>\n                          </ion-button>\n                \n              </ion-col>\n            </ion-row>\n            \n        </div>\n\n      <h2 style=\"color: white;\" *ngIf=\"mostrarEIncomp.length != 0\">Completar creación</h2>\n        <div>          \n            <ion-row class=\"bor\" *ngFor=\"let item of mostrarEIncomp\">\n              <ion-col class=\"izquierda\"><h5 style=\"color: white;\">{{item.nombre}}</h5></ion-col>\n              <!-- A PARTIR DE AQUI YA ESTABA COMENTADO  <ion-col class=\"derecha\">\n                <ion-button *ngIf=\"!unido\" color=\"success\"\n                            (click)=\"llenar(user.idEquipo)\"\n                            (click)=\"uniraEquipo()\">UNIRME</ion-button>\n              </ion-col> HASTA AQUI ESTABA COMENTADO -->\n              <ion-col class=\"derecha\">\n                <ion-button color=\"success\"\n                            class=\"derecha\"\n                            shape=\"round\" fill=\"clear\"\n                            (click)=\"uniraEquipo(item.idEquipo)\">Completar creacion</ion-button>              \n              </ion-col>\n            </ion-row>\n        </div>\n\n    </ion-grid>\n  </ion-slide>\n\n\n<!-- -------------------------------------------------------------------------------------------------  -->\n\n\n  <ion-slide>\n    <ion-grid>\n    <div>\n\n      <div>\n        <h1 *ngIf=\"perfil.id == equipo.userId\">{{equipo.nombre}}</h1>\n        <h2 *ngIf=\"perfil.id == equipo.userId\">Soy capitán</h2>\n        <h1 *ngIf=\"perfil.id != equipo.userId\">{{equipo.nombre}}</h1>\n        <h2 *ngIf=\"perfil.id != equipo.userId\">Miembros</h2>\n        \n        <ion-row *ngIf=\"perfil.id == equipo.userId\" class=\"bor\">\n          <ion-col class=\"izquierda\" size=\"9\">\n              Jugadores permitidos: \n          </ion-col>\n          <ion-col class=\"derecha\">\n            {{equipo.cantJugadores}} \n          </ion-col>          \n        </ion-row>\n        <ion-row *ngIf=\"perfil.id == equipo.userId\" class=\"bor\">\n          <ion-col class=\"izquierda\" size=\"9\">\n            Jugadores en el equipo:\n          </ion-col>\n          <ion-col class=\"derecha\">\n            {{equipoUsers.length}} \n          </ion-col>          \n        </ion-row>\n        <br>\n        <h2 *ngIf=\"perfil.id == equipo.userId\">Miembros</h2><br>\n\n        <ion-row class=\"ion-align-items-center bor\" *ngFor=\"let user of equipoUsers\">\n          <ion-col>        \n            <h5 class=\"izquierda\">{{user.user.nombreUsuario}}</h5>                  \n          </ion-col>\n          <ion-col *ngIf=\"user.userId == equipo.userId\" class=\"derecha\">\n            <h6>Capitán</h6>\n          </ion-col>\n          <ion-col *ngIf=\"user.userId != equipo.userId && equipo.userId == perfil.id\" class=\"derecha\">\n            <ion-icon class=\"size shadow\" \n                style=\"color: green\" \n                (click)=\"actualizarCapitan(user.userId)\"\n                name=\"ellipsis-vertical\"></ion-icon>\n          </ion-col>\n          <!-- <ion-col *ngIf=\"user.userId != equipo.userId && equipo.userId == perfil.id\" class=\"derecha\">\n            <ion-button color=\"success\"\n                        class=\"derecha\"\n                        (click)=\"cambiarCapitan(user.userId)\">\n                        Elegir como capitan\n                      </ion-button>\n          </ion-col> \n          <ion-col *ngIf=\"user.userId != equipo.userId && equipo.userId == perfil.id\" class=\"derecha\">\n            <ion-button color=\"danger\"\n                        class=\"derecha\"\n                        (click)=\"sacarEquipo(user.userId)\">\n                        <ion-icon color=\"light\" name=\"person-remove-outline\"></ion-icon>\n                      </ion-button>\n          </ion-col>  -->\n          <ion-col *ngIf=\"user.userId == perfil.id && user.userId!=equipo.userId\" class=\"derecha\">\n            <h5 style=\"color: red;\" (click)=\"salirEquipo(user.equipoId)\">Salirme</h5>\n          </ion-col>\n        </ion-row>\n        \n\n      </div>\n    </div>\n  </ion-grid>\n  </ion-slide>\n\n\n\n\n\n  <ion-slide>\n    <!-- <ion-grid>\n    <div>\n      <ion-card class=\"blanco\">\n        <ion-row *ngFor=\"let user of equipoUsers\">\n          <ion-col size=\"6\" class=\"izquierda\">        \n            <h5 style=\"color: black;\">{{user.user.nombreUsuario}}</h5>                  \n          </ion-col>\n          <ion-col class=\"derecha\" *ngIf=\"user.userId == equipo.userId\">\n            <h5>Capitan</h5>\n          </ion-col>\n          <ion-col *ngIf=\"user.userId != equipo.userId\" class=\"derecha\">\n            <ion-button color=\"danger\"\n                        class=\"derecha\"\n                        (click)=\"sacarEquipo(user.userId)\">\n                        <ion-icon color=\"light\" name=\"person-remove-outline\"></ion-icon>\n                      </ion-button>\n          </ion-col>    \n        </ion-row>\n        <ion-row>\n          <ion-col>\n          <ion-button   color=\"success\"\n                        expand=\"full\"\n                        (click)=\"ocultar()\"\n                        (click)=\"goSlide1()\">Regresar</ion-button>\n                      </ion-col>\n        </ion-row>\n      </ion-card>\n    </div>  \n  </ion-grid> -->\n  </ion-slide>\n  \n  \n</ion-slides>\n\n</ion-content>\n");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ EquipoPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".centrado {\n  text-align: center;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.izquierda {\n  text-align: left;\n}\n\nion-content.background {\n  --background: url(/assets/img/paraequipo.jpeg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.blanco {\n  background-color: white;\n}\n\nion-icon.size {\n  font-size: 30px;\n}\n\n.bor {\n  border-bottom: rgba(255, 255, 255, 0.877) 1px solid;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvZXF1aXBvL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxlcXVpcG9cXGVxdWlwby5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL2VxdWlwby9lcXVpcG8ucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksa0JBQUE7QUNDSjs7QURDQTtFQUNJLGlCQUFBO0FDRUo7O0FEQUE7RUFDSSxnQkFBQTtBQ0dKOztBREFBO0VBQ0ksc0VBQUE7RUFDQSxZQUFBO0FDR0o7O0FEREE7RUFDSSx1QkFBQTtBQ0lKOztBRERBO0VBQ0ksZUFBQTtBQ0lKOztBRERBO0VBQ0ksbURBQUE7QUNJSiIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL2VxdWlwby9lcXVpcG8ucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNlbnRyYWRve1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIH1cclxuLmRlcmVjaGF7XHJcbiAgICB0ZXh0LWFsaWduOiByaWdodDtcclxufVxyXG4uaXpxdWllcmRhe1xyXG4gICAgdGV4dC1hbGlnbjogbGVmdDtcclxufVxyXG5cclxuaW9uLWNvbnRlbnQuYmFja2dyb3VuZHtcclxuICAgIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL3BhcmFlcXVpcG8uanBlZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XHJcbiAgICBvcGFjaXR5OiAwLjg7XHJcbn1cclxuLmJsYW5jbyB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcclxufVxyXG5cclxuaW9uLWljb24uc2l6ZSB7XHJcbiAgICBmb250LXNpemU6IDMwcHg7XHJcbn1cclxuXHJcbi5ib3Ige1xyXG4gICAgYm9yZGVyLWJvdHRvbTogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjg3NykgMXB4IHNvbGlkO1xyXG59IiwiLmNlbnRyYWRvIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uZGVyZWNoYSB7XG4gIHRleHQtYWxpZ246IHJpZ2h0O1xufVxuXG4uaXpxdWllcmRhIHtcbiAgdGV4dC1hbGlnbjogbGVmdDtcbn1cblxuaW9uLWNvbnRlbnQuYmFja2dyb3VuZCB7XG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL3BhcmFlcXVpcG8uanBlZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XG4gIG9wYWNpdHk6IDAuODtcbn1cblxuLmJsYW5jbyB7XG4gIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xufVxuXG5pb24taWNvbi5zaXplIHtcbiAgZm9udC1zaXplOiAzMHB4O1xufVxuXG4uYm9yIHtcbiAgYm9yZGVyLWJvdHRvbTogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjg3NykgMXB4IHNvbGlkO1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = (".centrado {\n  text-align: center;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.izquierda {\n  text-align: left;\n}\n\nion-content.background {\n  --background: url(/assets/img/paraequipo.jpeg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.blanco {\n  background-color: white;\n}\n\nion-icon.size {\n  font-size: 30px;\n}\n\n.bor {\n  border-bottom: rgba(255, 255, 255, 0.877) 1px solid;\n}\n\nlabel, ion-label, h1, h2, h3, h4, h5, h6 {\n  text-shadow: 2px 2px 8px #080808;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvZXF1aXBvL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxlcXVpcG9cXGVxdWlwby5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL2VxdWlwby9lcXVpcG8ucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksa0JBQUE7QUNDSjs7QURDQTtFQUNJLGlCQUFBO0FDRUo7O0FEQUE7RUFDSSxnQkFBQTtBQ0dKOztBREFBO0VBQ0ksc0VBQUE7RUFDQSxZQUFBO0FDR0o7O0FEREE7RUFDSSx1QkFBQTtBQ0lKOztBRERBO0VBQ0ksZUFBQTtBQ0lKOztBRERBO0VBQ0ksbURBQUE7QUNJSjs7QUREQTtFQUNJLGdDQUFBO0FDSUoiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy9lcXVpcG8vZXF1aXBvLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jZW50cmFkb3tcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICB9XHJcbi5kZXJlY2hhe1xyXG4gICAgdGV4dC1hbGlnbjogcmlnaHQ7XHJcbn1cclxuLml6cXVpZXJkYXtcclxuICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbn1cclxuXHJcbmlvbi1jb250ZW50LmJhY2tncm91bmR7XHJcbiAgICAtLWJhY2tncm91bmQ6IHVybCgvYXNzZXRzL2ltZy9wYXJhZXF1aXBvLmpwZWcpIDAgMC8xMDAlIDEwMCUgbm8tcmVwZWF0O1xyXG4gICAgb3BhY2l0eTogMC44O1xyXG59XHJcbi5ibGFuY28ge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcbn1cclxuXHJcbmlvbi1pY29uLnNpemUge1xyXG4gICAgZm9udC1zaXplOiAzMHB4O1xyXG59XHJcblxyXG4uYm9yIHtcclxuICAgIGJvcmRlci1ib3R0b206IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC44NzcpIDFweCBzb2xpZDtcclxufVxyXG5cclxubGFiZWwsIGlvbi1sYWJlbCwgaDEsIGgyLCBoMywgaDQsIGg1LCBoNiB7XHJcbiAgICB0ZXh0LXNoYWRvdzogMnB4IDJweCA4cHggIzA4MDgwODtcclxufSIsIi5jZW50cmFkbyB7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLmRlcmVjaGEge1xuICB0ZXh0LWFsaWduOiByaWdodDtcbn1cblxuLml6cXVpZXJkYSB7XG4gIHRleHQtYWxpZ246IGxlZnQ7XG59XG5cbmlvbi1jb250ZW50LmJhY2tncm91bmQge1xuICAtLWJhY2tncm91bmQ6IHVybCgvYXNzZXRzL2ltZy9wYXJhZXF1aXBvLmpwZWcpIDAgMC8xMDAlIDEwMCUgbm8tcmVwZWF0O1xuICBvcGFjaXR5OiAwLjg7XG59XG5cbi5ibGFuY28ge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbn1cblxuaW9uLWljb24uc2l6ZSB7XG4gIGZvbnQtc2l6ZTogMzBweDtcbn1cblxuLmJvciB7XG4gIGJvcmRlci1ib3R0b206IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC44NzcpIDFweCBzb2xpZDtcbn1cblxubGFiZWwsIGlvbi1sYWJlbCwgaDEsIGgyLCBoMywgaDQsIGg1LCBoNiB7XG4gIHRleHQtc2hhZG93OiAycHggMnB4IDhweCAjMDgwODA4O1xufSJdfQ== */");
 
 /***/ }),
 
@@ -135,12 +135,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let EquipoPage = class EquipoPage {
-    constructor(usuarioService, equipoService, navCtrl, alertaService, alertController) {
+    constructor(usuarioService, equipoService, navCtrl, alertaService, alertController, actionSheetController) {
         this.usuarioService = usuarioService;
         this.equipoService = equipoService;
         this.navCtrl = navCtrl;
         this.alertaService = alertaService;
         this.alertController = alertController;
+        this.actionSheetController = actionSheetController;
         this.equipo = new src_models_equipo_models__WEBPACK_IMPORTED_MODULE_2__["Equipo"](0, '', null, '');
         this.equiposCap = [];
         this.mostrarEIncomp = [];
@@ -210,7 +211,7 @@ let EquipoPage = class EquipoPage {
             this.alertaService.alertaInformativa('Equipo modificado');
             this.obtenerEquipoxUser();
             this.obtenerEquipoUserxIduser();
-            // this.goSlide1();
+            this.goSlide1();
         }, (error) => {
             console.log(error);
         });
@@ -230,11 +231,72 @@ let EquipoPage = class EquipoPage {
             this.alertaService.alertaInformativa(error['error']);
         });
     }
+    // -----------------------------------------------METODOS --------------------------------------------------
+    actualizar() {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            const actionSheet = yield this.actionSheetController.create({
+                header: 'Actualizar',
+                buttons: [{
+                        text: 'Cantidad de Jugadores a admitir',
+                        icon: 'people',
+                        cssClass: 'azul',
+                        handler: () => {
+                            this.presentAlertPrompt();
+                        }
+                    }, {
+                        text: 'Nombre del equipo',
+                        icon: 'receipt',
+                        cssClass: 'morado',
+                        handler: () => {
+                            this.actualizarNombre();
+                        }
+                    }, {
+                        text: 'Cancel',
+                        icon: 'close',
+                        role: 'cancel',
+                        handler: () => {
+                            console.log('Cancel clicked');
+                        }
+                    }]
+            });
+            yield actionSheet.present();
+        });
+    }
+    actualizarCapitan(id) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            const actionSheet = yield this.actionSheetController.create({
+                header: 'Opciones',
+                buttons: [{
+                        text: 'Sacar del equipo',
+                        icon: 'person-remove',
+                        cssClass: 'rojo',
+                        handler: () => {
+                            this.sacarEquipo(id);
+                        }
+                    }, {
+                        text: 'Elegir como nuevo capitán',
+                        icon: 'shield-checkmark',
+                        cssClass: 'verde',
+                        handler: () => {
+                            this.cambiarCapitan(id);
+                        }
+                    }, {
+                        text: 'Cancel',
+                        icon: 'close',
+                        role: 'cancel',
+                        handler: () => {
+                            console.log('Cancel clicked');
+                        }
+                    }]
+            });
+            yield actionSheet.present();
+        });
+    }
     presentAlertPrompt() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             const alert = yield this.alertController.create({
-                header: '¿Quieres aumentar o disminuir la cantidad de cupos?',
-                message: '<strong>Coloca cuantos cupos quieres quieres tener en total</strong>??',
+                header: 'Aumenta o disminuye la cantidad de jugadores que quieres que tenga el equipo.',
+                message: '<strong>Actualmente el máximo de jugadores es de ' + this.equipo.cantJugadores + ' </strong>',
                 inputs: [
                     {
                         name: 'cantJugadores',
@@ -265,12 +327,17 @@ let EquipoPage = class EquipoPage {
             yield alert.present();
         });
     }
-    presentAlertConfirm() {
+    actualizarNombre() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             const alert = yield this.alertController.create({
-                header: '¿Quieres aumentar o disminuir la cantidad de cupos?',
-                message: '<strong>Escribe </strong>??',
-                buttons: [
+                header: 'Cambiale el nombre al equipo',
+                message: '<strong>Actualmente se llama ' + this.equipo.nombre + ' </strong>',
+                inputs: [
+                    {
+                        name: 'nombre',
+                        type: 'text',
+                    }
+                ], buttons: [
                     {
                         text: 'Cancel',
                         role: 'cancel',
@@ -280,7 +347,9 @@ let EquipoPage = class EquipoPage {
                         }
                     }, {
                         text: 'Okay',
-                        handler: () => {
+                        handler: data => {
+                            this.equipo.nombre = data.nombre;
+                            this.modificarEquipo();
                             console.log('Confirm Okay');
                         }
                     }
@@ -394,6 +463,7 @@ let EquipoPage = class EquipoPage {
         this.slides.lockSwipes(false);
         this.slides.slidePrev();
         this.slides.lockSwipes(true);
+        this.clear();
         this.slides.isBeginning().then(data => {
             if (data === true) {
                 this.atras = false;
@@ -406,7 +476,8 @@ EquipoPage.ctorParameters = () => [
     { type: src_app_services_equipo_service__WEBPACK_IMPORTED_MODULE_4__["EquipoService"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"] },
     { type: src_app_services_alerta_service_service__WEBPACK_IMPORTED_MODULE_6__["AlertaServiceService"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ActionSheetController"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('slidePrincipal', { static: true }),
@@ -422,7 +493,8 @@ EquipoPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         src_app_services_equipo_service__WEBPACK_IMPORTED_MODULE_4__["EquipoService"],
         _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"],
         src_app_services_alerta_service_service__WEBPACK_IMPORTED_MODULE_6__["AlertaServiceService"],
-        _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"]])
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"],
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ActionSheetController"]])
 ], EquipoPage);
 
 

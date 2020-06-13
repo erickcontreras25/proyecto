@@ -7,6 +7,7 @@ import { Usuario } from 'src/models/usuario.models';
 import { Admin } from 'src/models/admin.models';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { AlertaServiceService } from 'src/app/services/alerta-service.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +34,7 @@ export class LoginPage implements OnInit {
   //   password: '',
   //   rol: false,
   // }];
+
 
   perfiles: Usuario[] = [];
 

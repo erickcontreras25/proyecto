@@ -1,9 +1,25 @@
 <app-header titulo="Torneo" *ngIf="!atras"></app-header>
 
-<ion-header no-border *ngIf="atras">
+<ion-header no-border *ngIf="atras && !mD">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="slideAtras()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon class="size shadow" 
+                style="color: white;" 
+                (click)="actualizar()"
+                name="ellipsis-vertical"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header no-border *ngIf="mD">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goSlide2()">
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -15,12 +31,13 @@
 
   <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
 
+<!-- ---------------------------------------------------SLIDE 1---------------------------------------- -->
 
     <ion-slide>
       <ion-grid>
         
         <div class="derecha">
-          <ion-button color="tertiary" 
+          <ion-button color="success" 
                       (click)="mostrarCrear=true"
                       shape="round" 
                       fill="solid"
@@ -80,7 +97,7 @@
                 <h6 style="color: white;">Equipos inscritos: </h6>
               </ion-col>
               <ion-col class="derecha">
-                <h6 style="color: white;">{{ocupado}}</h6>
+                <h6 style="color: white;">{{equipoxTorneo.length}}</h6>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -88,7 +105,7 @@
                 <h6 style="color: white;">Cupos disponibles: </h6>
               </ion-col>
               <ion-col class="derecha">
-                <h6 style="color: white;">{{libre}}</h6>
+                <h6 style="color: white;">{{torneoUser.cantEquipos - equipoxTorneo.length}}</h6>
               </ion-col>
             </ion-row>
 
@@ -97,6 +114,7 @@
             <ion-col>
               <ion-button color="success"
                           shape="round"
+                          fill="outline"
                         (click)="mostrarDel()">Ver Equipos Inscritos</ion-button>
             </ion-col>
           </ion-row> 
@@ -112,24 +130,19 @@
  
       <!-- <h2 class="ion-text-center">Equipos inscritos: {{calcu}}</h2> -->
       <div>
+        <h1>Equipos</h1>
           <ion-row *ngFor="let item of equipoxTorneo" class="bor">
-            <ion-col size="6" class="izquierda">        
+            <ion-col class="izquierda">        
               <h5 style="color: white;">{{item.equipo.nombre}}</h5>                  
             </ion-col> 
             <ion-col class="derecha" *ngIf="mE">
               <ion-button color="success"
                           class="derecha"
-                          fill="clear"
+                          fill="outline"
                           (click)="sacardTorneo(item.torneoId, item.equipoId)">Sacar del torneo</ion-button>
             </ion-col>    
           </ion-row>
-          <!-- <ion-row>
-            <ion-col>
-            <ion-button   color="success"
-                          expand="full"
-                          (click)="goSlide1()">Regresar</ion-button>
-                        </ion-col>
-          </ion-row> -->
+
       </div>
       
   </ion-grid>
@@ -139,8 +152,47 @@
 
 <ion-slide>
   <ion-grid>
+    <form #formulario="ngForm">
 
-    
+      <ion-row>
+        <ion-col>
+            <h4>Imagen Actual</h4>
+          <div>
+              <img class="img" src="{{torneoUser.premioFoto}}">
+          </div>                  
+        </ion-col>
+      </ion-row>
+  
+        <ion-row>
+          <ion-col>
+            <div>
+              <h4>Cambia la imagen</h4>                        
+              <ion-item>
+                  <input type="file"
+                         id="img"
+                         name="img"
+                         ngModel
+                         required>
+              </ion-item>
+            </div>
+          </ion-col>
+        </ion-row>
+  
+        <ion-row>
+          <ion-col>
+            <ion-button 
+                        type="submit"
+                        color="success"
+                        shape="round"
+                        [disabled]="formulario.invalid"
+                        (click)="modificarTorneoConImagen()">
+                        <ion-icon name="sync-outline"></ion-icon>
+                Actualizar
+            </ion-button>  
+          </ion-col>
+        </ion-row>
+
+    </form>    
   </ion-grid>
 </ion-slide>
 

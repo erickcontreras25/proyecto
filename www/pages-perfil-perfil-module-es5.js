@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<app-header titulo=\"Mi Perfil\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"goSlide1()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"background\">\n\n  <div>\n    <ion-row>\n      <ion-col>\n        <ion-row><h5 class=\"shadow\" style=\"color: white;\">{{user.nombreUsuario}}</h5></ion-row>\n        <!-- <ion-row><h5>{{user.email}}</h5></ion-row>       -->\n      </ion-col>\n      <ion-col><h5 class=\"shadow\" style=\"color: white;\">{{user.edad}} años</h5></ion-col>\n    </ion-row>\n  </div>\n\n  \n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n    <ion-slide>\n      <ion-grid>\n        <form>\n\n          <!-- <ion-row center>\n            <ion-button (click)=\"obtenerMisReservacion()\">Ver mi historial reservas</ion-button>\n          </ion-row> -->\n\n          <h1 style=\"color: white;\" class=\"shadow\">Mis reservaciones</h1>\n\n          <div>\n            <ion-row class=\"ion-align-items-center bor\" >\n              <ion-col class=\"centrado\"><label class=\"shadow\">Día</label></ion-col>\n              <ion-col class=\"centrado\"><label class=\"shadow\">Horario</label></ion-col>\n              <ion-col class=\"derecha\">                \n              </ion-col>\n            </ion-row>            \n        </div>\n\n        <div *ngFor=\"let item of reservacionesNoVencidas\">\n            <ion-row class=\"ion-align-items-center\">\n              <ion-col class=\"centrado\" >\n                <label class=\"shadow\">{{item.horaInicial | date:'MMMM-dd'}}</label>\n              </ion-col>\n              <ion-col class=\"centrado\" >\n                <label class=\"shadow\">{{item.horaInicial | date:'HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</label>\n              </ion-col>\n              <ion-col class=\"derecha\">\n                <ion-button color=\"success\"\n                            class=\"derecha\"      \n                            fill=\"clear\"    \n                                       \n                            (click)=\"obtenerReservacionId(item.idReservacion)\">\n                            <ion-icon color=\"success\" class=\"size\" name=\"return-up-forward-outline\"></ion-icon>\n                            </ion-button>\n                \n              </ion-col>\n            </ion-row>            \n        </div>\n        </form>\n      </ion-grid>\n    </ion-slide>\n\n<!-- ---------------------------------------------------SLIDE 2--------------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n        <form>\n          <!-- <h2 class=\"ion-text-center\">Mis reservaciones</h2>           -->\n\n            <div style=\"background-color: rgb(211, 197, 197, 0.05);\">\n\n                  <div style=\"display: inline-block; position:relative\">\n                    <img src=\"{{cancha.foto}}\" alt=\"200\" width=\"500\">\n                    <div style=\"display: inline-block; position:absolute; top:100%; left:50%; transform: translate(-50%, -50%)\">      \n                      <img src=\"{{complejo.foto}}\" class=\"imgRedonda\">\n                  </div>\n                  </div>\n                  <br><br><br><br>\n                  <h1 class=\"ion-text-center shadow\">{{complejo.nombre}}</h1>\n                  <ion-row>\n                    <ion-col>\n                      <ion-icon class=\"shadow\" name=\"calendar-outline\" color=\"secondary\"></ion-icon>\n                      <label class=\"shadow\">{{reservacion.horaInicial | date:'MMMM-dd'}}</label>\n                      <label class=\"shadow\">                       \n                          {{reservacion.horaInicial | date:'HH:mm'}} a {{reservacion.horaFinal | date:'HH:mm'}}\n                      </label>\n                    </ion-col>\n                    <ion-col>\n                      <ion-icon class=\"shadow\" name=\"cash-outline\" color=\"success\"></ion-icon>\n                      <label class=\"shadow\">                        \n                          Lps. {{cancha.precio * auxHoras}}\n                      </label>\n                    </ion-col>\n                  </ion-row>\n                  <ion-row>\n                    <ion-col>\n                      <ion-icon class=\"shadow\" name=\"location-outline\" color=\"primary\"></ion-icon>\n                      <label class=\"shadow\">                        \n                          {{complejo.localidad}}\n                      </label>\n                    </ion-col>\n                    <ion-col>\n                      <ion-icon name=\"call-outline\" color=\"secondary\"></ion-icon>\n                      <label class=\"shadow\">                        \n                        {{complejo.numero}}\n                    </label>\n                    </ion-col>\n                  </ion-row>\n                  \n\n                  \n                  <ion-row>\n                    <ion-col>\n                          <ion-icon name=\"trash-outline\" style=\"color: red;\" (click)=\"confirmarCancelacion()\">Cancelar resereserva</ion-icon>\n                    </ion-col>          \n                    <!-- <ion-col class=\"centrado\" *ngIf=\"!reservacion.pago || !reservacion.pagoParcial\">\n                      <ion-button (click)=\"obtenerReservacionId(reservacion.idReservacion)\"\n                                  (click)=\"obtenerCanchaId(reservacion.idCancha)\"\n                                  (click)=\"pagarCompleto()\">Pagar 100%</ion-button>\n                    </ion-col> -->\n                    <ion-col class=\"derecha\" *ngIf=\"!reservacion.pago && !reservacion.pagoParcial\">\n                      <ion-button \n                                  (click)=\"pagarParcial()\"\n                                  >Pagar Reserva</ion-button>\n                    </ion-col>\n                  </ion-row>\n                  \n                  \n             </div>\n        </form>\n      </ion-grid>\n    </ion-slide>\n\n  </ion-slides>\n  \n  \n  \n\n  <!-- ------------------------------------------------------------------------------------ -->\n\n  \n\n\n  \n  <!-- <div *ngFor=\"let item of reservacionesNoVencidas\" style=\"background-color: rgb(67, 179, 96);\">\n    <ion-card class=\"ion-text-center\" style=\"background-color: rgb(230, 230, 241); border-radius : 10px;\">      \n\n        <div style=\"display: inline-block; position:relative\">\n          <img src=\"{{item.cancha.foto}}\" class=\"img\">\n          <div style=\"display: inline-block; position:absolute; top:100%; left:50%; transform: translate(-50%, -50%)\">      \n            <img src=\"{{item.cancha.complejo.foto}}\" class=\"imgRedonda\">\n        </div>\n        </div>\n        <br><br><br><br><br>\n        <h3 class=\"ion-text-center\">{{item.cancha.complejo.nombre}}</h3>\n        <h6>\n          <ion-icon name=\"calendar-outline\" color=\"secondary\"></ion-icon>\n              {{item.horaInicial | date:'MMMM-dd HH:mm'}} a {{item.horaFinal | date:'MMMM-dd HH:mm'}}\n          </h6>\n        <h6>\n          <ion-icon name=\"cash-outline\" color=\"success\"></ion-icon>\n            Lps. {{item.cancha.precio}}\n        </h6>\n\n        <h6>\n          <ion-icon name=\"location-outline\" color=\"primary\"></ion-icon>\n            {{item.cancha.complejo.localidad}}\n        </h6>\n        <label>\n          <ion-icon slot=\"start\" name=\"trash-outline\" color=\"danger\" (click)=\"eliminarReservacion(item.idReservacion)\">Eliminar reservacion</ion-icon>\n        </label>\n    </ion-card>\n</div> -->\n  \n\n  <!-- <ion-button (click)=\"obtenerEquipoUsuario()\">Ver equipo</ion-button>\n  <ion-card>\n    <ion-list *ngFor=\"let item of equipos\">\n      <ion-item>{{item.usuario.nombre}}</ion-item>\n      <ion-item>\n      </ion-item>\n    </ion-list>\n  </ion-card> -->\n\n  \n\n</ion-content>\n";
+    __webpack_exports__["default"] = "<app-header titulo=\"Mi Perfil\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"goSlide1()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"background\">\n\n  <div>\n    <ion-row>\n      <ion-col>\n        <ion-row><h5 class=\"shadow\" style=\"color: white;\">{{user.nombreUsuario}}</h5></ion-row>\n        <!-- <ion-row><h5>{{user.email}}</h5></ion-row>       -->\n      </ion-col>\n      <ion-col><h5 class=\"shadow\" style=\"color: white;\">{{user.edad}} años</h5></ion-col>\n    </ion-row>\n  </div>\n\n  \n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n<!-- ---------------------------------------------------SLIDE 1--------------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n        <form>\n\n          <h1 style=\"color: white;\" class=\"shadow\">Mis reservaciones</h1>\n\n          <div>\n            <ion-row class=\"ion-align-items-center bor\" >\n              <ion-col class=\"centrado\"><label class=\"shadow\">Día</label></ion-col>\n              <ion-col class=\"centrado\"><label class=\"shadow\">Horario</label></ion-col>\n              <ion-col class=\"derecha\">                \n              </ion-col>\n            </ion-row>            \n        </div>\n\n        <div *ngFor=\"let item of reservacionesNoVencidas\">\n            <ion-row class=\"ion-align-items-center\">\n              <ion-col class=\"centrado\" >\n                <label class=\"shadow\">{{item.horaInicial | date:'MMMM-dd'}}</label>\n              </ion-col>\n              <ion-col class=\"centrado\" >\n                <label class=\"shadow\">{{item.horaInicial | date:'HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</label>\n              </ion-col>\n              <ion-col class=\"derecha\">\n                <ion-button color=\"success\"\n                            class=\"derecha\"      \n                            fill=\"clear\"    \n                                       \n                            (click)=\"obtenerReservacionId(item.idReservacion)\">\n                            <ion-icon color=\"success\" class=\"size\" name=\"return-up-forward-outline\"></ion-icon>\n                            </ion-button>\n                \n              </ion-col>\n            </ion-row>            \n        </div>\n        </form>\n      </ion-grid>\n    </ion-slide>\n\n<!-- ---------------------------------------------------SLIDE 2--------------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n        <form>\n          <!-- <h2 class=\"ion-text-center\">Mis reservaciones</h2>           -->\n\n            <div class=\"bor\" style=\"background-color: rgb(211, 197, 197, 0);\">\n              <br>\n\n                  <div style=\"display: inline-block; position:relative\">\n                    <img class=\"img\" src=\"{{cancha.foto}}\">\n                    <div style=\"display: inline-block; position:absolute; top:7%; left:96%; transform: translate(-50%, -50%)\">\n                        <ion-icon class=\"size shadow\" \n                                  style=\"color: white;\" \n                                  slot=\"start\"\n                                  (click)=\"actualizar()\"\n                                  name=\"ellipsis-vertical\"></ion-icon>\n                    </div>\n                    <div style=\"display: inline-block; position:absolute; top:100%; left:50%; transform: translate(-50%, -50%)\">      \n                      <img src=\"{{complejo.foto}}\" class=\"imgRedonda\">\n                  </div>\n                  </div>\n                  <br><br><br><br>\n                  <h1 class=\"ion-text-center shadow\">{{complejo.nombre}}</h1>\n                  <ion-row>\n                    <ion-col>\n                      <ion-icon class=\"shadow\" name=\"calendar-outline\" color=\"secondary\"></ion-icon>\n                      <label class=\"shadow\">{{reservacion.horaInicial | date:'dd-MMMM'}}</label>\n                      <label class=\"shadow\">                       \n                          {{reservacion.horaInicial | date:'HH:mm'}} a {{reservacion.horaFinal | date:'HH:mm'}}\n                      </label>\n                    </ion-col>\n                    <ion-col>\n                      <ion-icon class=\"shadow\" name=\"cash-outline\" color=\"success\"></ion-icon>\n                      <label class=\"shadow\">                        \n                          Lps. {{cancha.precio * auxHoras}}\n                      </label>\n                    </ion-col>\n                  </ion-row>\n                  <ion-row>\n                    <ion-col>\n                      <ion-icon class=\"shadow\" name=\"location-outline\" color=\"primary\"></ion-icon>\n                      <label class=\"shadow\">                        \n                          {{complejo.localidad}}\n                      </label>\n                    </ion-col>\n                    <ion-col>\n                      <ion-icon name=\"call-outline\" color=\"secondary\"></ion-icon>\n                      <label class=\"shadow\">                        \n                        {{complejo.numero}}\n                    </label>\n                    </ion-col>\n                  </ion-row>\n                  \n\n                  \n                  <ion-row>\n                    <!-- <ion-col>\n                          <ion-icon class=\"size\" name=\"trash-outline\" style=\"color: red;\" (click)=\"confirmarCancelacion()\">Cancelar resereserva</ion-icon>\n                    </ion-col>           -->\n                    <!-- <ion-col class=\"centrado\" *ngIf=\"!reservacion.pago || !reservacion.pagoParcial\">\n                      <ion-button (click)=\"obtenerReservacionId(reservacion.idReservacion)\"\n                                  (click)=\"obtenerCanchaId(reservacion.idCancha)\"\n                                  (click)=\"pagarCompleto()\">Pagar 100%</ion-button>\n                    </ion-col> -->\n                    <ion-col *ngIf=\"!reservacion.pago && !reservacion.pagoParcial\">\n                      <ion-button color=\"success\"\n                                  fill=\"outline\"\n                                  (click)=\"pagarParcial()\"\n                                  >Pagar Reserva</ion-button>\n                    </ion-col>\n                  </ion-row>\n                  \n                  \n             </div>\n        </form>\n      </ion-grid>\n    </ion-slide>\n\n\n    <!-- ---------------------------------------------------SLIDE 3--------------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n        <form>\n\n          <ion-row>\n            <ion-col>\n              <h2>Cambia el día y hora de la reserva</h2>\n              <label>\n                Recuerda que en este complejo solo puedes reservar en horario de:\n              </label>\n              <h4>\n              <b style=\"color: red;\">{{complejo.horaInicio | date:'HH'}}:00</b>\n                a \n              <b style=\"color: red;\">{{complejo.horaCierre | date:'HH'}}:00</b>\n            </h4>\n            </ion-col>\n          </ion-row>\n\n          <ion-row>\n              <ion-col>  \n\n                <ion-item>\n                  <ion-label>Hora Inicial</ion-label>\n                  <ion-datetime displayFormat=\"D MMM YYYY HH:mm\" \n                                name=\"horaInicial\"\n                                minuteValues=\"0\" min=\"10:00\" \n                                [(ngModel)]=\"hInicio\"\n                                (ngModelChange)=\"volver()\">\n                  </ion-datetime>\n                </ion-item>\n                <ion-item>\n                  <ion-label>Hora Final</ion-label>\n                  <ion-datetime displayFormat=\"D MMM YYYY HH:mm\" \n                                name=\"horaFinal\"\n                                minuteValues=\"0\" min=\"11:00\" \n                                [(ngModel)]=\"hFin\"\n                                (ngModelChange)=\"volver()\">\n                  </ion-datetime>\n                </ion-item>\n                  \n              </ion-col>\n          </ion-row>\n          <ion-row>\n              <ion-col>\n                <ion-button type=\"submit\"\n                            color=\"success\"\n                            fill=\"outline\"\n                            (click)=\"validarFecha()\">\n                            Verificar Horario\n                </ion-button>\n            </ion-col>\n              <ion-col>\n                  <ion-button type=\"submit\"\n                              color=\"success\"\n                              fill=\"outline\"\n                              *ngIf=\"auxReser==true\"\n                              (click)=\"modificarReservacion()\">\n                      Actualizar\n                  </ion-button>\n              </ion-col>\n          </ion-row>\n\n          <ion-row>\n            <ion-col>\n              <label style=\"color: white;\">Estas reservando por un tiempo de </label>\n              <h2 *ngIf=\"auxHoras!=null\">{{auxHoras}} h</h2>\n            </ion-col>\n          </ion-row>\n\n        </form>\n      </ion-grid>\n    </ion-slide>\n\n  </ion-slides>\n\n\n  \n  <!-- <div *ngFor=\"let item of reservacionesNoVencidas\" style=\"background-color: rgb(67, 179, 96);\">\n    <ion-card class=\"ion-text-center\" style=\"background-color: rgb(230, 230, 241); border-radius : 10px;\">      \n\n        <div style=\"display: inline-block; position:relative\">\n          <img src=\"{{item.cancha.foto}}\" class=\"img\">\n          <div style=\"display: inline-block; position:absolute; top:100%; left:50%; transform: translate(-50%, -50%)\">      \n            <img src=\"{{item.cancha.complejo.foto}}\" class=\"imgRedonda\">\n        </div>\n        </div>\n        <br><br><br><br><br>\n        <h3 class=\"ion-text-center\">{{item.cancha.complejo.nombre}}</h3>\n        <h6>\n          <ion-icon name=\"calendar-outline\" color=\"secondary\"></ion-icon>\n              {{item.horaInicial | date:'MMMM-dd HH:mm'}} a {{item.horaFinal | date:'MMMM-dd HH:mm'}}\n          </h6>\n        <h6>\n          <ion-icon name=\"cash-outline\" color=\"success\"></ion-icon>\n            Lps. {{item.cancha.precio}}\n        </h6>\n\n        <h6>\n          <ion-icon name=\"location-outline\" color=\"primary\"></ion-icon>\n            {{item.cancha.complejo.localidad}}\n        </h6>\n        <label>\n          <ion-icon slot=\"start\" name=\"trash-outline\" color=\"danger\" (click)=\"eliminarReservacion(item.idReservacion)\">Eliminar reservacion</ion-icon>\n        </label>\n    </ion-card>\n</div> -->\n  \n\n  <!-- <ion-button (click)=\"obtenerEquipoUsuario()\">Ver equipo</ion-button>\n  <ion-card>\n    <ion-list *ngFor=\"let item of equipos\">\n      <ion-item>{{item.usuario.nombre}}</ion-item>\n      <ion-item>\n      </ion-item>\n    </ion-list>\n  </ion-card> -->\n\n  \n\n</ion-content>\n";
     /***/
   },
 
@@ -180,7 +180,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".img {\n  width: 500px;\n  height: 220px;\n}\n\nion-icon {\n  font-size: 30px;\n}\n\n.imgRedonda {\n  width: 150px;\n  height: 150px;\n  border-radius: 150px;\n  border: 5px solid #666;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n\n.bor {\n  border-bottom: white 2px solid;\n}\n\nion-content.background {\n  --background: url(/assets/img/bueno.jpg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.shadow {\n  text-shadow: 2px 2px #080808;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvcGVyZmlsL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxwZXJmaWxcXHBlcmZpbC5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3BlcmZpbC9wZXJmaWwucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksWUFBQTtFQUNBLGFBQUE7QUNDSjs7QURDRTtFQUNJLGVBQUE7QUNFTjs7QURBRTtFQUNFLFlBQUE7RUFDQSxhQUFBO0VBQ0Esb0JBQUE7RUFDQSxzQkFBQTtBQ0dKOztBREFBO0VBQ0UsaUJBQUE7QUNHRjs7QUREQTtFQUNFLGtCQUFBO0FDSUY7O0FERkE7RUFDRSxnQkFBQTtBQ0tGOztBREZBO0VBQ0UsOEJBQUE7QUNLRjs7QURGQTtFQUNFLGdFQUFBO0VBQ0EsWUFBQTtBQ0tGOztBREZBO0VBQ0UsNEJBQUE7QUNLRiIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL3BlcmZpbC9wZXJmaWwucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmltZyB7XHJcbiAgICB3aWR0aDogNTAwcHg7XHJcbiAgICBoZWlnaHQ6IDIyMHB4O1xyXG4gIH1cclxuICBpb24taWNvbiB7XHJcbiAgICAgIGZvbnQtc2l6ZTogMzBweDtcclxuICB9XHJcbiAgLmltZ1JlZG9uZGEge1xyXG4gICAgd2lkdGg6MTUwcHg7XHJcbiAgICBoZWlnaHQ6MTUwcHg7XHJcbiAgICBib3JkZXItcmFkaXVzOjE1MHB4O1xyXG4gICAgYm9yZGVyOjVweCBzb2xpZCAjNjY2O1xyXG59XHJcblxyXG4uZGVyZWNoYXtcclxuICB0ZXh0LWFsaWduOiByaWdodDtcclxufVxyXG4uY2VudHJhZG97XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbi5penF1aWVyZGF7XHJcbiAgdGV4dC1hbGlnbjogbGVmdDtcclxufVxyXG5cclxuLmJvciB7XHJcbiAgYm9yZGVyLWJvdHRvbTogd2hpdGUgMnB4IHNvbGlkO1xyXG59XHJcblxyXG5pb24tY29udGVudC5iYWNrZ3JvdW5ke1xyXG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL2J1ZW5vLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XHJcbiAgb3BhY2l0eTogMC44O1xyXG59XHJcblxyXG4uc2hhZG93IHtcclxuICB0ZXh0LXNoYWRvdzogMnB4IDJweCAjMDgwODA4O1xyXG59IiwiLmltZyB7XG4gIHdpZHRoOiA1MDBweDtcbiAgaGVpZ2h0OiAyMjBweDtcbn1cblxuaW9uLWljb24ge1xuICBmb250LXNpemU6IDMwcHg7XG59XG5cbi5pbWdSZWRvbmRhIHtcbiAgd2lkdGg6IDE1MHB4O1xuICBoZWlnaHQ6IDE1MHB4O1xuICBib3JkZXItcmFkaXVzOiAxNTBweDtcbiAgYm9yZGVyOiA1cHggc29saWQgIzY2Njtcbn1cblxuLmRlcmVjaGEge1xuICB0ZXh0LWFsaWduOiByaWdodDtcbn1cblxuLmNlbnRyYWRvIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uaXpxdWllcmRhIHtcbiAgdGV4dC1hbGlnbjogbGVmdDtcbn1cblxuLmJvciB7XG4gIGJvcmRlci1ib3R0b206IHdoaXRlIDJweCBzb2xpZDtcbn1cblxuaW9uLWNvbnRlbnQuYmFja2dyb3VuZCB7XG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL2J1ZW5vLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XG4gIG9wYWNpdHk6IDAuODtcbn1cblxuLnNoYWRvdyB7XG4gIHRleHQtc2hhZG93OiAycHggMnB4ICMwODA4MDg7XG59Il19 */";
+    __webpack_exports__["default"] = ".img {\n  width: 500px;\n  height: 220px;\n}\n\nion-icon.size {\n  font-size: 35px;\n}\n\n.imgRedonda {\n  width: 150px;\n  height: 150px;\n  border-radius: 150px;\n  border: 5px solid white;\n}\n\n.derecha {\n  text-align: right;\n}\n\n.centrado {\n  text-align: center;\n}\n\n.izquierda {\n  text-align: left;\n}\n\n.bor {\n  border-bottom: white 2px solid;\n}\n\nion-content.background {\n  --background: url(/assets/img/bueno.jpg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.shadow {\n  text-shadow: 2px 2px #080808;\n}\n\nlabel, ion-label, h1, h2, h3, h4, h5, h6 {\n  text-shadow: 2px 2px 8px #080808;\n}\n\n.img {\n  min-height: 250px;\n  max-height: 570px;\n  width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvcGVyZmlsL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxwZXJmaWxcXHBlcmZpbC5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3BlcmZpbC9wZXJmaWwucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksWUFBQTtFQUNBLGFBQUE7QUNDSjs7QURDRTtFQUNJLGVBQUE7QUNFTjs7QURBRTtFQUNFLFlBQUE7RUFDQSxhQUFBO0VBQ0Esb0JBQUE7RUFDQSx1QkFBQTtBQ0dKOztBREFBO0VBQ0UsaUJBQUE7QUNHRjs7QUREQTtFQUNFLGtCQUFBO0FDSUY7O0FERkE7RUFDRSxnQkFBQTtBQ0tGOztBREZBO0VBQ0UsOEJBQUE7QUNLRjs7QURGQTtFQUNFLGdFQUFBO0VBQ0EsWUFBQTtBQ0tGOztBREZBO0VBQ0UsNEJBQUE7QUNLRjs7QURGQTtFQUNFLGdDQUFBO0FDS0Y7O0FERkE7RUFDRSxpQkFBQTtFQUNBLGlCQUFBO0VBQ0EsV0FBQTtBQ0tGIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvcGVyZmlsL3BlcmZpbC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaW1nIHtcclxuICAgIHdpZHRoOiA1MDBweDtcclxuICAgIGhlaWdodDogMjIwcHg7XHJcbiAgfVxyXG4gIGlvbi1pY29uLnNpemUge1xyXG4gICAgICBmb250LXNpemU6IDM1cHg7XHJcbiAgfVxyXG4gIC5pbWdSZWRvbmRhIHtcclxuICAgIHdpZHRoOjE1MHB4O1xyXG4gICAgaGVpZ2h0OjE1MHB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czoxNTBweDtcclxuICAgIGJvcmRlcjo1cHggc29saWQgcmdiKDI1NSwgMjU1LCAyNTUpO1xyXG59XHJcblxyXG4uZGVyZWNoYXtcclxuICB0ZXh0LWFsaWduOiByaWdodDtcclxufVxyXG4uY2VudHJhZG97XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbi5penF1aWVyZGF7XHJcbiAgdGV4dC1hbGlnbjogbGVmdDtcclxufVxyXG5cclxuLmJvciB7XHJcbiAgYm9yZGVyLWJvdHRvbTogd2hpdGUgMnB4IHNvbGlkO1xyXG59XHJcblxyXG5pb24tY29udGVudC5iYWNrZ3JvdW5ke1xyXG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL2J1ZW5vLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XHJcbiAgb3BhY2l0eTogMC44O1xyXG59XHJcblxyXG4uc2hhZG93IHtcclxuICB0ZXh0LXNoYWRvdzogMnB4IDJweCAjMDgwODA4O1xyXG59XHJcblxyXG5sYWJlbCwgaW9uLWxhYmVsLCBoMSwgaDIsIGgzLCBoNCwgaDUsIGg2IHtcclxuICB0ZXh0LXNoYWRvdzogMnB4IDJweCA4cHggIzA4MDgwODtcclxufVxyXG5cclxuLmltZyB7XHJcbiAgbWluLWhlaWdodDogMjUwcHg7XHJcbiAgbWF4LWhlaWdodDogNTcwcHg7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbn0iLCIuaW1nIHtcbiAgd2lkdGg6IDUwMHB4O1xuICBoZWlnaHQ6IDIyMHB4O1xufVxuXG5pb24taWNvbi5zaXplIHtcbiAgZm9udC1zaXplOiAzNXB4O1xufVxuXG4uaW1nUmVkb25kYSB7XG4gIHdpZHRoOiAxNTBweDtcbiAgaGVpZ2h0OiAxNTBweDtcbiAgYm9yZGVyLXJhZGl1czogMTUwcHg7XG4gIGJvcmRlcjogNXB4IHNvbGlkIHdoaXRlO1xufVxuXG4uZGVyZWNoYSB7XG4gIHRleHQtYWxpZ246IHJpZ2h0O1xufVxuXG4uY2VudHJhZG8ge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5penF1aWVyZGEge1xuICB0ZXh0LWFsaWduOiBsZWZ0O1xufVxuXG4uYm9yIHtcbiAgYm9yZGVyLWJvdHRvbTogd2hpdGUgMnB4IHNvbGlkO1xufVxuXG5pb24tY29udGVudC5iYWNrZ3JvdW5kIHtcbiAgLS1iYWNrZ3JvdW5kOiB1cmwoL2Fzc2V0cy9pbWcvYnVlbm8uanBnKSAwIDAvMTAwJSAxMDAlIG5vLXJlcGVhdDtcbiAgb3BhY2l0eTogMC44O1xufVxuXG4uc2hhZG93IHtcbiAgdGV4dC1zaGFkb3c6IDJweCAycHggIzA4MDgwODtcbn1cblxubGFiZWwsIGlvbi1sYWJlbCwgaDEsIGgyLCBoMywgaDQsIGg1LCBoNiB7XG4gIHRleHQtc2hhZG93OiAycHggMnB4IDhweCAjMDgwODA4O1xufVxuXG4uaW1nIHtcbiAgbWluLWhlaWdodDogMjUwcHg7XG4gIG1heC1oZWlnaHQ6IDU3MHB4O1xuICB3aWR0aDogMTAwJTtcbn0iXX0= */";
     /***/
   },
 
@@ -269,11 +269,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! @ionic/angular */
     "./node_modules/@ionic/angular/fesm2015/ionic-angular.js");
+    /* harmony import */
+
+
+    var src_app_services_alerta_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! src/app/services/alerta-service.service */
+    "./src/app/services/alerta-service.service.ts");
 
     var PerfilPage =
     /*#__PURE__*/
     function () {
-      function PerfilPage(apiServi, usuarioService, payPal, alertController, navCtrl) {
+      function PerfilPage(apiServi, usuarioService, payPal, alertController, navCtrl, alertaService, actionSheetController) {
         _classCallCheck(this, PerfilPage);
 
         this.apiServi = apiServi;
@@ -281,11 +287,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.payPal = payPal;
         this.alertController = alertController;
         this.navCtrl = navCtrl;
+        this.alertaService = alertaService;
+        this.actionSheetController = actionSheetController;
+        this.auxReser = false;
         this.parcial = false;
         this.completo = false;
         this.atras = false;
         this.reservacion = new src_models_reservacion_models__WEBPACK_IMPORTED_MODULE_3__["Reservacion"](0, new Date(), new Date(), false, false, 0, '');
         this.reservaciones = [];
+        this.reser = [];
         this.reservacionesNoVencidas = [];
         this.cancha = new src_models_cancha_models__WEBPACK_IMPORTED_MODULE_5__["Cancha"](0, null, null, '', null);
         this.complejo = new src_models_complejo_models__WEBPACK_IMPORTED_MODULE_6__["Complejo"](0, null, null, null, null, false, 0.0, 0.0, null, null, false, false, null);
@@ -385,10 +395,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
       }, {
         key: "modificarReservacion",
-        value: function modificarReservacion(id) {
+        value: function modificarReservacion() {
           var _this4 = this;
 
-          this.apiServi.putReservacion(id, this.reservacion).subscribe(function (data) {
+          this.reservacion.horaInicial = moment__WEBPACK_IMPORTED_MODULE_7__(this.hInicio).subtract(6, 'hour');
+          this.reservacion.horaFinal = moment__WEBPACK_IMPORTED_MODULE_7__(this.hFin).subtract(6, 'hour');
+          this.apiServi.putReservacion(this.reservacion.idReservacion, this.reservacion).subscribe(function (data) {
             _this4.reservacion = new src_models_reservacion_models__WEBPACK_IMPORTED_MODULE_3__["Reservacion"](0, new Date(), new Date(), false, false, 0, '');
 
             _this4.navCtrl.navigateRoot('/inicio');
@@ -418,6 +430,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.apiServi.getComplejoId(id).subscribe(function (resp) {
             _this6.complejo = resp;
 
+            _this6.obtenerReservas(id);
+
             _this6.goSlide2(); // console.log('EJECUTADO CON EXITO');
 
           });
@@ -443,6 +457,98 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               valor++;
             }
           }
+        }
+      }, {
+        key: "obtenerReservas",
+        value: function obtenerReservas(id) {
+          var _this7 = this;
+
+          this.apiServi.getReservacionComplejo(id).subscribe(function (resp) {
+            _this7.reser = resp;
+            console.log(_this7.reser);
+          });
+        }
+      }, {
+        key: "validarFecha",
+        value: function validarFecha() {
+          var ini = moment__WEBPACK_IMPORTED_MODULE_7__().format('MM-DD-YYYY HH:mm');
+          var dInicial = moment__WEBPACK_IMPORTED_MODULE_7__(this.hInicio).format('MM-DD-YYYY HH:mm');
+          var dFinal = moment__WEBPACK_IMPORTED_MODULE_7__(this.hFin).format('MM-DD-YYYY HH:mm');
+          var abre = moment__WEBPACK_IMPORTED_MODULE_7__(this.hInicio).format('HH');
+          var cierra = moment__WEBPACK_IMPORTED_MODULE_7__(this.hFin).format('HH');
+          var abreComplejo = moment__WEBPACK_IMPORTED_MODULE_7__(this.complejo.horaInicio).format('HH');
+          var cierraComplejo = moment__WEBPACK_IMPORTED_MODULE_7__(this.complejo.horaCierre).format('HH');
+          var diaReserva = moment__WEBPACK_IMPORTED_MODULE_7__(this.hInicio).format('MM-DD-YYYY');
+
+          if (dInicial <= ini || dFinal <= ini) {
+            this.volver();
+            return alert('La hora inicial o final no puede ser menor que la hora actual');
+          }
+
+          if (dFinal < dInicial) {
+            this.volver();
+            return alert('La hora final no puede ser menor que la hora inicial.');
+          }
+
+          if (dInicial === dFinal) {
+            this.volver();
+            return alert('La hora final no puede ser igual que la inicial');
+          }
+
+          if (abre < abreComplejo || cierra > cierraComplejo) {
+            this.volver();
+            return alert('Solo puede reservar en horario que permite el complejo');
+          }
+
+          for (var i = 0; i < this.reser.length; i++) {
+            var fechInicial = moment__WEBPACK_IMPORTED_MODULE_7__(this.reser[i].horaInicial).format('MM-DD-YYYY H:mm');
+            var fechFinal = moment__WEBPACK_IMPORTED_MODULE_7__(this.reser[i].horaFinal).format('MM-DD-YYYY H:mm');
+
+            if (dInicial > fechInicial && dInicial < fechFinal || dFinal > fechInicial && dFinal < fechFinal) {
+              this.volver();
+              return alert('El horario de ' + fechInicial + ' a ' + fechFinal + ' no esta disponible');
+            }
+
+            if (dInicial === fechInicial || dFinal === fechFinal) {
+              this.volver();
+              return alert('Este horario no esta disponible');
+            }
+          }
+
+          var inic = moment__WEBPACK_IMPORTED_MODULE_7__(this.hInicio);
+          var fin = moment__WEBPACK_IMPORTED_MODULE_7__(this.hFin);
+          this.auxHoras = fin.diff(inic, 'hours');
+
+          if (this.auxHoras >= 4) {
+            this.volver();
+            return alert('No puedes reservar por más de 3 horas.');
+          }
+
+          this.auxReser = true;
+          return alert('Horario disponible');
+        }
+      }, {
+        key: "volver",
+        value: function volver() {
+          this.auxReser = false;
+        }
+      }, {
+        key: "validarSiPago",
+        value: function validarSiPago() {
+          if (this.reservacion.pago === true || this.reservacion.pagoParcial === true) {
+            return this.alertaService.alertaInformativa('No puedes cancelar porque ya pagaste.\nComunícate con el encargado del complejo.');
+          } else {
+            this.eliminarReservacion();
+          }
+        }
+      }, {
+        key: "validarSiPago2",
+        value: function validarSiPago2() {
+          if (this.reservacion.pago === true || this.reservacion.pagoParcial === true) {
+            return this.alertaService.alertaInformativa('No puedes hacer cambios porque ya pagaste.\nComunícate con el encargado del complejo.');
+          } else {
+            this.goSlide3();
+          }
         } // --------------------------------------------------------------------------------------------------
 
       }, {
@@ -451,7 +557,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
           /*#__PURE__*/
           regeneratorRuntime.mark(function _callee() {
-            var _this7 = this;
+            var _this8 = this;
 
             var alert;
             return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -472,7 +578,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                       }, {
                         text: 'Okay',
                         handler: function handler() {
-                          _this7.eliminarReservacion();
+                          _this8.validarSiPago();
 
                           console.log('Confirm Okay');
                         }
@@ -493,47 +599,49 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           }));
         }
       }, {
-        key: "pagarCompleto",
-        value: function pagarCompleto() {
+        key: "actualizar",
+        value: function actualizar() {
           return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
           /*#__PURE__*/
           regeneratorRuntime.mark(function _callee2() {
-            var _this8 = this;
+            var _this9 = this;
 
-            var alert;
+            var actionSheet;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
               while (1) {
                 switch (_context2.prev = _context2.next) {
                   case 0:
                     _context2.next = 2;
-                    return this.alertController.create({
-                      header: 'Confirmar pago',
-                      message: '<strong>--</strong>??',
+                    return this.actionSheetController.create({
+                      header: 'Actualizar',
                       buttons: [{
-                        text: 'Cancel',
-                        role: 'cancel',
-                        cssClass: 'secondary',
-                        handler: function handler(blah) {
-                          console.log('Confirm Cancel: blah');
+                        text: 'Dia reserva',
+                        icon: 'calendar',
+                        cssClass: 'azul',
+                        handler: function handler() {
+                          _this9.validarSiPago2();
                         }
                       }, {
-                        text: 'Okay',
+                        text: 'Cancelar reserva',
+                        icon: 'trash',
+                        cssClass: 'rojo',
                         handler: function handler() {
-                          _this8.totalPagar = _this8.auxHoras * _this8.cancha.precio;
-                          _this8.completo = true;
-
-                          _this8.pagar();
-
-                          console.log(_this8.totalPagar);
-                          console.log('Confirm Okay');
+                          _this9.confirmarCancelacion();
+                        }
+                      }, {
+                        text: 'Cancel',
+                        icon: 'close',
+                        role: 'cancel',
+                        handler: function handler() {
+                          console.log('Cancel clicked');
                         }
                       }]
                     });
 
                   case 2:
-                    alert = _context2.sent;
+                    actionSheet = _context2.sent;
                     _context2.next = 5;
-                    return alert.present();
+                    return actionSheet.present();
 
                   case 5:
                   case "end":
@@ -549,7 +657,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
           /*#__PURE__*/
           regeneratorRuntime.mark(function _callee3() {
-            var _this9 = this;
+            var _this10 = this;
 
             var alert;
             return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -558,35 +666,37 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                   case 0:
                     _context3.next = 2;
                     return this.alertController.create({
-                      header: 'Confirmar pago',
-                      message: '<strong>Cuanto quieres pagar</strong>??',
+                      header: 'Confirma el pago',
+                      message: '<strong>¿Cuánto quieres pagar</strong>?',
                       buttons: [{
                         text: 'Cancel',
                         role: 'cancel',
                         cssClass: 'secondary',
                         handler: function handler(blah) {
+                          _this10.parcial = false;
+                          _this10.completo = false;
                           console.log('Confirm Cancel: blah');
                         }
                       }, {
                         text: 'Pagar 50%',
                         handler: function handler() {
-                          _this9.totalPagar = _this9.auxHoras * _this9.cancha.precio * 0.50;
-                          _this9.parcial = true;
+                          _this10.totalPagar = _this10.auxHoras * _this10.cancha.precio * 0.50;
+                          _this10.parcial = true;
 
-                          _this9.pagar();
+                          _this10.pagar();
 
-                          console.log(_this9.totalPagar);
+                          console.log(_this10.totalPagar);
                           console.log('Confirm Okay');
                         }
                       }, {
                         text: 'Pagar 100%',
                         handler: function handler() {
-                          _this9.totalPagar = _this9.auxHoras * _this9.cancha.precio;
-                          _this9.completo = true;
+                          _this10.totalPagar = _this10.auxHoras * _this10.cancha.precio;
+                          _this10.completo = true;
 
-                          _this9.pagar();
+                          _this10.pagar();
 
-                          console.log(_this9.totalPagar);
+                          console.log(_this10.totalPagar);
                           console.log('Confirm Okay');
                         }
                       }]
@@ -616,7 +726,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "pagar",
         value: function pagar() {
-          var _this10 = this;
+          var _this11 = this;
 
           this.payPal.init({
             PayPalEnvironmentProduction: 'TU_ID_DE_CLIENTE_EN_PRODUCCIÓN',
@@ -624,22 +734,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           }).then(function () {
             // Entornos: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
-            _this10.payPal.prepareToRender('PayPalEnvironmentSandbox', new _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__["PayPalConfiguration"]({// Solo lo necesitas si necesitas controlar los errores posteriores al login de paypal "Internal Service Error".
+            _this11.payPal.prepareToRender('PayPalEnvironmentSandbox', new _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__["PayPalConfiguration"]({// Solo lo necesitas si necesitas controlar los errores posteriores al login de paypal "Internal Service Error".
               //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
             })).then(function () {
-              var cobro = new _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__["PayPalPayment"](_this10.totalPagar, 'USD', 'Description', 'Reserva');
+              var cobro = new _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__["PayPalPayment"](_this11.totalPagar, 'USD', 'Description', 'Reserva');
 
-              _this10.payPal.renderSinglePaymentUI(cobro).then(function () {
-                if (_this10.parcial === true) {
-                  _this10.reservacion.pagoParcial = true;
+              _this11.payPal.renderSinglePaymentUI(cobro).then(function () {
+                if (_this11.parcial === true) {
+                  _this11.reservacion.pagoParcial = true;
 
-                  _this10.modificarReservacion(_this10.reservacion.idReservacion);
+                  _this11.modificarReservacion();
                 }
 
-                if (_this10.completo === true) {
-                  _this10.reservacion.pago = true;
+                if (_this11.completo === true) {
+                  _this11.reservacion.pago = true;
 
-                  _this10.modificarReservacion(_this10.reservacion.idReservacion);
+                  _this11.modificarReservacion();
                 } // Se ha realizado el cobro correctamente
                 // En caso de estar en desarrollo, este el código de la Sandbox
                 //
@@ -659,11 +769,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 //   }
                 // }
 
-              }, function () {// Ha petado el cuadro de diálogo
+              }, function () {
+                _this11.parcial = false;
+                _this11.completo = false; // Ha petado el cuadro de diálogo
               });
-            }, function () {// Ha petado la configuración
+            }, function () {
+              _this11.parcial = false;
+              _this11.completo = false; // Ha petado la configuración
             });
-          }, function () {// Ha petado la inicialización o el dispositivo no permite usar PayPal
+          }, function () {
+            _this11.parcial = false;
+            _this11.completo = false; // Ha petado la inicialización o el dispositivo no permite usar PayPal
           });
         }
       }, {
@@ -706,6 +822,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["AlertController"]
       }, {
         type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["NavController"]
+      }, {
+        type: src_app_services_alerta_service_service__WEBPACK_IMPORTED_MODULE_10__["AlertaServiceService"]
+      }, {
+        type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["ActionSheetController"]
       }];
     };
 
@@ -720,7 +840,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./perfil.page.scss */
       "./src/app/pages/perfil/perfil.page.scss")).default]
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_services_apiservi_service__WEBPACK_IMPORTED_MODULE_2__["ApiserviService"], src_app_services_usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"], _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__["PayPal"], _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["AlertController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["NavController"]])], PerfilPage);
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_services_apiservi_service__WEBPACK_IMPORTED_MODULE_2__["ApiserviService"], src_app_services_usuario_service__WEBPACK_IMPORTED_MODULE_4__["UsuarioService"], _ionic_native_paypal_ngx__WEBPACK_IMPORTED_MODULE_8__["PayPal"], _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["AlertController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["NavController"], src_app_services_alerta_service_service__WEBPACK_IMPORTED_MODULE_10__["AlertaServiceService"], _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["ActionSheetController"]])], PerfilPage);
     /***/
   }
 }]);

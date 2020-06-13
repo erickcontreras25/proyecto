@@ -3,7 +3,7 @@ import { Equipo } from 'src/models/equipo.models';
 import { ApiserviService } from 'src/app/services/apiservi.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { EquipoService } from 'src/app/services/equipo.service';
-import { NavController, IonSlides, AlertController } from '@ionic/angular';
+import { NavController, IonSlides, AlertController, ActionSheetController } from '@ionic/angular';
 import { AlertaServiceService } from 'src/app/services/alerta-service.service';
 import { Usuario } from 'src/models/usuario.models';
 import { User } from 'src/models/user.models';
@@ -42,7 +42,8 @@ export class EquipoPage implements OnInit {
               private equipoService: EquipoService,
               private navCtrl: NavController,
               private alertaService: AlertaServiceService,
-              private alertController: AlertController) { }
+              private alertController: AlertController,
+              public actionSheetController: ActionSheetController) { }
 
   ngOnInit() {
     this.perfil = this.usuarioService.getUsuario();
@@ -68,7 +69,7 @@ export class EquipoPage implements OnInit {
     this.equipoService.getEquipos()
       .subscribe((resp: Equipo[]) => {
         this.equipos = resp;
-        console.log('SERVICIO ', resp);
+        // console.log('SERVICIO ', resp);
       });
   }
 
@@ -76,7 +77,7 @@ export class EquipoPage implements OnInit {
     this.equipoService.getEquipoId(id)
     .subscribe((resp: Equipo) => {
       this.equipo = resp;
-      console.log(this.equipo);
+      // console.log(this.equipo);
     });
   }
 
@@ -108,8 +109,8 @@ export class EquipoPage implements OnInit {
     this.equipo.userId = user;
     this.equipoService.putEquipo(this.equipo.idEquipo, this.equipo)
     .subscribe(data => {
-      this.clear();
-      this.alertaService.alertaInformativa('Equipo modificado');
+      // this.clear();
+      this.alertaService.alertaInformativa('Actualizado!!');
       this.obtenerEquipoxUser();
       this.obtenerEquipoUserxIduser();
       // this.goSlide1();
@@ -121,12 +122,12 @@ export class EquipoPage implements OnInit {
   modificarEquipo() {
     this.equipoService.putEquipo(this.equipo.idEquipo, this.equipo)
     .subscribe(data => {
-      this.clear();
+      // this.clear();
       this.aux = null;
-      this.alertaService.alertaInformativa('Equipo actualizado');
+      this.alertaService.alertaInformativa('Actualizado!!');
       this.obtenerEquipoxUser();
       this.obtenerEquipoUserxIduser();
-      this.goSlide1();
+      // this.goSlide1();
     },
     (error) => {
       this.equipo.cantJugadores = this.aux;
@@ -136,11 +137,70 @@ export class EquipoPage implements OnInit {
   }
 
 
+// -----------------------------------------------METODOS --------------------------------------------------
+
+  async actualizar() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Actualizar',
+      buttons: [{
+        text: 'Cantidad de Jugadores a admitir',
+        icon: 'people',
+        cssClass: 'azul',
+        handler: () => {
+          this.presentAlertPrompt();
+        }
+      }, {
+        text: 'Nombre del equipo',
+        icon: 'receipt',
+        cssClass: 'morado',
+        handler: () => {
+          this.actualizarNombre();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  async actualizarCapitan(id: string) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Opciones',
+      buttons: [{
+        text: 'Sacar del equipo',
+        icon: 'person-remove',
+        cssClass: 'rojo',
+        handler: () => {
+          this.sacarEquipo(id);
+        }
+      }, {
+        text: 'Elegir como nuevo capitán',
+        icon: 'shield-checkmark',
+        cssClass: 'verde',
+        handler: () => {
+          this.cambiarCapitan(id);
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
 
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
-      header: '¿Quieres aumentar o disminuir la cantidad de cupos?',
-      message: '<strong>Coloca cuantos cupos quieres quieres tener en total</strong>??',
+      header: 'Aumenta o disminuye la cantidad de jugadores que quieres que tenga el equipo.',
+      message: '<strong>Actualmente el máximo de jugadores es de ' + this.equipo.cantJugadores + ' </strong>',
       inputs: [
         {
           name: 'cantJugadores',
@@ -173,11 +233,16 @@ export class EquipoPage implements OnInit {
   }
 
 
-  async presentAlertConfirm() {
+  async actualizarNombre() {
     const alert = await this.alertController.create({
-      header: '¿Quieres aumentar o disminuir la cantidad de cupos?',
-      message: '<strong>Escribe </strong>??',
-      buttons: [
+      header: 'Cambiale el nombre al equipo',
+      message: '<strong>Actualmente se llama ' + this.equipo.nombre + ' </strong>',
+      inputs: [
+        {
+          name: 'nombre',
+          type: 'text',
+        }
+      ], buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
@@ -187,9 +252,9 @@ export class EquipoPage implements OnInit {
           }
         }, {
           text: 'Okay',
-          handler: () => {
-            
-            
+          handler: data => {
+            this.equipo.nombre = data.nombre;
+            this.modificarEquipo();
             console.log('Confirm Okay');
           }
         }
@@ -308,6 +373,7 @@ export class EquipoPage implements OnInit {
 
   // -------------------------------------------------SLIDE--------------------------------
 goSlide1() {
+  this.clear();
   this.slides.lockSwipes(false);
   this.slides.slideTo(0);
   this.slides.lockSwipes(true);
@@ -329,6 +395,7 @@ slideAtras() {
   this.slides.lockSwipes(false);
   this.slides.slidePrev();
   this.slides.lockSwipes(true);
+  this.clear();
   this.slides.isBeginning().then(data => {
     if (data === true) {
       this.atras = false;

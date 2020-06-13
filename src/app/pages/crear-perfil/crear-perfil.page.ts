@@ -19,6 +19,8 @@ export class CrearPerfilPage implements OnInit {
   ngOnInit() {
   }
 
+  enviar() {
+  }
 
 
   // obtenerUsuario() {

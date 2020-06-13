@@ -53,6 +53,8 @@
 
   <ion-slides class="mainSlide" [options]="{ autoHeight: true }" #slidePrincipal>
     
+<!-- ----------------------------------------SLIDE COMPLEJOS---------------------------------------- -->
+
     <ion-slide>  
       <form #formulario="ngForm">
         <ion-grid>
@@ -68,17 +70,18 @@
               
                 <div *ngFor='let user of complejos'>
   
-                <ion-card class="ion-text-center back">
 
-                  <img src="{{user.foto}}" alt="200" width="500">
-                  <ion-card-title style="color: black;">
+                  <img class="img" src="{{user.foto}}">
+                  <h1 class="shadow">
                     Complejo: {{user.nombre}}
-                  </ion-card-title>
+                  </h1>
                   
               <ion-row>
                 <ion-col size="6">
                   <ion-button type="submit"
-                      color="tertiary"
+                      fill="outline"
+                      color="success"
+                      shape="round"
                       (click)="obtenerIdComplejo2(user.idComplejo)"
                       (click)="goSlideCancha()">
                       Crear cancha
@@ -86,15 +89,16 @@
                 </ion-col>
                 <ion-col size="6">
                   <ion-button type="submit"
-                      color="tertiary"
-                      (click)="obtenerIdComplejo(user.idComplejo)"
+                      fill="outline"
+                      color="success"
+                      shape="round"
+                      (click)="obtenerComplejoId(user.idComplejo)"
                       >
-                      Ver cancha
+                      Canchas
                   </ion-button>
                 </ion-col>
               </ion-row>
   
-                </ion-card>
   
                 </div>
             </ion-col>
@@ -109,13 +113,13 @@
 <!-- ----------------------------------------SLIDE AGREGAR CANCHA---------------------------------------- -->
     <ion-slide>
       <ion-grid>
-            <form #formulario="ngForm">
+            <form #formulario2="ngForm">
 
                 <ion-row>
                     <ion-col>  
   
                       
-                        <ion-label class="ion-text-center">Cual sera el precio por hora que tendra esta cancha?</ion-label>                      
+                        <ion-label class="ion-text-center">Coloca el precio por hora que tendrá esta cancha</ion-label>                      
                       
 
                       <ion-item>
@@ -142,7 +146,7 @@
                       </ion-list>
 
                       
-                          <h4>Agrega una foto de la cancha</h4>
+                          <h4>Agrega una imagen de la cancha</h4>
                         <ion-item class="ion-text-center">
                         <input type="file"
                         id="imgCancha"
@@ -155,23 +159,14 @@
                 </ion-row>
 
             <ion-row>
-              <!-- <ion-col>
-                <ion-button type="submit"
-                          color="success"
-                          shape="round"
-                          expand="full"
-                          (click)="goSlide1()">
-                          <ion-icon name="caret-back-outline"></ion-icon>
-                          Regresar
-                        </ion-button>
-              </ion-col> -->
               <ion-col>
                 <ion-button type="submit"
                             color="success"
+                            shape="round"
                             expand="full"
-                            [disabled]="formulario.invalid"
+                            [disabled]="formulario2.invalid"
                             (click)="agregarCancha()">
-                            <ion-icon name="add-circle-outline"></ion-icon>
+                            <!-- <ion-icon name="add-circle-outline"></ion-icon> -->
                         Crear cancha
                     </ion-button>
               </ion-col>
@@ -185,53 +180,104 @@
 <!-- ------------------------------------------SLIDE VER CANCHAS---------------------------------------------- -->
 
   <ion-slide>  
-    <form>
+    <form #formulario3="ngForm">
       <ion-grid>
-
-        <!-- <ion-row class="center">
-          <ion-col>
-            <ion-button type="submit"
-                        color="success"
-                        shape="round"
-                        (click)="goSlide1()">
-                        <ion-icon name="caret-back-outline"></ion-icon>
-              Regresar
-            </ion-button>
-          </ion-col>
-        </ion-row> -->
-
       
         <ion-row class="center">
           <ion-col>
             
-              <div *ngFor='let user of canchas' style="background-color: rgb(211, 197, 197, 0.1);">
+              <div class="bor" *ngFor='let user of canchas' style="background-color: rgb(211, 197, 197, 0);">
+                <br>
+                <!-- <ion-row>
 
+                  <ion-col class="derecha">
+                    <ion-button fill="clear"
+                                (click)="getCanchaId(user.idCancha)"
+                                >
+                    <ion-icon class="size" color="success" slot="start" name="ellipsis-vertical-outline"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row> -->
+                
+
+                <div style="display: inline-block; position:relative">
+                  <img class="img" src="{{user.foto}}" >
+                  <div style="display: inline-block; position:absolute; top:4%; left:97%; transform: translate(-50%, -50%)">
+                    <ion-icon class="size" 
+                              color="dark" 
+                              slot="start" 
+                              (click)="getCanchaId(user.idCancha)"
+                              name="ellipsis-vertical"></ion-icon>
+                  </div>
+                </div>
+
+                
                 <ion-row>
                   <ion-col>
-                      <h4 class="shadow">Precio</h4>
-                      <h5 (click)="getCanchaId(user.idCancha)"
-                                          (click)="presentAlertPrompt()"
-                                          style="color: blue;"><u>&#8226; Lps. {{user.precio}}</u>
-                                        </h5>
+                      <label>Precio: Lps. {{user.precio}}</label>
                   </ion-col>
                   <ion-col>
-                      <h4 class="shadow">Tamaño</h4>
-                      <h5 style="color: blue;"
-                      ><u>&#8226;{{user.tamanioCancha}}</u>
-                                        </h5>
+                      <label>Tamaño: {{user.tamanioCancha}}</label>
                   </ion-col>
                 </ion-row>
-                
-
-                <img class="img" src="{{user.foto}}" alt="200" width="500">
-                
-
-
+                <br>
               </div>
           </ion-col>
-        </ion-row>
+        </ion-row>        
 
-        
+      </ion-grid>
+    </form>
+  </ion-slide>
+
+  <!-- ------------------------------------------SLIDE ACT IMAGEN---------------------------------------------- -->
+
+  <ion-slide>  
+    <form #formulario4="ngForm">
+      <ion-grid>
+      
+        <ion-row class="center">
+          <ion-col>
+            
+            <ion-row>
+              <ion-col>
+                  <h4>Imagen Actual</h4>
+                <div>
+                    <img class="img" src="{{cancha.foto}}">
+                </div>                  
+              </ion-col>
+            </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <div>
+                    <h4>Cambia la imagen</h4>                        
+                    <ion-item>
+                        <input type="file"
+                               id="img"
+                               name="img"
+                               ngModel
+                               required>
+                    </ion-item>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <ion-button fill="outline"
+                              type="submit"
+                              color="success"
+                              shape="round"
+                              [disabled]="formulario4.invalid"
+                              (click)="modificarCanchaFoto()">
+                              <ion-icon name="sync-outline"></ion-icon>
+                      Actualizar
+                  </ion-button>  
+                </ion-col>
+              </ion-row>
+              
+          </ion-col>
+        </ion-row>        
 
       </ion-grid>
     </form>

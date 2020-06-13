@@ -4,7 +4,7 @@ import { ApiserviService } from 'src/app/services/apiservi.service';
 import { Complejo } from 'src/models/complejo.models';
 import { User } from 'src/models/user.models';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { NavController, IonSlides, AlertController } from '@ionic/angular';
+import { NavController, IonSlides, AlertController, ActionSheetController } from '@ionic/angular';
 import { AlertaServiceService } from 'src/app/services/alerta-service.service';
 
 @Component({
@@ -23,6 +23,7 @@ export class CanchaPage implements OnInit {
   atras = false;
 
   cancha = new Cancha(0, null, null, '', null);
+  complejo: Complejo = new Complejo(0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
 
   perfil: User;
 
@@ -31,7 +32,8 @@ export class CanchaPage implements OnInit {
               private usuarioService: UsuarioService,
               private navCtrl: NavController,
               private alertaService: AlertaServiceService,
-              public alertController: AlertController) { }
+              public alertController: AlertController,
+              public actionSheetController: ActionSheetController) { }
 
   ngOnInit() {
 
@@ -63,16 +65,28 @@ export class CanchaPage implements OnInit {
   modificarCancha() {
     this.apiServi.putCancha(this.cancha.idCancha, this.cancha)
     .subscribe((data) => {
-      this.canchas.push(this.cancha);
+      // this.canchas.push(this.cancha);
       this.clean();
-      window.alert('ACTUALIZADO CON EXITO');
-      
-      this.goSlide1();
+      this.obtenerCanchasComplejo(this.complejo.idComplejo);
+      this.alertaService.alertaInformativa('Actualizado!!');
     },
     (error) => {
       console.log(error);
     }
     );
+  }
+
+  modificarCanchaFoto() {
+
+    const fileInput: any = document.getElementById('img');
+    const file = fileInput.files[0];
+    const imgPromise = this.getFileBlobCancha(file);
+
+    imgPromise.then(blob => {
+      this.cancha.foto = blob;
+
+      this.modificarCancha();
+  });
   }
 
   eliminarCancha() {
@@ -84,10 +98,12 @@ export class CanchaPage implements OnInit {
 
 
 
-  obtenerIdComplejo(id: number) {
-    this.cancha.idComplejo = id;
-    // console.log('ESTE ES EL ID DEL COMPLEJO ' + this.cancha.idComplejo);
-    this.obtenerCanchasComplejo(id);
+  obtenerComplejoId(id: number) {
+    this.apiServi.getComplejoId(id)
+    .subscribe( (resp: Complejo) => {
+      this.complejo = resp;
+      this.obtenerCanchasComplejo(this.complejo.idComplejo);
+    });
   }
   obtenerIdComplejo2(id: number) {
     this.cancha.idComplejo = id;
@@ -96,6 +112,9 @@ export class CanchaPage implements OnInit {
 
   clean() {
     this.cancha = new Cancha(0, null, null, '', null);
+  }
+  clear() {
+    this.complejo = new Complejo(0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
   }
 
 
@@ -136,6 +155,7 @@ export class CanchaPage implements OnInit {
     this.apiServi.getCanchaId(id)
     .subscribe((resp: Cancha) => {
       this.cancha = resp;
+      this.presentActionSheet();
       console.log(this.cancha);
     },
     error => console.log(error));
@@ -159,6 +179,42 @@ export class CanchaPage implements OnInit {
   }
 
 // ------------------------------------------------ALERT CONTROLLER-------------------------------------
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Actualizar',
+      buttons: [{
+        text: 'Precio',
+        icon: 'cash',
+        cssClass: 'verde',
+        handler: () => {
+          this.presentAlertPrompt();
+        }
+      }, {
+        text: 'Tamanio cancha',
+        icon: 'file-tray',
+        cssClass: 'azul',
+        handler: () => {
+          this.tamanio();
+        }
+      }, {
+        text: 'Imagen cancha',
+        icon: 'camera-reverse',
+        cssClass: 'morado',
+        handler: () => {
+          this.goSlideImagen();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       header: 'Cambia el precio de la cancha!',
@@ -187,6 +243,7 @@ export class CanchaPage implements OnInit {
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
       header: 'Cambia el precio de la cancha!',
+      message: '<strong>Precio actual: Lps.' + this.cancha.precio + ' </strong>',
       inputs: [
         {
           name: 'name',
@@ -201,6 +258,7 @@ export class CanchaPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
+            this.clean();
             console.log('Confirm Cancel');
           }
         }, {
@@ -217,11 +275,54 @@ export class CanchaPage implements OnInit {
     await alert.present();
   }
 
+  async tamanio() {
+    const alert = await this.alertController.create({
+      header: 'Cambiar tamanio',
+      message: '<strong>Tamaño actual: ' + this.cancha.tamanioCancha + ' </strong>',
+      buttons: [
+        {
+          text: 'Pequeña',
+          handler: () => {
+            this.cancha.tamanioCancha = 'Pequeña';
+            this.modificarCancha();
+            console.log('Confirm Okay');
+          }
+        }, {
+          text: 'Mediana',
+          handler: () => {
+            this.cancha.tamanioCancha = 'Mediana';
+            this.modificarCancha();
+            console.log('Confirm Okay');
+          }
+        }, {
+          text: 'Grande',
+          handler: () => {
+            this.cancha.tamanioCancha = 'Grande';
+            this.modificarCancha();
+            console.log('Confirm Okay');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            this.clean();
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
 // ---------------------------------------------------SLIDES--------------------------------------------
 
   goSlide1() {
     this.atras = false;
     this.clean();
+    this.clear();
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
@@ -238,6 +339,13 @@ export class CanchaPage implements OnInit {
     this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(2);
+    this.slides.lockSwipes(true);
+  }
+
+  goSlideImagen() {
+    this.atras = true;
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(3);
     this.slides.lockSwipes(true);
   }
 

@@ -22,7 +22,7 @@
 
   <!-- <ion-button expand="full" routerLink="/reservar">RESERVAR CANCHA</ion-button> -->
 
-  <ion-grid *ngIf="!user.isAdmin">
+  <ion-grid *ngIf="!user.isAdmin && !todoMap">
     <!-- <ion-row text-center>
       <ion-col size="6">
         <ion-card class="ion-text-center" routerLink="/equipo">
@@ -91,10 +91,10 @@
       <ion-label>Torneos</ion-label>
     </ion-item>
     <br>
-    <ion-item  detail>
+    <!-- <ion-item routerLink="/crear-perfil" routerDirection="forward" detail>
       <ion-icon name="information-circle-outline"></ion-icon>
       <ion-label>Contactame</ion-label>
-    </ion-item>
+    </ion-item> -->
 
   </ion-grid>
 
@@ -209,10 +209,10 @@
               <ion-label>Mis Complejos</ion-label>
             </ion-item>
             <br>
-          <ion-item  detail>
+          <!-- <ion-item routerLink="/crear-perfil" routerDirection="forward" detail>
             <ion-icon name="information-circle-outline"></ion-icon>
             <ion-label>Info</ion-label>
-          </ion-item>
+          </ion-item> -->
 
   </ion-grid>
 
