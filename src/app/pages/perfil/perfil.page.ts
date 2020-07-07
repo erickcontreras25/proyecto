@@ -46,7 +46,6 @@ export class PerfilPage implements OnInit {
   equipos: Equipo[] = [];
   idEquipo;
 
-  // perfil: User;
 
   private user = {
     id: '',
@@ -76,48 +75,11 @@ export class PerfilPage implements OnInit {
 
   }
 
-  // agregarUsuario() {
-  //   this.apiServi.postUsuario(this.perfil)
-  //   .subscribe((data) => {
-  //     this.perfiles.push(this.perfil);
-  //     this.perfil = {
-  //       nombreUsuario: null,
-  //       edad: null,
-  //       email: null,
-  //       password: null,
-  //       rol: false
-  //     };
-  //     window.alert('AGREGADO');
-  //   },
-  //   (error) => {
-  //     console.log(error);
-  //   }
-  //   );
-  // }
-  // modificarUsuario() {
-  //   this.apiServi.putUsuario(this.idUsuario, this.perfil)
-  //   .subscribe((data) => {
-  //     this.perfiles.push(this.perfil);
-  //     this.perfil = {
-  //       nombreUsuario: null,
-  //       edad: null,
-  //       email: null,
-  //       password: null,
-  //       rol: false
-  //     };
-  //     window.alert('ACTUALIZADO CON EXITO');
-  //   },
-  //   (error) => {
-  //     console.log(error);
-  //   }
-  //   );
-  // }
   obtenerReservacionId(id: number) {
     this.apiServi.getReservacionId(id)
     .subscribe( (resp: Reservacion) => {
       this.reservacion = resp;
       this.valorPagar();
-      // console.log('EJECUTADO CON EXITO');
       this.obtenerCanchaId(this.reservacion.idCancha);
     });
   }
@@ -137,7 +99,6 @@ export class PerfilPage implements OnInit {
       this.goSlide1();
     });
   }
-
   modificarReservacion() {
     this.reservacion.horaInicial = moment(this.hInicio).subtract(6, 'hour');
     this.reservacion.horaFinal = moment(this.hFin).subtract(6, 'hour');
@@ -145,13 +106,35 @@ export class PerfilPage implements OnInit {
     .subscribe((data) => {
       // this.clear();
       this.obtenerMisReservacion();
-      this.goSlide1();
+      this.goSlide2();
       window.alert('Actualizado!!');
     },
     (error) => {
       console.log(error);
     }
     );
+  }
+  obtenerReservas(id: number) {
+    this.apiServi.getReservacionComplejo(id)
+    .subscribe((resp: Reservacion[]) => {
+      this.reser = resp;
+      // console.log(this.reser);
+    });
+  }
+  noVencidas() {
+
+    const ini = moment().format('MM-DD-YYYY HH:mm');
+    let valor = 0;
+
+    for (let i = 0; i < this.reservaciones.length; i++) {
+
+      const val = moment(this.reservaciones[i].horaFinal).format('MM-DD-YYYY HH:mm');
+
+      if (ini < val) {
+        this.reservacionesNoVencidas[valor] = this.reservaciones[i];
+        valor++;
+      }
+    }
   }
 
   obtenerCanchaId(id: number) {
@@ -162,7 +145,6 @@ export class PerfilPage implements OnInit {
       // console.log('EJECUTADO CON EXITO');
     });
   }
-
   getComplejoId(id: number) {
     this.apiServi.getComplejoId(id)
     .subscribe( (resp: Complejo) => {
@@ -172,38 +154,6 @@ export class PerfilPage implements OnInit {
       // console.log('EJECUTADO CON EXITO');
     });
   }
-  // obtenerEquipoUsuario() {
-  //   this.apiServi.getEquipoUsuario(this.idUsuario)
-  //   .subscribe( (resp: Equipo[]) => {
-  //     this.equipos = resp;
-  //     console.log('EJECUTADO CON EXITO');
-  //   });
-  // }
-
-  noVencidas() {
-
-    const ini = moment().format('MM-DD-YYYY HH:mm');
-    let valor = 0;
-
-    for (let i = 0; i < this.reservaciones.length; i++) {
-
-      const val = moment(this.reservaciones[i].horaFinal).format('MM-DD-YYYY HH:mm');
-      
-      if (ini < val) {
-        this.reservacionesNoVencidas[valor] = this.reservaciones[i];
-        valor++;
-      }
-    }
-  }
-
-  obtenerReservas(id: number) {
-    this.apiServi.getReservacionComplejo(id)
-    .subscribe((resp: Reservacion[]) => {
-      this.reser = resp;
-      // console.log(this.reser);
-    });
-  }
-
   validarFecha() {
 
     const ini = moment().format('MM-DD-YYYY HH:mm');
@@ -266,6 +216,9 @@ export class PerfilPage implements OnInit {
     this.auxReser = true;
     return alert('Horario disponible');
   }
+
+
+// --------------------------------------------------------------------------------------------------
   volver() {
     this.auxReser = false;
   }
@@ -285,6 +238,11 @@ export class PerfilPage implements OnInit {
   }
   clear() {
     this.reservacion = new Reservacion(0, new Date(), new Date(), false, false, 0, '');
+  }
+  valorPagar() {
+    const inic = moment(this.reservacion.horaInicial);
+    const fin = moment(this.reservacion.horaFinal);
+    this.auxHoras = fin.diff(inic, 'hours');
   }
 
 
@@ -312,7 +270,6 @@ async confirmarCancelacion() {
   });
   await alert.present();
 }
-
 async actualizar() {
   const actionSheet = await this.actionSheetController.create({
     header: 'Actualizar',
@@ -341,7 +298,6 @@ async actualizar() {
   });
   await actionSheet.present();
 }
-
   async pagarParcial() {
     const alert = await this.alertController.create({
       header: 'Confirma el pago',
@@ -379,15 +335,9 @@ async actualizar() {
     });
 
     await alert.present();
-  }
+}
 
-  valorPagar() {
-    const inic = moment(this.reservacion.horaInicial);
-    const fin = moment(this.reservacion.horaFinal);
-    this.auxHoras = fin.diff(inic, 'hours');
-  }
-
-// ----------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
   pagar() {
     this.payPal.init({
       PayPalEnvironmentProduction: 'TU_ID_DE_CLIENTE_EN_PRODUCCIÓN',
@@ -443,7 +393,7 @@ async actualizar() {
     });
   }
 
-
+// ------------------------------------------------------------------------------------------------------------
   goSlide1() {
     this.clear();
     this.atras = false;

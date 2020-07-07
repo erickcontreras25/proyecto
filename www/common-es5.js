@@ -1182,6 +1182,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _usuario_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! ./usuario.service */
     "./src/app/services/usuario.service.ts");
+    /* harmony import */
+
+
+    var src_environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! src/environments/environment */
+    "./src/environments/environment.ts");
+
+    var URL = src_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].url;
 
     var ApiserviService =
     /*#__PURE__*/
@@ -1191,8 +1199,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         this.http = http;
         this.storage = storage;
-        this.usuarioSer = usuarioSer;
-        this.url = 'https://conmigo.armalapotra.com/api';
+        this.usuarioSer = usuarioSer; // private url = 'https://conmigo.armalapotra.com/api';
+
         this.token = null;
       } // getCanchas(){
       //   return this.http.get('https://apibackend2019.herokuapp.com/api/Complejos');
@@ -1235,7 +1243,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/complejo"), {
+          return this.http.get("".concat(URL, "/complejo"), {
             headers: tokenHeaders
           });
         }
@@ -1245,7 +1253,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/complejo/").concat(id), {
+          return this.http.get("".concat(URL, "/complejo/").concat(id), {
             headers: tokenHeaders
           });
         }
@@ -1255,7 +1263,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/complejo/p?n1=").concat(n1), {
+          return this.http.get("".concat(URL, "/complejo/p?n1=").concat(n1), {
             headers: tokenHeaders
           });
         }
@@ -1265,28 +1273,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/complejo/q?n1=").concat(n1), {
+          return this.http.get("".concat(URL, "/complejo/q?n1=").concat(n1), {
             headers: tokenHeaders
           });
         }
       }, {
         key: "postComplejo",
         value: function postComplejo(complejo) {
-          return this.http.post("".concat(this.url, "/complejo"), complejo, {
+          return this.http.post("".concat(URL, "/complejo"), complejo, {
             responseType: 'text'
           });
         }
       }, {
         key: "putComplejo",
         value: function putComplejo(id, complejo) {
-          return this.http.put("".concat(this.url, "/complejo/").concat(id), complejo, {
+          return this.http.put("".concat(URL, "/complejo/").concat(id), complejo, {
             responseType: 'text'
           });
         }
       }, {
         key: "deleteComplejo",
         value: function deleteComplejo(id) {
-          return this.http.delete("".concat(this.url, "/complejo/").concat(id));
+          return this.http.delete("".concat(URL, "/complejo/").concat(id));
         }
       }, {
         key: "getCanchaComplejo",
@@ -1294,7 +1302,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/cancha/p?n1=").concat(n1), {
+          return this.http.get("".concat(URL, "/cancha/p?n1=").concat(n1), {
             headers: tokenHeaders
           });
         }
@@ -1304,28 +1312,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/cancha/").concat(id), {
+          return this.http.get("".concat(URL, "/cancha/").concat(id), {
             headers: tokenHeaders
           });
         }
       }, {
         key: "postCancha",
         value: function postCancha(cancha) {
-          return this.http.post("".concat(this.url, "/cancha"), cancha, {
+          return this.http.post("".concat(URL, "/cancha"), cancha, {
             responseType: 'text'
           });
         }
       }, {
         key: "putCancha",
         value: function putCancha(id, cancha) {
-          return this.http.put("".concat(this.url, "/cancha/").concat(id), cancha, {
+          return this.http.put("".concat(URL, "/cancha/").concat(id), cancha, {
             responseType: 'text'
           });
         }
       }, {
         key: "deleteCancha",
         value: function deleteCancha(id) {
-          return this.http.delete("".concat(this.url, "/cancha/").concat(id));
+          return this.http.delete("".concat(URL, "/cancha/").concat(id));
         }
       }, {
         key: "getReservaciones",
@@ -1333,7 +1341,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/reservacion"), {
+          return this.http.get("".concat(URL, "/reservacion"), {
             headers: tokenHeaders
           });
         }
@@ -1343,7 +1351,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/reservacion/p?n1=").concat(n1), {
+          return this.http.get("".concat(URL, "/reservacion/p?n1=").concat(n1), {
             headers: tokenHeaders
           });
         }
@@ -1353,7 +1361,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/reservacion/q?n1=").concat(n1), {
+          return this.http.get("".concat(URL, "/reservacion/q?n1=").concat(n1), {
             headers: tokenHeaders
           });
         }
@@ -1363,28 +1371,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/reservacion/").concat(id), {
+          return this.http.get("".concat(URL, "/reservacion/").concat(id), {
             headers: tokenHeaders
           });
         }
       }, {
         key: "postReservacion",
         value: function postReservacion(reservacion) {
-          return this.http.post("".concat(this.url, "/reservacion"), reservacion, {
+          return this.http.post("".concat(URL, "/reservacion"), reservacion, {
             responseType: 'text'
           });
         }
       }, {
         key: "putReservacion",
         value: function putReservacion(id, reservacion) {
-          return this.http.put("".concat(this.url, "/reservacion/").concat(id), reservacion, {
+          return this.http.put("".concat(URL, "/reservacion/").concat(id), reservacion, {
             responseType: 'text'
           });
         }
       }, {
         key: "deleteReservacion",
         value: function deleteReservacion(id) {
-          return this.http.delete("".concat(this.url, "/reservacion/").concat(id));
+          return this.http.delete("".concat(URL, "/reservacion/").concat(id));
         }
       }]);
 
@@ -1456,17 +1464,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _ionic_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! @ionic/storage */
     "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+    /* harmony import */
+
+
+    var src_environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! src/environments/environment */
+    "./src/environments/environment.ts");
+
+    var URL = src_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].url;
 
     var EquipoService =
     /*#__PURE__*/
     function () {
+      // private url = 'https://conmigo.armalapotra.com/api';
       function EquipoService(http, storage, usuarioSer) {
         _classCallCheck(this, EquipoService);
 
         this.http = http;
         this.storage = storage;
         this.usuarioSer = usuarioSer;
-        this.url = 'https://conmigo.armalapotra.com/api';
       }
 
       _createClass(EquipoService, [{
@@ -1475,7 +1491,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/equipo"), {
+          return this.http.get("".concat(URL, "/equipo"), {
             headers: tokenHeaders
           });
         }
@@ -1485,7 +1501,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/equipo/p?n1=").concat(n1), {
+          return this.http.get("".concat(URL, "/equipo/p?n1=").concat(n1), {
             headers: tokenHeaders
           });
         }
@@ -1495,28 +1511,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/equipo/").concat(id), {
+          return this.http.get("".concat(URL, "/equipo/").concat(id), {
             headers: tokenHeaders
           });
         }
       }, {
         key: "postEquipo",
         value: function postEquipo(equipo) {
-          return this.http.post("".concat(this.url, "/equipo"), equipo, {
+          return this.http.post("".concat(URL, "/equipo"), equipo, {
             responseType: 'text'
           });
         }
       }, {
         key: "putEquipo",
         value: function putEquipo(id, equipo) {
-          return this.http.put("".concat(this.url, "/equipo/").concat(id), equipo, {
+          return this.http.put("".concat(URL, "/equipo/").concat(id), equipo, {
             responseType: 'text'
           });
         }
       }, {
         key: "deleteEquipo",
         value: function deleteEquipo(id) {
-          return this.http.delete("".concat(this.url, "/equipo/").concat(id));
+          return this.http.delete("".concat(URL, "/equipo/").concat(id));
         }
       }, {
         key: "getEquipoUser",
@@ -1524,7 +1540,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/equipoUser"), {
+          return this.http.get("".concat(URL, "/equipoUser"), {
             headers: tokenHeaders
           });
         }
@@ -1534,7 +1550,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/equipoUser/p?n1=").concat(n1), {
+          return this.http.get("".concat(URL, "/equipoUser/p?n1=").concat(n1), {
             headers: tokenHeaders
           });
         }
@@ -1544,21 +1560,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/equipoUser/").concat(id), {
+          return this.http.get("".concat(URL, "/equipoUser/").concat(id), {
             headers: tokenHeaders
           });
         }
       }, {
         key: "postEquipoUser",
         value: function postEquipoUser(equipoUser) {
-          return this.http.post("".concat(this.url, "/equipoUser"), equipoUser, {
+          return this.http.post("".concat(URL, "/equipoUser"), equipoUser, {
             responseType: 'text'
           });
         }
       }, {
         key: "deleteEquipoUser",
         value: function deleteEquipoUser(id, idu) {
-          return this.http.delete("".concat(this.url, "/equipoUser/").concat(id, "/").concat(idu), {
+          return this.http.delete("".concat(URL, "/equipoUser/").concat(id, "/").concat(idu), {
             responseType: 'text'
           });
         }
@@ -1632,17 +1648,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _ionic_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! @ionic/storage */
     "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+    /* harmony import */
+
+
+    var src_environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! src/environments/environment */
+    "./src/environments/environment.ts");
+
+    var URL = src_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].url;
 
     var TorneoService =
     /*#__PURE__*/
     function () {
+      // private url = 'https://conmigo.armalapotra.com/api';
       function TorneoService(http, storage, usuarioSer) {
         _classCallCheck(this, TorneoService);
 
         this.http = http;
         this.storage = storage;
         this.usuarioSer = usuarioSer;
-        this.url = 'https://conmigo.armalapotra.com/api';
       }
 
       _createClass(TorneoService, [{
@@ -1651,7 +1675,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/torneo"), {
+          return this.http.get("".concat(URL, "/torneo"), {
             headers: tokenHeaders
           });
         }
@@ -1661,7 +1685,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/torneo/p?n1=").concat(n1), {
+          return this.http.get("".concat(URL, "/torneo/p?n1=").concat(n1), {
+            headers: tokenHeaders
+          });
+        }
+      }, {
+        key: "getTorneoxComplejo",
+        value: function getTorneoxComplejo(n1) {
+          var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Authorization': 'Bearer ' + this.usuarioSer.token
+          });
+          return this.http.get("".concat(URL, "/torneo/q?id=").concat(n1), {
             headers: tokenHeaders
           });
         }
@@ -1671,28 +1705,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/torneo/").concat(id), {
+          return this.http.get("".concat(URL, "/torneo/").concat(id), {
             headers: tokenHeaders
           });
         }
       }, {
         key: "postTorneo",
         value: function postTorneo(torneo) {
-          return this.http.post("".concat(this.url, "/torneo"), torneo, {
+          return this.http.post("".concat(URL, "/torneo"), torneo, {
             responseType: 'text'
           });
         }
       }, {
         key: "putTorneo",
         value: function putTorneo(id, torneo) {
-          return this.http.put("".concat(this.url, "/torneo/").concat(id), torneo, {
+          return this.http.put("".concat(URL, "/torneo/").concat(id), torneo, {
             responseType: 'text'
           });
         }
       }, {
         key: "deleteTorneo",
         value: function deleteTorneo(id) {
-          return this.http.delete("".concat(this.url, "/torneo/").concat(id));
+          return this.http.delete("".concat(URL, "/torneo/").concat(id));
         }
       }, {
         key: "getTorneoEquipo",
@@ -1700,7 +1734,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/torneoEquipo"), {
+          return this.http.get("".concat(URL, "/torneoEquipo"), {
             headers: tokenHeaders
           });
         }
@@ -1710,7 +1744,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/torneoEquipo/p?n1=").concat(n1), {
+          return this.http.get("".concat(URL, "/torneoEquipo/p?n1=").concat(n1), {
             headers: tokenHeaders
           });
         }
@@ -1720,21 +1754,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           var tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
             'Authorization': 'Bearer ' + this.usuarioSer.token
           });
-          return this.http.get("".concat(this.url, "/torneoEquipo/").concat(id), {
+          return this.http.get("".concat(URL, "/torneoEquipo/").concat(id), {
             headers: tokenHeaders
           });
         }
       }, {
         key: "postTorneoEquipo",
         value: function postTorneoEquipo(torneoEquipo) {
-          return this.http.post("".concat(this.url, "/torneoEquipo"), torneoEquipo, {
+          return this.http.post("".concat(URL, "/torneoEquipo"), torneoEquipo, {
             responseType: 'text'
           });
         }
       }, {
         key: "deleteTorneoEquipo",
         value: function deleteTorneoEquipo(idT, idE) {
-          return this.http.delete("".concat(this.url, "/torneoEquipo/").concat(idT, "/").concat(idE), {
+          return this.http.delete("".concat(URL, "/torneoEquipo/").concat(idT, "/").concat(idE), {
             responseType: 'text'
           });
         }

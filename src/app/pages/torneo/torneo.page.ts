@@ -21,9 +21,9 @@ export class TorneoPage implements OnInit {
   complejos: Complejo[] = [];
   complejo: Complejo = new Complejo(0, null, null, null, null, false, 0.0, 0.0, new Date(), new Date(), false, false, null);
 
-  torneoUser: Torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
   torneos: Torneo[] = [];
   torneosxUser: Torneo[] = [];
+  torneoUser: Torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
 
   equipoxTorneo: TorneoEquipo[] = [];
   torneoEquipo: TorneoEquipo = new TorneoEquipo(0, 0);
@@ -59,8 +59,6 @@ export class TorneoPage implements OnInit {
 
 
   // -------------------------------------------METODOS TORNEO---------------------------------------
-
-
   getTorneoxUser() {
     this.torneoService.getTorneoxUsuario(this.perfil.id)
     .subscribe((resp: Torneo[]) => {
@@ -90,7 +88,9 @@ export class TorneoPage implements OnInit {
   modificarTorneoConImagen() {
     const fileInput: any = document.getElementById('img');
     const file = fileInput.files[0];
-
+    if (!(/\.(jpg|png|jpeg)$/i).test(file.name)) {
+      return alert('El archivo a adjuntar no es una imagen');
+  }
     const imgPromise = this.getFileBlob(file);
 
     imgPromise.then(blob => {
@@ -168,8 +168,6 @@ export class TorneoPage implements OnInit {
       this.complejos = resp;
     });
   }
-
-
 
   mostrarDel() {
     this.hoy = moment().format('YYYY-MM-DD');
@@ -332,10 +330,7 @@ export class TorneoPage implements OnInit {
 
 
 
-
-
-
-    // -------------------------------------------------SLIDE--------------------------------
+// -------------------------------------------------SLIDE--------------------------------
 goSlide1() {
   this.clea();
   this.slides.lockSwipes(false);

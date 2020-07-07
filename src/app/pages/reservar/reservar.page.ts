@@ -25,40 +25,26 @@ export class ReservarPage implements OnInit {
   seleccion: number;
   atras = false;
 
-  complejosAbiertos: Complejo[];
-  canchas: Cancha[];
+
   aux = false;
   auxReser = false;
   auxHoras;
 
+  complejosAbiertos: Complejo[];
   complejos: Complejo[];
-
   complejo = new Complejo(0, '', '', null, '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
 
+  canchas: Cancha[];
   canchaId = new Cancha(0, null, null, null, 0);
-  //  {
-  //   idCancha: 0,
-  //   precio: null,
-  //   foto: null,
-  //   idComplejo: null
-  // };
 
-  reservaciones: Reservacion[] = [];
   reser: Reservacion[] = [];
-
+  reservaciones: Reservacion[] = [];
   reservacion = new Reservacion(0, null, null, false, false, 0, '');
-  //  {
-  //   idReservacion: 0,
-  //   horaInicial: null,
-  //   horaFinal: null,
-  //   pago: false,
-  //   pagoParcial: false,
-  //   idCancha: 0,
-  //   userId: ''
-  // };
+
+  torneo: Torneo[] = [];
+
   hInicio;
   hFin;
-  torneo: Torneo[] = [];
   diaTorneo = false;
 
 
@@ -76,18 +62,15 @@ export class ReservarPage implements OnInit {
     this.slides.lockSwipes(true);
 
     this.reservacion.userId = this.perfil.id;
-    // console.log('ESTE ES EL ID OBTENIDO > > ' + this.reservacion.userId);
-
 
     this.obtenerComplejos();
 
     this.obtenerComplejoEstado();
 
-
   }
 
 
-  // ---------------METODOS COMPLEJO------------------------------------------------
+// ------------------------------------------METODOS COMPLEJO------------------------------------------------
   obtenerComplejos() {
     this.apiServi.getComplejo()
     .subscribe((resp: Complejo[]) => {
@@ -95,14 +78,12 @@ export class ReservarPage implements OnInit {
       // console.log('SERVICIO ', resp);
     });
   }
-
   obtenerComplejoEstado() {
     this.apiServi.getComplejoEstado(true)
     .subscribe((resp: Complejo[]) => {
       this.complejosAbiertos = resp;
     });
   }
-
   obtenerComplejoId(id: number) {
     this.apiServi.getComplejoId(id)
     .subscribe( (resp: Complejo) => {
@@ -114,11 +95,10 @@ export class ReservarPage implements OnInit {
   }
 
 
-  // ----------------------METODOS RESERVAR-----------------------------------
+  // ------------------------------------------METODOS RESERVA-------------------------------------------------
   obtenerReservacionId() {
     this.apiServi.getReservacionId(this.reservacion.idReservacion)
     .subscribe( resp => {
-      // console.log('EJECUTADO CON EXITO');
     });
   }
   agregarReservacion() {
@@ -172,51 +152,12 @@ export class ReservarPage implements OnInit {
       console.log('ELIMINADO CON EXITO');
     });
   }
-
-  volver() {
-    this.auxReser = false;
-  }
-
-
-
-  // ----------------------------METODOS CANCHAS-----------------------------------
-  obtenerCanchasComplejo(id: number) {
-    this.apiServi.getCanchaComplejo(id)
-    .subscribe((resp: Cancha[]) => {
-      this.canchas = resp;
-      this.obtenerComplejoId(id);
-      // console.log('CANCHAS ', this.canchas);
-    });
-  }
-  obtenerCanchaId(id: number) {
-    this.apiServi.getCanchaId(id)
-    .subscribe((resp: Cancha) => {
-      this.canchaId = resp;
-      this.reservacion.idCancha = this.canchaId.idCancha;
-    });
-  }
-
-
   obtenerReservas(id: number) {
     this.apiServi.getReservacionComplejo(id)
     .subscribe((resp: Reservacion[]) => {
       this.reser = resp;
-      // console.log(this.reser);
     });
   }
-
-  getTorneoId(id: number) {
-    this.torneoService.getTorneooId(id)
-    .subscribe( (resp: Torneo[]) => {
-      this.torneo = resp;
-      if (this.torneo != null) {
-        this.diaTorneo = true;
-      }
-      // console.log(this.torneo);
-    });
-  }
-
-
   validarFecha() {
 
     const ini = moment().format('MM-DD-YYYY HH:mm');
@@ -252,16 +193,14 @@ export class ReservarPage implements OnInit {
       return alert('Solo puede reservar en horario que permite el complejo');
     }
 
-    // if (this.diaTorneo === true) {
-    //   console.log(this.torneo.length);
-    //   for (let i = 0; i < this.torneo.length; i++) {
-    //     console.log(this.diaTorneo);
-    //     if (diaReserva === moment(this.torneo[i].diaTorneo).format('MM-DD-YYYY')) {
-    //       return alert('Este dia no esta disponible ya que se realizará un torneo');
-    //     }
-    //     console.log('diaaa ' + diaReserva + ' ' + moment(this.torneo[i].diaTorneo).format('MM-DD-YYYY'));
-    //   }
-    // }
+    if (this.diaTorneo === true) {
+      for (let i = 0; i < this.torneo.length; i++) {
+        const diaT = moment(this.torneo[i].diaTorneo).format('MM-DD-YYYY');
+        if (diaReserva === diaT) {
+          return alert('Este día se llevará a cabo un torneo en este complejo, por lo que no puede reservarse ese horario.');
+        }
+      }
+    }
 
     for (let i = 0; i < this.reser.length; i++) {
       const fechInicial = moment(this.reser[i].horaInicial).format('MM-DD-YYYY H:mm');
@@ -291,25 +230,43 @@ export class ReservarPage implements OnInit {
     return alert('Horario disponible');
   }
 
+  volver() {
+    this.auxReser = false;
+  }
 
 
 
-  // -------------------------------METODOS OBTENER------------------
-idCancha(id: number) {
-  this.reservacion.idCancha = id;
-}
-// precioCancha(precio: number) {
-//   this.seleccion = precio;
-// }
-// nombreComplejo(nombre: string) {
-//   this.complejo.nombre = nombre;
-// }
-// localidadComplejo(local: string) {
-//   this.complejo.localidad = local;
-// }
-obtenerComplejo(id: number) {
-  this.obtenerComplejoId(id);
-}
+  // ----------------------------METODOS CANCHAS-----------------------------------
+  obtenerCanchasComplejo(id: number) {
+    this.apiServi.getCanchaComplejo(id)
+    .subscribe((resp: Cancha[]) => {
+      this.canchas = resp;
+      this.obtenerComplejoId(id);
+      // console.log('CANCHAS ', this.canchas);
+    });
+  }
+  obtenerCanchaId(id: number) {
+    this.apiServi.getCanchaId(id)
+    .subscribe((resp: Cancha) => {
+      this.canchaId = resp;
+      this.reservacion.idCancha = this.canchaId.idCancha;
+    });
+  }
+
+  getTorneoId(id: number) {
+    this.torneoService.getTorneoxComplejo(id)
+    .subscribe( (resp: Torneo[]) => {
+      this.torneo = resp;
+      if (this.torneo.length > 0) {
+        this.diaTorneo = true;
+      }
+      // console.log(this.torneo);
+    });
+  }
+
+
+
+// ------------------------------------------------------------------------------------------------------------
 obtenerCancha(id: number) {
   this.obtenerCanchaId(id);
   this.obtenerReservas(id);
@@ -317,12 +274,18 @@ obtenerCancha(id: number) {
 llenar() {
   this.reservacion.idCancha = this.canchaId.idCancha;
 }
+clean() {
+  this.diaTorneo = false;
+  this.torneo = null;
+  this.complejo = null;
+}
 
 
 
 
-// -------------------------------------------------SLIDE--------------------------------
+// ----------------------------------------------------------SLIDE---------------------------------------------
 goComplejos() {
+  this.clean();
   this.atras = false;
   this.slides.lockSwipes(false);
   this.slides.slideTo(0);

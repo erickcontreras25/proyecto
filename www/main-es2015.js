@@ -1400,6 +1400,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _alerta_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./alerta-service.service */ "./src/app/services/alerta-service.service.ts");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
 
 
 
@@ -1407,7 +1408,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+const URL = src_environments_environment__WEBPACK_IMPORTED_MODULE_7__["environment"].url;
 let UsuarioService = class UsuarioService {
+    // private url = 'https://conmigo.armalapotra.com/api';
     constructor(http, storage, navCtrl, alertaSercice) {
         this.http = http;
         this.storage = storage;
@@ -1423,14 +1427,13 @@ let UsuarioService = class UsuarioService {
             edad: null,
             isAdmin: null
         };
-        this.url = 'https://conmigo.armalapotra.com/api';
     }
     login(email, password) {
         const data = { email, password };
         return new Promise(resolve => {
-            this.http.post(`${this.url}/account/login`, data)
+            this.http.post(`${URL}/account/login`, data)
                 .subscribe((resp) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-                console.log('PASO 0 >> ' + resp);
+                // console.log('PASO 0 >> ' + resp);
                 if (resp['ok']) {
                     yield this.guardarToken(resp['token']);
                     this.guardarVencimiento(resp['expiration']);
@@ -1454,7 +1457,7 @@ let UsuarioService = class UsuarioService {
     }
     registro(usuario) {
         return new Promise(resolve => {
-            this.http.post(`${this.url}/account/create`, usuario)
+            this.http.post(`${URL}/account/create`, usuario)
                 .subscribe(resp => {
                 // console.log(resp);
                 if (resp['ok']) {
@@ -1475,14 +1478,14 @@ let UsuarioService = class UsuarioService {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             this.token = token;
             yield this.storage.set('token', token);
-            console.log('GUARDAR TOKEN DEBE IR PRIMERO');
+            // console.log('GUARDAR TOKEN DEBE IR PRIMERO');
             yield this.validaToken();
         });
     }
     guardarVencimiento(expiration) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             this.expiration = expiration;
-            console.log('GUARDAR VENCIMIENTO DEBE IR SEGUNDO');
+            // console.log('GUARDAR VENCIMIENTO DEBE IR SEGUNDO');
             yield this.storage.set('expiration', expiration);
         });
     }
@@ -1508,7 +1511,7 @@ let UsuarioService = class UsuarioService {
             return new Promise(resolve => {
                 if (this.verificarVencimiento()) {
                     const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.token });
-                    this.http.get(`${this.url}/user`, { headers: tokenHeaders })
+                    this.http.get(`${URL}/user`, { headers: tokenHeaders })
                         .subscribe((resp) => {
                         this.user = resp;
                         // console.log( 'PASO 3 >> ' );
@@ -1538,15 +1541,15 @@ let UsuarioService = class UsuarioService {
             else {
                 const actual = moment__WEBPACK_IMPORTED_MODULE_5__().format('MM-DD-YYYY HH:mm');
                 const aux = moment__WEBPACK_IMPORTED_MODULE_5__(this.expiration).format('MM-DD-YYYY HH:mm');
-                console.log('PASO 1 >> ' + 'HORA ' + actual + ' EXPIRA ' + aux);
+                // console.log( 'PASO 1 >> ' + 'HORA ' + actual + ' EXPIRA ' + aux);
                 if (actual >= aux) {
-                    console.log('PASO 2 >> ' + 'ESTE ES FALSO');
+                    // console.log( 'PASO 2 >> ' + 'ESTE ES FALSO');
                     this.alertaSercice.alertaInformativa('Tu sesion a finalizado');
                     this.navCtrl.navigateRoot('/login');
                     return false;
                 }
                 else {
-                    console.log('PASO 2 >> ' + 'ESTE ES VERDADERO');
+                    // console.log( 'PASO 2 >> ' + 'ESTE ES VERDADERO');
                     return true;
                 }
             }
@@ -1595,7 +1598,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 
 const environment = {
-    production: false
+    production: false,
+    url: 'https://prueba.armalapotra.com/api'
 };
 /*
  * For easier debugging in development mode, you can import the following file

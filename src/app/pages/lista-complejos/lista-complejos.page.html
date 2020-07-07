@@ -7,6 +7,7 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <h2 class="centrado" style="color: white;">Reservas</h2>  
   </ion-toolbar>
 </ion-header>
 
@@ -84,59 +85,7 @@
                     </ion-col>
                   </ion-row>
 
-                  <!-- <ion-row>
-                    <ion-col>                 
-                    </ion-col>
-                    <ion-col>
-                        <ion-label position="floating">Cambiar estado</ion-label>
-                        <ion-select [(ngModel)]="complejo.estado"
-                                    name="idCancha">
-                            <ion-select-option value="true">Abierto</ion-select-option>
-                            <ion-select-option value="false">Cerrado</ion-select-option>
-                        </ion-select>
-                  </ion-col>
-                  </ion-row> -->
-                  
-                  <!-- <ion-row>
-                    <ion-col size="6">
-                      <ion-button type="submit"
-                          color="tertiary"
-                          shape="round"
-                          >
-                          Actualizar estado
-                      </ion-button>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-button type="submit"
-                          color="tertiary"
-                          shape="round"
-                          (click)="obtenerComplejo(user.idComplejo)"
-                          
-                          (click)="goSlideActualizar()">
-                        Actualizar Info.
-                      </ion-button>
-                    </ion-col>
-                  </ion-row> -->
-                  <!-- <ion-row>
-                    <ion-col size="6">
-                      <ion-button type="submit"
-                          color="tertiary"
-                          shape="round"
-                          (click)="obtenerCanchasComplejo(user.idComplejo)"
-                          (click)="goSlideVerCancha()">
-                        Ver cancha
-                      </ion-button>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-button type="submit"
-                          color="tertiary"
-                          shape="round"
-                          (click)="obtenerIdComplejo(user.idComplejo)"
-                          (click)="goSlideAgregarCancha()">
-                        Agregar cancha
-                      </ion-button>
-                    </ion-col>
-                  </ion-row> -->
+
                   <ion-row>
                     <ion-col>
                       <ion-button type="submit"
@@ -166,18 +115,33 @@
       <ion-grid fixed>
             <form>
  
-              <h1 style="color: white;">Reservas</h1>  
 
-              <div>
+              <!-- <div>
                 <ion-row>
-                  <ion-col class="bor" size="3"><h6 class="shadow">Usuario</h6></ion-col>
+                  <ion-col class="borA"><h6 class="shadow">Usuario</h6></ion-col>
                   <ion-col class="bor" size="3"><h6 class="shadow">Dia y hora</h6></ion-col>
-                  <ion-col class="bor"><h6 class="shadow">¿Realizo el pagó?</h6></ion-col>
-                  <!-- <ion-col></ion-col> -->
+                  <ion-col class="borA"><h6 class="shadow">¿Realizó el pagó?</h6></ion-col>
+                  <ion-col class="borA"><h6 class="shadow">Ver</h6></ion-col>
                 </ion-row>
-              </div>
+              </div> -->
 
-              <div>
+              <!-- <div>
+                <ion-row *ngFor="let item of reservasComplejo" class="borA">
+                  <ion-col class="izquierda"><h6>{{item.user.nombreUsuario}}</h6></ion-col>
+                  <ion-col  *ngIf="item.pago"><label class="shadow">100% </label></ion-col>
+                  <ion-col  *ngIf="item.pagoParcial"><label class="shadow">50% </label></ion-col>
+                  <ion-col  *ngIf="!item.pago && !item.pagoParcial"><h6 class="shadow">No</h6></ion-col>
+                  <ion-col class="derecha">
+                    <ion-button color="success"
+                                class="derecha"      
+                                shape="round" fill="clear"
+                                (click)="obtenerReserva(item.idReservacion)"
+                                ><ion-icon color="success" class="size" name="return-up-forward-outline"></ion-icon></ion-button>
+                  </ion-col>
+                </ion-row>            
+            </div> -->
+
+              <!-- <div>
                   <ion-row *ngFor="let item of reservasComplejo">
                     <ion-col class="bor" size="3"><h6 class="shadow">{{item.user.nombreUsuario}}</h6></ion-col>
                     <ion-col class="bor" size="3"><h6 class="shadow">{{item.horaInicial | date:'dd-MMMM HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}</h6></ion-col>
@@ -193,10 +157,88 @@
                                   </ion-button>
                       
                     </ion-col>
-                    <!-- <ion-col *ngIf="item.pago || item.pagoParcial"></ion-col> -->
                   </ion-row>            
-              </div>
+              </div> -->
 
+
+              <div class="borA" *ngFor='let item of reservasComplejo' style="background-color: rgb(211, 197, 197, 0);">
+  
+                <ion-row>
+                  <ion-col>
+                    <ion-label>
+                      <ion-icon name="person-outline" color="secondary"></ion-icon>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label>
+                      <!-- <ion-icon name="mail-outline" color="secondary"></ion-icon> -->
+                      <ion-icon name="cash-outline" color="success"></ion-icon>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-label>
+                      {{item.user.nombreUsuario}}
+                    </ion-label>
+                  </ion-col>
+                  <!-- <ion-col>
+                    <ion-label>
+                      {{item.user.email}}
+                    </ion-label>
+                  </ion-col> -->
+                  <ion-col *ngIf="item.pago"><ion-label>Pagó 100%</ion-label></ion-col>
+                  <ion-col *ngIf="item.pagoParcial"><ion-label>Pagó 50%</ion-label></ion-col>
+                  <ion-col *ngIf="!item.pago && !item.pagoParcial"><ion-label>No Pagó</ion-label></ion-col>
+                </ion-row>
+                
+                <ion-row>
+                  <ion-col>
+                    <ion-label>
+                      <ion-icon name="calendar-outline" color="tertiary"></ion-icon>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label>
+                      <ion-icon name="time-outline" color="success"></ion-icon>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-label>
+                      {{item.horaInicial | date:'dd-MMMM'}}
+                    </ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label>
+                      De: {{item.horaFinal | date:'HH:mm'}} a {{item.horaFinal | date:'HH:mm'}}
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+
+
+                <ion-row *ngIf="!item.pago && !item.pagoParcial">
+                  <ion-col>
+                    <!-- <ion-button type="submit"
+                                color="tertiary"
+                                expand="full"
+                                fill="clear"
+                                (click)="eliminar(item.idReservacion)"
+                                >
+                                <ion-icon name="trash-outline"></ion-icon>
+                                <ion-label style="color: red;">
+                                  Eliminar Reserva
+                                </ion-label>
+                    </ion-button> -->
+                    <ion-icon class="size" name="trash-outline" style="color: red;"
+                              (click)="eliminar(item.idReservacion)"
+                              ></ion-icon>
+                  </ion-col>
+                </ion-row>
+
+
+              </div>
             
             </form>
         </ion-grid>
@@ -405,7 +447,7 @@
                                 shape="round"
                                 [disabled]="formulario.invalid"
                                 (click)="modificarComplejo()"
-                                (click)="goSlide1()">
+                                >
                                 <ion-icon name="sync-outline"></ion-icon>
                         Actualizar
                     </ion-button>  
@@ -471,10 +513,29 @@
       </ion-slide>
   
   
-  <!-- -------------------------------SLIDE VER CANCHAS------------------------------------- -->
+  <!-- -------------------------------SLIDE VER RESERVA------------------------------------- -->
 
   <ion-slide>
   
+    <!-- <ion-grid>
+      <form>
+
+
+        <div *ngIf="reservaComplejo !== undefined">
+          <ion-row>
+            <ion-col ><h6 class="shadow">{{reservaComplejo.user.nombreUsuario}}</h6></ion-col>
+            <ion-col ><h6 class="shadow">{{reservaComplejo.user.email}}</h6></ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col ><h6 class="shadow">{{reservaComplejo.horaInicial | date:'dd-MMMM HH:mm'}}</h6></ion-col>
+            <ion-col ><h6 class="shadow">{{reservaComplejo.horaFinal | date:'dd-MMMM HH:mm'}}</h6></ion-col>
+          </ion-row>
+        </div>
+      
+      </form>
+  </ion-grid> -->
+
     <!--  -->
   </ion-slide>
 

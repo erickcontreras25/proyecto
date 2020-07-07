@@ -69,7 +69,6 @@ export class EquipoPage implements OnInit {
     this.equipoService.getEquipos()
       .subscribe((resp: Equipo[]) => {
         this.equipos = resp;
-        // console.log('SERVICIO ', resp);
       });
   }
 
@@ -93,7 +92,6 @@ export class EquipoPage implements OnInit {
     this.equipo.userId = this.perfil.id;
     this.equipoService.postEquipo(this.equipo)
     .subscribe(data => {
-      this.equipos.push(this.equipo);
       this.clear();
       this.alertaService.alertaInformativa('Equipo creado. \n Ahora solo tienes que dar click en completar creacion.');
       this.obtenerEquipoxUser();
@@ -137,7 +135,7 @@ export class EquipoPage implements OnInit {
   }
 
 
-// -----------------------------------------------METODOS --------------------------------------------------
+// ----------------------------------------------- --------------------------------------------------
 
   async actualizar() {
     const actionSheet = await this.actionSheetController.create({
@@ -280,7 +278,7 @@ export class EquipoPage implements OnInit {
         aux = aux + 1;
       }
     });
-      console.log(this.mostrarEIncomp);
+      // console.log(this.mostrarEIncomp);
     }
   }
   obtenerEquipoUserId(id: number) {
@@ -314,7 +312,6 @@ export class EquipoPage implements OnInit {
       console.log(error);
     });
   }
-  
 
   uniraEquipo(id: string) {
     this.equipoUser.userId = this.perfil.id;
@@ -355,7 +352,7 @@ export class EquipoPage implements OnInit {
   }
 
 
-
+// ----------------------------------------------- --------------------------------------------------
   llenar(id: number) {
     this.equipoUser.equipoId = id;
   }
@@ -371,7 +368,7 @@ export class EquipoPage implements OnInit {
 
 
 
-  // -------------------------------------------------SLIDE--------------------------------
+  // -----------------------------------------------------------SLIDE---------------------------------------------
 goSlide1() {
   this.clear();
   this.slides.lockSwipes(false);
@@ -386,6 +383,7 @@ goSlide2() {
   this.slides.lockSwipes(true);
 }
 goSlide3() {
+  this.atras = true;
   this.slides.lockSwipes(false);
   this.slides.slideTo(2);
   this.slides.lockSwipes(true);

@@ -26,16 +26,6 @@ export class InicioPage implements OnInit, AfterViewInit {
   todoMap = false;
 
   complejos: Complejo[] = [];
-  // complejo = {
-  //   idComplejo: 0,
-  //   nombre: null,
-  //   localidad: null,
-  //   foto: null,
-  //   estado: null,
-  //   idAdmin: null
-  // };
-
-  // perfil: User;
 
   private user = {
     id: '',
@@ -48,23 +38,16 @@ export class InicioPage implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    // const lat = 15.5;
-    // const lng =  -88.0333;
-
-    
-
-    
     this.user = this.usuarioService.getUsuario();
     // console.log('PASO 4 >> ');
-    console.log(this.user);
+    // console.log(this.user);
     // console.log('PASO 5 >> ' + this.user.isAdmin);
-    // this.aux2 = this.apiServi.getAuxEst();
 
   }
 
+
   ngAfterViewInit() {
     this.obtenerComplejos();
-    console.log('ESTA RECARGANDO');
   }
 
   logout() {
@@ -81,8 +64,6 @@ export class InicioPage implements OnInit, AfterViewInit {
     });
   }
 
-
-
   async loadMap() {
     const rta = await this.geolocation.getCurrentPosition();
     const myLatLng = {
@@ -97,23 +78,16 @@ export class InicioPage implements OnInit, AfterViewInit {
     zoom: 11
     });
     const marker = new Mapboxgl.Marker().setLngLat( [ myLatLng.lng, myLatLng.lat ] ).addTo( map );
-    
+
     let markers: any[] = [];
     let valor = 0;
-    console.log(this.complejos);
+    // console.log(this.complejos);
     for (let i = 0; i < this.complejos.length; i++) {
 
       if (this.complejos[i].longitud != null && this.complejos[i].latitud != null) {
-      
+
       const popup = new Mapboxgl.Popup()
       .setHTML('<h3 style="color: black;">' + this.complejos[i].nombre + '</h3>');
-
-      // console.log(this.complejos[i].nombre);
-
-      // const marker = new mapboxgl.Marker()
-      //   .setLngLat( [ this.complejos[i].longitud, this.complejos[i].latitud] )
-      //   .setPopup(popup)
-      //   .addTo( map );
 
       markers[valor] = new Mapboxgl.Marker({color: 'green'})
       .setLngLat([this.complejos[i].longitud, this.complejos[i].latitud])
@@ -125,33 +99,8 @@ export class InicioPage implements OnInit, AfterViewInit {
 
         }
 
-      
     }
-    // const marker = new mapboxgl.Marker()
-    //     .setLngLat( [ myLatLng.lng, myLatLng.lat ] )
-    //     .addTo( map );
 
-    // const popup = new mapboxgl.Popup()
-    //     .setHTML('<h3>Soccer</p>');
-
-    // const marker2 = new mapboxgl.Marker()
-    //     .setLngLat( [ -88.034648, 15.525479 ] )
-    //     .setPopup(popup)
-    //     .addTo( map );
-
-    // const popup1 = new mapboxgl.Popup()
-    //     .setHTML('<h3>Tiki</p>');
-
-    // const marker3 = new mapboxgl.Marker()
-    //     .setLngLat( [ -88.013182, 15.534694 ] )
-    //     .setPopup(popup1)
-    //     .addTo( map );
-    // console.log(myLatLng);
-    // const mapEle: HTMLElement = document.getElementById('map');
-    // const map = new google.maps.Map(mapEle, {
-    //   center: myLatLng,
-    //   zoom: 12
-    // });
     
   }
 

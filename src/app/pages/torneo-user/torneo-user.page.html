@@ -36,7 +36,7 @@
               <ion-col class="izquierda"><label>{{item.nombre}}</label></ion-col>
               <ion-col class="izquierda"><label>{{item.complejo.nombre}}</label></ion-col>
               <ion-col *ngIf="item.diaTorneo > hoy">
-                <label  style="color: rgb(16, 122, 243);"> {{item.diaTorneo | date:'dd-MMMM-yyyy'}}</label>
+                <label  style="color: rgb(16, 243, 103);"> {{item.diaTorneo | date:'dd-MMMM-yyyy'}}</label>
               </ion-col>
               <ion-col class="derecha">
                 <ion-button color="success"
@@ -66,14 +66,14 @@
             <ion-row>
               <ion-col>
                 <h6>
-                  <ion-icon class="size" name="calendar-outline" color="secondary"></ion-icon>
+                  <ion-icon class="size" name="calendar-outline" style="color: red;"></ion-icon>
                       Día del torneo:
                 </h6>
                 <h6>{{torneo.diaTorneo | date:'dd-MMMM-yyyy'}}</h6>
               </ion-col>
               <ion-col>
                 <h6>
-                  <ion-icon class="size" name="location-outline" color="primary"></ion-icon>
+                  <ion-icon class="size" name="location-outline" style="color: red;"></ion-icon>
                     Dirección:
                 </h6>
                 <h6>{{complejo.localidad}}</h6>
@@ -103,14 +103,8 @@
                 </ion-col>
               </ion-row>
             <ion-row>
-              <!-- <ion-col>
-                <ion-button color="success"
-                            shape="round"
-                          (click)="goSlide1()">Regresar</ion-button>
-              </ion-col> -->
               <ion-col *ngIf="ver">
                 <ion-button color="success"
-                            fill="outline"
                            (click)="registrar()" 
                           >Registrar mi equipo</ion-button>
               </ion-col>

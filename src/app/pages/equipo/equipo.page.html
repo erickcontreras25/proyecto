@@ -7,9 +7,11 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <h2 class="centrado"  *ngIf="perfil.id == equipo.userId">Soy capitán</h2>
+    <h2 class="centrado"  *ngIf="perfil.id != equipo.userId">Soy miembro</h2>
     <ion-buttons slot="end" *ngIf="perfil.id == equipo.userId">
       <ion-icon class="size shadow" 
-                style="color: white;" 
+                style="color: green;" 
                 (click)="actualizar()"
                 name="ellipsis-vertical"></ion-icon>
     </ion-buttons>
@@ -42,7 +44,7 @@
           <ion-col class="derecha">
             <div >
               <ion-button color="light" 
-                          routerLink="/unirme-equipo" routerDirection="forward"
+                          routerLink="/unirme-equipo" routerDirection="root"
                           class="redondo">
                           <ion-icon color="success" name="search-outline" class="size"></ion-icon>
                         </ion-button>
@@ -144,9 +146,9 @@
 
       <div>
         <h1 *ngIf="perfil.id == equipo.userId">{{equipo.nombre}}</h1>
-        <h2 *ngIf="perfil.id == equipo.userId">Soy capitán</h2>
+        <!-- <h2 *ngIf="perfil.id == equipo.userId">Soy capitán</h2> -->
         <h1 *ngIf="perfil.id != equipo.userId">{{equipo.nombre}}</h1>
-        <h2 *ngIf="perfil.id != equipo.userId">Miembros</h2>
+        <!-- <h2 *ngIf="perfil.id != equipo.userId">Miembros</h2> -->
         
         <ion-row *ngIf="perfil.id == equipo.userId" class="bor">
           <ion-col class="izquierda" size="9">
@@ -206,39 +208,16 @@
   </ion-slide>
 
 
+<!-- -------------------------------------------------------------------------------------------------  -->
 
 
 
   <ion-slide>
-    <!-- <ion-grid>
-    <div>
-      <ion-card class="blanco">
-        <ion-row *ngFor="let user of equipoUsers">
-          <ion-col size="6" class="izquierda">        
-            <h5 style="color: black;">{{user.user.nombreUsuario}}</h5>                  
-          </ion-col>
-          <ion-col class="derecha" *ngIf="user.userId == equipo.userId">
-            <h5>Capitan</h5>
-          </ion-col>
-          <ion-col *ngIf="user.userId != equipo.userId" class="derecha">
-            <ion-button color="danger"
-                        class="derecha"
-                        (click)="sacarEquipo(user.userId)">
-                        <ion-icon color="light" name="person-remove-outline"></ion-icon>
-                      </ion-button>
-          </ion-col>    
-        </ion-row>
-        <ion-row>
-          <ion-col>
-          <ion-button   color="success"
-                        expand="full"
-                        (click)="ocultar()"
-                        (click)="goSlide1()">Regresar</ion-button>
-                      </ion-col>
-        </ion-row>
-      </ion-card>
-    </div>  
-  </ion-grid> -->
+    <ion-grid>
+      <form>
+        
+      </form>
+    </ion-grid>
   </ion-slide>
   
   

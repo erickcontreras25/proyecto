@@ -65,7 +65,6 @@ export class TorneoUserPage implements OnInit {
       this.noVencidas();
     });
   }
-
   getTorneoId(id: number) {
     this.torneoService.getTorneooId(id)
     .subscribe( (resp: Torneo) => {
@@ -75,39 +74,6 @@ export class TorneoUserPage implements OnInit {
       this.obtenerEquipoDeUser();
     });
   }
-
-
-  noVencidas() {
-    let valor = 0;
-
-    for (let i = 0; i < this.torneos.length; i++) {
-      const val = moment(this.torneos[i].diaTorneo).format('YYYY-MM-DDTHH:mm');
-      if (this.hoy < val) {
-        this.torneosNoVen[valor] = this.torneos[i];
-        valor++;
-      }
-    }
-  }
-
-  // -------------------------------------------METODOS TORNEO-EQUIPO---------------------------------------
-
-  getEquipoxTorneo(id: number) {
-    this.torneoService.getTorneoEquipoId(id)
-    .subscribe((resp: TorneoEquipo[]) => {
-       this.torneosEquipos = resp;
-       this.verificarCanEquipos();
-    },
-    error => {
-      console.log(error);
-    });
-  }
-  verificarCanEquipos() {
-    // console.log(this.torneosEquipos.length + ' ' + this.torneo.cantEquipos);
-    if (this.torneosEquipos.length < this.torneo.cantEquipos) {
-      this.ver = true;
-    }
-  }
-
   registrar() {
     this.torneoEquipo.torneoId = this.torneo.idTorneo;
     if (this.torneoEquipo.equipoId === 0 || this.torneoEquipo.equipoId === undefined) {
@@ -116,7 +82,13 @@ export class TorneoUserPage implements OnInit {
       this.validar();
     }
   }
-
+  validar() {
+    if (this.torneosEquipos.length < this.torneo.cantEquipos) {
+      this.registrarEquipo();
+    } else {
+      this.alertaService.alertaInformativa('Torneo ya esta lleno.');
+    }
+  }
   registrarEquipo() {
     console.log('IDTORNEO: ' + this.torneoEquipo.torneoId + ' IDEQUIPO: ' + this.torneoEquipo.equipoId);
     this.torneoService.postTorneoEquipo(this.torneoEquipo)
@@ -130,31 +102,38 @@ export class TorneoUserPage implements OnInit {
       this.alertaService.alertaInformativa(error['error']);
     });
   }
+  noVencidas() {
+    let valor = 0;
 
-  validar() {
-    if (this.torneosEquipos.length < this.torneo.cantEquipos) {
-      this.registrarEquipo();
-    } else {
-      this.alertaService.alertaInformativa('Torneo ya esta lleno.');
+    for (let i = 0; i < this.torneos.length; i++) {
+      const val = moment(this.torneos[i].diaTorneo).format('YYYY-MM-DDTHH:mm');
+      if (this.hoy < val) {
+        this.torneosNoVen[valor] = this.torneos[i];
+        valor++;
+      }
     }
   }
 
-  llenar(id: number) {
-    this.torneoEquipo.equipoId = this.equipo.idEquipo;
+ // -------------------------------------------METODOS TORNEO-EQUIPO---------------------------------------
+
+  getEquipoxTorneo(id: number) {
+    this.torneoService.getTorneoEquipoId(id)
+    .subscribe((resp: TorneoEquipo[]) => {
+       this.torneosEquipos = resp;
+       this.verificarCanEquipos();
+    },
+    error => {
+      console.log(error);
+    });
   }
 
-
-  // -------------------------------------------METODOS EQUIPOS---------------------------------------
-
+// -------------------------------------------------------METODOS------------------------------------------------
   obtenerEquipoDeUser() {
     this.equipoService.getEquipoxUsuario(this.perfil.id)
     .subscribe((resp: Equipo[]) => {
       this.equipos = resp;
     });
   }
-
-  // -------------------------------------------METODOS COMPLEJO---------------------------------------
-
   obtenerComplejoId(id: number) {
     this.apiServi.getComplejoId(id)
     .subscribe( (resp: Complejo) => {
@@ -163,13 +142,21 @@ export class TorneoUserPage implements OnInit {
     });
   }
 
-
+  verificarCanEquipos() {
+    // console.log(this.torneosEquipos.length + ' ' + this.torneo.cantEquipos);
+    if (this.torneosEquipos.length < this.torneo.cantEquipos) {
+      this.ver = true;
+    }
+  }
+  llenar(id: number) {
+    this.torneoEquipo.equipoId = this.equipo.idEquipo;
+  }
   clea() {
     this.complejo = new Complejo(0, null, null, null, null, false, 0.0, 0.0, new Date(), new Date(), false, false, null);
   }
 
 
-      // -------------------------------------------------SLIDE--------------------------------
+// -----------------------------------------------------------SLIDE--------------------------------------------
 goSlide1() {
   this.atras = false;
   this.slides.lockSwipes(false);

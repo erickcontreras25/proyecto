@@ -48,25 +48,17 @@ export class CrearTorneoPage implements OnInit {
   crearTorneoConImagen() {
     const fileInput: any = document.getElementById('img');
     const file = fileInput.files[0];
-
+    if (!(/\.(jpg|png|jpeg)$/i).test(file.name)) {
+      return alert('El archivo a adjuntar no es una imagen');
+  }
     const imgPromise = this.getFileBlob(file);
 
     imgPromise.then(blob => {
       this.torneo.premioFoto = blob;
-      // console.log("ESTE ES MI BLOB: " + blob);
 
       this.postTorneo();
 
     });
-  }
-
-  crearTorneo() {
-    if (this.torneo.premioFoto === '' || this.torneo.premioFoto === undefined || this.torneo.premioFoto === null) {
-      console.log('AQUI ESTA');
-      this.postTorneo();
-    } else {
-      this.crearTorneoConImagen();
-    }
   }
 
   postTorneo() {
@@ -100,26 +92,6 @@ export class CrearTorneoPage implements OnInit {
     });
   }
 
-
-  clea() {
-    this.torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
-  }
-
-// ----------------------------------------------------------------------------------------
-// ----------------------------------------------------------------------------------------
-  getIdComplejo() {
-    this.torneo.idComplejo = this.complejo.idComplejo;
-    console.log(this.torneo.idComplejo);
-  }
-
-  obtenerComplejos() {
-    this.apiServi.getComplejoAdmin(this.perfil.id)
-    .subscribe((resp: Complejo[]) => {
-      this.complejos = resp;
-    });
-  }
-
-
   verificar() {
     const hoy = moment().format('MM-DD-YYYY');
     const diaTorneo = moment(this.torneo.diaTorneo).format('MM-DD-YYYY');
@@ -133,10 +105,25 @@ export class CrearTorneoPage implements OnInit {
 
   }
 
+  clea() {
+    this.torneo = new Torneo(0, '', null, '', '', new Date(), '', 0);
+  }
+
+// ---------------------------------------------------------------------------------------------------------
+  getIdComplejo() {
+    this.torneo.idComplejo = this.complejo.idComplejo;
+    console.log(this.torneo.idComplejo);
+  }
+
+  obtenerComplejos() {
+    this.apiServi.getComplejoAdmin(this.perfil.id)
+    .subscribe((resp: Complejo[]) => {
+      this.complejos = resp;
+    });
+  }
 
 
-
-
+// ---------------------------------------------------------------------------------------------------------
   goSlide1() {
     this.atras = false;
     this.slides.lockSwipes(false);

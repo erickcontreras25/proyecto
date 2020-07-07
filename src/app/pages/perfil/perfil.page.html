@@ -78,9 +78,9 @@
 
                   <div style="display: inline-block; position:relative">
                     <img class="img" src="{{cancha.foto}}">
-                    <div style="display: inline-block; position:absolute; top:5%; left:96%; transform: translate(-50%, -50%)">
-                        <ion-icon class="size shadow" 
-                                  style="color: white;" 
+                    <div style="display: inline-block; position:absolute; top:7%; left:96%; transform: translate(-50%, -50%)">
+                        <ion-icon class="size" 
+                                  style="color: red; background-color: rgba(0, 0, 0, 0.1);" 
                                   slot="start"
                                   (click)="actualizar()"
                                   name="ellipsis-vertical"></ion-icon>
@@ -195,7 +195,6 @@
               <ion-col>
                   <ion-button type="submit"
                               color="success"
-                              fill="outline"
                               *ngIf="auxReser==true"
                               (click)="modificarReservacion()">
                       Actualizar

@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<app-header titulo=\"Crear Torneo\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"slideAtras()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"background\">\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n    <ion-slide>\n      <form #formulario=\"ngForm\">\n      <ion-grid>\n        <div class=\"ion-margin-top\">\n          <ion-label class=\"shadow\">¿Donde se realizara el torneo?</ion-label>\n          <ion-select [(ngModel)]=\"complejo.idComplejo\"\n                      name=\"idComplejo\"\n                      (ngModelChange)=\"getIdComplejo()\">\n            <ion-select-option *ngFor=\"let item of complejos\" value=\"{{item.idComplejo}}\" >{{item.nombre}}</ion-select-option>\n          </ion-select>\n        </div>\n            \n        <br>\n        <div *ngIf=\"complejo.idComplejo!=0\">\n          <h4 class=\"shadow\">Dale nombre al torneo</h4>\n          <ion-item>\n            <ion-input name=\"nombre\"\n                        type=\"text\"\n                        placeholder=\"Nombre\"\n                        minlength=\"5\"\n                        maxlength=\"15\"\n                        required\n                        [(ngModel)]=\"torneo.nombre\"></ion-input>\n          </ion-item>\n        </div>\n        <br>\n        <div *ngIf=\"complejo.idComplejo!=0\">\n          <h4 class=\"shadow\">Cuantos equipos quieres que participen</h4>\n          <ion-item>\n            <ion-input name=\"cantEquipos\"\n                        type=\"number\"\n                        placeholder=\"cantEquipos\"\n                        required\n                        [(ngModel)]=\"torneo.cantEquipos\"></ion-input>\n          </ion-item>\n        </div>\n        <ion-row *ngIf=\"complejo.idComplejo!=0\">\n          <ion-col>\n            <ion-button color=\"success\"\n                        shape=\"round\" fill=\"outline\"\n                        (click)=\"goSlide2()\"\n                        [disabled]=\"formulario.invalid\">Continuar</ion-button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </form>\n    </ion-slide>\n\n<!-- ----------------------------------------------------SLIDE 3-------------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n        <form #formulario1=\"ngForm\">\n        <div>\n          <h5 class=\"shadow\">Agrega una descripción si deseas.</h5>\n\n          <ion-item>\n            <ion-input name=\"descripcion\"\n                        type=\"text\"\n                        placeholder=\"descripcion\"\n                        minlength=\"5\"                        \n                        [(ngModel)]=\"torneo.descripcion\"></ion-input>\n          </ion-item>\n          <br>\n          <label class=\"shadow\">Agrega una imagen donde se indiquen las reglas y premios del torneo</label>\n          <ion-item>\n            <input type=\"file\"\n                   id=\"img\"\n                   name=\"img\"\n                   ngModel\n                   required>\n          </ion-item>\n          <br>\n          <ion-item>\n            <ion-label class=\"shadow\">¿Cuándo se realizara el torneo?</ion-label>\n            <ion-datetime displayFormat=\"D MMM YYYY\" \n                                      name=\"diaTorneo\"\n                                      [(ngModel)]=\"torneo.diaTorneo\"\n                                      (ngModelChange)='verificar()'>\n                        </ion-datetime>\n          </ion-item>\n        </div>\n        <ion-row>\n          <ion-col>\n            <ion-button *ngIf=\"ver\"\n                              color=\"success\"\n                              expand=\"full\"\n                              (click)=\"crearTorneoConImagen()\"\n                              [disabled]=\"formulario1.invalid\">\n                CREAR\n              </ion-button>\n          </ion-col>\n        </ion-row>\n      </form>\n      </ion-grid>\n    </ion-slide>\n\n<!-- ----------------------------------------------------SLIDE 3-------------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n        <form #formulario2=\"ngForm\">\n          <br>\n        <ion-item>\n          <ion-label class=\"shadow\">¿Cuándo se realizara el torneo?</ion-label>\n          <ion-datetime displayFormat=\"D MMM YYYY\" \n                                    name=\"diaTorneo\"\n                                    [(ngModel)]=\"torneo.diaTorneo\"\n                                    (ngModelChange)='verificar()'>\n                      </ion-datetime>\n        </ion-item>\n        <ion-row>\n          <ion-col>\n            <!-- <ion-button color=\"success\"\n                        shape=\"round\" fill=\"outline\"\n                        (click)=\"verificar()\"\n                        >Verificar</ion-button> -->\n                  <ion-button *ngIf=\"ver\"\n                              color=\"success\"\n                              expand=\"full\"\n                              (click)=\"crearTorneoConImagen()\"\n                              [disabled]=\"formulario2.invalid\">\n                CREAR\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </form>\n      </ion-grid>\n    </ion-slide>\n\n\n  </ion-slides>\n\n</ion-content>\n";
+    __webpack_exports__["default"] = "<app-header titulo=\"Crear Torneo\" *ngIf=\"!atras\"></app-header>\n\n<ion-header no-border *ngIf=\"atras\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"slideAtras()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"background\">\n\n  <ion-slides class=\"mainSlide\" [options]=\"{ autoHeight: true }\" #slidePrincipal>\n\n    <ion-slide>\n      <form #formulario=\"ngForm\">\n      <ion-grid>\n        <div class=\"ion-margin-top bor\">\n          <ion-label class=\"shadow\">¿Dónde se realizará el torneo?</ion-label>\n          <ion-select [(ngModel)]=\"complejo.idComplejo\"\n                      name=\"idComplejo\"\n                      (ngModelChange)=\"getIdComplejo()\">\n            <ion-select-option *ngFor=\"let item of complejos\" value=\"{{item.idComplejo}}\" >{{item.nombre}}</ion-select-option>\n          </ion-select>\n        </div>\n            \n        <div *ngIf=\"complejo.idComplejo!=0\" class=\"bor\">\n          <h4 class=\"shadow\">Dale nombre al torneo</h4>\n          <ion-item>\n            <ion-input name=\"nombre\"\n                        type=\"text\"\n                        placeholder=\"Nombre\"\n                        minlength=\"5\"\n                        maxlength=\"15\"\n                        required\n                        [(ngModel)]=\"torneo.nombre\"></ion-input>\n          </ion-item>\n        </div>\n        <div *ngIf=\"complejo.idComplejo!=0\" class=\"bor\">\n          <h4 class=\"shadow\">¿Cuántos equipos quieres que participen?</h4>\n          <ion-item>\n            <ion-input name=\"cantEquipos\"\n                        type=\"number\"\n                        placeholder=\"cantEquipos\"\n                        required\n                        [(ngModel)]=\"torneo.cantEquipos\"></ion-input>\n          </ion-item>\n        </div>\n        <ion-row *ngIf=\"complejo.idComplejo!=0\">\n          <ion-col>\n            <ion-button color=\"success\"\n                        shape=\"round\"\n                        (click)=\"goSlide2()\"\n                        [disabled]=\"formulario.invalid\">Siguiente</ion-button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </form>\n    </ion-slide>\n\n<!-- ----------------------------------------------------SLIDE 3-------------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n        <form #formulario1=\"ngForm\">\n          <!-- <div class=\"bor\">\n            <h4>Si quieres, agrega una descripción para el torneo</h4>\n            <ion-item class=\"bor\">\n              <ion-input name=\"descripcion\"\n                          type=\"text\"\n                          placeholder=\"descripcion\"\n                          minlength=\"5\"                        \n                          [(ngModel)]=\"torneo.descripcion\"></ion-input>\n            </ion-item>\n          </div> -->\n          \n          <div class=\"bor\">\n            <h4>Agrega una imagen donde se indiquen las reglas y premios del torneo</h4>\n            <ion-item>\n              <input type=\"file\"\n                    id=\"img\"\n                    name=\"img\"\n                    ngModel\n                    required>\n            </ion-item>\n          </div>\n          <br><br>\n          <div class=\"bor\">\n          <ion-item>\n            <ion-label>¿Cuándo se realizará el torneo?</ion-label>\n            <ion-datetime displayFormat=\"D MMM YYYY\" \n                                      name=\"diaTorneo\"\n                                      [(ngModel)]=\"torneo.diaTorneo\"\n                                      (ngModelChange)='verificar()'>\n                        </ion-datetime>\n          </ion-item>\n        </div>\n        <ion-row>\n          <ion-col>\n            <ion-button *ngIf=\"ver\"\n                        color=\"success\"\n                        expand=\"full\"\n                        (click)=\"crearTorneoConImagen()\"\n                        [disabled]=\"formulario1.invalid\">\n                Crear Torneo\n              </ion-button>\n          </ion-col>\n        </ion-row>\n      </form>\n      </ion-grid>\n    </ion-slide>\n\n<!-- ----------------------------------------------------SLIDE 3-------------------------------------------- -->\n\n    <ion-slide>\n      <ion-grid>\n        <form #formulario2=\"ngForm\">\n          <br>\n        <ion-item>\n          <ion-label class=\"shadow\">¿Cuándo se realizara el torneo?</ion-label>\n          <ion-datetime displayFormat=\"D MMM YYYY\" \n                                    name=\"diaTorneo\"\n                                    [(ngModel)]=\"torneo.diaTorneo\"\n                                    (ngModelChange)='verificar()'>\n                      </ion-datetime>\n        </ion-item>\n        <ion-row>\n          <ion-col>\n            <!-- <ion-button color=\"success\"\n                        shape=\"round\" fill=\"outline\"\n                        (click)=\"verificar()\"\n                        >Verificar</ion-button> -->\n                  <ion-button *ngIf=\"ver\"\n                              color=\"success\"\n                              expand=\"full\"\n                              (click)=\"crearTorneoConImagen()\"\n                              [disabled]=\"formulario2.invalid\">\n                CREAR\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </form>\n      </ion-grid>\n    </ion-slide>\n\n\n  </ion-slides>\n\n</ion-content>\n";
     /***/
   },
 
@@ -180,7 +180,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "ion-content.background {\n  --background: url(/assets/img/trofeo.png) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.shadow {\n  text-shadow: 2px 2px #080808;\n}\n\n.img {\n  alt: 200px;\n  width: 1000px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvY3JlYXItdG9ybmVvL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxjcmVhci10b3JuZW9cXGNyZWFyLXRvcm5lby5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL2NyZWFyLXRvcm5lby9jcmVhci10b3JuZW8ucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUVBQUE7RUFDQSxZQUFBO0FDQ0o7O0FERUU7RUFDRSw0QkFBQTtBQ0NKOztBREVFO0VBQ0UsVUFBQTtFQUNBLGFBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL2NyZWFyLXRvcm5lby9jcmVhci10b3JuZW8ucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWNvbnRlbnQuYmFja2dyb3VuZHtcclxuICAgIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL3Ryb2Zlby5wbmcpIDAgMC8xMDAlIDEwMCUgbm8tcmVwZWF0O1xyXG4gICAgb3BhY2l0eTogMC44O1xyXG4gIH1cclxuXHJcbiAgLnNoYWRvdyB7XHJcbiAgICB0ZXh0LXNoYWRvdzogMnB4IDJweCAjMDgwODA4O1xyXG4gIH1cclxuXHJcbiAgLmltZyB7XHJcbiAgICBhbHQ6IDIwMHB4O1xyXG4gICAgd2lkdGg6IDEwMDBweDtcclxuICB9IiwiaW9uLWNvbnRlbnQuYmFja2dyb3VuZCB7XG4gIC0tYmFja2dyb3VuZDogdXJsKC9hc3NldHMvaW1nL3Ryb2Zlby5wbmcpIDAgMC8xMDAlIDEwMCUgbm8tcmVwZWF0O1xuICBvcGFjaXR5OiAwLjg7XG59XG5cbi5zaGFkb3cge1xuICB0ZXh0LXNoYWRvdzogMnB4IDJweCAjMDgwODA4O1xufVxuXG4uaW1nIHtcbiAgYWx0OiAyMDBweDtcbiAgd2lkdGg6IDEwMDBweDtcbn0iXX0= */";
+    __webpack_exports__["default"] = "ion-content.background {\n  --background: url(/assets/img/fondo3.jpg) 0 0/100% 100% no-repeat;\n  opacity: 0.8;\n}\n\n.shadow {\n  text-shadow: 2px 2px #080808;\n}\n\n.img {\n  alt: 200px;\n  width: 1000px;\n}\n\n.bor {\n  border-bottom: rgba(255, 255, 255, 0.877) 1px solid;\n}\n\nlabel, ion-label, h1, h2, h3, h4, h5, h6 {\n  text-shadow: 2px 2px 8px #080808;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvY3JlYXItdG9ybmVvL0M6XFxVc2Vyc1xcZXJpY2tcXE9uZURyaXZlXFxEZXNrdG9wXFxpb25pY1xccHJveWVjdG8vc3JjXFxhcHBcXHBhZ2VzXFxjcmVhci10b3JuZW9cXGNyZWFyLXRvcm5lby5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL2NyZWFyLXRvcm5lby9jcmVhci10b3JuZW8ucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUVBQUE7RUFDQSxZQUFBO0FDQ0o7O0FERUU7RUFDRSw0QkFBQTtBQ0NKOztBREVFO0VBQ0UsVUFBQTtFQUNBLGFBQUE7QUNDSjs7QURFQTtFQUNJLG1EQUFBO0FDQ0o7O0FERUE7RUFDRSxnQ0FBQTtBQ0NGIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvY3JlYXItdG9ybmVvL2NyZWFyLXRvcm5lby5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJpb24tY29udGVudC5iYWNrZ3JvdW5ke1xyXG4gICAgLS1iYWNrZ3JvdW5kOiB1cmwoL2Fzc2V0cy9pbWcvZm9uZG8zLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XHJcbiAgICBvcGFjaXR5OiAwLjg7XHJcbiAgfVxyXG5cclxuICAuc2hhZG93IHtcclxuICAgIHRleHQtc2hhZG93OiAycHggMnB4ICMwODA4MDg7XHJcbiAgfVxyXG5cclxuICAuaW1nIHtcclxuICAgIGFsdDogMjAwcHg7XHJcbiAgICB3aWR0aDogMTAwMHB4O1xyXG4gIH1cclxuXHJcbi5ib3Ige1xyXG4gICAgYm9yZGVyLWJvdHRvbTogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjg3NykgMXB4IHNvbGlkO1xyXG59XHJcblxyXG5sYWJlbCwgaW9uLWxhYmVsLCBoMSwgaDIsIGgzLCBoNCwgaDUsIGg2IHtcclxuICB0ZXh0LXNoYWRvdzogMnB4IDJweCA4cHggIzA4MDgwODtcclxufSIsImlvbi1jb250ZW50LmJhY2tncm91bmQge1xuICAtLWJhY2tncm91bmQ6IHVybCgvYXNzZXRzL2ltZy9mb25kbzMuanBnKSAwIDAvMTAwJSAxMDAlIG5vLXJlcGVhdDtcbiAgb3BhY2l0eTogMC44O1xufVxuXG4uc2hhZG93IHtcbiAgdGV4dC1zaGFkb3c6IDJweCAycHggIzA4MDgwODtcbn1cblxuLmltZyB7XG4gIGFsdDogMjAwcHg7XG4gIHdpZHRoOiAxMDAwcHg7XG59XG5cbi5ib3Ige1xuICBib3JkZXItYm90dG9tOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuODc3KSAxcHggc29saWQ7XG59XG5cbmxhYmVsLCBpb24tbGFiZWwsIGgxLCBoMiwgaDMsIGg0LCBoNSwgaDYge1xuICB0ZXh0LXNoYWRvdzogMnB4IDJweCA4cHggIzA4MDgwODtcbn0iXX0= */";
     /***/
   },
 
@@ -304,22 +304,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           var fileInput = document.getElementById('img');
           var file = fileInput.files[0];
+
+          if (!/\.(jpg|png|jpeg)$/i.test(file.name)) {
+            return alert('El archivo a adjuntar no es una imagen');
+          }
+
           var imgPromise = this.getFileBlob(file);
           imgPromise.then(function (blob) {
-            _this.torneo.premioFoto = blob; // console.log("ESTE ES MI BLOB: " + blob);
+            _this.torneo.premioFoto = blob;
 
             _this.postTorneo();
           });
-        }
-      }, {
-        key: "crearTorneo",
-        value: function crearTorneo() {
-          if (this.torneo.premioFoto === '' || this.torneo.premioFoto === undefined || this.torneo.premioFoto === null) {
-            console.log('AQUI ESTA');
-            this.postTorneo();
-          } else {
-            this.crearTorneoConImagen();
-          }
         }
       }, {
         key: "postTorneo",
@@ -354,11 +349,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
         }
       }, {
+        key: "verificar",
+        value: function verificar() {
+          var hoy = moment__WEBPACK_IMPORTED_MODULE_9__().format('MM-DD-YYYY');
+          var diaTorneo = moment__WEBPACK_IMPORTED_MODULE_9__(this.torneo.diaTorneo).format('MM-DD-YYYY');
+
+          if (diaTorneo <= hoy) {
+            this.ver = false;
+            this.alertaService.alertaInformativa('El dia del torneo no puede ser igual al dia de hoy o anterior a el.');
+          } else {
+            this.ver = true;
+          }
+        }
+      }, {
         key: "clea",
         value: function clea() {
           this.torneo = new src_models_torneo_models__WEBPACK_IMPORTED_MODULE_7__["Torneo"](0, '', null, '', '', new Date(), '', 0);
-        } // ----------------------------------------------------------------------------------------
-        // ----------------------------------------------------------------------------------------
+        } // ---------------------------------------------------------------------------------------------------------
 
       }, {
         key: "getIdComplejo",
@@ -374,20 +381,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.apiServi.getComplejoAdmin(this.perfil.id).subscribe(function (resp) {
             _this3.complejos = resp;
           });
-        }
-      }, {
-        key: "verificar",
-        value: function verificar() {
-          var hoy = moment__WEBPACK_IMPORTED_MODULE_9__().format('MM-DD-YYYY');
-          var diaTorneo = moment__WEBPACK_IMPORTED_MODULE_9__(this.torneo.diaTorneo).format('MM-DD-YYYY');
+        } // ---------------------------------------------------------------------------------------------------------
 
-          if (diaTorneo <= hoy) {
-            this.ver = false;
-            this.alertaService.alertaInformativa('El dia del torneo no puede ser igual al dia de hoy o anterior a el.');
-          } else {
-            this.ver = true;
-          }
-        }
       }, {
         key: "goSlide1",
         value: function goSlide1() {

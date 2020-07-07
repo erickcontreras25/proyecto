@@ -249,22 +249,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.navCtr1 = navCtr1;
         this.apiServi = apiServi;
         this.usuarioService = usuarioService;
-        this.alertaService = alertaService; // pAdmin: any[] = [{
-        //   nombre: '',
-        //   email: '',
-        //   password: '',
-        //   rol: true
-        // }];
-        // prueba: any[] = [{
-        //   idUsuario: '',
-        //   nombre: '',
-        //   nombreUsuario: '',
-        //   edad: 0,
-        //   email: '',
-        //   password: '',
-        //   rol: false,
-        // }];
-
+        this.alertaService = alertaService;
         this.perfiles = [];
         this.perfil = new src_models_usuario_models__WEBPACK_IMPORTED_MODULE_4__["Usuario"](null, null, null, null, false);
         this.auxNombre = '';
@@ -351,48 +336,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               }
             }, _callee2, this);
           }));
-        } // goInicio(): void {
-        //   for (let index = 0; index < this.prueba.length; index++) {
-        //       if (this.auxNombre === this.prueba[index].email && this.auxPassword === this.prueba[index].password) {
-        //         this.navCtr1.navigateForward('/inicio');
-        //         this.apiServi.setAuxUsu(this.prueba[index].idUsuario);
-        //         this.apiServi.setAuxEst(this.prueba[index].rol);
-        //         this.apiServi.setAuxNom(this.prueba[index].nombreUsuario);
-        //       }
-        //   }
-        //   for (let index = 0; index < this.pAdmin.length; index++) {
-        //     if (this.auxNombre === this.pAdmin[index].email && this.auxPassword === this.pAdmin[index].password) {
-        //       this.navCtr1.navigateForward('/inicio');
-        //       this.apiServi.setAuxUsu(this.pAdmin[index].idAdmin);
-        //       this.apiServi.setAuxEst(this.pAdmin[index].rol);
-        //       this.apiServi.setAuxNom(this.pAdmin[index].nombreUsuario);
-        //     }
-        // }
-        // }
-        // agregarUsuario() {
-        //     this.apiServi.postUsuario(this.perfil)
-        //   .subscribe((data) => {
-        //     this.perfiles.push(this.perfil);
-        //     this.perfil = {
-        //       nombreUsuario: null,
-        //       edad: null,
-        //       email: null,
-        //       password: null,
-        //       rol: false
-        //     };
-        //     this.alertaService.alertaInformativa('AGREGADO');
-        //     this.apiServi.getUsuario()
-        //   .subscribe((resp: any[]) => {
-        //     // this.prueba = resp;
-        //     console.log("AQUI ESTA: ", resp);
-        //   });
-        //   this.mostrarRegistro();
-        //   },
-        //   (error) => {console.log(error);
-        //   }
-        //   );
-        // }
-
+        }
       }, {
         key: "mostrarRegistro",
         value: function mostrarRegistro() {

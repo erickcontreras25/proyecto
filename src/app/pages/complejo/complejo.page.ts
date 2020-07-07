@@ -56,7 +56,7 @@ export class ComplejoPage implements OnInit {
 
 
 
-  // --------------------------------METODOS COMPLEJO-------------------------------------
+  // ---------------------------------------------METODOS COMPLEJO----------------------------------------------
   obtenerComplejoXAdmin(id: string) {
     this.apiServi.getComplejoAdmin(id)
     .subscribe((resp: Complejo[]) => {
@@ -78,7 +78,9 @@ export class ComplejoPage implements OnInit {
 
     const fileInput: any = document.getElementById('img');
     const file = fileInput.files[0];
-
+    if (!(/\.(jpg|png|jpeg)$/i).test(file.name)) {
+      return alert('El archivo a adjuntar no es una imagen');
+  }
     const imgPromise = this.getFileBlob(file);
 
     imgPromise.then(blob => {
@@ -90,7 +92,6 @@ export class ComplejoPage implements OnInit {
       this.complejos.push(this.complejo);
       this.limpiar();
       this.listo = false;
-      // this.alertaService.alertaInformativa('Cambia el estado de complejo a ABIERTO AHORA para que tus clientes sepan que pueden visitarte');
       this.alertaService.alertaInformativa('Complejo creado. \n Puedes verlo en Mis Complejos.');
       this.navCtrl.navigateRoot('/inicio');
     },
@@ -111,7 +112,6 @@ export class ComplejoPage implements OnInit {
   }
 
 
-
   getFileBlob(file) {
     const reader = new FileReader();
     return new Promise(function(resolve, reject) {
@@ -125,6 +125,21 @@ export class ComplejoPage implements OnInit {
       reader.readAsDataURL(file);
 
     });
+  }
+
+  verificar() {
+    const hoy = moment().format('MM-DD-YYYY HH:mm');
+    const inicio = moment(this.abre).format('MM-DD-YYYY HH:mm');
+    const cierre = moment(this.cierr).format('MM-DD-YYYY HH:mm');
+
+    if (cierre < inicio) {
+      this.ver = false;
+      this.alertaService.alertaInformativa('La hora de cierre no puede ser menor a la hora de inicio.')
+    } else {
+      this.ver = true;
+      this.goSlide3();
+    }
+
   }
 
   limpiar() {
@@ -157,44 +172,6 @@ export class ComplejoPage implements OnInit {
        console.log('Error getting location', error);
      });
   }
-
-
-  verificar() {
-    const hoy = moment().format('MM-DD-YYYY HH:mm');
-    const inicio = moment(this.abre).format('MM-DD-YYYY HH:mm');
-    const cierre = moment(this.cierr).format('MM-DD-YYYY HH:mm');
-
-    if (cierre < inicio) {
-      this.ver = false;
-      this.alertaService.alertaInformativa('La hora de cierre no puede ser menor a la hora de inicio.')
-    } else {
-      this.ver = true;
-      this.goSlide3();
-    }
-
-  }
-
-  // getGeo() {
-
-  //   this.cargando = true;
-
-  //   this.geolocation.getCurrentPosition().then((resp) => {
-  //     // resp.coords.latitude
-  //     // resp.coords.longitude
-  //     this.cargando = false;
-
-  //     this.complejo.longitud = resp.coords.longitude;
-  //     this.complejo.latitud = resp.coords.latitude;
-
-  //    }).catch((error) => {
-  //      console.log('Error getting location', error);
-  //      this.cargando = false;
-  //    });
-
-  // }
-
-
-
 
 
   // -------------------------------------------------SLIDE--------------------------------

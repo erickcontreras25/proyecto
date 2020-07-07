@@ -13,114 +13,6 @@
 
 <ion-content class="background">
 
-  <!-- <ion-button (click)="obtenerReservaciones()">MOSTRAR HORARIOS</ion-button>
-  <ion-item *ngFor='let user of reser'>
-    <ion-label>Esta es la hora: : {{user.horaInicial | date:'yyyy-MM-dd HH'}}</ion-label>
-  </ion-item>
-  <ion-item>
-  <ion-label>Hora Inicial</ion-label>
-  <ion-datetime displayFormat="D MMM YYYY H" 
-                name="horaInicial"
-                
-                [(ngModel)]="reservacion.horaInicial">
-  </ion-datetime>
-</ion-item>
-
-<h3>{{reservacion.horaInicial}}</h3> -->
-
-  
-
-  <!-- SELECT PARA ELEGIR COMPLEJO -->
-  <!-- <ion-list>
-    <ion-item>
-      <ion-label>Complejo</ion-label>
-      <ion-select [(ngModel)]="seleccion"
-                  (ngModelChange)="obtenerCancha()">
-        <ion-select-option *ngFor="let user of complejosAbiertos" value="{{user.idComplejo}}" >
-          {{user.nombre}}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list> -->
-
-
-
-<!-- <form #formulario="ngForm" (ngSubmit)="agregarReservacion()"> -->
-
-  <!-- <ion-list> -->
-
-    <!-- INGRESAR HORA INICIAL Y FINAL DE RESERVACION -->
-    <!-- <ion-item>
-      <ion-label>Hora Inicial</ion-label>
-      <ion-datetime displayFormat="HH:mm" 
-                    name="horaInicial"
-                    minuteValues="0" min="10:00" 
-                    [(ngModel)]="reservacion.horaInicial">
-      </ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label>Hora Final</ion-label>
-      <ion-datetime displayFormat="HH:mm" 
-                    name="horaFinal"
-                    minuteValues="0" min="11:00" 
-                    [(ngModel)]="reservacion.horaFinal">
-      </ion-datetime>
-    </ion-item> -->
-
-
-    <!-- INGRESAR ID DE LA CANCHA -->
-    <!-- <ion-list>
-      <ion-item>
-        <ion-label>Cancha</ion-label>
-        <ion-select [(ngModel)]="reservacion.idCancha"
-                    (ngModelChange)="obtenerCanchaId()"
-                    name="idCancha">
-          <ion-select-option *ngFor="let user of canchas" value="{{user.idCancha}}" >
-            Lps. {{user.precio}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list> -->
-
-
-  <!-- BOTONES PARA VER COMPLEJOS Y RESERVAR -->
-  <!-- </ion-list>
-  <ion-row>
-    <ion-col>
-      <ion-button expand="full" type="submit"
-                  shape="round"
-                  size="small"
-                  color="tertiary"
-                  [disabled]="formulario.invalid" 
-                  routerLink="/inicio">
-                  Reservar
-      </ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button shape="round"
-                  expand="full"
-                  size="small"
-                  color="tertiary"
-                  routerLink="/lista-complejos">
-        Ver complejos
-      </ion-button>
-    </ion-col>
-  </ion-row> -->
-
-
-    <!-- BOTON GRANDE PARA RESERVAR -->
-  <!-- <ion-button expand="full" type="submit"
-  [disabled]="formulario.invalid" routerLink="/inicio">
-      Reservar
-  </ion-button> -->
-
-<!-- </form> -->
-
-<!-- IMG PARA VISUALIZAR CANCHAS -->
-  <!-- <ion-item>
-    <img src={{canchaId.foto}} alt="200" width="500" class="img-rounded">
-  </ion-item> -->
-
 
 
 
@@ -156,16 +48,16 @@
                   {{user.nombre}}
                 </h2>
                 <ion-row>
-                  <ion-col *ngIf='user.estado == true'><label class="shadow" style="color: blue;">Abierto Ahora</label></ion-col>
-                  <ion-col *ngIf='user.estado == false'><label class="shadow" style="color: blue;">Cerrado Ahora</label></ion-col>
+                  <ion-col *ngIf='user.estado == true'><label class="shadow" style=" background-color: rgb(184, 178, 178, 0.1);"><u>Abierto Ahora</u></label></ion-col>
+                  <ion-col *ngIf='user.estado == false'><label class="shadow" style=" background-color: rgb(184, 178, 178, 0.1);"><u>Cerrado Ahora</u></label></ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col *ngIf="user.parqueo">
-                    <label><ion-icon class="size" name="car-outline" color="tertiary"></ion-icon>
+                    <label><ion-icon class="size" name="car-outline" style="color: blue;"></ion-icon>
                       Con parqueo</label>
                   </ion-col>
                   <ion-col *ngIf="!user.parqueo">
-                    <label><ion-icon class="size" name="car-outline" color="tertiary"></ion-icon>
+                    <label><ion-icon class="size" name="car-outline" style="color: blue;"></ion-icon>
                       Sin parqueo</label>
                   </ion-col>
                   <ion-col *ngIf="user.seguridad">
@@ -342,23 +234,23 @@
                 <div>
 
                       <ion-grid>
-                        <h1 class="shadow">Detalle de la reserva</h1>
+                        <h1 ><u>Detalle de la reserva</u></h1>
                         <br>
-                        <h3 class="borA shadow">Información Complejo</h3>
+                        <h3><u>Información Complejo</u></h3>
                         <ion-row class="borA">
                           <ion-col class="izquierda">
-                            <label class="shadow">Nombre:</label>
+                            <label>Nombre:</label>
                           </ion-col>
                           <ion-col class="izquierda">
-                            <label class="shadow">{{complejo.nombre}}</label>
+                            <label>{{complejo.nombre}}</label>
                           </ion-col>
                         </ion-row>
                         <ion-row class="borA">
                           <ion-col class="izquierda">
-                            <label class="shadow">Día y hora de reserva:</label>
+                            <label>Día y hora de reserva:</label>
                           </ion-col>
                           <ion-col class="izquierda">
-                            <label class="shadow">{{hInicio | date:'MMMM-dd HH:mm'}} a {{hFin | date:'HH:mm'}}</label>
+                            <label >{{hInicio | date:'MMMM-dd HH:mm'}} a {{hFin | date:'HH:mm'}}</label>
                           </ion-col>
                         </ion-row>                        
                           
@@ -390,22 +282,22 @@
                       </ion-grid>
 
                       <ion-grid>
-                        <h3 class="borA shadow">Datos Personales</h3>
+                        <h3><u>Datos Personales</u></h3>
 
                         <ion-row class="borA">
                           <ion-col class="izquierda">
-                            <label class="shadow">Usuario:</label>
+                            <label>Usuario:</label>
                           </ion-col>
                           <ion-col class="izquierda">
-                            <label class="shadow">{{perfil.nombreUsuario}}</label>
+                            <label>{{perfil.nombreUsuario}}</label>
                           </ion-col>
                         </ion-row>
                         <ion-row>
                           <ion-col class="izquierda">
-                            <label class="shadow">Correo:</label>
+                            <label>Correo:</label>
                           </ion-col>
                           <ion-col class="izquierda">
-                            <label class="shadow">{{perfil.email}}</label>
+                            <label>{{perfil.email}}</label>
                           </ion-col>
                         </ion-row>
                         <ion-row>

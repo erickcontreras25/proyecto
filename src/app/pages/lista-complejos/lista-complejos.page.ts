@@ -18,19 +18,7 @@ import * as moment from 'moment';
 export class ListaComplejosPage implements OnInit {
   @ViewChild('slidePrincipal', {static: true}) slides: IonSlides;
 
-  
-  // complejo = {
-  //   idComplejo: 0,
-  //   nombre: '',
-  //   localidad: '',
-  //   foto: null,
-  //   estado: false,
-  //   longitud: 0,
-  //   latitud: 0,
-  //   horaInicio: new Date(),
-  //   horaCierre: new Date(),
-  //   userId: ''
-  // };
+
   complejo: Complejo = new Complejo(0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
   complejos: Complejo[] = [];
   abre;
@@ -92,7 +80,7 @@ export class ListaComplejosPage implements OnInit {
       this.abre = this.complejo.horaInicio;
       this.cierr = this.complejo.horaCierre;
       this.presentActionSheet();
-      console.log(this.complejo);
+      // console.log(this.complejo);
     });
   }
 
@@ -103,20 +91,18 @@ export class ListaComplejosPage implements OnInit {
     this.obtenerComplejoId(id);
   }
 
-
   modificarSinFoto() {
-    // this.complejo.latitud = 15.51789;
-    // this.complejo.longitud = -88.03639;
+
     this.complejo.horaInicio = moment(this.abre).subtract(6, 'hour');
     this.complejo.horaCierre = moment(this.cierr).subtract(6, 'hour');
     console.log(moment(this.abre).format('YYYY-MM-DDTHH:mm') + ' ' + moment(this.cierr).format('YYYY-MM-DDTHH:mm'));
     this.apiServi.putComplejo(this.complejo.idComplejo, this.complejo)
       .subscribe((data) => {
-        // this.complejos.push(this.complejo);
         this.clear();
         // this.navCtrl.navigateRoot('/inicio');
         this.alertaService.alertaInformativa('Actualizado!!');
         this.obtenerComplejos();
+        this.goSlide1();
       },
       (error) => {
         console.log(error);
@@ -128,17 +114,36 @@ export class ListaComplejosPage implements OnInit {
 
     const fileInput: any = document.getElementById('img');
     const file = fileInput.files[0];
-    const imgPromise = this.getFileBlobCancha(file);
+    if (!(/\.(jpg|png|jpeg)$/i).test(file.name)) {
+      return alert('El archivo a adjuntar no es una imagen');
+  }
+    const imgPromise = this.getFileBlobComplejo(file);
+    // console.log('PRIIIIIMEROO');
+    // console.log(this.complejo);
 
     imgPromise.then(blob => {
+
       this.complejo.foto = blob;
 
       this.modificarSinFoto();
   });
   }
 
+  getFileBlobComplejo(file) {
+    const reader = new FileReader();
+    return new Promise(function(resolve, reject) {
 
-  // --------------------------------------------METODOS CANCHAS--------------------------------------
+      reader.onload = (function(theFile) {
+        return function(e) {
+          resolve(e.target.result);
+        };
+      })(file);
+      reader.readAsDataURL(file);
+    });
+  }
+
+
+  // -------------------------------------------------------------------------------------------------------
   // agregarCancha() {
 
   //   const fileInput: any = document.getElementById('imgCancha');
@@ -183,19 +188,6 @@ export class ListaComplejosPage implements OnInit {
 
 
   // ---------------------------------------------------METODOS IMAGENES--------------------------------
-  getFileBlobCancha(file) {
-    const reader = new FileReader();
-    return new Promise(function(resolve, reject) {
-
-      reader.onload = (function(theFile) {
-        return function(e) {
-          resolve(e.target.result);
-        };
-      })(file);
-      reader.readAsDataURL(file);
-    });
-  }
-
 
 
   async loadMap() {
@@ -233,6 +225,15 @@ export class ListaComplejosPage implements OnInit {
       this.reservasComplejo = resp;
       this.goSlide2();
       // console.log(resp);
+    });
+  }
+
+  obtenerReserva(id: number) {
+    this.apiServi.getReservacionId(id)
+    .subscribe((resp: Reservacion) => {
+      this.reservaComplejo = resp;
+      // console.log(this.reservaComplejo);
+      this.goSlideVerCancha();
     });
   }
 
@@ -298,10 +299,11 @@ export class ListaComplejosPage implements OnInit {
 
   clear() {
     this.complejo = new Complejo(0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
+    this.reservaComplejo = new Reservacion(0, new Date(), new Date(), false, false, 0, '');
   }
 
 
-// -----------------------------------------------ACTION SHEET-----------------------------------------------
+// ---------------------------------------------------ACTION----------------------------------------------------
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Actualizar',
@@ -372,7 +374,6 @@ export class ListaComplejosPage implements OnInit {
     });
     await actionSheet.present();
   }
-
 
   async actualizarDireccion() {
     const alert = await this.alertController.create({
@@ -450,7 +451,6 @@ export class ListaComplejosPage implements OnInit {
 
     await alert.present();
   }
-
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
@@ -608,6 +608,7 @@ export class ListaComplejosPage implements OnInit {
   }
 
   goSlideVerCancha() {
+    this.atras = true;
     this.slides.lockSwipes(false);
     this.slides.slideTo(7);
     this.slides.lockSwipes(true);

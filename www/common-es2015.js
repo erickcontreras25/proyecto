@@ -651,17 +651,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
 /* harmony import */ var _usuario_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./usuario.service */ "./src/app/services/usuario.service.ts");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
 
 
 
 
 
+
+const URL = src_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].url;
 let ApiserviService = class ApiserviService {
     constructor(http, storage, usuarioSer) {
         this.http = http;
         this.storage = storage;
         this.usuarioSer = usuarioSer;
-        this.url = 'https://conmigo.armalapotra.com/api';
+        // private url = 'https://conmigo.armalapotra.com/api';
         this.token = null;
     }
     // getCanchas(){
@@ -687,70 +690,70 @@ let ApiserviService = class ApiserviService {
     }
     getComplejo() {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/complejo`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/complejo`, { headers: tokenHeaders });
     }
     getComplejoId(id) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/complejo/${id}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/complejo/${id}`, { headers: tokenHeaders });
     }
     getComplejoAdmin(n1) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/complejo/p?n1=${n1}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/complejo/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getComplejoEstado(n1) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/complejo/q?n1=${n1}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/complejo/q?n1=${n1}`, { headers: tokenHeaders });
     }
     postComplejo(complejo) {
-        return this.http.post(`${this.url}/complejo`, complejo, { responseType: 'text' });
+        return this.http.post(`${URL}/complejo`, complejo, { responseType: 'text' });
     }
     putComplejo(id, complejo) {
-        return this.http.put(`${this.url}/complejo/${id}`, complejo, { responseType: 'text' });
+        return this.http.put(`${URL}/complejo/${id}`, complejo, { responseType: 'text' });
     }
     deleteComplejo(id) {
-        return this.http.delete(`${this.url}/complejo/${id}`);
+        return this.http.delete(`${URL}/complejo/${id}`);
     }
     getCanchaComplejo(n1) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/cancha/p?n1=${n1}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/cancha/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getCanchaId(id) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/cancha/${id}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/cancha/${id}`, { headers: tokenHeaders });
     }
     postCancha(cancha) {
-        return this.http.post(`${this.url}/cancha`, cancha, { responseType: 'text' });
+        return this.http.post(`${URL}/cancha`, cancha, { responseType: 'text' });
     }
     putCancha(id, cancha) {
-        return this.http.put(`${this.url}/cancha/${id}`, cancha, { responseType: 'text' });
+        return this.http.put(`${URL}/cancha/${id}`, cancha, { responseType: 'text' });
     }
     deleteCancha(id) {
-        return this.http.delete(`${this.url}/cancha/${id}`);
+        return this.http.delete(`${URL}/cancha/${id}`);
     }
     getReservaciones() {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/reservacion`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/reservacion`, { headers: tokenHeaders });
     }
     getReservacionXUser(n1) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/reservacion/p?n1=${n1}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/reservacion/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getReservacionComplejo(n1) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/reservacion/q?n1=${n1}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/reservacion/q?n1=${n1}`, { headers: tokenHeaders });
     }
     getReservacionId(id) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/reservacion/${id}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/reservacion/${id}`, { headers: tokenHeaders });
     }
     postReservacion(reservacion) {
-        return this.http.post(`${this.url}/reservacion`, reservacion, { responseType: 'text' });
+        return this.http.post(`${URL}/reservacion`, reservacion, { responseType: 'text' });
     }
     putReservacion(id, reservacion) {
-        return this.http.put(`${this.url}/reservacion/${id}`, reservacion, { responseType: 'text' });
+        return this.http.put(`${URL}/reservacion/${id}`, reservacion, { responseType: 'text' });
     }
     deleteReservacion(id) {
-        return this.http.delete(`${this.url}/reservacion/${id}`);
+        return this.http.delete(`${URL}/reservacion/${id}`);
     }
 };
 ApiserviService.ctorParameters = () => [
@@ -786,56 +789,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var _usuario_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./usuario.service */ "./src/app/services/usuario.service.ts");
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
 
 
 
 
 
+
+const URL = src_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].url;
 let EquipoService = class EquipoService {
+    // private url = 'https://conmigo.armalapotra.com/api';
     constructor(http, storage, usuarioSer) {
         this.http = http;
         this.storage = storage;
         this.usuarioSer = usuarioSer;
-        this.url = 'https://conmigo.armalapotra.com/api';
     }
     getEquipos() {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/equipo`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/equipo`, { headers: tokenHeaders });
     }
     getEquipoxUsuario(n1) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/equipo/p?n1=${n1}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/equipo/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getEquipoId(id) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/equipo/${id}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/equipo/${id}`, { headers: tokenHeaders });
     }
     postEquipo(equipo) {
-        return this.http.post(`${this.url}/equipo`, equipo, { responseType: 'text' });
+        return this.http.post(`${URL}/equipo`, equipo, { responseType: 'text' });
     }
     putEquipo(id, equipo) {
-        return this.http.put(`${this.url}/equipo/${id}`, equipo, { responseType: 'text' });
+        return this.http.put(`${URL}/equipo/${id}`, equipo, { responseType: 'text' });
     }
     deleteEquipo(id) {
-        return this.http.delete(`${this.url}/equipo/${id}`);
+        return this.http.delete(`${URL}/equipo/${id}`);
     }
     getEquipoUser() {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/equipoUser`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/equipoUser`, { headers: tokenHeaders });
     }
     getEquipoUserxUsuario(n1) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/equipoUser/p?n1=${n1}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/equipoUser/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getEquipoUserId(id) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/equipoUser/${id}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/equipoUser/${id}`, { headers: tokenHeaders });
     }
     postEquipoUser(equipoUser) {
-        return this.http.post(`${this.url}/equipoUser`, equipoUser, { responseType: 'text' });
+        return this.http.post(`${URL}/equipoUser`, equipoUser, { responseType: 'text' });
     }
     deleteEquipoUser(id, idu) {
-        return this.http.delete(`${this.url}/equipoUser/${id}/${idu}`, { responseType: 'text' });
+        return this.http.delete(`${URL}/equipoUser/${id}/${idu}`, { responseType: 'text' });
     }
 };
 EquipoService.ctorParameters = () => [
@@ -871,56 +877,63 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var _usuario_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./usuario.service */ "./src/app/services/usuario.service.ts");
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
 
 
 
 
 
+
+const URL = src_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].url;
 let TorneoService = class TorneoService {
+    // private url = 'https://conmigo.armalapotra.com/api';
     constructor(http, storage, usuarioSer) {
         this.http = http;
         this.storage = storage;
         this.usuarioSer = usuarioSer;
-        this.url = 'https://conmigo.armalapotra.com/api';
     }
     getTorneos() {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/torneo`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/torneo`, { headers: tokenHeaders });
     }
     getTorneoxUsuario(n1) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/torneo/p?n1=${n1}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/torneo/p?n1=${n1}`, { headers: tokenHeaders });
+    }
+    getTorneoxComplejo(n1) {
+        const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
+        return this.http.get(`${URL}/torneo/q?id=${n1}`, { headers: tokenHeaders });
     }
     getTorneooId(id) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/torneo/${id}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/torneo/${id}`, { headers: tokenHeaders });
     }
     postTorneo(torneo) {
-        return this.http.post(`${this.url}/torneo`, torneo, { responseType: 'text' });
+        return this.http.post(`${URL}/torneo`, torneo, { responseType: 'text' });
     }
     putTorneo(id, torneo) {
-        return this.http.put(`${this.url}/torneo/${id}`, torneo, { responseType: 'text' });
+        return this.http.put(`${URL}/torneo/${id}`, torneo, { responseType: 'text' });
     }
     deleteTorneo(id) {
-        return this.http.delete(`${this.url}/torneo/${id}`);
+        return this.http.delete(`${URL}/torneo/${id}`);
     }
     getTorneoEquipo() {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/torneoEquipo`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/torneoEquipo`, { headers: tokenHeaders });
     }
     getTorneoEquipoxUsuario(n1) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/torneoEquipo/p?n1=${n1}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/torneoEquipo/p?n1=${n1}`, { headers: tokenHeaders });
     }
     getTorneoEquipoId(id) {
         const tokenHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Authorization': 'Bearer ' + this.usuarioSer.token });
-        return this.http.get(`${this.url}/torneoEquipo/${id}`, { headers: tokenHeaders });
+        return this.http.get(`${URL}/torneoEquipo/${id}`, { headers: tokenHeaders });
     }
     postTorneoEquipo(torneoEquipo) {
-        return this.http.post(`${this.url}/torneoEquipo`, torneoEquipo, { responseType: 'text' });
+        return this.http.post(`${URL}/torneoEquipo`, torneoEquipo, { responseType: 'text' });
     }
     deleteTorneoEquipo(idT, idE) {
-        return this.http.delete(`${this.url}/torneoEquipo/${idT}/${idE}`, { responseType: 'text' });
+        return this.http.delete(`${URL}/torneoEquipo/${idT}/${idE}`, { responseType: 'text' });
     }
 };
 TorneoService.ctorParameters = () => [

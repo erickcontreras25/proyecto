@@ -45,23 +45,29 @@ export class CanchaPage implements OnInit {
 
   }
 
+// --------------------------------------------------METODOS COMPLEJOS--------------------------------------------
 
   obtenerComplejoAdmin(id: string) {
     this.apiServi.getComplejoAdmin(id)
     .subscribe((resp: Complejo[]) => {
       this.complejos = resp;
-      console.log('SERVICIO', resp);
+      // console.log('SERVICIO', resp);
     });
   }
 
-  obtenerCanchaId() {
-    this.apiServi.getCanchaId(this.cancha.idCancha)
-    .subscribe( resp => {
-      console.log('EJECUTADO CON EXITO');
+  obtenerComplejoId(id: number) {
+    this.apiServi.getComplejoId(id)
+    .subscribe( (resp: Complejo) => {
+      this.complejo = resp;
+      this.obtenerCanchasComplejo(this.complejo.idComplejo);
     });
+  }
+  obtenerIdComplejo2(id: number) {
+    this.cancha.idComplejo = id;
   }
 
 
+  // --------------------------------------------METODOS CANCHAS----------------------------------------------
   modificarCancha() {
     this.apiServi.putCancha(this.cancha.idCancha, this.cancha)
     .subscribe((data) => {
@@ -80,6 +86,9 @@ export class CanchaPage implements OnInit {
 
     const fileInput: any = document.getElementById('img');
     const file = fileInput.files[0];
+    if (!(/\.(jpg|png|jpeg)$/i).test(file.name)) {
+      return alert('El archivo a adjuntar no es una imagen');
+  }
     const imgPromise = this.getFileBlobCancha(file);
 
     imgPromise.then(blob => {
@@ -89,41 +98,13 @@ export class CanchaPage implements OnInit {
   });
   }
 
-  eliminarCancha() {
-    this.apiServi.deleteCancha(this.cancha.idCancha)
-    .subscribe( resp => {
-      console.log('ELIMINADO CON EXITO');
-    });
-  }
-
-
-
-  obtenerComplejoId(id: number) {
-    this.apiServi.getComplejoId(id)
-    .subscribe( (resp: Complejo) => {
-      this.complejo = resp;
-      this.obtenerCanchasComplejo(this.complejo.idComplejo);
-    });
-  }
-  obtenerIdComplejo2(id: number) {
-    this.cancha.idComplejo = id;
-    // console.log('ESTE ES EL ID DEL COMPLEJO ' + this.cancha.idComplejo);
-  }
-
-  clean() {
-    this.cancha = new Cancha(0, null, null, '', null);
-  }
-  clear() {
-    this.complejo = new Complejo(0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
-  }
-
-
-
-  // --------------------------------------------METODOS CANCHAS--------------------------------------
   agregarCancha() {
 
     const fileInput: any = document.getElementById('imgCancha');
     const file = fileInput.files[0];
+    if (!(/\.(jpg|png|jpeg)$/i).test(file.name)) {
+      return alert('El archivo a adjuntar no es una imagen');
+  }
     const imgPromise = this.getFileBlobCancha(file);
 
     imgPromise.then(blob => {
@@ -156,13 +137,9 @@ export class CanchaPage implements OnInit {
     .subscribe((resp: Cancha) => {
       this.cancha = resp;
       this.presentActionSheet();
-      console.log(this.cancha);
+      // console.log(this.cancha);
     },
     error => console.log(error));
-  }
-
-  idCancha(id: number) {
-    this.cancha.idCancha = id;
   }
 
   getFileBlobCancha(file) {
@@ -175,6 +152,13 @@ export class CanchaPage implements OnInit {
         };
       })(file);
       reader.readAsDataURL(file);
+    });
+  }
+
+  eliminarCancha() {
+    this.apiServi.deleteCancha(this.cancha.idCancha)
+    .subscribe( resp => {
+      console.log('ELIMINADO CON EXITO');
     });
   }
 
@@ -314,6 +298,15 @@ export class CanchaPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+// ------------------------------------------------------------------------------------------------------
+
+  clean() {
+    this.cancha = new Cancha(0, null, null, '', null);
+  }
+  clear() {
+    this.complejo = new Complejo(0, '', '', '', '', false, 0.0, 0.0, new Date(), new Date(), false, false, '');
   }
 
 

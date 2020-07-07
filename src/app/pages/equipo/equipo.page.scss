@@ -9,8 +9,11 @@
 }
 
 ion-content.background{
-    --background: url(/assets/img/paraequipo.jpeg) 0 0/100% 100% no-repeat;
+    --background: url(/assets/img/fondo1.jpg) 0 0/100% 100% no-repeat;
     opacity: 0.8;
+}
+ion-content.background2 {
+    --background: var(--ion-color-dark);
 }
 .blanco {
     background-color: white;

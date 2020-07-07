@@ -8,6 +8,9 @@ import { resolve } from 'url';
 import { async } from '@angular/core/testing';
 import { User } from 'src/models/user.models';
 import { AlertaServiceService } from './alerta-service.service';
+import { environment } from 'src/environments/environment';
+
+const URL = environment.url;
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +30,7 @@ export class UsuarioService {
     isAdmin: null
   };
 
-  private url = 'https://conmigo.armalapotra.com/api';
+  // private url = 'https://conmigo.armalapotra.com/api';
 
 
   constructor(private http: HttpClient,
@@ -40,9 +43,9 @@ export class UsuarioService {
     const data = { email, password};
 
     return new Promise( resolve => {
-      this.http.post(`${this.url}/account/login`, data)
+      this.http.post(`${URL}/account/login`, data)
     .subscribe( async resp => {
-      console.log('PASO 0 >> ' + resp);
+      // console.log('PASO 0 >> ' + resp);
 
       if ( resp['ok']) {
         await this.guardarToken( resp['token'] );
@@ -72,7 +75,7 @@ export class UsuarioService {
     
     return new Promise( resolve => {
 
-      this.http.post(`${this.url}/account/create`, usuario)
+      this.http.post(`${URL}/account/create`, usuario)
       .subscribe( resp => {
         // console.log(resp);
 
@@ -98,7 +101,7 @@ export class UsuarioService {
   async guardarToken(token: string) {
     this.token = token;
     await this.storage.set('token', token);
-    console.log('GUARDAR TOKEN DEBE IR PRIMERO');
+    // console.log('GUARDAR TOKEN DEBE IR PRIMERO');
 
     await this.validaToken();
 
@@ -106,7 +109,7 @@ export class UsuarioService {
 
   async guardarVencimiento(expiration: string) {
     this.expiration = expiration;
-    console.log('GUARDAR VENCIMIENTO DEBE IR SEGUNDO');
+    // console.log('GUARDAR VENCIMIENTO DEBE IR SEGUNDO');
 
     await this.storage.set('expiration', expiration);
   }
@@ -136,7 +139,7 @@ export class UsuarioService {
       if (this.verificarVencimiento()) {
         const tokenHeaders = new HttpHeaders({ 'Authorization': 'Bearer ' + this.token});
 
-        this.http.get(`${this.url}/user`, {headers: tokenHeaders})
+        this.http.get(`${URL}/user`, {headers: tokenHeaders})
         .subscribe( (resp: any) => {
           this.user = resp;
           // console.log( 'PASO 3 >> ' );
@@ -168,15 +171,15 @@ export class UsuarioService {
     } else {
       const actual = moment().format('MM-DD-YYYY HH:mm');
       const aux = moment(this.expiration).format('MM-DD-YYYY HH:mm');
-      console.log( 'PASO 1 >> ' + 'HORA ' + actual + ' EXPIRA ' + aux);
+      // console.log( 'PASO 1 >> ' + 'HORA ' + actual + ' EXPIRA ' + aux);
 
       if (actual >= aux) {
-        console.log( 'PASO 2 >> ' + 'ESTE ES FALSO');
+        // console.log( 'PASO 2 >> ' + 'ESTE ES FALSO');
         this.alertaSercice.alertaInformativa('Tu sesion a finalizado');
         this.navCtrl.navigateRoot('/login');
         return false;
       } else {
-        console.log( 'PASO 2 >> ' + 'ESTE ES VERDADERO');
+        // console.log( 'PASO 2 >> ' + 'ESTE ES VERDADERO');
         return true;
       }
     }

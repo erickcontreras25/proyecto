@@ -1895,10 +1895,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var _alerta_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! ./alerta-service.service */
     "./src/app/services/alerta-service.service.ts");
+    /* harmony import */
+
+
+    var src_environments_environment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! src/environments/environment */
+    "./src/environments/environment.ts");
+
+    var URL = src_environments_environment__WEBPACK_IMPORTED_MODULE_7__["environment"].url;
 
     var UsuarioService =
     /*#__PURE__*/
     function () {
+      // private url = 'https://conmigo.armalapotra.com/api';
       function UsuarioService(http, storage, navCtrl, alertaSercice) {
         _classCallCheck(this, UsuarioService);
 
@@ -1916,7 +1925,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           edad: null,
           isAdmin: null
         };
-        this.url = 'https://conmigo.armalapotra.com/api';
       }
 
       _createClass(UsuarioService, [{
@@ -1929,7 +1937,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             password: password
           };
           return new Promise(function (resolve) {
-            _this2.http.post("".concat(_this2.url, "/account/login"), data).subscribe(function (resp) {
+            _this2.http.post("".concat(URL, "/account/login"), data).subscribe(function (resp) {
               return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this2, void 0, void 0,
               /*#__PURE__*/
               regeneratorRuntime.mark(function _callee2() {
@@ -1937,29 +1945,27 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                   while (1) {
                     switch (_context2.prev = _context2.next) {
                       case 0:
-                        console.log('PASO 0 >> ' + resp);
-
                         if (!resp['ok']) {
-                          _context2.next = 8;
+                          _context2.next = 7;
                           break;
                         }
 
-                        _context2.next = 4;
+                        _context2.next = 3;
                         return this.guardarToken(resp['token']);
 
-                      case 4:
+                      case 3:
                         this.guardarVencimiento(resp['expiration']);
                         resolve(true);
-                        _context2.next = 12;
+                        _context2.next = 11;
                         break;
 
-                      case 8:
+                      case 7:
                         this.token = null;
                         this.expiration = null;
                         this.storage.clear();
                         resolve(false);
 
-                      case 12:
+                      case 11:
                       case "end":
                         return _context2.stop();
                     }
@@ -1986,7 +1992,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this3 = this;
 
           return new Promise(function (resolve) {
-            _this3.http.post("".concat(_this3.url, "/account/create"), usuario).subscribe(function (resp) {
+            _this3.http.post("".concat(URL, "/account/create"), usuario).subscribe(function (resp) {
               // console.log(resp);
               if (resp['ok']) {
                 resolve(true);
@@ -2018,11 +2024,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     return this.storage.set('token', token);
 
                   case 3:
-                    console.log('GUARDAR TOKEN DEBE IR PRIMERO');
-                    _context3.next = 6;
+                    _context3.next = 5;
                     return this.validaToken();
 
-                  case 6:
+                  case 5:
                   case "end":
                     return _context3.stop();
                 }
@@ -2040,12 +2045,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               while (1) {
                 switch (_context4.prev = _context4.next) {
                   case 0:
-                    this.expiration = expiration;
-                    console.log('GUARDAR VENCIMIENTO DEBE IR SEGUNDO');
-                    _context4.next = 4;
+                    this.expiration = expiration; // console.log('GUARDAR VENCIMIENTO DEBE IR SEGUNDO');
+
+                    _context4.next = 3;
                     return this.storage.set('expiration', expiration);
 
-                  case 4:
+                  case 3:
                   case "end":
                     return _context4.stop();
                 }
@@ -2154,7 +2159,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                           'Authorization': 'Bearer ' + _this4.token
                         });
 
-                        _this4.http.get("".concat(_this4.url, "/user"), {
+                        _this4.http.get("".concat(URL, "/user"), {
                           headers: tokenHeaders
                         }).subscribe(function (resp) {
                           _this4.user = resp; // console.log( 'PASO 3 >> ' );
@@ -2207,24 +2212,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                   case 6:
                     actual = moment__WEBPACK_IMPORTED_MODULE_5__().format('MM-DD-YYYY HH:mm');
-                    aux = moment__WEBPACK_IMPORTED_MODULE_5__(this.expiration).format('MM-DD-YYYY HH:mm');
-                    console.log('PASO 1 >> ' + 'HORA ' + actual + ' EXPIRA ' + aux);
+                    aux = moment__WEBPACK_IMPORTED_MODULE_5__(this.expiration).format('MM-DD-YYYY HH:mm'); // console.log( 'PASO 1 >> ' + 'HORA ' + actual + ' EXPIRA ' + aux);
 
                     if (!(actual >= aux)) {
-                      _context8.next = 16;
+                      _context8.next = 14;
                       break;
                     }
 
-                    console.log('PASO 2 >> ' + 'ESTE ES FALSO');
+                    // console.log( 'PASO 2 >> ' + 'ESTE ES FALSO');
                     this.alertaSercice.alertaInformativa('Tu sesion a finalizado');
                     this.navCtrl.navigateRoot('/login');
                     return _context8.abrupt("return", false);
 
-                  case 16:
-                    console.log('PASO 2 >> ' + 'ESTE ES VERDADERO');
+                  case 14:
                     return _context8.abrupt("return", true);
 
-                  case 18:
+                  case 15:
                   case "end":
                     return _context8.stop();
                 }
@@ -2295,7 +2298,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
     var environment = {
-      production: false
+      production: false,
+      url: 'https://prueba.armalapotra.com/api'
     };
     /*
      * For easier debugging in development mode, you can import the following file
